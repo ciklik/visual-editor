@@ -1,7 +1,13 @@
 .ve-layout {
+  --primary: #1771E6;
   --color: #111827;
   --color-light: #6b7280;
+  --field-border: rgb(209, 213, 219);
   color: var(--color-light);
+}
+
+.ve-layout * {
+  box-sizing: border-box;
 }
 
 .ve-layout button {
@@ -9,6 +15,7 @@
   border: none;
   padding: 0;
   margin: 0;
+  font-family: inherit;
 }
 
 .ve-layout {
@@ -21,15 +28,16 @@
   height: 100%;
   display: grid;
   grid-template-columns: 600px 1fr;
-  font-size: 14px;
 }
 
 .ve-layout iframe {
   width: 100%;
   height: 100%;
+  border: none;
 }
 
 .ve-sidebar {
+  background-color: #FBFBFD;
   position: relative;
   z-index: 2;
   display: grid;
@@ -44,6 +52,7 @@
 .ve-sidebar-item {
   position: relative;
   padding: 1em;
+  background-color: #fff;
   border: 1px solid rgba(0,0,0,0.06);
   box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
 }
@@ -63,6 +72,36 @@
 
 .ve-sidebar-fields {
   margin-top: 1em;
+
+  & > * + * {
+    margin-top: 1em;
+  }
+}
+
+.ve-sidebar-fields label {
+  display: block;
+  margin-bottom: .5em;
+}
+
+.ve-sidebar-fields input[type="text"],
+.ve-sidebar-fields input[type="email"],
+.ve-sidebar-fields textarea,
+.ve-sidebar-fields select {
+  border: 1px solid var(--field-border);
+  background: transparent;
+  padding: .5rem .75em;
+  font-size: .875rem;
+  line-height: 1.25rem;
+  border-radius: .2rem;
+  display: block;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+
+  &:focus {
+    border-color: var(--primary);
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(23 113 230 / 25%);
+  }
 }
 
 .ve-sidebar-title {
@@ -71,4 +110,72 @@
   text-transform: uppercase;
   font-size: 1em;
   font-weight: lighter;
+}
+
+.ve-debug {
+  position: fixed;
+  top: 0;
+  right: 0;
+  border: 1px solid red;
+  width: 500px;
+  height: 300px;
+}
+
+.ve-flex {
+  display: flex;
+  gap: 1em;
+}
+
+// Repeater
+// =============
+.ve-repeater {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.ve-repeater-item {
+  position: relative;
+
+  &:hover .ve-repeater-remove{
+    transform: translateX(0) rotate(0);
+    opacity: 1;
+  }
+}
+.ve-repeater-item .ve-repeater-remove {
+  position: absolute;
+  top: 35px;
+  right: -30px;
+  background: #FFF;
+  font-family: monospace;
+  font-weight: 500;
+  border: 1px solid var(--field-border);
+  color: var(--color-light);
+  font-size: 1.2rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transform: translateX(5px) rotate(45deg);
+  opacity: 0;
+  transition: opacity .2s, transform .2s;
+
+  &:hover {
+    border: 1px solid var(--color-light);
+    color: var(--color);
+  }
+}
+.ve-layout .ve-repeater-add {
+  background-color: var(--primary);
+  border: none;
+  font-weight: 500;
+  color: #FFF;
+  align-self: flex-end;
+  font-size: .875rem;
+  line-height: 1.25rem;
+  cursor: pointer;
+  padding: .5rem 1rem;
+  border-radius: .2rem;
 }

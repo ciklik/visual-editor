@@ -24,11 +24,14 @@ export class Text implements EditorField {
     this.args = args
   }
 
-  public field = ({ value, onChange }: {value: string}) => {
+  public field = ({ value, onChange }: { value: string, onChange: (value: any) => void }) => {
     const id = useUniqId('textinput')
     return <div class="form-group">
       {this.args.label && <label for={id} class="form-label">{this.args.label}</label>}
-      <input type="text" id={id} class="form-control" defaultValue={value} onChange={e => onChange(e.target.value)}/>
+      {this.args.multiline ?
+        <textarea id={id} class="form-control" defaultValue={value} onInput={e => onChange(e.target.value)}/> :
+        <input type="text" id={id} class="form-control" defaultValue={value} onInput={e => onChange(e.target.value)}/>
+      }
       {this.args.help && <div class="form-text">{this.args.help}</div>}
     </div>
   }
