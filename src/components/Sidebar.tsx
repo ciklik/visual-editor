@@ -1,6 +1,7 @@
 import { EditorComponentData, EditorComponentDefinition, EditorComponentDefinitions, EditorField } from '../types'
 import { useToggle } from '../hooks/useToggle'
 import { useCallback } from 'preact/hooks'
+import { hightlightComponent } from '../functions/iframe'
 
 type ChangeCallback = (value: any, path: string) => void
 
@@ -10,7 +11,8 @@ export function Sidebar ({
                            onChange
                          }: { content: EditorComponentData[], definitions: EditorComponentDefinitions, onChange: ChangeCallback }) {
   return <div class="ve-sidebar">
-    {content.map((c, k) => <SidebarItem key={k} content={c} definition={definitions[c.name]} path={`${k}.data`}
+    {content.map((c, k) => <SidebarItem key={k} index={k} content={c} definition={definitions[c.name]}
+                                        path={`${k}.data`}
                                         onChange={onChange}/>)}
   </div>
 }
@@ -19,14 +21,15 @@ function SidebarItem ({
                         content,
                         definition,
                         path,
-                        onChange
-                      }: { content: EditorComponentData, definition: EditorComponentDefinition, path: string, onChange: ChangeCallback }) {
+                        onChange,
+                        index
+                      }: { content: EditorComponentData, definition: EditorComponentDefinition, path: string, onChange: ChangeCallback, index: number }) {
   const [isCollapsed, toggleCollapsed] = useToggle(false)
   const onFocus = () => {
-    console.log('lol');
+    hightlightComponent(index)
   }
 
-  return <div class="ve-sidebar-item">
+  return <div class="ve-sidebar-item" onClick={onFocus}>
     <button onClick={toggleCollapsed}>
       <h2 class="ve-sidebar-title">{definition.title}</h2>
       <div class="ve-sidebar-collapse">{isCollapsed ? '+' : '-'}</div>
@@ -43,7 +46,7 @@ function Field ({
                   value,
                   onChange,
                   path
-                }: { field: EditorField, value: string, onChange: ChangeCallback, path: string }) {
+                }: { field: EditorField<any>, value: string, onChange: ChangeCallback, path: string }) {
   const Component = field.field
   const onChangeCallback = useCallback((value: any) => {
     onChange(value, path)

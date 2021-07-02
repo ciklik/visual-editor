@@ -5,14 +5,16 @@ export type EditorComponentData = {
   data: Record<string, any>
 }
 
-export interface EditorField {
+export interface EditorField<V> {
   name: string
-  field: FunctionComponent<any>
+  field: FunctionComponent<EditorFieldProps<V>>
 }
+
+export type EditorFieldProps<V> = { value?: V, onChange: (value: V) => void }
 
 export type EditorComponentDefinition = {
   title: string,
-  fields: EditorField[]
+  fields: EditorField<any>[]
 }
 
 export type EditorComponentDefinitions = Record<string, EditorComponentDefinition>

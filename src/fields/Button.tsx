@@ -1,8 +1,9 @@
-import { EditorField } from '../types'
+import { EditorField, EditorFieldProps } from '../types'
 import { uniqId } from '../functions/string'
 import { useUniqId } from '../hooks/useUniqId'
+import { AbstractField } from './AbstractField'
 
-type textArgs = {
+type FieldArgs = {
   label?: string,
   required?: boolean,
   help?: string
@@ -14,8 +15,7 @@ type InputValue = {
   type: string
 }
 
-let id = 0;
-const TYPES = {
+const TYPES: Record<string, string> = {
   primary: 'Primaire',
   secondary: 'Secondaire',
   danger: 'Danger'
@@ -24,22 +24,14 @@ const TYPES = {
 /**
  * Enregistre un champs de type texte
  */
-export class Button implements EditorField {
+export class Button extends AbstractField<FieldArgs, InputValue>{
 
-  name: string
-  private args: textArgs = {}
-
-  constructor (name: string, args: textArgs) {
-    this.name = name
-    this.args = args
-  }
-
-  public field = ({ value, onChange }: { value: InputValue, onChange: (value: any) => void }) => {
+  public field ({ value, onChange }: EditorFieldProps<InputValue>) {
     const id = useUniqId('textinput')
     value = value ?? {title: '', href: '', type: 'primary'}
 
-    const onPropertyChange = (name: string) => (e: {target: HTMLInputElement}) => {
-      onChange({...value, [name]: e.target.value})
+    const onPropertyChange = (name: keyof InputValue) => (e: Event) => {
+      onChange({...value, [name]: ''} as InputValue)
     }
 
     return <div class="form-group">

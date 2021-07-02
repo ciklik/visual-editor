@@ -26,5 +26,5 @@ export function Preview ({data, previewUrl}: PreviewProps) {
     })
   }, [data])
 
-  return <iframe ref={iframe} src={previewUrl}/>
+  return <iframe ref={iframe} src={previewUrl} id="ve-preview"/>
 }

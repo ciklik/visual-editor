@@ -11,8 +11,11 @@ editor.registerComponent('hero', {
     new Text('title', { label: 'Titre' }),
     new Text('body', { label: 'Description', multiline: true }),
     new Repeater('actions', {
+      title: 'Actions',
       addLabel: 'Ajouter un bouton',
-      fields: [new Button('action', { label: 'Action' })]
+      fields: [
+        new Button('action')
+      ]
     })
   ]
 })
