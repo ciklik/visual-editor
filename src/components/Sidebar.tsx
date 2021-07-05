@@ -6,10 +6,10 @@ import {
 } from '../types'
 import { useToggle } from '../hooks/useToggle'
 import { useCallback, useEffect, useRef } from 'preact/hooks'
-import { hightlightComponent } from '../functions/iframe'
 import { Sortable, SortableWrapper } from './Sortable'
 import { moveItem } from '../functions/array'
 import { useFocusComponent } from '../hooks/useFocusComponent'
+import { useUpdateEffect } from '../hooks/useUpdateEffect'
 
 type ChangeCallback = (value: any, path?: string) => void
 
@@ -59,7 +59,7 @@ function SidebarItem({
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const [isCollapsed, toggleCollapsed, setCollapsed] = useToggle(true)
-  const [focusedIndex, setFocus] = useFocusComponent()
+  const [focusedIndex] = useFocusComponent()
   const isFocused = focusedIndex === content._index
   const label =
     definition.label && content.data[definition.label]
@@ -67,7 +67,7 @@ function SidebarItem({
       : definition.title
 
   // Scroll vers l'élément lorsqu'il a le focus
-  useEffect(() => {
+  useUpdateEffect(() => {
     if (isFocused) {
       window.setTimeout(
         () =>

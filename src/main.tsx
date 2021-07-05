@@ -3,6 +3,7 @@ import { VisualEditor } from './VisualEditor'
 import { Text } from './fields/Text'
 import { Button } from './fields/Button'
 import { Repeater } from './fields/Repeater'
+import { Checkbox } from './fields/Checkbox'
 
 let editor = new VisualEditor()
 editor.registerComponent('hero', {
@@ -17,20 +18,16 @@ editor.registerComponent('hero', {
     }),
   ],
 })
-editor.registerComponent('demo', {
-  title: 'Demo',
+editor.registerComponent('steps', {
+  title: 'Etapes',
   fields: [
     new Text('title', { label: 'Titre' }),
-    new Text('body', { label: 'Description', multiline: true }),
-    new Repeater('columns', {
-      title: 'Colonnes',
-      addLabel: 'Ajouter une colonne',
-      collapsed: 'title',
-      fields: [
-        new Text('title', { label: 'Titre' }),
-        new Text('slug', { label: 'Slug' }),
-        new Text('body', { label: 'Contenu', multiline: true }),
-      ],
+    new Text('caption', { label: "Mention sous l'image" }),
+    new Checkbox('inversed', { label: 'Image à droite ?' }),
+    new Repeater('steps', {
+      title: 'Étapes',
+      addLabel: 'Ajouter une étape',
+      fields: [new Text('step', {})],
     }),
   ],
 })
