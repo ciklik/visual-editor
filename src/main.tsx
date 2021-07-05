@@ -13,10 +13,8 @@ editor.registerComponent('hero', {
     new Repeater('actions', {
       title: 'Actions',
       addLabel: 'Ajouter un bouton',
-      fields: [
-        new Button('action')
-      ]
-    })
-  ]
+      fields: [new Button('action')],
+    }),
+  ],
 })
 editor.defineElement()

@@ -1,12 +1,11 @@
 import { EditorComponentData } from '../types'
 import { useEffect, useRef } from 'preact/hooks'
 type PreviewProps = {
-  data: EditorComponentData[],
+  data: EditorComponentData[]
   previewUrl: string
 }
 
-export function Preview ({data, previewUrl}: PreviewProps) {
-
+export function Preview({ data, previewUrl }: PreviewProps) {
   const iframe = useRef<HTMLIFrameElement>(null)
 
   useEffect(() => {
@@ -14,10 +13,10 @@ export function Preview ({data, previewUrl}: PreviewProps) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        Accept: 'application/json',
       },
-      body: JSON.stringify(data)
-    }).then(async r => {
+      body: JSON.stringify(data),
+    }).then(async (r) => {
       if (r.ok) {
         if (iframe.current.contentDocument) {
           iframe.current.contentDocument.body.innerHTML = await r.text()
@@ -26,5 +25,5 @@ export function Preview ({data, previewUrl}: PreviewProps) {
     })
   }, [data])
 
-  return <iframe ref={iframe} src={previewUrl} id="ve-preview"/>
+  return <iframe ref={iframe} src={previewUrl} id="ve-preview" />
 }
