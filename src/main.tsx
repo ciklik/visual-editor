@@ -17,4 +17,21 @@ editor.registerComponent('hero', {
     }),
   ],
 })
+editor.registerComponent('demo', {
+  title: 'Demo',
+  fields: [
+    new Text('title', { label: 'Titre' }),
+    new Text('body', { label: 'Description', multiline: true }),
+    new Repeater('columns', {
+      title: 'Colonnes',
+      addLabel: 'Ajouter une colonne',
+      collapsed: 'title',
+      fields: [
+        new Text('title', { label: 'Titre' }),
+        new Text('slug', { label: 'Slug' }),
+        new Text('body', { label: 'Contenu', multiline: true }),
+      ],
+    }),
+  ],
+})
 editor.defineElement()

@@ -19,6 +19,7 @@ export type EditorFieldProps<V> = { value?: V; onChange: (value: V) => void }
 
 export type EditorComponentDefinition = {
   title: string
+  label?: string
   fields: EditorField<any>[]
 }
 

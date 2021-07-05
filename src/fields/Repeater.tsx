@@ -4,6 +4,7 @@ import { moveItem } from '../functions/array'
 import { uniqId } from '../functions/string'
 import { AbstractField } from './AbstractField'
 import { Sortable, SortableWrapper } from '../components/Sortable'
+import { useToggle } from '../hooks/useToggle'
 
 type FieldArgs = {
   label?: string
@@ -12,6 +13,7 @@ type FieldArgs = {
   addLabel?: string
   fields: EditorField<any>[]
   title?: string
+  collapsed?: string
 }
 
 type RepeaterLine = { _index: string; [key: string]: unknown }
@@ -86,10 +88,16 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
     const handleRemove = () => onRemove(line)
     const handleUpdate = (path: string) => (value: unknown) =>
       onUpdate(path, value)
+    const [collapsed, toggleCollapsed] = useToggle(
+      !!(this.args.collapsed && line[this.args.collapsed])
+    )
+    const visibleFields = this.args.fields.filter((field) =>
+      collapsed ? field.name === this.args.collapsed : true
+    )
 
     return (
       <Sortable item={line} class="ve-repeater-item">
-        {this.args.fields.map((field) => (
+        {visibleFields.map((field) => (
           <field.field
             value={line[field.name]}
             onChange={handleUpdate(`${index}.${field.name}`)}
@@ -102,6 +110,15 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
         >
           &times;
         </button>
+        {this.args.collapsed && (
+          <button
+            class="ve-repeater-collapse"
+            onClick={toggleCollapsed}
+            title="Replier/Déplier l'élément"
+          >
+            {collapsed ? '▴' : '▾'}
+          </button>
+        )}
       </Sortable>
     )
   }

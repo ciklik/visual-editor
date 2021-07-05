@@ -1,3 +1,18 @@
+<?php
+function renderBlock($d) {
+    $data = $d['data'];
+    include 'components/' . $d['name'] . '.php';
+}
+
+
+$body = file_get_contents('php://input');
+$data = json_decode($body, true);
+if ($data['preview'] ?? null) {
+  renderBlock($data);
+  exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,22 +54,10 @@
   </div>
 </header>
 
-<main role="main">
+<main role="main" id="ve-components">
 <?php
-$body = file_get_contents('php://input');;
-$requestData = [];
-if ($body) {
-    $requestData = json_decode($body, true);
-}
-foreach ($requestData as $k => $d) {
-    $data = $d['data'];
-    echo '<div class="ve-component" id="component-' . $k . '">';
-    include 'components/' . $d['name'] . '.php';
-    echo '</div>';
-}
+array_map('renderBlock', $data)
 ?>
-<pre>
-</pre>
 </main>
 </body>
 </html>

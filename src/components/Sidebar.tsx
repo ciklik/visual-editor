@@ -5,10 +5,11 @@ import {
   EditorField,
 } from '../types'
 import { useToggle } from '../hooks/useToggle'
-import { useCallback } from 'preact/hooks'
+import { useCallback, useEffect, useRef } from 'preact/hooks'
 import { hightlightComponent } from '../functions/iframe'
 import { Sortable, SortableWrapper } from './Sortable'
 import { moveItem } from '../functions/array'
+import { useFocusComponent } from '../hooks/useFocusComponent'
 
 type ChangeCallback = (value: any, path?: string) => void
 
@@ -56,29 +57,47 @@ function SidebarItem({
   onChange: ChangeCallback
   index: number
 }) {
-  const [isCollapsed, toggleCollapsed] = useToggle(true)
-  const onFocus = () => {
-    hightlightComponent(index)
-  }
+  const ref = useRef<HTMLDivElement>(null)
+  const [isCollapsed, toggleCollapsed, setCollapsed] = useToggle(true)
+  const [focusedIndex, setFocus] = useFocusComponent()
+  const isFocused = focusedIndex === content._index
+  const label =
+    definition.label && content.data[definition.label]
+      ? definition.title + ' : ' + content.data[definition.label]
+      : definition.title
+
+  // Scroll vers l'élément lorsqu'il a le focus
+  useEffect(() => {
+    if (isFocused) {
+      window.setTimeout(
+        () =>
+          ref.current!.scrollIntoView({ behavior: 'smooth', block: 'nearest' }),
+        100
+      )
+    }
+    setCollapsed(!isFocused)
+  }, [focusedIndex, isFocused])
 
   return (
-    <Sortable item={content} class="ve-sidebar-item" onClick={onFocus}>
-      <button onClick={toggleCollapsed}>
-        <h2 class="ve-sidebar-title">{definition.title}</h2>
-        <div class="ve-sidebar-collapse">{isCollapsed ? '+' : '-'}</div>
-      </button>
-      {!isCollapsed && (
-        <div className="ve-sidebar-fields">
-          {definition.fields.map((field, k) => (
-            <Field
-              field={field}
-              value={content.data[field.name]}
-              path={`${path}.${field.name}`}
-              onChange={onChange}
-            />
-          ))}
-        </div>
-      )}
+    <Sortable item={content} class="ve-sidebar-item">
+      <div ref={ref}>
+        <button onClick={toggleCollapsed}>
+          <h2 class="ve-sidebar-title">{label}</h2>
+          <div class="ve-sidebar-collapse">{isCollapsed ? '+' : '-'}</div>
+        </button>
+        {!isCollapsed && (
+          <div className="ve-sidebar-fields">
+            {definition.fields.map((field, k) => (
+              <Field
+                field={field}
+                value={content.data[field.name]}
+                path={`${path}.${field.name}`}
+                onChange={onChange}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </Sortable>
   )
 }

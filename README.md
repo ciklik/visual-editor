@@ -19,3 +19,4 @@ Les variable --{var} doivent exister sur la page en cours
 - Réorganisation des blocs
 - Ajout de nouveaux blocs
 - Uploader de média ?
+

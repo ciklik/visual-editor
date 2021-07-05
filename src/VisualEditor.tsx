@@ -1,19 +1,20 @@
-import { ComponentChildren, render } from 'preact'
+import { render } from 'preact'
 import {
-  EditorComponentDefinition,
   EditorComponentData,
+  EditorComponentDefinition,
   EditorComponentDefinitions,
 } from './types'
 import { Sidebar } from './components/Sidebar'
-import { useCallback, useEffect, useState } from 'preact/hooks'
+import { useCallback, useState } from 'preact/hooks'
 import { deepSet } from './functions/object'
 import { Preview } from './components/Preview'
+import { FocusContextProvider } from './hooks/useFocusComponent'
 
 const components: EditorComponentDefinitions = {}
 
 export class VisualEditor {
   registerComponent(name: string, definition: EditorComponentDefinition) {
-    components[name] = definition
+    components[name] = { label: 'title', ...definition }
   }
 
   defineElement(elementName: string = 'visual-editor') {
@@ -82,10 +83,12 @@ export function VisualEditorComponent({
   }
 
   return (
-    <div class="ve-layout">
-      <Sidebar content={data} definitions={definitions} onChange={onChange} />
-      {previewUrl && <Preview data={data} previewUrl={previewUrl} />}
-      <textarea class="ve-debug" name={name} value={exportData(data)} />
-    </div>
+    <FocusContextProvider>
+      <div class="ve-layout">
+        <Sidebar content={data} definitions={definitions} onChange={onChange} />
+        {previewUrl && <Preview data={data} previewUrl={previewUrl} />}
+        <textarea class="ve-debug" name={name} value={exportData(data)} />
+      </div>
+    </FocusContextProvider>
   )
 }
