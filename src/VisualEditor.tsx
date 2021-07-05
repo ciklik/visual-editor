@@ -52,8 +52,12 @@ type VisualEditorProps = {
 
 export function VisualEditorComponent({ content, definitions, previewUrl, name }: VisualEditorProps) {
   const [data, setData] = useState(content)
-  const onChange = useCallback((value: any, path: string) => {
-    setData(data => deepSet(data, path, value))
+  const onChange = useCallback((value: any, path?: string) => {
+    if (path) {
+      setData(data => deepSet(data, path, value))
+    } else {
+      setData(value)
+    }
   }, [])
 
   const exportData = (data: EditorComponentData[]) => {

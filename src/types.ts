@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'preact'
 
 export type EditorComponentData = {
+  _index: string,
   name: string,
   data: Record<string, any>
 }
@@ -8,6 +9,10 @@ export type EditorComponentData = {
 export interface EditorField<V> {
   name: string
   field: FunctionComponent<EditorFieldProps<V>>
+}
+
+export interface IndexableObject {
+  _index: string
 }
 
 export type EditorFieldProps<V> = { value?: V, onChange: (value: V) => void }

@@ -1,5 +1,5 @@
 import { EditorField } from '../types'
-import { FunctionComponent, VNode } from 'preact'
+import { VNode } from 'preact'
 
 export class AbstractField<Args extends Record<string, any>, V> implements EditorField<V> {
 

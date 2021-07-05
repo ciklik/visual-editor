@@ -8,7 +8,6 @@
         <a href="<?= $action['href'] ?? '#' ?>" class="btn btn-<?= $action['type'] ?? 'primary' ?> my-2"><?= $action['title'] ?? 'Acheter' ?></a>
         <?php endforeach ?>
       </p>
-      <div style="background-color:grey; height: 1000px;"></div>
     </div>
   </div>
 </section>
