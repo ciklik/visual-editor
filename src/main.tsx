@@ -31,4 +31,8 @@ editor.registerComponent('steps', {
     }),
   ],
 })
+editor.registerComponent('html', {
+  title: 'HTML',
+  fields: [new Text('html', { label: 'HTML', multiline: true })],
+})
 editor.defineElement()

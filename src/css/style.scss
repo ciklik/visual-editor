@@ -38,18 +38,39 @@
   color: var(--primary);
 }
 
+// Generics
+// =============
+%button,
+.ve-layout .ve-button {
+  background-color: var(--primary);
+  border: none;
+  font-weight: 500;
+  color: #FFF;
+  align-self: flex-end;
+  font-size: .875rem;
+  line-height: 1.25rem;
+  cursor: pointer;
+  padding: .5rem 1rem;
+  border-radius: .2rem;
+}
+
+// Sidebar
+// =============
 .ve-sidebar {
   overflow: auto;
   background-color: #FBFBFD;
   position: relative;
   z-index: 2;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2),0 10px 10px -5px rgba(0,0,0,0.04);
+}
+
+.ve-fields {
   display: grid;
-  gap: 1em;
   padding: 1em;
+  gap: 1em;
   align-content: flex-start;
   grid-template-columns: 1fr;
   align-items: flex-start;
-  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2),0 10px 10px -5px rgba(0,0,0,0.04);
 }
 
 .ve-sidebar-item{
@@ -90,7 +111,6 @@
 .ve-sidebar-fields input[type="email"],
 .ve-sidebar-fields textarea,
 .ve-sidebar-fields select {
-  border: 1px solid var(--field-border);
   background: transparent;
   padding: .5rem .75em;
   font-size: .875rem;
@@ -98,6 +118,7 @@
   border-radius: .2rem;
   display: block;
   width: 100%;
+  border: 1px solid var(--field-border);
   box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
 
   &:focus {
@@ -127,6 +148,21 @@
 .ve-flex {
   display: flex;
   gap: 1em;
+}
+
+.ve-sidebar-footer {
+  margin-top: 0;
+  display: flex;
+  position: sticky;
+  padding: 1em;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #FFF;
+  justify-content: flex-end;
+  z-index: 10;
+  border-bottom: 1px solid var(--field-border);
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
 }
 
 // Repeater
@@ -206,16 +242,7 @@
   }
 }
 .ve-layout .ve-repeater-add {
-  background-color: var(--primary);
-  border: none;
-  font-weight: 500;
-  color: #FFF;
-  align-self: flex-end;
-  font-size: .875rem;
-  line-height: 1.25rem;
-  cursor: pointer;
-  padding: .5rem 1rem;
-  border-radius: .2rem;
+  @extend %button;
 }
 .ve-repeater-item .ve-repeater-collapse {
   @extend %roundedButton;
@@ -282,4 +309,36 @@
 .ve-checkbox input:checked + label::after {
   background-color: #FFF;
   transform: translateX(17px);
+}
+
+.ve-blocs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.ve-bloc {
+  position: relative;
+  height: 150px;
+  box-shadow: 0 0 0 1px var(--field-border);
+  background-color: #fff;
+  color: var(--color);
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  transition: border-color .3s, color .3s;
+  img {
+    filter: invert(45%) sepia(8%) saturate(649%) hue-rotate(182deg) brightness(95%) contrast(89%);
+    transition: filter .3s;
+  }
+}
+.ve-bloc:hover {
+  box-shadow: 0 0  0 1px var(--primary);
+  z-index: 10;
+  color: var(--primary);
+  img {
+    filter: invert(36%) sepia(43%) saturate(6104%) hue-rotate(204deg) brightness(95%) contrast(90%);
+  }
 }

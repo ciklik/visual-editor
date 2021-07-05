@@ -85,9 +85,8 @@ export function VisualEditorComponent({
   return (
     <FocusContextProvider>
       <div class="ve-layout">
-        <Sidebar content={data} definitions={definitions} onChange={onChange} />
+        <Sidebar data={data} definitions={definitions} onChange={onChange} />
         {previewUrl && <Preview data={data} previewUrl={previewUrl} />}
-        <textarea class="ve-debug" name={name} value={exportData(data)} />
       </div>
     </FocusContextProvider>
   )
