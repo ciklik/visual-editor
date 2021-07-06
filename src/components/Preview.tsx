@@ -52,7 +52,7 @@ export function Preview({ data, previewUrl }: PreviewProps) {
 
   return (
     <>
-      <iframe ref={iframe} />
+      <iframe ref={iframe} class="ve-preview" />
       {iframeRoot &&
         createPortal(
           <PreviewItems

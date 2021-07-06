@@ -1,4 +1,5 @@
 {
+  "name": "visual-editor",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",

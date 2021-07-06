@@ -1,4 +1,3 @@
-import './css/style.scss'
 import { VisualEditor } from './VisualEditor'
 import { Text } from './fields/Text'
 import { Button } from './fields/Button'

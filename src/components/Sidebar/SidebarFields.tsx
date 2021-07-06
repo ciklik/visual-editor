@@ -10,6 +10,7 @@ import { useFocusComponent } from '../../hooks/useFocusComponent'
 import { useUpdateEffect } from '../../hooks/useUpdateEffect'
 import { Sortable, SortableWrapper } from '../Sortable'
 import { moveItem } from '../../functions/array'
+import { prevent } from '../../functions/functions'
 
 type ChangeCallback = (value: any, path?: string) => void
 
@@ -81,7 +82,7 @@ function SidebarItem({
   return (
     <Sortable item={data} class="ve-sidebar-item">
       <div ref={ref}>
-        <button onClick={toggleCollapsed}>
+        <button onClick={prevent(toggleCollapsed)}>
           <h2 class="ve-sidebar-title">{label}</h2>
           <div class="ve-sidebar-collapse">{isCollapsed ? '+' : '-'}</div>
         </button>

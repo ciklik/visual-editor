@@ -8,7 +8,6 @@ export function SidebarBlocs({
 }: {
   definitions: EditorComponentDefinitions
 }) {
-  console.log(definitions)
   return (
     <div class="ve-blocs">
       {Object.keys(definitions).map((key) => (

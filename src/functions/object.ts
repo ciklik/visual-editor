@@ -32,9 +32,12 @@ function deepGet(o: ExplorableObject, kp: Keypath, d: any = null): unknown {
 // 3. returned = Object.assign({}, { a: { b: { c: 1 } } }, { a: b })
 export function deepSet(
   object: ExplorableObject,
-  keyPath: Keypath,
+  keyPath: Keypath | undefined,
   value: any
 ) {
+  if (!keyPath) {
+    return value
+  }
   return keys(keyPath).reduceRight((acc, key, i, keys: string[]) => {
     const original = deepGet(object, keys.slice(0, i))
     if (Array.isArray(original)) {

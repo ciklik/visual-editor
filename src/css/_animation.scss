@@ -1,0 +1,16 @@
+.is-hidden .ve-sidebar {
+  animation: SlideToLeft .7s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+.is-visible .ve-sidebar {
+  animation: SlideFromLeft .7s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+@keyframes SlideToLeft {
+  from {transform: translateX(0) }
+  to {transform: translateX(-100%) }
+}
+
+@keyframes SlideFromLeft {
+  from {transform: translateX(-100%) }
+  to {transform: translateX(0) }
+}
