@@ -5,8 +5,8 @@ import { useAsyncEffect } from '../hooks/useAsyncEffect'
 import { iframeStyle } from '../css/iframe'
 import { usePreview } from '../hooks/usePreview'
 import clsx from 'clsx'
-import { useFocusComponent } from '../hooks/useFocusComponent'
 import { useDroppable } from '@dnd-kit/core'
+import { useFieldFocused, useSetFocusIndex } from '../store'
 
 type PreviewProps = {
   data: EditorComponentData[]
@@ -128,8 +128,8 @@ export function PreviewItem({
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const { loading, html } = usePreview(data, previewUrl, initialHTML)
-  const [focusedIndex, setIndex] = useFocusComponent()
-  const isFocused = focusedIndex === data._id
+  const setFocusIndex = useSetFocusIndex()
+  const isFocused = useFieldFocused(data._id)
 
   useEffect(() => {
     if (isFocused) {
@@ -164,7 +164,7 @@ export function PreviewItem({
           isFocused && 'is-focused'
         )}
         ref={ref}
-        onClick={() => setIndex(data._id)}
+        onClick={() => setFocusIndex(data._id)}
       >
         <div dangerouslySetInnerHTML={{ __html: html }} />
       </div>

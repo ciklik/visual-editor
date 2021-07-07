@@ -15,14 +15,13 @@ import {
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { useState } from 'preact/hooks'
 import { SidebarModes } from '../constants'
-import { useFocusComponent } from '../hooks/useFocusComponent'
+import { useInsertData } from '../store'
 
 type LayoutProps = {
   class?: string
   data: EditorComponentData[]
   previewUrl?: string
   definitions: EditorComponentDefinitions
-  onChange: (v: any, path?: string) => void
   onClose: () => void
 }
 
@@ -31,28 +30,16 @@ export function Layout({
   data,
   previewUrl,
   definitions,
-  onChange,
   onClose,
 }: LayoutProps) {
-  const [state, setState] = useState(SidebarModes.FIELDS)
-  const [_, setFocus] = useFocusComponent()
+  const insertData = useInsertData()
 
   // Lorsqu'on ajoute un nouveau bloc
   const handleBlocDrop = (e: DragEndEvent) => {
     const blocName = e.active.id
     const index = e.over?.data?.current?.index
     if (index !== undefined && blocName) {
-      const id = blocName + uniqId()
-      // On propage le changement de données
-      onChange(
-        insertItem(data, index, {
-          _name: blocName,
-          _id: id,
-        })
-      )
-      // On repasse en mode fields
-      setState(SidebarModes.FIELDS)
-      window.setTimeout(() => setFocus(id), 10)
+      insertData(blocName, index)
     }
   }
 
@@ -66,14 +53,7 @@ export function Layout({
   return (
     <DndContext sensors={sensors} onDragEnd={handleBlocDrop}>
       <div class={clsx('ve-layout', className)}>
-        <Sidebar
-          data={data}
-          mode={state}
-          definitions={definitions}
-          onChange={onChange}
-          onClose={onClose}
-          onModeChange={setState}
-        />
+        <Sidebar data={data} definitions={definitions} onClose={onClose} />
         {previewUrl && <Preview data={data} previewUrl={previewUrl} />}
       </div>
     </DndContext>

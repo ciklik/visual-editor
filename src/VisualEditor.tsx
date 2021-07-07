@@ -6,25 +6,10 @@ import {
   EditorComponentDefinition,
   EditorComponentDefinitions,
 } from './types'
-import { Sidebar } from './components/Sidebar'
-import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
-import { deepSet } from './functions/object'
-import { Preview } from './components/Preview'
-import { FocusContextProvider } from './hooks/useFocusComponent'
-import clsx from 'clsx'
+import { useEffect, useMemo } from 'preact/hooks'
 import { useVisibilityClass } from './hooks/useVisibilityClass'
-import {
-  DndContext,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core'
-import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
-import { DragEndEvent } from '@dnd-kit/core/dist/types'
-import { insertItem } from './functions/array'
-import { uniqId } from './functions/string'
 import { Layout } from './components/Layout'
+import { useData, useUpdateData } from './store'
 
 const components: EditorComponentDefinitions = {}
 
@@ -152,15 +137,8 @@ export function VisualEditorComponent({
   visible: visibleProps,
   onChange,
 }: VisualEditorProps) {
-  const [data, setData] = useState(value)
-  const handleChange = useCallback((value: any, path?: string) => {
-    setData((data) => {
-      const newData = deepSet(data, path, value)
-      onChange(newData)
-      return newData
-    })
-  }, [])
-
+  const updateData = useUpdateData()
+  const data = useData()
   const [visibilityClass, visible] = useVisibilityClass(visibleProps)
   const handleClose = () => {
     element.dispatchEvent(new Event('veClose'))
@@ -169,7 +147,7 @@ export function VisualEditorComponent({
   const cleanedData = useMemo(() => JSON.stringify(data, hideIndexe, 2), [data])
   // Synchronise l'état du composant avec la prop value
   useEffect(() => {
-    setData(value)
+    updateData(value)
   }, [value])
 
   if (!visible) {
@@ -177,17 +155,16 @@ export function VisualEditorComponent({
   }
 
   return (
-    <FocusContextProvider>
+    <>
       <Layout
         class={visibilityClass}
         data={data}
         definitions={definitions}
-        onChange={handleChange}
         onClose={handleClose}
         previewUrl={previewUrl}
       />
       <textarea hidden name={name} value={cleanedData} class="ve-debug" />
-    </FocusContextProvider>
+    </>
   )
 }
 

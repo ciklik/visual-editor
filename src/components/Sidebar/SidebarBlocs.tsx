@@ -7,18 +7,30 @@ import { useDraggable } from '@dnd-kit/core'
 
 export function SidebarBlocs({
   definitions,
+  search,
 }: {
   definitions: EditorComponentDefinitions
+  search: string
 }) {
   return (
-    <div>
-      <div class="ve-blocs">
-        {Object.keys(definitions).map((key) => (
+    <div class="ve-blocs">
+      {Object.keys(definitions)
+        .filter(searchDefinition(search, definitions))
+        .map((key) => (
           <SidebarBloc definition={definitions[key]} name={key} />
         ))}
-      </div>
     </div>
   )
+}
+
+function searchDefinition(
+  search: string,
+  definitions: EditorComponentDefinitions
+) {
+  if (search === '') {
+    return () => true
+  }
+  return (key: string) => definitions[key].title.toLowerCase().includes(search)
 }
 
 function SidebarBloc({

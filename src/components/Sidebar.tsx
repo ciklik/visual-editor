@@ -3,27 +3,35 @@ import { SidebarFields } from './Sidebar/SidebarFields'
 import { SidebarBlocs } from './Sidebar/SidebarBlocs'
 import { prevent } from '../functions/functions'
 import { SidebarModes } from '../constants'
+import { useData, useSetSidebarMode, useSidebarMode } from '../store'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
 export function Sidebar({
   data,
   definitions,
-  onChange,
   onClose,
-  mode,
-  onModeChange,
 }: {
   data: EditorComponentData[]
   definitions: EditorComponentDefinitions
-  onChange: (value: any, path?: string) => void
-  mode: SidebarModes
   onClose: () => void
-  onModeChange: (mode: SidebarModes) => void
 }) {
+  const searchField = useRef<HTMLInputElement>(null)
+  const mode = useSidebarMode()
+  const setMode = useSetSidebarMode()
+  const [search, setSearch] = useState('')
+
   const toggleMode = () => {
-    onModeChange(
+    setSearch('')
+    setMode(
       mode === SidebarModes.FIELDS ? SidebarModes.BLOCS : SidebarModes.FIELDS
     )
   }
+
+  useEffect(() => {
+    if (mode === SidebarModes.BLOCS) {
+      searchField.current?.focus()
+    }
+  }, [mode])
 
   return (
     <div class="ve-sidebar">
@@ -31,6 +39,16 @@ export function Sidebar({
         <button class="ve-close" onClick={prevent(onClose)} title="Fermer">
           &times;
         </button>
+        {mode === SidebarModes.BLOCS && (
+          <input
+            ref={searchField}
+            type="text"
+            class="ve-bloc-search"
+            autofocus
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+          />
+        )}
         <button class="ve-button" onClick={prevent(toggleMode)}>
           {mode === SidebarModes.BLOCS
             ? 'Revenir au contenu'
@@ -38,15 +56,16 @@ export function Sidebar({
         </button>
       </div>
       {mode === SidebarModes.FIELDS && (
-        <SidebarFields
-          data={data}
-          onChange={onChange}
-          definitions={definitions}
-        />
+        <SidebarFields data={data} definitions={definitions} />
       )}
       {mode === SidebarModes.BLOCS && (
-        <SidebarBlocs definitions={definitions} />
+        <SidebarBlocs definitions={definitions} search={search} />
       )}
     </div>
   )
+}
+
+function Demo() {
+  console.log('Demo rerendered')
+  return <div>{JSON.stringify(useData())}</div>
 }

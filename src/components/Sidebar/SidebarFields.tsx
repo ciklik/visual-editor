@@ -6,28 +6,26 @@ import {
 } from '../../types'
 import { useCallback, useRef } from 'preact/hooks'
 import { useToggle } from '../../hooks/useToggle'
-import { useFocusComponent } from '../../hooks/useFocusComponent'
 import { useUpdateEffect } from '../../hooks/useUpdateEffect'
 import { Sortable, SortableWrapper } from '../Sortable'
 import { moveItem } from '../../functions/array'
 import { prevent } from '../../functions/functions'
-
-type ChangeCallback = (value: any, path?: string) => void
+import { useFieldFocused, useUpdateData } from '../../store'
+import { memo } from 'preact/compat'
 
 /**
  * Génère la liste des champs dans la sidebar
  */
 export function SidebarFields({
   data,
-  onChange,
   definitions,
 }: {
   data: EditorComponentData[]
-  onChange: ChangeCallback
   definitions: EditorComponentDefinitions
 }) {
+  const updateData = useUpdateData()
   const handleMove = (from: number, to: number) => {
-    onChange(moveItem(data, from, to))
+    updateData(moveItem(data, from, to))
   }
 
   return (
@@ -39,7 +37,6 @@ export function SidebarFields({
             data={v}
             definition={definitions[v._name]}
             path={`${k}`}
-            onChange={onChange}
           />
         ))}
       </SortableWrapper>
@@ -47,21 +44,18 @@ export function SidebarFields({
   )
 }
 
-function SidebarItem({
+const SidebarItem = memo(function SidebarItem({
   data,
   definition,
   path,
-  onChange,
 }: {
   data: EditorComponentData
   definition: EditorComponentDefinition
   path: string
-  onChange: ChangeCallback
 }) {
   const ref = useRef<HTMLDivElement>(null)
-  const [isCollapsed, toggleCollapsed, setCollapsed] = useToggle(true)
-  const [focusedIndex] = useFocusComponent()
-  const isFocused = focusedIndex === data._id
+  const isFocused = useFieldFocused(data._id)
+  const [isCollapsed, toggleCollapsed, setCollapsed] = useToggle(!isFocused)
   const label =
     definition.label && data[definition.label]
       ? definition.title + ' : ' + data[definition.label]
@@ -70,14 +64,14 @@ function SidebarItem({
   // Scroll vers l'élément lorsqu'il a le focus
   useUpdateEffect(() => {
     if (isFocused) {
+      setCollapsed(false)
       window.setTimeout(
         () =>
           ref.current!.scrollIntoView({ behavior: 'smooth', block: 'nearest' }),
         100
       )
     }
-    setCollapsed(!isFocused)
-  }, [focusedIndex, isFocused])
+  }, [isFocused])
 
   return (
     <Sortable item={data} class="ve-sidebar-item">
@@ -93,7 +87,6 @@ function SidebarItem({
                 field={field}
                 value={data[field.name]}
                 path={`${path}.${field.name}`}
-                onChange={onChange}
               />
             ))}
           </div>
@@ -101,23 +94,22 @@ function SidebarItem({
       </div>
     </Sortable>
   )
-}
+})
 
 function Field({
   field,
   value,
-  onChange,
   path,
 }: {
   field: EditorField<any>
   value: string
-  onChange: ChangeCallback
   path: string
 }) {
+  const updateData = useUpdateData()
   const Component = field.field
   const onChangeCallback = useCallback(
     (value: any) => {
-      onChange(value, path)
+      updateData(value, path)
     },
     [path]
   )

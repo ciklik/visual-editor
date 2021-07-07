@@ -12,9 +12,11 @@
     "@dnd-kit/modifiers": "^3.0.0",
     "@dnd-kit/sortable": "^4.0.0",
     "clsx": "^1.1.1",
-    "preact": "^10.5.13"
+    "preact": "^10.5.13",
+    "zustand": "^3.5.5"
   },
   "devDependencies": {
+    "@babel/plugin-transform-react-jsx-source": "^7.14.5",
     "@preact/preset-vite": "^2.0.0",
     "prettier": "^2.3.2",
     "sass": "^1.35.1",
