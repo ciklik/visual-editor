@@ -10,6 +10,7 @@
 }
 
 .ve-bloc-draggable {
+  outline: none;
   transition: .3s;
   position: relative;
   &:hover {
