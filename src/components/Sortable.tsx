@@ -20,6 +20,7 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { DragEndEvent } from '@dnd-kit/core/dist/types'
 import { ComponentChildren } from 'preact'
+import clsx from 'clsx'
 
 export function SortableWrapper({
   items,
@@ -63,6 +64,7 @@ export function SortableWrapper({
 export function Sortable({
   item,
   children,
+  class: className,
   ...props
 }: {
   item: IndexableObject
@@ -70,15 +72,27 @@ export function Sortable({
   class?: string
   onClick?: (e: Event) => void
 }) {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: item._id })
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: item._id })
 
   const style = {
     transform: CSS.Translate.toString(transform),
     transition,
   }
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...props}>
+    <div
+      class={clsx(className, isDragging && 'is-dragging')}
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...props}
+    >
       <div class="ve-repeater-handle" {...listeners} />
       {children}
     </div>

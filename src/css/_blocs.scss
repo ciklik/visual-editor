@@ -1,0 +1,56 @@
+
+.ve-blocs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.ve-bloc-wrapper {
+  background: rgba(0, 0, 0, 0.02);
+  box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.ve-bloc-draggable {
+  transition: .3s;
+  position: relative;
+  &:hover {
+    z-index: 2;
+  }
+  .is-dragging & {
+    z-index: 3;
+    transition: none;
+  }
+}
+
+.ve-bloc {
+  position: relative;
+  height: 150px;
+  box-shadow: 0 0 0 1px var(--field-border);
+  background-color: #fff;
+  color: var(--color);
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  transition: border-color .3s, color .3s, box-shadow .3s;
+  img {
+    opacity: .45;
+    max-width: 80%;
+    height: 50px;
+    filter: invert(45%) sepia(8%) saturate(649%) hue-rotate(182deg) brightness(95%) contrast(89%);
+    transition: filter .3s, opacity .3s;
+  }
+}
+.ve-bloc:hover {
+  box-shadow: 0 0  0 1px var(--primary);
+  z-index: 10;
+  color: var(--primary);
+  img {
+    opacity: 1;
+    filter: invert(36%) sepia(43%) saturate(6104%) hue-rotate(204deg) brightness(95%) contrast(90%);
+  }
+}
+.is-dragging .ve-bloc {
+  box-shadow: var(--shadow-dragging);
+}

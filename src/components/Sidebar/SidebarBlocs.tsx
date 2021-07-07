@@ -4,6 +4,7 @@ import {
 } from '../../types'
 import { CSS } from '@dnd-kit/utilities'
 import { useDraggable } from '@dnd-kit/core'
+import clsx from 'clsx'
 
 export function SidebarBlocs({
   definitions,
@@ -40,17 +41,27 @@ function SidebarBloc({
   name: string
   definition: EditorComponentDefinition
 }) {
-  const { setNodeRef, listeners, attributes, transform } = useDraggable({
-    id: name,
-  })
+  const { setNodeRef, listeners, attributes, transform, isDragging } =
+    useDraggable({
+      id: name,
+    })
   const style = {
     transform: CSS.Translate.toString(transform),
   }
+
   return (
-    <div style={style} ref={setNodeRef} {...attributes} {...listeners}>
-      <div class="ve-bloc">
-        <img src={'/' + name + '.svg'} />
-        {definition.title}
+    <div class={clsx('ve-bloc-wrapper', isDragging && 'is-dragging')}>
+      <div
+        class="ve-bloc-draggable"
+        style={style}
+        ref={setNodeRef}
+        {...attributes}
+        {...listeners}
+      >
+        <div class="ve-bloc">
+          <img src={'/' + name + '.svg'} />
+          {definition.title}
+        </div>
       </div>
     </div>
   )

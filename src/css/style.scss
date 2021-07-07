@@ -8,6 +8,7 @@ visual-editor {
   --color-light: #6b7280;
   --field-border: rgb(209, 213, 219);
   --danger: red;
+  --shadow-dragging: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
   color: var(--color-light);
   background-color: rgba(255, 255, 255, 0);
   transition: background-color .3s;
@@ -65,7 +66,6 @@ visual-editor {
 // Sidebar
 // =============
 .ve-sidebar {
-  overflow: auto;
   background-color: #FBFBFD;
   position: relative;
   z-index: 2;
@@ -89,6 +89,13 @@ visual-editor {
   background-color: #fff;
   border: 1px solid rgba(0,0,0,0.06);
   box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+  transition: box-shadow .3s;
+}
+
+.ve-sidebar-item.is-dragging {
+  box-shadow: var(--shadow-dragging);
+  transition: box-shadow .3s!important;
+  z-index: 10;
 }
 
 .ve-layout .ve-sidebar-collapse {
@@ -260,39 +267,6 @@ visual-editor {
   left: -4px;
 }
 
-.ve-blocs {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.ve-bloc {
-  position: relative;
-  height: 150px;
-  box-shadow: 0 0 0 1px var(--field-border);
-  background-color: #fff;
-  color: var(--color);
-  font-weight: 500;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1em;
-  transition: border-color .3s, color .3s;
-  img {
-    max-width: 80%;
-    height: 60px;
-    filter: invert(45%) sepia(8%) saturate(649%) hue-rotate(182deg) brightness(95%) contrast(89%);
-    transition: filter .3s;
-  }
-}
-.ve-bloc:hover {
-  box-shadow: 0 0  0 1px var(--primary);
-  z-index: 10;
-  color: var(--primary);
-  img {
-    filter: invert(36%) sepia(43%) saturate(6104%) hue-rotate(204deg) brightness(95%) contrast(90%);
-  }
-}
-
+@import "blocs";
 @import "animation";
 @import "form";
