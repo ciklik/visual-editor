@@ -3,6 +3,7 @@ import { Text } from './fields/Text'
 import { Button } from './fields/Button'
 import { Repeater } from './fields/Repeater'
 import { Checkbox } from './fields/Checkbox'
+import { ImageUrl } from './fields/ImageUrl'
 
 let editor = new VisualEditor()
 editor.registerComponent('hero', {
@@ -20,6 +21,10 @@ editor.registerComponent('hero', {
 editor.registerComponent('steps', {
   title: 'Etapes',
   fields: [
+    new ImageUrl('image', {
+      label: 'Image',
+      onBrowse: (url) => Promise.resolve('https://picsum.photos/425/458'),
+    }),
     new Text('title', { label: 'Titre' }),
     new Text('caption', { label: "Mention sous l'image" }),
     new Checkbox('inversed', { label: 'Image à droite ?' }),

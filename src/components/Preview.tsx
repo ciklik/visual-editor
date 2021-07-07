@@ -6,6 +6,7 @@ import { iframeStyle } from '../css/iframe'
 import { usePreview } from '../hooks/usePreview'
 import clsx from 'clsx'
 import { useFocusComponent } from '../hooks/useFocusComponent'
+import { useDroppable } from '@dnd-kit/core'
 
 type PreviewProps = {
   data: EditorComponentData[]
@@ -18,7 +19,7 @@ type PreviewProps = {
 export function Preview({ data, previewUrl }: PreviewProps) {
   const iframe = useRef<HTMLIFrameElement>(null)
   const [iframeRoot, setIframeRoot] = useState<HTMLElement | null>(null)
-  const initialHTML = useRef<string[]>([])
+  const initialHTML = useRef<Record<string, string>>({})
 
   useAsyncEffect(async () => {
     // On génère le premier rendu de la page complète
@@ -45,9 +46,27 @@ export function Preview({ data, previewUrl }: PreviewProps) {
     style.innerHTML = iframeStyle(color)
     iframeDocument.querySelector('head')!.appendChild(style)
     const root = iframeDocument.querySelector('#ve-components') as HTMLElement
-    initialHTML.current = Array.from(root.children).map((v) => v.outerHTML)
+    const onScroll = () => {
+      iframeDocument.body.style.setProperty(
+        '--offsetX',
+        iframe.current.offsetLeft + 'px'
+      )
+      iframeDocument.body.style.setProperty(
+        '--offsetY',
+        iframeDocument.documentElement.scrollTop * -1 + 'px'
+      )
+    }
+    onScroll()
+    iframeDocument.addEventListener('scroll', onScroll)
+    initialHTML.current = Array.from(root.children).reduce(
+      (acc, v, k) => ({ ...acc, [data[k]._id]: v.outerHTML }),
+      {}
+    )
     root.innerHTML = ''
     setIframeRoot(root)
+    return () => {
+      iframeDocument.removeEventListener('scroll', onScroll)
+    }
   }, [])
 
   return (
@@ -71,11 +90,11 @@ export function Preview({ data, previewUrl }: PreviewProps) {
  */
 export function PreviewItems({
   data,
-  initialHTML = [],
+  initialHTML = {},
   previewUrl,
 }: {
   data: EditorComponentData[]
-  initialHTML: string[]
+  initialHTML: Record<string, string>
   previewUrl: string
 }) {
   return (
@@ -83,8 +102,9 @@ export function PreviewItems({
       {data.map((v, k) => (
         <PreviewItem
           data={v}
-          initialHTML={initialHTML[k]}
-          key={v._index}
+          initialHTML={initialHTML[v._id]}
+          key={v._id}
+          index={k}
           previewUrl={previewUrl}
         />
       ))}
@@ -99,15 +119,17 @@ export function PreviewItem({
   data,
   initialHTML,
   previewUrl,
+  index,
 }: {
   data: EditorComponentData
   initialHTML: string
   previewUrl: string
+  index: number
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const { loading, html } = usePreview(data, previewUrl, initialHTML)
-  const [index, setIndex] = useFocusComponent()
-  const isFocused = index === data._index
+  const [focusedIndex, setIndex] = useFocusComponent()
+  const isFocused = focusedIndex === data._id
 
   useEffect(() => {
     if (isFocused) {
@@ -118,17 +140,34 @@ export function PreviewItem({
     }
   }, [isFocused])
 
+  const { setNodeRef: setNodeRefTop, isOver: isOverTop } = useDroppable({
+    id: index.toString() + 'top',
+    data: { index },
+  })
+  const { setNodeRef: setNodeRefBottom, isOver: isOverBottom } = useDroppable({
+    id: index.toString() + 'bottom',
+    data: { index: index + 1 },
+  })
+  const isOver = isOverTop || isOverBottom
+
   return (
-    <div
-      class={clsx(
-        've-preview-component',
-        loading && 'is-loading',
-        isFocused && 'is-focused'
-      )}
-      ref={ref}
-      onClick={() => setIndex(data._index)}
-    >
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+    <div style="position:relative">
+      <div ref={setNodeRefTop} class="ve-preview-droppable-top" />
+      <div ref={setNodeRefBottom} class="ve-preview-droppable-bottom" />
+      <div
+        class={clsx(
+          've-preview-component',
+          loading && 'is-loading',
+          isOver && 'is-over',
+          isOverBottom && 'is-over-bottom',
+          isOverTop && 'is-over-top',
+          isFocused && 'is-focused'
+        )}
+        ref={ref}
+        onClick={() => setIndex(data._id)}
+      >
+        <div dangerouslySetInnerHTML={{ __html: html }} />
+      </div>
     </div>
   )
 }

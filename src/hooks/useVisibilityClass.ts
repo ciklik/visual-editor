@@ -7,8 +7,8 @@ const CLASS_NOT_VISIBLE = 'is-hidden'
  * Renvoie une classe et la visibilité réel de l'élément (utile pour les animations)
  * @param visible
  */
-export function useVisibilityClass(visible: boolean): [string | null, boolean] {
-  const [className, setClassName] = useState<string | null>(
+export function useVisibilityClass(visible: boolean): [string, boolean] {
+  const [className, setClassName] = useState(
     visible ? CLASS_VISIBLE : CLASS_NOT_VISIBLE
   )
   const [delayedVisible, setDelayedVisible] = useState(visible)

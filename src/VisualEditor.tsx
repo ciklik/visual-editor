@@ -13,6 +13,18 @@ import { Preview } from './components/Preview'
 import { FocusContextProvider } from './hooks/useFocusComponent'
 import clsx from 'clsx'
 import { useVisibilityClass } from './hooks/useVisibilityClass'
+import {
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core'
+import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
+import { DragEndEvent } from '@dnd-kit/core/dist/types'
+import { insertItem } from './functions/array'
+import { uniqId } from './functions/string'
+import { Layout } from './components/Layout'
 
 const components: EditorComponentDefinitions = {}
 
@@ -102,13 +114,13 @@ class VisualEditorElement extends HTMLElement {
   }
 
   /**
-   * Ajoute des _index sur tous les objets dans des tableaux afin de faciliter l'identification des objets
+   * Ajoute des _id sur tous les objets dans des tableaux afin de faciliter l'identification des objets
    */
   private indexify<T extends unknown>(object: T): T {
     if (Array.isArray(object)) {
       object.forEach((v, k) => {
         if (typeof v === 'object') {
-          v._index = k.toString()
+          v._id = k.toString()
           this.indexify(v)
         }
       })
@@ -154,7 +166,7 @@ export function VisualEditorComponent({
     element.dispatchEvent(new Event('veClose'))
   }
   // JSON nettoyé
-  const cleanedData = useMemo(() => JSON.stringify(data, hideIndexe), [data])
+  const cleanedData = useMemo(() => JSON.stringify(data, hideIndexe, 2), [data])
   // Synchronise l'état du composant avec la prop value
   useEffect(() => {
     setData(value)
@@ -166,22 +178,21 @@ export function VisualEditorComponent({
 
   return (
     <FocusContextProvider>
-      <div class={clsx('ve-layout', visibilityClass)}>
-        <Sidebar
-          data={data}
-          definitions={definitions}
-          onChange={handleChange}
-          onClose={handleClose}
-        />
-        {previewUrl && <Preview data={data} previewUrl={previewUrl} />}
-      </div>
-      <textarea hidden name={name} value={cleanedData} />
+      <Layout
+        class={visibilityClass}
+        data={data}
+        definitions={definitions}
+        onChange={handleChange}
+        onClose={handleClose}
+        previewUrl={previewUrl}
+      />
+      <textarea hidden name={name} value={cleanedData} class="ve-debug" />
     </FocusContextProvider>
   )
 }
 
 function hideIndexe(key: string, value: any) {
-  if (key === '_index') {
+  if (key === '_id') {
     return undefined
   }
   return value
@@ -193,3 +204,4 @@ export { Checkbox } from './fields/Checkbox'
 export { Button } from './fields/Button'
 export { Repeater } from './fields/Repeater'
 export { AbstractField } from './fields/AbstractField'
+export { ImageUrl } from './fields/ImageUrl'

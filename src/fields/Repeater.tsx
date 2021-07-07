@@ -16,7 +16,7 @@ type FieldArgs = {
   collapsed?: string
 }
 
-type RepeaterLine = { _index: string; [key: string]: unknown }
+type RepeaterLine = { _id: string; [key: string]: unknown }
 
 /**
  * Permet de créer une liste de champs imbriqués
@@ -32,7 +32,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
     const canAdd = !this.args.max || value.length < this.args.max
 
     const add = () => {
-      onChange([...value, { _index: uniqId() }])
+      onChange([...value, { _id: uniqId() }])
     }
 
     const remove = (line: Object) => {
@@ -54,7 +54,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
           <div class="ve-repeater">
             {value.map((line, k) => (
               <this.fieldLine
-                key={line._index}
+                key={line._id}
                 line={line}
                 index={k}
                 onUpdate={updateProperty}

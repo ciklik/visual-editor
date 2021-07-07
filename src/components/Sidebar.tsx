@@ -1,50 +1,52 @@
 import { EditorComponentData, EditorComponentDefinitions } from '../types'
 import { SidebarFields } from './Sidebar/SidebarFields'
-import { useState } from 'preact/hooks'
 import { SidebarBlocs } from './Sidebar/SidebarBlocs'
 import { prevent } from '../functions/functions'
-
-type ChangeCallback = (value: any, path?: string) => void
-
-enum State {
-  FIELDS,
-  BLOCS,
-}
+import { SidebarModes } from '../constants'
 
 export function Sidebar({
   data,
   definitions,
   onChange,
   onClose,
+  mode,
+  onModeChange,
 }: {
   data: EditorComponentData[]
   definitions: EditorComponentDefinitions
-  onChange: ChangeCallback
+  onChange: (value: any, path?: string) => void
+  mode: SidebarModes
   onClose: () => void
+  onModeChange: (mode: SidebarModes) => void
 }) {
-  const [state, setState] = useState(State.FIELDS)
-  const toggleState = () => {
-    setState((v) => (v === State.BLOCS ? State.FIELDS : State.BLOCS))
+  const toggleMode = () => {
+    onModeChange(
+      mode === SidebarModes.FIELDS ? SidebarModes.BLOCS : SidebarModes.FIELDS
+    )
   }
 
   return (
     <div class="ve-sidebar">
       <div class="ve-sidebar-footer">
-        <button class="ve-button" onClick={prevent(onClose)}>
-          Fermer
+        <button class="ve-close" onClick={prevent(onClose)} title="Fermer">
+          &times;
         </button>
-        <button class="ve-button" onClick={prevent(toggleState)}>
-          {state === State.BLOCS ? 'Revenir au contenu' : 'Ajouter un bloc'}
+        <button class="ve-button" onClick={prevent(toggleMode)}>
+          {mode === SidebarModes.BLOCS
+            ? 'Revenir au contenu'
+            : 'Ajouter un bloc'}
         </button>
       </div>
-      {state === State.FIELDS && (
+      {mode === SidebarModes.FIELDS && (
         <SidebarFields
           data={data}
           onChange={onChange}
           definitions={definitions}
         />
       )}
-      {state === State.BLOCS && <SidebarBlocs definitions={definitions} />}
+      {mode === SidebarModes.BLOCS && (
+        <SidebarBlocs definitions={definitions} />
+      )}
     </div>
   )
 }

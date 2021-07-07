@@ -35,10 +35,10 @@ export function SidebarFields({
       <SortableWrapper items={data} onMove={handleMove}>
         {data.map((v, k) => (
           <SidebarItem
-            key={v._index}
+            key={v._id}
             data={v}
-            definition={definitions[v.name]}
-            path={`${k}.data`}
+            definition={definitions[v._name]}
+            path={`${k}`}
             onChange={onChange}
           />
         ))}
@@ -61,10 +61,10 @@ function SidebarItem({
   const ref = useRef<HTMLDivElement>(null)
   const [isCollapsed, toggleCollapsed, setCollapsed] = useToggle(true)
   const [focusedIndex] = useFocusComponent()
-  const isFocused = focusedIndex === data._index
+  const isFocused = focusedIndex === data._id
   const label =
-    definition.label && data.data[definition.label]
-      ? definition.title + ' : ' + data.data[definition.label]
+    definition.label && data[definition.label]
+      ? definition.title + ' : ' + data[definition.label]
       : definition.title
 
   // Scroll vers l'élément lorsqu'il a le focus
@@ -91,7 +91,7 @@ function SidebarItem({
             {definition.fields.map((field, k) => (
               <Field
                 field={field}
-                value={data.data[field.name]}
+                value={data[field.name]}
                 path={`${path}.${field.name}`}
                 onChange={onChange}
               />

@@ -30,7 +30,7 @@ export function SortableWrapper({
   children: ComponentChildren
   onMove: (from: number, to: number) => void
 }) {
-  const ids = items.map((item) => item._index)
+  const ids = items.map((item) => item._id)
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -71,7 +71,7 @@ export function Sortable({
   onClick?: (e: Event) => void
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: item._index })
+    useSortable({ id: item._id })
 
   const style = {
     transform: CSS.Translate.toString(transform),

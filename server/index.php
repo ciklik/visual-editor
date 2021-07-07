@@ -1,8 +1,7 @@
 <?php
-function renderBlock($d) {
-    $data = $d['data'];
-    if (file_exists('components/' . $d['name'] . '.php')) {
-      include 'components/' . $d['name'] . '.php';
+function renderBlock($data) {
+    if (file_exists('components/' . $data['_name'] . '.php')) {
+      include 'components/' . $data['_name'] . '.php';
     } else {
       echo "<div>Bloc manquant</div>";
     }

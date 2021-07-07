@@ -71,6 +71,7 @@ visual-editor {
   z-index: 2;
   box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2),0 10px 10px -5px rgba(0,0,0,0.04);
   transition: transform .5s cubic-bezier(0.19, 1, 0.22, 1);
+  overflow: visible;
 }
 
 .ve-fields {
@@ -111,32 +112,6 @@ visual-editor {
   }
 }
 
-.ve-sidebar-fields label {
-  display: block;
-  margin-bottom: .5em;
-}
-
-.ve-sidebar-fields input[type="text"],
-.ve-sidebar-fields input[type="email"],
-.ve-sidebar-fields textarea,
-.ve-sidebar-fields select {
-  background: transparent;
-  padding: .5rem .75em;
-  font-size: .875rem;
-  line-height: 1.25rem;
-  border-radius: .2rem;
-  display: block;
-  width: 100%;
-  border: 1px solid var(--field-border);
-  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-
-  &:focus {
-    border-color: var(--primary);
-    outline: 0;
-    box-shadow: 0 0 0 0.25rem rgb(23 113 230 / 25%);
-  }
-}
-
 .ve-sidebar-title {
   margin: 0;
   color: var(--color);
@@ -146,12 +121,14 @@ visual-editor {
 }
 
 .ve-debug {
+  display: block;
   position: fixed;
   top: 0;
   right: 0;
   border: 1px solid red;
   width: 500px;
   height: 300px;
+  z-index: 9999;
 }
 
 .ve-flex {
@@ -168,10 +145,23 @@ visual-editor {
   left: 0;
   right: 0;
   background-color: #FFF;
-  justify-content: flex-end;
   z-index: 10;
   border-bottom: 1px solid var(--field-border);
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+}
+.ve-layout .ve-close {
+  display: block;
+  color: var(--color-light);
+  font-size: 20px;
+  margin-right: auto;
+  padding-left: .5em;
+  margin-left: -.5em;
+  padding-right: .5em;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color);
+  }
 }
 
 // Repeater
@@ -260,66 +250,6 @@ visual-editor {
   left: -4px;
 }
 
-.ve-checkbox {
-  position: relative;
-  display: flex;
-}
-
-.ve-checkbox input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity: 0;
-  cursor: pointer;
-  z-index: 5;
-}
-
-.ve-checkbox label {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.ve-checkbox label::before{
-  cursor: pointer;
-  display: block;
-  content:'';
-  width: 36px;
-  height: 18px;
-  border: solid 1px var(--field-border);
-  border-radius: 18px;
-  margin-right: .5em;
-  transition: .3s;
-}
-.ve-checkbox label::after {
-  position: absolute;
-  content:'';
-  top: 2px;
-  left: 2px;
-  border-radius: 16px;
-  width: 16px;
-  height: 16px;
-  background-color: var(--color-light);
-  transition: .3s;
-}
-
-.ve-checkbox input:checked + label::before {
-  border-color: var(--primary);
-  background-color: var(--primary);
-}
-
-.ve-checkbox input:focus + label::before {
-  outline: 0;
-  box-shadow: 0 0 0 0.25rem rgb(23 113 230 / 25%);
-}
-
-.ve-checkbox input:checked + label::after {
-  background-color: #FFF;
-  transform: translateX(17px);
-}
-
 .ve-blocs {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -355,3 +285,4 @@ visual-editor {
 }
 
 @import "animation";
+@import "form";
