@@ -2,6 +2,8 @@ import { EditorField, EditorFieldProps } from '../types'
 import { useUniqId } from '../hooks/useUniqId'
 import { AbstractField } from './AbstractField'
 import { prevent } from '../functions/functions'
+import { useRef } from 'preact/hooks'
+import { Tooltip } from '../components/Tooltip'
 
 type FieldArgs = {
   label?: string
@@ -18,6 +20,7 @@ export class ImageUrl
   implements EditorField<string>
 {
   field({ value, onChange }: EditorFieldProps<string>) {
+    const inputRef = useRef<HTMLInputElement>(null)
     const id = useUniqId('textinput')
     const handleBrowse = () => {
       this.args.onBrowse!(value)
@@ -34,6 +37,7 @@ export class ImageUrl
         {this.args.label && <label for={id}>{this.args.label}</label>}
         <div class="ve-input-icon">
           <input
+            ref={inputRef}
             type="text"
             id={id}
             class="form-control"
@@ -56,6 +60,11 @@ export class ImageUrl
           )}
         </div>
         {this.args.help && <div class="ve-form-help">{this.args.help}</div>}
+        {value && (
+          <Tooltip targetRef={inputRef} class="ve-imageurl-tooltip">
+            <img src={value} alt="" />
+          </Tooltip>
+        )}
       </div>
     )
   }

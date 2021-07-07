@@ -27,6 +27,7 @@ const useStore = create(
           set(() => ({ sidebarMode: mode }))
         },
         updateData: function (newData: any, path?: string) {
+          console.log('updating', newData, path)
           return set((state) => ({ data: deepSet(state.data, path, newData) }))
         },
         insertData: function (

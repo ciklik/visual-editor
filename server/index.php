@@ -27,6 +27,15 @@ if ($data['preview'] ?? null) {
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         -->
   <title>Preview</title>
+  <style>
+    :root {
+      --pink: #f50057;
+      --purple: #651fff;
+      --blue: #3d5afe;
+      --green: #00e676;
+      --lightblue: #00e5ff;
+    }
+  </style>
 </head>
 <body>
 

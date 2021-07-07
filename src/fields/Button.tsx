@@ -30,7 +30,10 @@ export class Button extends AbstractField<FieldArgs, InputValue> {
     value = value ?? { title: '', href: '', type: 'primary' }
 
     const onPropertyChange = (name: keyof InputValue) => (e: Event) => {
-      onChange({ ...value, [name]: '' } as InputValue)
+      onChange({
+        ...value,
+        [name]: (e.target as HTMLInputElement).value,
+      } as InputValue)
     }
 
     return (

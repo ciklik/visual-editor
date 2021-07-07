@@ -163,7 +163,7 @@ export function VisualEditorComponent({
         onClose={handleClose}
         previewUrl={previewUrl}
       />
-      <textarea hidden name={name} value={cleanedData} class="ve-debug" />
+      <textarea hidden name={name} value={cleanedData} />
     </>
   )
 }

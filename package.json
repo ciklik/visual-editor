@@ -13,6 +13,8 @@
     "@dnd-kit/sortable": "^4.0.0",
     "clsx": "^1.1.1",
     "preact": "^10.5.13",
+    "react-popper": "^2.2.5",
+    "react-use": "^17.2.4",
     "zustand": "^3.5.5"
   },
   "devDependencies": {

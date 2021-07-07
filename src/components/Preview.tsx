@@ -141,11 +141,11 @@ export function PreviewItem({
   }, [isFocused])
 
   const { setNodeRef: setNodeRefTop, isOver: isOverTop } = useDroppable({
-    id: index.toString() + 'top',
+    id: data._id.toString() + 'top',
     data: { index },
   })
   const { setNodeRef: setNodeRefBottom, isOver: isOverBottom } = useDroppable({
-    id: index.toString() + 'bottom',
+    id: data._id.toString() + 'bottom',
     data: { index: index + 1 },
   })
   const isOver = isOverTop || isOverBottom

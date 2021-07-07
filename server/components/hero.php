@@ -1,4 +1,4 @@
-<section class="py-5 text-center container">
+<section class="py-5 text-center container" style="background-color:var(<?= $data['background'] ?? '--aze, grey' ?>);">
   <div class="row py-lg-5">
     <div class="col-lg-6 col-md-8 mx-auto">
       <h1 class="fw-light"><?= $data['title'] ?? 'Titre du héro'; ?></h1>
