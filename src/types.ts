@@ -27,3 +27,5 @@ export type EditorComponentDefinitions = Record<
   string,
   EditorComponentDefinition
 >
+
+export type EventWithTarget<T> = EventTarget & { target: T }

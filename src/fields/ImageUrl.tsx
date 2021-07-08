@@ -1,9 +1,9 @@
-import { EditorField, EditorFieldProps } from '../types'
-import { useUniqId } from '../hooks/useUniqId'
-import { AbstractField } from './AbstractField'
-import { prevent } from '../functions/functions'
+import { EditorField, EditorFieldProps } from 'src/types'
+import { useUniqId } from 'src/hooks/useUniqId'
+import { AbstractField } from 'src/fields/AbstractField'
+import { prevent } from 'src/functions/functions'
 import { useRef } from 'preact/hooks'
-import { Tooltip } from '../components/Tooltip'
+import { Tooltip } from 'src/components/Tooltip'
 
 type FieldArgs = {
   label?: string

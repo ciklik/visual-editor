@@ -1,6 +1,5 @@
-import { EditorField, EditorFieldProps } from '../types'
-import { uniqId } from '../functions/string'
-import { useUniqId } from '../hooks/useUniqId'
+import { EditorFieldProps } from 'src/types'
+import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from './AbstractField'
 
 type FieldArgs = {

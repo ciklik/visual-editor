@@ -1,7 +1,6 @@
-import { EditorField, EditorFieldProps } from '../types'
-import { useUniqId } from '../hooks/useUniqId'
-import { AbstractField } from './AbstractField'
-import { QuillEditor, QuillEditorMode } from './shared/QuillEditor'
+import { EditorField, EditorFieldProps } from 'src/types'
+import { AbstractField } from 'src/fields/AbstractField'
+import { QuillEditor, QuillEditorMode } from 'src/fields/shared/QuillEditor'
 
 type FieldArgs = {
   label?: string

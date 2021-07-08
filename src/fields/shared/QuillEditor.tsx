@@ -1,7 +1,5 @@
 import { useEffect, useRef } from 'preact/hooks'
-import { Delta, lineBreakMatcher, Quill } from '../../libs/Quill'
-import 'quill/dist/quill.bubble.css'
-import '../../css/fields/quilleditor.scss'
+import { Delta, lineBreakMatcher, Quill } from 'src/libs/Quill'
 import type { DeltaOperation } from 'quill'
 import clsx from 'clsx'
 

@@ -1,4 +1,4 @@
-import { EditorComponentData } from '../types'
+import { EditorComponentData } from 'src/types'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
 export function usePreview(

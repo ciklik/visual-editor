@@ -1,4 +1,4 @@
-import { IndexableObject } from '../types'
+import { IndexableObject } from 'src/types'
 import {
   DndContext,
   closestCenter,

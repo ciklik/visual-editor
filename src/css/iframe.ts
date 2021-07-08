@@ -1,3 +1,5 @@
+/**
+ */
 export function iframeStyle(color: string) {
   return `
 :root {

@@ -1,12 +1,12 @@
-import { EditorComponentData } from '../types'
+import { EditorComponentData } from 'src/types'
 import { useEffect, useRef, useState } from 'preact/hooks'
 import { createPortal } from 'preact/compat'
-import { useAsyncEffect } from '../hooks/useAsyncEffect'
-import { iframeStyle } from '../css/iframe'
-import { usePreview } from '../hooks/usePreview'
+import { useAsyncEffect } from 'src/hooks/useAsyncEffect'
+import { iframeStyle } from 'src/css/iframe'
+import { usePreview } from 'src/hooks/usePreview'
 import clsx from 'clsx'
 import { useDroppable } from '@dnd-kit/core'
-import { useFieldFocused, useSetFocusIndex } from '../store'
+import { useFieldFocused, useSetFocusIndex } from 'src/store'
 
 type PreviewProps = {
   data: EditorComponentData[]
@@ -21,6 +21,7 @@ export function Preview({ data, previewUrl }: PreviewProps) {
   const [iframeRoot, setIframeRoot] = useState<HTMLElement | null>(null)
   const initialHTML = useRef<Record<string, string>>({})
 
+  // Gère le chargement de la preview initiale
   useAsyncEffect(async () => {
     // On génère le premier rendu de la page complète
     const r = await fetch(previewUrl, {
@@ -151,7 +152,7 @@ export function PreviewItem({
   const isOver = isOverTop || isOverBottom
 
   return (
-    <div style="position:relative">
+    <div class="ve-preview-wrapper">
       <div ref={setNodeRefTop} class="ve-preview-droppable-top" />
       <div ref={setNodeRefBottom} class="ve-preview-droppable-bottom" />
       <div

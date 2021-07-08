@@ -1,5 +1,5 @@
 import { usePopper } from 'react-popper'
-import { PropRef, useEffect, useRef, useState } from 'preact/hooks'
+import { PropRef, useEffect, useState } from 'preact/hooks'
 import clsx from 'clsx'
 import { ComponentChildren } from 'preact'
 

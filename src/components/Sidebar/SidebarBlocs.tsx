@@ -1,7 +1,7 @@
 import {
   EditorComponentDefinition,
   EditorComponentDefinitions,
-} from '../../types'
+} from 'src/types'
 import { CSS } from '@dnd-kit/utilities'
 import { useDraggable } from '@dnd-kit/core'
 import clsx from 'clsx'

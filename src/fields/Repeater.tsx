@@ -1,10 +1,10 @@
-import { EditorField, EditorFieldProps } from '../types'
-import { deepSet } from '../functions/object'
-import { moveItem } from '../functions/array'
-import { uniqId } from '../functions/string'
+import { EditorField, EditorFieldProps } from 'src/types'
+import { deepSet } from 'src/functions/object'
+import { moveItem } from 'src/functions/array'
+import { uniqId } from 'src/functions/string'
 import { AbstractField } from './AbstractField'
-import { Sortable, SortableWrapper } from '../components/Sortable'
-import { useToggle } from '../hooks/useToggle'
+import { Sortable, SortableWrapper } from 'src/components/Sortable'
+import { useToggle } from 'src/hooks/useToggle'
 
 type FieldArgs = {
   label?: string

@@ -3,16 +3,16 @@ import {
   EditorComponentDefinition,
   EditorComponentDefinitions,
   EditorField,
-} from '../../types'
+} from 'src/types'
 import { useCallback, useMemo, useRef } from 'preact/hooks'
-import { useToggle } from '../../hooks/useToggle'
-import { useUpdateEffect } from '../../hooks/useUpdateEffect'
+import { useToggle } from 'src/hooks/useToggle'
+import { useUpdateEffect } from 'src/hooks/useUpdateEffect'
 import { Sortable, SortableWrapper } from '../Sortable'
-import { moveItem } from '../../functions/array'
-import { prevent } from '../../functions/functions'
-import { useFieldFocused, useUpdateData } from '../../store'
+import { moveItem } from 'src/functions/array'
+import { prevent } from 'src/functions/functions'
+import { useFieldFocused, useUpdateData } from 'src/store'
 import { memo } from 'preact/compat'
-import { strToDom } from '../../functions/dom'
+import { strToDom } from 'src/functions/dom'
 
 /**
  * Génère la liste des champs dans la sidebar

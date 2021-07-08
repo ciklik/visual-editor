@@ -272,9 +272,8 @@ mark {
   left: -4px;
 }
 
+@import "preview";
 @import "tooltip";
 @import "blocs";
 @import "animation";
 @import "form";
-@import "fields/color";
-@import "fields/quilleditor";

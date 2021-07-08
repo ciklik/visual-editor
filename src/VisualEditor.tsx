@@ -5,11 +5,11 @@ import {
   EditorComponentData,
   EditorComponentDefinition,
   EditorComponentDefinitions,
-} from './types'
+} from 'src/types'
 import { useEffect, useMemo } from 'preact/hooks'
-import { useVisibilityClass } from './hooks/useVisibilityClass'
-import { Layout } from './components/Layout'
-import { useData, useUpdateData } from './store'
+import { useVisibilityClass } from 'src/hooks/useVisibilityClass'
+import { Layout } from 'src/components/Layout'
+import { useData, useUpdateData } from 'src/store'
 
 const components: EditorComponentDefinitions = {}
 
@@ -176,10 +176,11 @@ function hideIndexe(key: string, value: any) {
 }
 
 // Exporte les champs
-export { Text } from './fields/Text'
-export { Checkbox } from './fields/Checkbox'
-export { Button } from './fields/Button'
-export { Repeater } from './fields/Repeater'
-export { AbstractField } from './fields/AbstractField'
-export { ImageUrl } from './fields/ImageUrl'
-export { HTMLText } from './fields/HTMLText'
+export { Text } from 'src/fields/Text'
+export { Checkbox } from 'src/fields/Checkbox'
+export { Button } from 'src/fields/Button'
+export { Repeater } from 'src/fields/Repeater'
+export { AbstractField } from 'src/fields/AbstractField'
+export { ImageUrl } from 'src/fields/ImageUrl'
+export { HTMLText } from 'src/fields/HTMLText'
+export { Color } from 'src/fields/Color'

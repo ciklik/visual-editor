@@ -17,6 +17,10 @@
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment",
     "jsxImportSource": "preact",
+    "baseUrl": "./",
+    "paths": {
+      "src": [ "src/*" ]
+    }
   },
   "include": ["src"]
 }

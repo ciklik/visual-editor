@@ -11,6 +11,11 @@ export default defineConfig({
       '/preview': 'http://localhost:8000/index.php',
     }
   },
+  resolve: {
+    alias: {
+      'src': './src'
+    }
+  },
   build: {
     minify: false,
     lib: {

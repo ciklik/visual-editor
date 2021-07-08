@@ -1,10 +1,8 @@
 import clsx from 'clsx'
-import { Sidebar } from './Sidebar'
-import { Preview } from './Preview'
-import { EditorComponentData, EditorComponentDefinitions } from '../types'
+import { Sidebar } from 'src/components/Sidebar/Sidebar'
+import { Preview } from 'src/components/Preview'
+import { EditorComponentData, EditorComponentDefinitions } from 'src/types'
 import { DragEndEvent } from '@dnd-kit/core/dist/types'
-import { insertItem } from '../functions/array'
-import { uniqId } from '../functions/string'
 import {
   DndContext,
   KeyboardSensor,
@@ -13,9 +11,7 @@ import {
   useSensors,
 } from '@dnd-kit/core'
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
-import { useState } from 'preact/hooks'
-import { SidebarModes } from '../constants'
-import { useInsertData } from '../store'
+import { useInsertData } from 'src/store'
 
 type LayoutProps = {
   class?: string

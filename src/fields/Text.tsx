@@ -1,6 +1,6 @@
-import { EditorField, EditorFieldProps } from '../types'
-import { useUniqId } from '../hooks/useUniqId'
-import { AbstractField } from './AbstractField'
+import { EditorField, EditorFieldProps } from 'src/types'
+import { useUniqId } from 'src/hooks/useUniqId'
+import { AbstractField } from 'src/fields/AbstractField'
 
 type FieldArgs = {
   label?: string

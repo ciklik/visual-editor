@@ -1,5 +1,5 @@
-import { AbstractField } from './AbstractField'
-import { useUniqId } from '../hooks/useUniqId'
+import { AbstractField } from 'src/fields/AbstractField'
+import { useUniqId } from 'src/hooks/useUniqId'
 
 type FieldArgs = {
   label: string

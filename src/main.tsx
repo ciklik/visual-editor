@@ -1,12 +1,12 @@
-import { VisualEditor } from './VisualEditor'
-import { Text } from './fields/Text'
-import { Button } from './fields/Button'
-import { Repeater } from './fields/Repeater'
-import { Checkbox } from './fields/Checkbox'
-import { ImageUrl } from './fields/ImageUrl'
-import { Color } from './fields/Color'
-import { render } from 'preact'
-import { QuillEditor, QuillEditorMode } from './fields/shared/QuillEditor'
+import {
+  Button,
+  Checkbox,
+  Color,
+  ImageUrl,
+  Repeater,
+  Text,
+  VisualEditor,
+} from './VisualEditor'
 import { HTMLText } from './fields/HTMLText'
 
 let editor = new VisualEditor()

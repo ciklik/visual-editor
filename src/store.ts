@@ -1,12 +1,10 @@
 import create from 'zustand'
-import { EditorComponentData } from './types'
-import { deepSet } from './functions/object'
-import { combine } from 'zustand/middleware'
-import { devtools } from 'zustand/middleware'
-import { insertItem } from './functions/array'
-import { uniqId } from './functions/string'
-import { SidebarModes } from './constants'
-import { useCallback } from 'preact/hooks'
+import { EditorComponentData } from 'src/types'
+import { deepSet } from 'src/functions/object'
+import { combine, devtools } from 'zustand/middleware'
+import { insertItem } from 'src/functions/array'
+import { uniqId } from 'src/functions/string'
+import { SidebarModes } from 'src/constants'
 
 type State = {
   data: EditorComponentData[]

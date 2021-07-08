@@ -1,9 +1,9 @@
-import { EditorField, EditorFieldProps } from '../types'
-import { useUniqId } from '../hooks/useUniqId'
+import { EditorField, EditorFieldProps } from 'src/types'
+import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from './AbstractField'
-import { useToggle } from '../hooks/useToggle'
+import { useToggle } from 'src/hooks/useToggle'
 import { useRef } from 'preact/hooks'
-import { Tooltip } from '../components/Tooltip'
+import { Tooltip } from 'src/components/Tooltip'
 import { useClickAway } from 'react-use'
 import clsx from 'clsx'
 

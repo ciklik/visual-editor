@@ -1,8 +1,7 @@
 ## A faire
 
-- Wysiwyg
-- Header avec boutons d'actions ?
 - Vue responsive
+- Header avec boutons d'actions ?
 - Nombre
 - Champs icone ?
 - Refacto unistore ? https://github.com/developit/unistore
