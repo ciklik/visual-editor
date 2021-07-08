@@ -51,15 +51,3 @@ editor.registerComponent('html', {
   fields: [new HTMLText('html', { allowHeadings: true })],
 })
 editor.defineElement()
-
-const value = `Hello world`
-render(
-  <div>
-    <QuillEditor
-      value={value}
-      onChange={(e) => console.log('onChange', e)}
-      mode={QuillEditorMode.SINGLE_LINE}
-    />
-  </div>,
-  document.getElementById('app')!
-)

@@ -4,6 +4,9 @@ export function waitEvent(target: Element, event: string): Promise<void> {
   })
 }
 
-export function strToDom(str: string): DocumentFragment {
-  return document.createRange().createContextualFragment(str)
+export function strToDom(str: string): HTMLElement {
+  return document
+    .createRange()
+    .createContextualFragment(`<div>${str.trim()}</div>`)
+    .firstChild as HTMLElement
 }

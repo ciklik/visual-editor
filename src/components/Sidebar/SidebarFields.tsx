@@ -4,7 +4,7 @@ import {
   EditorComponentDefinitions,
   EditorField,
 } from '../../types'
-import { useCallback, useRef } from 'preact/hooks'
+import { useCallback, useMemo, useRef } from 'preact/hooks'
 import { useToggle } from '../../hooks/useToggle'
 import { useUpdateEffect } from '../../hooks/useUpdateEffect'
 import { Sortable, SortableWrapper } from '../Sortable'
@@ -12,6 +12,7 @@ import { moveItem } from '../../functions/array'
 import { prevent } from '../../functions/functions'
 import { useFieldFocused, useUpdateData } from '../../store'
 import { memo } from 'preact/compat'
+import { strToDom } from '../../functions/dom'
 
 /**
  * Génère la liste des champs dans la sidebar
@@ -72,12 +73,16 @@ const SidebarItem = memo(function SidebarItem({
       )
     }
   }, [isFocused])
+  const title = useMemo(
+    () => (label.includes('<') ? strToDom(label).innerText : label),
+    [label]
+  )
 
   return (
     <Sortable item={data} class="ve-sidebar-item">
       <div ref={ref}>
         <button onClick={prevent(toggleCollapsed)}>
-          <h2 class="ve-sidebar-title">{label}</h2>
+          <h2 class="ve-sidebar-title">{title}</h2>
           <div class="ve-sidebar-collapse">{isCollapsed ? '+' : '-'}</div>
         </button>
         {!isCollapsed && (
