@@ -73,6 +73,7 @@ class VisualEditorElement extends HTMLElement {
       const json = JSON.parse(data)
       return this.indexify(json)
     } catch (e) {
+      console.error('Impossible de parser les données', data, e)
       return []
     }
   }
@@ -109,7 +110,7 @@ class VisualEditorElement extends HTMLElement {
           this.indexify(v)
         }
       })
-    } else if (typeof object === 'object') {
+    } else if (typeof object === 'object' && object !== null) {
       Object.keys(object as Record<string, object>).forEach((key) =>
         this.indexify((object as Record<string, object>)[key])
       )
@@ -163,7 +164,7 @@ export function VisualEditorComponent({
         onClose={handleClose}
         previewUrl={previewUrl}
       />
-      <textarea hidden name={name} value={cleanedData} />
+      <textarea hidden name={name} value={cleanedData} class="ve-debug" />
     </>
   )
 }
@@ -182,3 +183,4 @@ export { Button } from './fields/Button'
 export { Repeater } from './fields/Repeater'
 export { AbstractField } from './fields/AbstractField'
 export { ImageUrl } from './fields/ImageUrl'
+export { HTMLText } from './fields/HTMLText'

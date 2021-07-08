@@ -19,7 +19,7 @@ export class Text
   field({ value, onChange }: EditorFieldProps<string>) {
     const id = useUniqId('textinput')
     return (
-      <div class="form-group">
+      <div>
         {this.args.label && (
           <label for={id} class="form-label">
             {this.args.label}
@@ -28,7 +28,7 @@ export class Text
         {this.args.multiline ? (
           <textarea
             id={id}
-            class="form-control"
+            class="ve-input"
             defaultValue={value}
             onInput={(e) => onChange((e.target as HTMLTextAreaElement).value)}
           />
@@ -36,7 +36,7 @@ export class Text
           <input
             type="text"
             id={id}
-            class="form-control"
+            class="ve-input"
             defaultValue={value}
             onInput={(e) => onChange((e.target as HTMLInputElement).value)}
           />

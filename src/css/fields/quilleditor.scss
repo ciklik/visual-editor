@@ -1,0 +1,16 @@
+.ql-container {
+  font-family: inherit!important;
+  font-size: inherit!important;
+}
+
+.ql-editor {
+  padding: 0 !important;
+}
+
+.ql-editor p {
+  margin-bottom: 1em;
+}
+
+.ql-container-oneline .ql-editor p {
+  margin-bottom: 0;
+}

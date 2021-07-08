@@ -23,16 +23,30 @@
   </style>
 </head>
 <body>
-<div id="app">
+<div id="app"></div>
   <h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur at blanditiis commodi consectetur, consequuntur debitis ducimus excepturi ipsum iusto nisi obcaecati omnis placeat rerum soluta suscipit voluptates voluptatum. Autem, mollitia?</h1>
   <button class="ve-button" id="button">Afficher l'éditeur</button>
-  <visual-editor name="content" preview="http://localhost:3000/preview">
-    [
+  <visual-editor name="content" preview="http://localhost:3000/preview" hidden>[
+  {
+    "_name": "hero",
+    "background": null,
+    "title": "Mon titre de test",
+    "body": "lorem ipsum",
+    "actions": [
+      {
+        "action": {
+          "title": "Acheter",
+          "href": "https://grafikart.fr",
+          "type": "primary"
+        }
+      }
+    ]
+  },
   {
     "_name": "steps",
     "image": "https://picsum.photos/425/458",
-    "title": "aze",
-    "caption": "aez",
+    "title": "Votre programme clé en main dès 64€ / semaine",
+    "caption": " Repas tout prêts livrés chez vous",
     "inversed": true,
     "steps": [
       {
@@ -77,9 +91,7 @@
     ],
     "caption": "93% de nos clients sont satisfaits*"
   }
-]
-  </visual-editor>
-</div>
+]</visual-editor>
 <script type="module" src="/src/main.tsx"></script>
 <script>
   const editor = document.querySelector('visual-editor');

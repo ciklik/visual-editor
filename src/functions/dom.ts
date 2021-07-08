@@ -3,3 +3,7 @@ export function waitEvent(target: Element, event: string): Promise<void> {
     target.addEventListener(event, () => resolve(), { once: true })
   })
 }
+
+export function strToDom(str: string): DocumentFragment {
+  return document.createRange().createContextualFragment(str)
+}

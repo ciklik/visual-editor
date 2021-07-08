@@ -8,7 +8,9 @@
 .ve-sidebar-fields input[type="text"],
 .ve-sidebar-fields input[type="email"],
 .ve-sidebar-fields textarea,
-.ve-sidebar-fields select {
+.ve-sidebar-fields select,
+.ve-input {
+  color: var(--color);
   background: transparent;
   padding: .5rem .75em;
   font-size: .875rem;

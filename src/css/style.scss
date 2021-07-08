@@ -2,6 +2,10 @@ visual-editor {
   display: block;
 }
 
+mark {
+  background-color: yellow;
+}
+
 .ve-layout {
   --primary: #1771E6;
   --color: #111827;
@@ -273,3 +277,4 @@ visual-editor {
 @import "animation";
 @import "form";
 @import "fields/color";
+@import "fields/quilleditor";
