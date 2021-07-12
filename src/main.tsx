@@ -8,6 +8,7 @@ import {
   VisualEditor,
 } from 'src/VisualEditor'
 import { HTMLText } from './fields/HTMLText'
+import { Row } from './fields/Row'
 
 let editor = new VisualEditor()
 const textPalette = ['--pink', '--purple', '--blue', '--green']
@@ -15,12 +16,26 @@ const textPalette = ['--pink', '--purple', '--blue', '--green']
 editor.registerComponent('hero', {
   title: 'Hero',
   fields: [
-    new HTMLText('title', {
-      label: 'Titre',
-      multiline: false,
-      colors: textPalette,
-    }),
-    new Color('background', { label: 'Couleur de fond', colors: textPalette }),
+    new Row(
+      [
+        new Row([
+          new HTMLText('a', {
+            multiline: false,
+            colors: textPalette,
+          }),
+          new HTMLText('b', {
+            multiline: false,
+            colors: textPalette,
+          }),
+        ]),
+        new HTMLText('title', {
+          multiline: false,
+          colors: textPalette,
+        }),
+        new Color('background', { colors: textPalette }),
+      ],
+      { columns: '1fr 1fr 40px', label: 'Titre' }
+    ),
     new HTMLText('body', { label: 'Description', colors: textPalette }),
     new Repeater('actions', {
       title: 'Actions',

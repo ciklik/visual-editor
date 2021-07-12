@@ -16,6 +16,7 @@ import { strToDom } from 'src/functions/dom'
 import { IconChevron } from 'src/components/Icons'
 import clsx from 'clsx'
 import { CopyAction } from 'src/components/Sidebar/Actions/CopyAction'
+import { AbstractFieldGroup } from 'src/fields/AbstractFieldGroup'
 
 /**
  * Génère la liste des champs dans la sidebar
@@ -110,19 +111,42 @@ const SidebarItem = memo(function SidebarItem({
         </div>
         {!isCollapsed && (
           <div className="ve-sidebar-fields">
-            {definition.fields.map((field, k) => (
-              <Field
-                field={field}
-                value={data[field.name]}
-                path={`${path}.${field.name}`}
-              />
-            ))}
+            <Fields fields={definition.fields} data={data} path={path} />
           </div>
         )}
       </div>
     </Sortable>
   )
 })
+
+function Fields({
+  fields,
+  data,
+  path,
+}: {
+  fields: EditorComponentDefinition['fields']
+  data: EditorComponentData
+  path: string
+}) {
+  return (
+    <>
+      {fields.map((field, k) =>
+        field instanceof AbstractFieldGroup ? (
+          <field.render>
+            <Fields fields={field.fields} data={data} path={path} />
+          </field.render>
+        ) : (
+          <Field
+            key={field.name}
+            field={field}
+            value={field.name ? data[field.name] : undefined}
+            path={`${path}.${field.name}`}
+          />
+        )
+      )}
+    </>
+  )
+}
 
 function Field({
   field,

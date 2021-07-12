@@ -35,7 +35,6 @@ export function Layout({
     const blocName = e.active.id
     const index = e.over?.data?.current?.index
     if (index !== undefined && blocName) {
-      console.log(blocName, index)
       insertData(blocName, index)
     }
   }
