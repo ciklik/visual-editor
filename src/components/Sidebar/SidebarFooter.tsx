@@ -55,22 +55,23 @@ export function SidebarFooter({
       <button class="ve-close" onClick={prevent(onClose)} title="Fermer">
         &times;
       </button>
+
+      {mode === SidebarModes.BLOCS && (
+        <input
+          ref={searchField}
+          type="text"
+          class="ve-bloc-search"
+          autofocus
+          onChange={prevent((e: EventWithTarget<HTMLInputElement>) =>
+            onSearch(e.target.value)
+          )}
+          value={search}
+        />
+      )}
       <div class="ve-row">
         <button class="ve-preview-toggle" onClick={prevent(togglePreviewMode)}>
           {isPhone ? <IconDesktop size={24} /> : <IconPhone size={24} />}
         </button>
-        {mode === SidebarModes.BLOCS && (
-          <input
-            ref={searchField}
-            type="text"
-            class="ve-bloc-search"
-            autofocus
-            onChange={prevent((e: EventWithTarget<HTMLInputElement>) =>
-              onSearch(e.target.value)
-            )}
-            value={search}
-          />
-        )}
         <button class="ve-button" onClick={prevent(toggleMode)}>
           {mode === SidebarModes.BLOCS
             ? 'Revenir au contenu'

@@ -12,6 +12,7 @@ import { Layout } from 'src/components/Layout'
 import { useData, useUpdateData } from 'src/store'
 import { indexify, stringifyFields } from 'src/functions/object'
 import { useClipboardPaste } from 'src/hooks/useClipboardPaste'
+import { useHistory } from 'src/hooks/useHistory'
 
 const components: EditorComponentDefinitions = {}
 
@@ -135,6 +136,7 @@ export function VisualEditorComponent({
   }, [value])
 
   useClipboardPaste()
+  useHistory(data)
 
   if (!visible) {
     return <textarea hidden name={name} value={cleanedData} />
@@ -149,7 +151,7 @@ export function VisualEditorComponent({
         onClose={handleClose}
         previewUrl={previewUrl}
       />
-      <textarea hidden name={name} value={cleanedData} class="ve-debug" />
+      <textarea hidden name={name} value={cleanedData} />
     </>
   )
 }

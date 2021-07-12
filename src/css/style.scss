@@ -71,7 +71,11 @@ mark {
   z-index: 2;
   box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2),0 10px 10px -5px rgba(0,0,0,0.04);
   transition: transform .5s cubic-bezier(0.19, 1, 0.22, 1);
-  overflow: visible;
+  overflow: auto;
+
+  .is-dragging & {
+    overflow: visible;
+  }
 }
 
 .ve-fields {
@@ -171,11 +175,11 @@ mark {
 .ve-debug {
   display: block;
   position: fixed;
-  top: 0;
+  bottom: 0;
   right: 0;
   border: 1px solid red;
   width: 500px;
-  height: 300px;
+  height: 200px;
   z-index: 9999;
 }
 
@@ -204,6 +208,7 @@ mark {
   border: none;
   border-bottom: solid 1px var(--field-border);
   width: 100%;
+  flex: 1;
   margin: 0 1em;
   outline: none;
 }

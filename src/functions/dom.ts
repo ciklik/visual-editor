@@ -10,3 +10,13 @@ export function strToDom(str: string): HTMLElement {
     .createContextualFragment(`<div>${str.trim()}</div>`)
     .firstChild as HTMLElement
 }
+
+export function offsetLeft(element: HTMLElement, acc: number = 0): number {
+  if (element.offsetParent) {
+    return offsetLeft(
+      element.offsetParent as HTMLElement,
+      acc + element.offsetLeft
+    )
+  }
+  return acc + element.offsetLeft
+}

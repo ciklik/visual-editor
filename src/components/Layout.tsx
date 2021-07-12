@@ -12,6 +12,7 @@ import {
 } from '@dnd-kit/core'
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { useInsertData } from 'src/store'
+import { useState } from 'preact/hooks'
 
 type LayoutProps = {
   class?: string
@@ -29,9 +30,11 @@ export function Layout({
   onClose,
 }: LayoutProps) {
   const insertData = useInsertData()
+  const [isDragging, setIsDragging] = useState(false)
 
   // Lorsqu'on ajoute un nouveau bloc
   const handleBlocDrop = (e: DragEndEvent) => {
+    setIsDragging(false)
     const blocName = e.active.id
     const index = e.over?.data?.current?.index
     if (index !== undefined && blocName) {
@@ -46,9 +49,17 @@ export function Layout({
     })
   )
 
+  const handleDragStart = () => {
+    setIsDragging(true)
+  }
+
   return (
-    <DndContext sensors={sensors} onDragEnd={handleBlocDrop}>
-      <div class={clsx('ve-layout', className)}>
+    <DndContext
+      sensors={sensors}
+      onDragEnd={handleBlocDrop}
+      onDragStart={handleDragStart}
+    >
+      <div class={clsx('ve-layout', isDragging && 'is-dragging', className)}>
         <Sidebar data={data} definitions={definitions} onClose={onClose} />
         {previewUrl && <Preview data={data} previewUrl={previewUrl} />}
       </div>

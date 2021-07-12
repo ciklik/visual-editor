@@ -5,11 +5,13 @@ export function iframeStyle(color: string) {
 :root {
   --ve-color: ${color};
 }
-
+#ve-components {
+  overflow-x: hidden;
+  overflow-y: visible;
+}
 .ve-preview-wrapper {
- overflow: hidden;
- }
-
+  position: relative;
+}
 .ve-preview-component {
   position: relative;
 }

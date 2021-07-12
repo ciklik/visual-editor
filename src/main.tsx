@@ -18,16 +18,6 @@ editor.registerComponent('hero', {
   fields: [
     new Row(
       [
-        new Row([
-          new HTMLText('a', {
-            multiline: false,
-            colors: textPalette,
-          }),
-          new HTMLText('b', {
-            multiline: false,
-            colors: textPalette,
-          }),
-        ]),
         new HTMLText('title', {
           multiline: false,
           colors: textPalette,

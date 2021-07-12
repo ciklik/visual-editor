@@ -15,6 +15,7 @@ import {
 import { Flipped, Flipper } from 'react-flip-toolkit'
 import { useWindowSize } from 'react-use'
 import { PHONE_HEIGHT } from '../constants'
+import { offsetLeft } from '../functions/dom'
 
 type PreviewProps = {
   data: EditorComponentData[]
@@ -58,7 +59,7 @@ export function Preview({ data, previewUrl }: PreviewProps) {
     const onScroll = () => {
       iframeDocument.body.style.setProperty(
         '--offsetX',
-        iframe.current.offsetLeft + 'px'
+        offsetLeft(iframe.current) + 'px'
       )
       iframeDocument.body.style.setProperty(
         '--offsetY',
