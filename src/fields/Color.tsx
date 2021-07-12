@@ -3,7 +3,7 @@ import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from 'src/fields/AbstractField'
 import { useToggle } from 'src/hooks/useToggle'
 import { useRef } from 'preact/hooks'
-import { Tooltip } from 'src/components/Tooltip'
+import { Tooltip, Tooltip2 } from 'src/components/Tooltip'
 import { useClickAway } from 'react-use'
 import clsx from 'clsx'
 
@@ -20,12 +20,7 @@ export class Color
   implements EditorField<string | null>
 {
   field({ value, onChange }: EditorFieldProps<string | null>) {
-    const buttonRef = useRef<HTMLButtonElement>(null)
     const id = useUniqId('color')
-    const [isVisible, togglePalette, setPaletteVisible] = useToggle(false)
-    useClickAway(buttonRef, () => {
-      setPaletteVisible(false)
-    })
 
     return (
       <div class="form-group">
@@ -34,29 +29,29 @@ export class Color
             {this.args.label}
           </label>
         )}
-        <button
-          ref={buttonRef}
-          onClick={togglePalette}
-          class={clsx(
-            've-color-button',
-            !value && 've-color-button-transparent'
-          )}
-          style={value ? `--veSelectedColor: var(${value})` : ``}
-        />
-        <Tooltip targetRef={buttonRef} visible={isVisible}>
-          <div class="ve-color-palette">
-            <button
-              class="ve-color-transparent"
-              onClick={() => onChange(null)}
-            />
-            {this.args.colors.map((color) => (
-              <button
-                style={`--veColor: var(${color})`}
-                onClick={() => onChange(color)}
-              />
-            ))}
-          </div>
+        <Tooltip trigger="click" content={<this.tooltip onChange={onChange} />}>
+          <button
+            class={clsx(
+              've-color-button',
+              !value && 've-color-button-transparent'
+            )}
+            style={value ? `--veSelectedColor: var(${value})` : ``}
+          />
         </Tooltip>
+      </div>
+    )
+  }
+
+  tooltip = ({ onChange }: EditorFieldProps<string | null>) => {
+    return (
+      <div class="ve-color-palette">
+        <button class="ve-color-transparent" onClick={() => onChange(null)} />
+        {this.args.colors.map((color) => (
+          <button
+            style={`--veColor: var(${color})`}
+            onClick={() => onChange(color)}
+          />
+        ))}
       </div>
     )
   }

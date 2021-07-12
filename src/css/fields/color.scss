@@ -27,8 +27,8 @@
 }
 
 %mosaic {
-  --transparentColor: #e7e7e7;
-  background-color: transparent;
+  --transparentColor: #ffffff;
+  background-color: #d0d0d0;
   background-image: linear-gradient(45deg, var(--transparentColor) 25%, transparent 25%), linear-gradient(-45deg, var(--transparentColor) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--transparentColor) 75%), linear-gradient(-45deg, transparent 75%, var(--transparentColor) 75%);
   background-size: 10px 10px;
   background-position: 0 0, 0 5px, 5px -5px, -5px 0px;
@@ -40,10 +40,7 @@
 .ve-color-palette {
   max-width: 212px;
   flex-wrap: wrap;
-  border: 1px solid var(--field-border);
   display: flex;
-  background-color: white;
-  padding: 5px;
 }
 .ve-color-palette button {
   position: relative;

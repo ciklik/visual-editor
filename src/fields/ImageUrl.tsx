@@ -36,14 +36,16 @@ export class ImageUrl
       <div>
         {this.args.label && <label for={id}>{this.args.label}</label>}
         <div class="ve-input-icon">
-          <input
-            ref={inputRef}
-            type="text"
-            id={id}
-            class="form-control"
-            value={value}
-            onInput={(e) => onChange((e.target as HTMLInputElement).value)}
-          />
+          <Tooltip content={<TooltipImage url={value} />}>
+            <input
+              ref={inputRef}
+              type="text"
+              id={id}
+              class="form-control"
+              value={value}
+              onInput={(e) => onChange((e.target as HTMLInputElement).value)}
+            />
+          </Tooltip>
           {this.args.onBrowse && (
             <button onClick={prevent(handleBrowse)}>
               <svg
@@ -60,12 +62,14 @@ export class ImageUrl
           )}
         </div>
         {this.args.help && <div class="ve-form-help">{this.args.help}</div>}
-        {value && (
-          <Tooltip targetRef={inputRef} class="ve-imageurl-tooltip">
-            <img src={value} alt="" />
-          </Tooltip>
-        )}
       </div>
     )
   }
+}
+
+function TooltipImage({ url }: { url?: string }) {
+  if (!url) {
+    return null
+  }
+  return <img src={url} alt="" class="ve-imageurl-tooltip" />
 }

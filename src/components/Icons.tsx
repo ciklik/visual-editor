@@ -77,3 +77,24 @@ export function IconCopy({ size = 18 }: IconProps) {
     </svg>
   )
 }
+
+export function IconCheck({ size = 18 }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 16 16"
+    >
+      <path
+        fill="currentColor"
+        d="M13.315 2.716A7.461 7.461 0 102.763 13.268 7.461 7.461 0 0013.315 2.716zM8.039 14.454a6.468 6.468 0 01-6.46-6.46 6.468 6.468 0 016.46-6.462A6.468 6.468 0 0114.5 7.992a6.468 6.468 0 01-6.46 6.461z"
+      />
+      <path
+        fill="currentColor"
+        d="M6.915 9.556L4.62 7.262l-.708.707 3.002 3.002 5.234-5.235-.707-.707-4.527 4.527z"
+      />
+    </svg>
+  )
+}

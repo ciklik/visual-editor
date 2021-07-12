@@ -2,20 +2,42 @@ import { usePopper } from 'react-popper'
 import { PropRef, useEffect, useState } from 'preact/hooks'
 import clsx from 'clsx'
 import { ComponentChildren } from 'preact'
+import Tippy, { TippyProps } from '@tippyjs/react'
 
 type TooltipProps = {
+  content: string | ComponentChildren
+  children: ComponentChildren
+  visible?: boolean
+  trigger?: 'click' | 'focus'
+}
+
+export function Tooltip({ content, children, visible, trigger }: TooltipProps) {
+  const tippyProps: TippyProps = {}
+  if (trigger === 'click') {
+    tippyProps.trigger = trigger
+    tippyProps.hideOnClick = true
+    tippyProps.interactive = true
+  }
+  return (
+    <Tippy content={content} visible={visible} {...tippyProps}>
+      {children}
+    </Tippy>
+  )
+}
+
+type Tooltip2Props = {
   children: ComponentChildren
   class?: string
   targetRef: PropRef<HTMLElement>
   visible?: boolean
 }
 
-export function Tooltip({
+export function Tooltip2({
   targetRef,
   class: className,
   children,
   visible: isVisibleProp,
-}: TooltipProps) {
+}: Tooltip2Props) {
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
     null
   )
