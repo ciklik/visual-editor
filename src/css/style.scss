@@ -13,7 +13,9 @@ mark {
   --field-border: rgb(209, 213, 219);
   --field-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   --danger: red;
-  --shadow-dragging: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --shadow-dragging: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;  justify-content: center;
+
+  --gap: .5em;
   color: var(--color-light);
   background-color: rgba(255, 255, 255, 0);
   transition: background-color .3s;
@@ -43,13 +45,6 @@ mark {
   padding: 0;
   margin: 0;
   font-family: inherit;
-}
-
-.ve-preview {
-  width: 100%;
-  height: 100%;
-  border: none;
-  color: var(--primary);
 }
 
 // Generics
@@ -200,7 +195,7 @@ mark {
   background-color: #FFF;
   z-index: 10;
   border-bottom: 1px solid var(--field-border);
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0 1px 2px 0;
 }
 .ve-sidebar-footer button {
   flex: none;
@@ -326,6 +321,7 @@ mark {
 }
 
 @import "preview";
+@import "layout";
 @import "tooltip";
 @import "blocs";
 @import "animation";

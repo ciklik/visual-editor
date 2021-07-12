@@ -6,10 +6,16 @@ import { insertItem } from 'src/functions/array'
 import { uniqId } from 'src/functions/string'
 import { SidebarModes } from 'src/constants'
 
+export enum PreviewModes {
+  PHONE,
+  DESKTOP,
+}
+
 type State = {
   data: EditorComponentData[]
   focusIndex: null | string
   sidebarMode: SidebarModes
+  previewMode: PreviewModes
 }
 
 const useStore = create(
@@ -19,6 +25,7 @@ const useStore = create(
         data: [],
         focusIndex: null,
         sidebarMode: SidebarModes.FIELDS,
+        previewMode: PreviewModes.DESKTOP,
       } as State,
       (set) => ({
         setSidebarMode: function (mode: SidebarModes) {
@@ -53,6 +60,14 @@ const useStore = create(
         },
         setFocusIndex: function (id: string) {
           set(() => ({ focusIndex: id }))
+        },
+        togglePreviewMode: function () {
+          set(({ previewMode }) => ({
+            previewMode:
+              previewMode === PreviewModes.DESKTOP
+                ? PreviewModes.PHONE
+                : PreviewModes.DESKTOP,
+          }))
         },
       })
     )
@@ -93,6 +108,14 @@ export function useSetFocusIndex() {
 
 export function useFieldFocused(id: string) {
   return useStore((state) => state.focusIndex === id)
+}
+
+export function usePreviewMode() {
+  return useStore((state) => state.previewMode)
+}
+
+export function useTogglePreviewMode() {
+  return useStore((state) => state.togglePreviewMode)
 }
 
 export const store = useStore

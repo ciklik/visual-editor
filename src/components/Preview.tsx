@@ -6,8 +6,15 @@ import { iframeStyle } from 'src/css/iframe'
 import { usePreview } from 'src/hooks/usePreview'
 import clsx from 'clsx'
 import { useDroppable } from '@dnd-kit/core'
-import { useFieldFocused, useSetFocusIndex } from 'src/store'
+import {
+  PreviewModes,
+  useFieldFocused,
+  usePreviewMode,
+  useSetFocusIndex,
+} from 'src/store'
 import { Flipped, Flipper } from 'react-flip-toolkit'
+import { useWindowSize } from 'react-use'
+import { PHONE_HEIGHT } from '../constants'
 
 type PreviewProps = {
   data: EditorComponentData[]
@@ -71,9 +78,22 @@ export function Preview({ data, previewUrl }: PreviewProps) {
     }
   }, [])
 
+  const previewMode = usePreviewMode()
+  const { height: windowHeight } = useWindowSize()
+  let transform = undefined
+
+  if (previewMode === PreviewModes.PHONE && windowHeight < 844) {
+    transform = { transform: `scale(${windowHeight / PHONE_HEIGHT})` }
+  }
+
   return (
-    <>
-      <iframe ref={iframe} class="ve-preview" />
+    <div
+      class={clsx(
+        've-preview',
+        previewMode === PreviewModes.PHONE && 've-preview-phone'
+      )}
+    >
+      <iframe ref={iframe} style={transform} />
       {iframeRoot &&
         createPortal(
           <PreviewItems
@@ -83,7 +103,7 @@ export function Preview({ data, previewUrl }: PreviewProps) {
           />,
           iframeRoot
         )}
-    </>
+    </div>
   )
 }
 

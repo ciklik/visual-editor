@@ -1,0 +1,36 @@
+.ve-preview {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ve-preview-toggle {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  color: var(--color-light);
+  cursor: pointer;
+  opacity: .4;
+  transition: opacity .3s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.ve-preview iframe {
+  transform-origin: 50% 50%;
+  width: 100%;
+  height: 100%;
+  border: none;
+  color: var(--primary);
+  transition: width .3s, height .3s;
+}
+
+.ve-preview-phone iframe {
+  width: 390px;
+  height: 844px;
+}
