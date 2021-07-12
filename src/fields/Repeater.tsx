@@ -2,7 +2,7 @@ import { EditorField, EditorFieldProps } from 'src/types'
 import { deepSet } from 'src/functions/object'
 import { moveItem } from 'src/functions/array'
 import { uniqId } from 'src/functions/string'
-import { AbstractField } from './AbstractField'
+import { AbstractField } from 'src/fields/AbstractField'
 import { Sortable, SortableWrapper } from 'src/components/Sortable'
 import { useToggle } from 'src/hooks/useToggle'
 

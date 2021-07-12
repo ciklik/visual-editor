@@ -6,7 +6,7 @@ import {
   Repeater,
   Text,
   VisualEditor,
-} from './VisualEditor'
+} from 'src/VisualEditor'
 import { HTMLText } from './fields/HTMLText'
 
 let editor = new VisualEditor()

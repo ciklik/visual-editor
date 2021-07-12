@@ -7,12 +7,15 @@ import {
 import { useCallback, useMemo, useRef } from 'preact/hooks'
 import { useToggle } from 'src/hooks/useToggle'
 import { useUpdateEffect } from 'src/hooks/useUpdateEffect'
-import { Sortable, SortableWrapper } from '../Sortable'
+import { Sortable, SortableWrapper } from 'src/components/Sortable'
 import { moveItem } from 'src/functions/array'
 import { prevent } from 'src/functions/functions'
 import { useFieldFocused, useUpdateData } from 'src/store'
 import { memo } from 'preact/compat'
 import { strToDom } from 'src/functions/dom'
+import { IconChevron } from 'src/components/Icons'
+import clsx from 'clsx'
+import { CopyAction } from 'src/components/Sidebar/Actions/CopyAction'
 
 /**
  * Génère la liste des champs dans la sidebar
@@ -79,12 +82,20 @@ const SidebarItem = memo(function SidebarItem({
   )
 
   return (
-    <Sortable item={data} class="ve-sidebar-item">
+    <Sortable item={data} class="ve-sidebar-bloc">
       <div ref={ref}>
-        <button onClick={prevent(toggleCollapsed)}>
+        <div className="ve-sidebar-bloc__head">
           <h2 class="ve-sidebar-title">{title}</h2>
-          <div class="ve-sidebar-collapse">{isCollapsed ? '+' : '-'}</div>
-        </button>
+          <div class="ve-sidebar-actions">
+            <CopyAction data={data} />
+            <button
+              class={clsx(!isCollapsed && 've-sidebar-expanded')}
+              onClick={prevent(toggleCollapsed)}
+            >
+              <IconChevron size={14} />
+            </button>
+          </div>
+        </div>
         {!isCollapsed && (
           <div className="ve-sidebar-fields">
             {definition.fields.map((field, k) => (

@@ -1,8 +1,10 @@
 ## A faire
 
+- Supprimer un bloc
+- Alert lors d'un copié / collé
 - Vue responsive
-- Header avec boutons d'actions ?
-- Nombre
+- Fix des tooltip (color)
+- Layout <Flex>
+- Resize de la barre latéral
 - Champs icone ?
-- Refacto unistore ? https://github.com/developit/unistore
 

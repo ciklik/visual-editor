@@ -1,5 +1,5 @@
 import { EditorComponentData } from 'src/types'
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks'
 import { createPortal } from 'preact/compat'
 import { useAsyncEffect } from 'src/hooks/useAsyncEffect'
 import { iframeStyle } from 'src/css/iframe'
@@ -7,6 +7,8 @@ import { usePreview } from 'src/hooks/usePreview'
 import clsx from 'clsx'
 import { useDroppable } from '@dnd-kit/core'
 import { useFieldFocused, useSetFocusIndex } from 'src/store'
+import { Flip } from '../functions/animation'
+import { Flipper, Flipped } from 'react-flip-toolkit'
 
 type PreviewProps = {
   data: EditorComponentData[]
@@ -99,7 +101,7 @@ export function PreviewItems({
   previewUrl: string
 }) {
   return (
-    <div>
+    <Flipper flipKey={data.map((d) => d._id).join('_')}>
       {data.map((v, k) => (
         <PreviewItem
           data={v}
@@ -109,7 +111,7 @@ export function PreviewItems({
           previewUrl={previewUrl}
         />
       ))}
-    </div>
+    </Flipper>
   )
 }
 
@@ -152,23 +154,25 @@ export function PreviewItem({
   const isOver = isOverTop || isOverBottom
 
   return (
-    <div class="ve-preview-wrapper">
-      <div ref={setNodeRefTop} class="ve-preview-droppable-top" />
-      <div ref={setNodeRefBottom} class="ve-preview-droppable-bottom" />
-      <div
-        class={clsx(
-          've-preview-component',
-          loading && 'is-loading',
-          isOver && 'is-over',
-          isOverBottom && 'is-over-bottom',
-          isOverTop && 'is-over-top',
-          isFocused && 'is-focused'
-        )}
-        ref={ref}
-        onClick={() => setFocusIndex(data._id)}
-      >
-        <div dangerouslySetInnerHTML={{ __html: html }} />
+    <Flipped flipId={data._id}>
+      <div class="ve-preview-wrapper" id={`previewItem${data._id}`}>
+        <div ref={setNodeRefTop} class="ve-preview-droppable-top" />
+        <div ref={setNodeRefBottom} class="ve-preview-droppable-bottom" />
+        <div
+          class={clsx(
+            've-preview-component',
+            loading && 'is-loading',
+            isOver && 'is-over',
+            isOverBottom && 'is-over-bottom',
+            isOverTop && 'is-over-top',
+            isFocused && 'is-focused'
+          )}
+          ref={ref}
+          onClick={() => setFocusIndex(data._id)}
+        >
+          <div dangerouslySetInnerHTML={{ __html: html }} />
+        </div>
       </div>
-    </div>
+    </Flipped>
   )
 }

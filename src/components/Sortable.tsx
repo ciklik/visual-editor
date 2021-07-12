@@ -32,6 +32,7 @@ export function SortableWrapper({
   onMove: (from: number, to: number) => void
 }) {
   const ids = items.map((item) => item._id)
+  console.log('items', ids)
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {

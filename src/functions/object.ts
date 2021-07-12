@@ -52,3 +52,35 @@ export function deepSet(
     }
   }, value)
 }
+
+export function stringifyFields(source: any) {
+  return JSON.stringify(
+    source,
+    (key: string, value: any) => {
+      if (key === '_id') {
+        return undefined
+      }
+      return value
+    },
+    2
+  )
+}
+
+/**
+ * Ajoute des _id sur tous les objets dans des tableaux afin de faciliter l'identification des objets
+ */
+export function indexify<T extends unknown>(object: T): T {
+  if (Array.isArray(object)) {
+    object.forEach((v, k) => {
+      if (typeof v === 'object') {
+        v._id = k.toString()
+        indexify(v)
+      }
+    })
+  } else if (typeof object === 'object' && object !== null) {
+    Object.keys(object as Record<string, object>).forEach((key) =>
+      indexify((object as Record<string, object>)[key])
+    )
+  }
+  return object
+}

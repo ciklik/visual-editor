@@ -30,8 +30,3 @@ export function Sidebar({
     </div>
   )
 }
-
-function Demo() {
-  console.log('Demo rerendered')
-  return <div>{JSON.stringify(useData())}</div>
-}

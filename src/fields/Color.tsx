@@ -1,6 +1,6 @@
 import { EditorField, EditorFieldProps } from 'src/types'
 import { useUniqId } from 'src/hooks/useUniqId'
-import { AbstractField } from './AbstractField'
+import { AbstractField } from 'src/fields/AbstractField'
 import { useToggle } from 'src/hooks/useToggle'
 import { useRef } from 'preact/hooks'
 import { Tooltip } from 'src/components/Tooltip'

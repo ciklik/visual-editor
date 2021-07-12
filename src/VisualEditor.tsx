@@ -10,6 +10,8 @@ import { useEffect, useMemo } from 'preact/hooks'
 import { useVisibilityClass } from 'src/hooks/useVisibilityClass'
 import { Layout } from 'src/components/Layout'
 import { useData, useUpdateData } from 'src/store'
+import { indexify, stringifyFields } from 'src/functions/object'
+import { useClipboardPaste } from 'src/hooks/useClipboardPaste'
 
 const components: EditorComponentDefinitions = {}
 
@@ -71,7 +73,7 @@ class VisualEditorElement extends HTMLElement {
   private parseData(data: string): EditorComponentData[] {
     try {
       const json = JSON.parse(data)
-      return this.indexify(json)
+      return indexify(json)
     } catch (e) {
       console.error('Impossible de parser les données', data, e)
       return []
@@ -90,32 +92,13 @@ class VisualEditorElement extends HTMLElement {
         onChange={(value: string) =>
           this.dispatchEvent(
             new CustomEvent('veChange', {
-              detail: JSON.stringify(value, hideIndexe),
+              detail: stringifyFields(value),
             })
           )
         }
       />,
       this
     )
-  }
-
-  /**
-   * Ajoute des _id sur tous les objets dans des tableaux afin de faciliter l'identification des objets
-   */
-  private indexify<T extends unknown>(object: T): T {
-    if (Array.isArray(object)) {
-      object.forEach((v, k) => {
-        if (typeof v === 'object') {
-          v._id = k.toString()
-          this.indexify(v)
-        }
-      })
-    } else if (typeof object === 'object' && object !== null) {
-      Object.keys(object as Record<string, object>).forEach((key) =>
-        this.indexify((object as Record<string, object>)[key])
-      )
-    }
-    return object
   }
 }
 
@@ -145,11 +128,13 @@ export function VisualEditorComponent({
     element.dispatchEvent(new Event('veClose'))
   }
   // JSON nettoyé
-  const cleanedData = useMemo(() => JSON.stringify(data, hideIndexe, 2), [data])
+  const cleanedData = useMemo(() => stringifyFields(data), [data])
   // Synchronise l'état du composant avec la prop value
   useEffect(() => {
     updateData(value)
   }, [value])
+
+  useClipboardPaste()
 
   if (!visible) {
     return <textarea hidden name={name} value={cleanedData} />
@@ -164,15 +149,9 @@ export function VisualEditorComponent({
         onClose={handleClose}
         previewUrl={previewUrl}
       />
+      <textarea hidden name={name} value={cleanedData} class={'ve-debug'} />
     </>
   )
-}
-
-function hideIndexe(key: string, value: any) {
-  if (key === '_id') {
-    return undefined
-  }
-  return value
 }
 
 // Exporte les champs

@@ -6,6 +6,10 @@ export function iframeStyle(color: string) {
   --ve-color: ${color};
 }
 
+.ve-preview-wrapper {
+ overflow: hidden;
+ }
+
 .ve-preview-component {
   position: relative;
 }

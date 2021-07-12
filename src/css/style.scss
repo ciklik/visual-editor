@@ -88,19 +88,50 @@ mark {
   align-items: flex-start;
 }
 
-.ve-sidebar-item{
+.ve-sidebar-bloc{
   position: relative;
-  padding: 1em 1em 1em 1.3em;
+  padding: .8em 1em .8em 1.3em;
   background-color: #fff;
   border: 1px solid rgba(0,0,0,0.06);
   box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
   transition: box-shadow .3s;
 }
 
-.ve-sidebar-item.is-dragging {
+.ve-sidebar-bloc.is-dragging {
   box-shadow: var(--shadow-dragging);
   transition: box-shadow .3s!important;
   z-index: 10;
+}
+
+.ve-sidebar-bloc__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ve-sidebar-bloc__head button {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: .3s;
+  color: var(--color-light);
+
+  &:hover {
+    color: var(--color);
+  }
+}
+
+.ve-sidebar-expanded {
+  transform: rotate(180deg);
+}
+
+.ve-sidebar-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .ve-layout .ve-sidebar-collapse {
@@ -128,7 +159,7 @@ mark {
   margin: 0;
   color: var(--color);
   text-transform: uppercase;
-  font-size: 1em;
+  font-size: 0.85em;
   font-weight: lighter;
 }
 

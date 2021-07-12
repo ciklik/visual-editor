@@ -29,17 +29,21 @@ const useStore = create(
         },
         insertData: function (
           name: string,
-          index: number
+          index: number,
+          extraData?: object
         ): EditorComponentData {
           const newData = {
+            ...extraData,
             _name: name,
             _id: name + uniqId(),
           }
-          set(({ data }) => ({
-            data: insertItem(data, index, newData),
-            sidebarMode: SidebarModes.FIELDS,
-            focusIndex: newData._id,
-          }))
+          set((state) => {
+            return {
+              data: insertItem(state.data, index, newData),
+              sidebarMode: SidebarModes.FIELDS,
+              focusIndex: newData._id,
+            }
+          })
           return newData
         },
         setFocusIndex: function (id: string) {
@@ -81,3 +85,5 @@ export function useSetFocusIndex() {
 export function useFieldFocused(id: string) {
   return useStore((state) => state.focusIndex === id)
 }
+
+export const store = useStore
