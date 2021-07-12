@@ -27,6 +27,11 @@ const useStore = create(
         updateData: function (newData: any, path?: string) {
           return set((state) => ({ data: deepSet(state.data, path, newData) }))
         },
+        removeBloc: function (removedData: EditorComponentData) {
+          return set(({ data }) => ({
+            data: data.filter((d) => d !== removedData),
+          }))
+        },
         insertData: function (
           name: string,
           index: number,
@@ -68,6 +73,10 @@ export function useData() {
 
 export function useUpdateData() {
   return useStore((state) => state.updateData)
+}
+
+export function useRemoveBloc() {
+  return useStore((state) => state.removeBloc)
 }
 
 export function useInsertData() {

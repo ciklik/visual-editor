@@ -1,7 +1,10 @@
-module.exports = {
+export default {
   preset: 'ts-jest',
   testEnvironment: 'node',
   transform:  {
     "\\.(ts)$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "react-dom": "preact/compat"
   },
 };

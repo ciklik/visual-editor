@@ -134,6 +134,16 @@ mark {
   justify-content: flex-end;
 }
 
+.ve-sidebar-action-hover {
+  opacity: 0;
+  transition: opacity .3s;
+
+  .ve-sidebar-bloc:hover & {
+    opacity: 1;
+  }
+}
+
+
 .ve-layout .ve-sidebar-collapse {
   position: absolute;
   top: 12px;
@@ -277,7 +287,8 @@ mark {
   }
 }
 
-.ve-repeater-item .ve-repeater-remove {
+.ve-repeater-item .ve-repeater-remove,
+.ve-sidebar-bloc .ve-bloc-remove {
   @extend %roundedButton;
   position: absolute;
   top: 18px;
@@ -286,6 +297,7 @@ mark {
   opacity: 0;
   transition: opacity .2s, transform .2s;
   color: var(--danger);
+  background-color: #fff;
   border-color: var(--danger);
 
   &:hover {
@@ -293,6 +305,16 @@ mark {
     color: var(--color);
   }
 }
+
+.ve-sidebar-bloc .ve-bloc-remove {
+  top: 12px;
+}
+
+.ve-sidebar-bloc:hover .ve-bloc-remove {
+  transform: translateX(0) rotate(0);
+  opacity: 1;
+}
+
 .ve-layout .ve-repeater-add {
   @extend %button;
 }

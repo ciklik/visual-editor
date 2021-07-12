@@ -1,8 +1,7 @@
 ## A faire
 
-- Supprimer un bloc
-- Alert lors d'un copié / collé
 - Vue responsive
+- Alert lors d'un copié / collé
 - Fix des tooltip (color)
 - Layout <Flex>
 - Resize de la barre latéral

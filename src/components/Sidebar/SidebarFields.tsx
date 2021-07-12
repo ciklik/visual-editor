@@ -10,7 +10,7 @@ import { useUpdateEffect } from 'src/hooks/useUpdateEffect'
 import { Sortable, SortableWrapper } from 'src/components/Sortable'
 import { moveItem } from 'src/functions/array'
 import { prevent } from 'src/functions/functions'
-import { useFieldFocused, useUpdateData } from 'src/store'
+import { useFieldFocused, useRemoveBloc, useUpdateData } from 'src/store'
 import { memo } from 'preact/compat'
 import { strToDom } from 'src/functions/dom'
 import { IconChevron } from 'src/components/Icons'
@@ -60,6 +60,7 @@ const SidebarItem = memo(function SidebarItem({
   const ref = useRef<HTMLDivElement>(null)
   const isFocused = useFieldFocused(data._id)
   const [isCollapsed, toggleCollapsed, setCollapsed] = useToggle(!isFocused)
+  const removeBloc = useRemoveBloc()
   const label =
     definition.label && data[definition.label]
       ? definition.title + ' : ' + data[definition.label]
@@ -81,8 +82,19 @@ const SidebarItem = memo(function SidebarItem({
     [label]
   )
 
+  const handleRemove = () => {
+    removeBloc(data)
+  }
+
   return (
     <Sortable item={data} class="ve-sidebar-bloc">
+      <button
+        class="ve-bloc-remove"
+        onClick={handleRemove}
+        title="Supprimer l'élément"
+      >
+        &times;
+      </button>
       <div ref={ref}>
         <div className="ve-sidebar-bloc__head">
           <h2 class="ve-sidebar-title">{title}</h2>

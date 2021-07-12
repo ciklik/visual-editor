@@ -18,7 +18,7 @@ export function CopyAction({ data }: CopyActionProps) {
     }
   }
   return (
-    <button onClick={prevent(handleCopy)}>
+    <button onClick={prevent(handleCopy)} class="ve-sidebar-action-hover">
       <IconCopy />
     </button>
   )

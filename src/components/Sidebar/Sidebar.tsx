@@ -2,7 +2,7 @@ import { EditorComponentData, EditorComponentDefinitions } from 'src/types'
 import { SidebarFields } from 'src/components/Sidebar/SidebarFields'
 import { SidebarBlocs } from 'src/components/Sidebar/SidebarBlocs'
 import { SidebarModes } from 'src/constants'
-import { useData, useSidebarMode } from 'src/store'
+import { useSidebarMode } from 'src/store'
 import { useState } from 'preact/hooks'
 import { SidebarFooter } from 'src/components/Sidebar/SidebarFooter'
 

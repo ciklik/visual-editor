@@ -1,5 +1,5 @@
 import { EditorComponentData } from 'src/types'
-import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 import { createPortal } from 'preact/compat'
 import { useAsyncEffect } from 'src/hooks/useAsyncEffect'
 import { iframeStyle } from 'src/css/iframe'
@@ -7,8 +7,7 @@ import { usePreview } from 'src/hooks/usePreview'
 import clsx from 'clsx'
 import { useDroppable } from '@dnd-kit/core'
 import { useFieldFocused, useSetFocusIndex } from 'src/store'
-import { Flip } from '../functions/animation'
-import { Flipper, Flipped } from 'react-flip-toolkit'
+import { Flipped, Flipper } from 'react-flip-toolkit'
 
 type PreviewProps = {
   data: EditorComponentData[]
