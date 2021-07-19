@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import preact from '@preact/preset-vite'
 import path from 'path'
+import analyze from 'rollup-plugin-analyzer'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -17,6 +18,13 @@ export default defineConfig({
   },
   build: {
     minify: false,
+    rollupOptions: {
+      plugins: [analyze({
+        summaryOnly: true,
+        filter: ({ size }) => size > 5000,
+        filterSummary: true,
+      })],
+    },
     lib: {
       entry: path.resolve('src/VisualEditor.tsx'),
       name: 'VisualEditor'
