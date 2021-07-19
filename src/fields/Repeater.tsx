@@ -5,6 +5,7 @@ import { uniqId } from 'src/functions/string'
 import { AbstractField } from 'src/fields/AbstractField'
 import { Sortable, SortableWrapper } from 'src/components/Sortable'
 import { useToggle } from 'src/hooks/useToggle'
+import { prevent } from '../functions/functions'
 
 type FieldArgs = {
   label?: string
@@ -63,7 +64,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
             ))}
             {canAdd && (
               <div class="ve-repeater-footer">
-                <button className="ve-repeater-add" onClick={add}>
+                <button className="ve-repeater-add" onClick={prevent(add)}>
                   {this.args.addLabel}
                 </button>
               </div>
