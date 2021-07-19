@@ -12,6 +12,21 @@ export function iframeStyle(color: string) {
 .ve-preview-wrapper {
   position: relative;
 }
+.ve-preview-placeholder {
+  position: relative;
+  font-size: 1.2em;
+  padding: 50px;
+  text-align: center;
+  opacity: .6;
+}
+.ve-preview-placeholder-hover {
+  border: 2px dashed var(--ve-color);
+  font-weight: bold;
+  color: var(--ve-color);
+}
+.ve-preview-placeholder .ve-preview-droppable-top {
+  height: 100%;
+}
 .ve-preview-component {
   position: relative;
 }

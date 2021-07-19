@@ -120,7 +120,9 @@ export function PreviewItems({
   initialHTML: Record<string, string>
   previewUrl: string
 }) {
-  const a = Flipper
+  if (data.length === 0) {
+    return <PreviewItemPlaceholder />
+  }
   return (
     <Flipper flipKey={data.map((d) => d._id).join('_')}>
       {data.map((v, k) => (
@@ -195,5 +197,29 @@ export function PreviewItem({
         </div>
       </div>
     </Flipped>
+  )
+}
+
+/**
+ * Gère le rendu de chaque composant
+ */
+export function PreviewItemPlaceholder() {
+  const ref = useRef<HTMLDivElement>(null)
+  const { setNodeRef, isOver } = useDroppable({
+    id: 'startcenter',
+    data: { index: null },
+  })
+
+  return (
+    <div
+      class={clsx(
+        've-preview-placeholder',
+        isOver && 've-preview-placeholder-hover'
+      )}
+      id="previewItemstart"
+    >
+      <div ref={setNodeRef} class="ve-preview-droppable-top" />
+      Déposer votre premier bloc ici
+    </div>
   )
 }
