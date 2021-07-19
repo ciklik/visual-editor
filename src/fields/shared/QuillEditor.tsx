@@ -1,5 +1,10 @@
 import { useEffect, useRef } from 'preact/hooks'
-import { Delta, lineBreakMatcher, Quill } from 'src/libs/Quill'
+import {
+  Delta,
+  lineBreakHandler,
+  lineBreakMatcher,
+  Quill,
+} from 'src/libs/Quill'
 import type { DeltaOperation } from 'quill'
 import clsx from 'clsx'
 
@@ -53,13 +58,17 @@ export function QuillEditor({
     if (colors) {
       toolbar = [...toolbar, [{ color: colors.map((c) => `var(${c})`) }]]
     }
-    const quill = new Quill(editorRef.current, {
+    const quill = new Quill(editorRef.current!, {
       modules: {
         clipboard: {
           matchers: [['BR', lineBreakMatcher]],
         },
         history: true,
-        keyboard: true,
+        keyboard: {
+          bindings: {
+            linbreak: lineBreakHandler(quillRef),
+          },
+        },
         toolbar: toolbar,
       },
       // debug: 'info',
@@ -70,8 +79,9 @@ export function QuillEditor({
     quill.on('text-change', () => {
       onChange(
         mode === QuillEditorMode.SINGLE_LINE
-          ? (quillRef.current.root.firstChild as HTMLParagraphElement).innerHTML
-          : quillRef.current.root.innerHTML
+          ? (quillRef.current!.root.firstChild as HTMLParagraphElement)
+              .innerHTML
+          : quillRef.current!.root.innerHTML
       )
     })
     quill.clipboard.addMatcher(Node.ELEMENT_NODE, function (node, delta) {

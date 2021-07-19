@@ -1,85 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <link rel="icon" type="image/svg+xml" href="/src/favicon.svg"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Vite App</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-  <style>
-    html, body {
-      font-family: Roboto, sans-serif;
-      font-size: 16px;
-    }
-    :root {
-      --pink: #f50057;
-      --purple: #651fff;
-      --blue: #3d5afe;
-      --green: #00e676;
-      --lightblue: #00e5ff;
-    }
-  </style>
-</head>
-<body>
-<div id="app"></div>
-  <h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur at blanditiis commodi consectetur, consequuntur debitis ducimus excepturi ipsum iusto nisi obcaecati omnis placeat rerum soluta suscipit voluptates voluptatum. Autem, mollitia?</h1>
-  <button class="ve-button" id="button">Afficher l'éditeur</button>
-  <visual-editor name="content" preview="http://localhost:3000/preview">[
-  {
-    "_name": "hero",
-    "background": null,
-    "title": "Mon titre de test",
-    "body": "lorem ipsum",
-    "actions": [
-      {
-        "action": {
-          "title": "Acheter",
-          "href": "https://grafikart.fr",
-          "type": "primary"
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body {
+        font-family: Roboto, sans-serif;
+        font-size: 16px;
+      }
+      :root {
+        --pink: #f50057;
+        --purple: #651fff;
+        --blue: #3d5afe;
+        --green: #00e676;
+        --lightblue: #00e5ff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <h1>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur at
+      blanditiis commodi consectetur, consequuntur debitis ducimus excepturi
+      ipsum iusto nisi obcaecati omnis placeat rerum soluta suscipit voluptates
+      voluptatum. Autem, mollitia?
+    </h1>
+    <button class="ve-button" data-target="editor1">
+      Afficher l'éditeur 1
+    </button>
+    <button class="ve-button" data-target="editor2">
+      Afficher l'éditeur 2
+    </button>
+    <button class="ve-clone">Clone editeur 2 vers éditeur 1</button>
+    <visual-editor
+      name="content"
+      preview="http://localhost:3000/preview"
+      id="editor1"
+      hidden
+      >[ { "_name": "hero", "background": null, "title": "Mon titre de test",
+      "body": "lorem ipsum", "actions": [ { "action": { "title": "Acheter",
+      "href": "https://grafikart.fr", "type": "primary" } } ] }, { "_name":
+      "steps", "image": "https://picsum.photos/425/458", "title": "Votre
+      programme clé en main dès 64€ / semaine", "caption": " Repas tout prêts
+      livrés chez vous", "inversed": true, "steps": [ { "step": "azeezaaez" }, {
+      "step": "aezaezaezaez" }, { "step": "aezaezaezaez" }, { "step":
+      "ezaaezaezze" }, { "step": "aezaezez" } ] } ]</visual-editor
+    >
+
+    <visual-editor
+      name="content"
+      preview="http://localhost:3000/preview"
+      id="editor2"
+      hidden
+      >[ { "_name": "steps", "image": "https://picsum.photos/425/458", "title":
+      "Votre programme clé en main dès 64€ / semaine", "caption": " Repas tout
+      prêts livrés chez vous", "inversed": true, "steps": [ { "step":
+      "azeezaaez" }, { "step": "aezaezaezaez" }, { "step": "aezaezaezaez" }, {
+      "step": "ezaaezaezze" }, { "step": "aezaezez" } ] } ]</visual-editor
+    >
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      const toggleEditor = (event) => {
+        const editor = document.getElementById(event.target.dataset.target)
+        if (editor.getAttribute('hidden') !== null) {
+          editor.removeAttribute('hidden')
+        } else {
+          editor.setAttribute('hidden', 'hidden')
         }
       }
-    ]
-  },
-  {
-    "_name": "steps",
-    "image": "https://picsum.photos/425/458",
-    "title": "Votre programme clé en main dès 64€ / semaine",
-    "caption": " Repas tout prêts livrés chez vous",
-    "inversed": true,
-    "steps": [
-      {
-        "step": "azeezaaez"
-      },
-      {
-        "step": "aezaezaezaez"
-      },
-      {
-        "step": "aezaezaezaez"
-      },
-      {
-        "step": "ezaaezaezze"
-      },
-      {
-        "step": "aezaezez"
-      }
-    ]
-  }
-]</visual-editor>
-<script type="module" src="/src/main.tsx"></script>
-<script>
-  const editor = document.querySelector('visual-editor');
-  const toggleEditor = () => {
-    console.log('toggle')
-    if (editor.getAttribute('hidden') !== null ) {
-      editor.removeAttribute('hidden')
-    } else {
-      editor.setAttribute('hidden', 'hidden')
-    }
-  }
-  editor.addEventListener('veClose', toggleEditor)
-  document.querySelector('#button').addEventListener('click', toggleEditor)
-</script>
-</body>
+      document.querySelectorAll('.ve-button').forEach((button) => {
+        button.addEventListener('click', toggleEditor)
+        const editor = document.getElementById(button.dataset.target)
+        editor.addEventListener('veChange', (e) =>
+          console.log(`veChange #${button.dataset.target} : `, e)
+        )
+        editor.addEventListener('veClose', (e) => {
+          editor.setAttribute('hidden', 'hidden')
+        })
+      })
+
+      document.querySelector('.ve-clone').addEventListener('click', (e) => {
+        console.log(e)
+        const editor1 = document.getElementById('editor1')
+        const editor2 = document.getElementById('editor2')
+        editor2.value = editor1.value
+      })
+    </script>
+  </body>
 </html>

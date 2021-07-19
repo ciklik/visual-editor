@@ -6,13 +6,14 @@ import {
   EditorComponentDefinition,
   EditorComponentDefinitions,
 } from 'src/types'
-import { useEffect, useMemo } from 'preact/hooks'
+import { useEffect, useMemo, useRef } from 'preact/hooks'
 import { useVisibilityClass } from 'src/hooks/useVisibilityClass'
 import { Layout } from 'src/components/Layout'
-import { useData, useUpdateData } from 'src/store'
+import { StoreProvider, useData, useUpdateData } from 'src/store'
 import { indexify, stringifyFields } from 'src/functions/object'
 import { useClipboardPaste } from 'src/hooks/useClipboardPaste'
 import { useHistory } from 'src/hooks/useHistory'
+import { useUpdateEffect } from './hooks/useUpdateEffect'
 
 const components: EditorComponentDefinitions = {}
 
@@ -33,27 +34,39 @@ export class VisualEditor {
  * On déclare notre custom element
  */
 class VisualEditorElement extends HTMLElement {
-  private _data: EditorComponentData[] | null = null
+  static changeEventName = 'veChange'
   private _mounted: boolean = false
+  private _data: EditorComponentData[] | null = null
+  private _value = ''
 
   static get observedAttributes() {
     return ['hidden', 'value']
   }
 
-  get data(): EditorComponentData[] {
-    if (this._data === null) {
-      this._data = this.parseData(this.getAttribute('value') ?? '')
+  get value(): string {
+    return this._value
+  }
+
+  set value(v: string) {
+    if (v === this._value) {
+      return
     }
-    return this._data as EditorComponentData[]
+    this._value = v
+    this._data = null
+    this.render()
   }
 
   connectedCallback() {
-    if (this.innerText) {
-      this._data = this.parseData(this.innerText)
-      this.innerText = ''
-    }
+    this._value = this.innerText || this.getAttribute('value') || '[]'
+    this.innerText = ''
     this.render()
     this._mounted = true
+    this.addEventListener(
+      VisualEditorElement.changeEventName,
+      (event: CustomEventInit<string>) => {
+        this._value = event.detail!
+      }
+    )
   }
 
   attributeChangedCallback(name: string, oldValue?: string, newValue?: string) {
@@ -62,7 +75,7 @@ class VisualEditorElement extends HTMLElement {
     }
     // Si la valeur change, on réinitialise la version traduite du JSON
     if (name === 'value') {
-      this._data = null
+      this._value = newValue!
     }
     this.render()
   }
@@ -71,33 +84,39 @@ class VisualEditorElement extends HTMLElement {
     this._mounted = false
   }
 
-  private parseData(data: string): EditorComponentData[] {
-    try {
-      const json = JSON.parse(data)
-      return indexify(json)
-    } catch (e) {
-      console.error('Impossible de parser les données', data, e)
-      return []
+  private parseValue(value: string): EditorComponentData[] {
+    if (this._data === null) {
+      try {
+        const json = JSON.parse(value)
+        this._data = indexify(json)
+      } catch (e) {
+        console.error('Impossible de parser les données', value, e)
+        this._data = []
+      }
     }
+    return this._data!
   }
 
   private render() {
+    const data = this.parseValue(this._value)
     render(
-      <VisualEditorComponent
-        element={this}
-        value={this.data}
-        definitions={components}
-        previewUrl={this.getAttribute('preview') ?? ''}
-        name={this.getAttribute('name') ?? ''}
-        visible={this.getAttribute('hidden') === null}
-        onChange={(value: string) =>
-          this.dispatchEvent(
-            new CustomEvent('veChange', {
-              detail: stringifyFields(value),
-            })
-          )
-        }
-      />,
+      <StoreProvider data={data}>
+        <VisualEditorComponent
+          element={this}
+          value={data}
+          definitions={components}
+          previewUrl={this.getAttribute('preview') ?? ''}
+          name={this.getAttribute('name') ?? ''}
+          visible={this.getAttribute('hidden') === null}
+          onChange={(value: string) =>
+            this.dispatchEvent(
+              new CustomEvent('veChange', {
+                detail: value,
+              })
+            )
+          }
+        />
+      </StoreProvider>,
       this
     )
   }
@@ -122,6 +141,7 @@ export function VisualEditorComponent({
   visible: visibleProps,
   onChange,
 }: VisualEditorProps) {
+  const skipNextChange = useRef(true) // Skip emitting a change event on the next update (usefull for external changes)
   const updateData = useUpdateData()
   const data = useData()
   const [visibilityClass, visible] = useVisibilityClass(visibleProps)
@@ -131,12 +151,20 @@ export function VisualEditorComponent({
   // JSON nettoyé
   const cleanedData = useMemo(() => stringifyFields(data), [data])
   // Synchronise l'état du composant avec la prop value
-  useEffect(() => {
+  useUpdateEffect(() => {
+    skipNextChange.current = true
     updateData(value)
   }, [value])
 
   useClipboardPaste()
   useHistory(data)
+  useEffect(() => {
+    if (skipNextChange.current) {
+      skipNextChange.current = false
+    } else {
+      onChange(cleanedData)
+    }
+  }, [cleanedData])
 
   if (!visible) {
     return <textarea hidden name={name} value={cleanedData} />

@@ -12,7 +12,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      'src': './src'
+      'src': path.resolve(__dirname, './src')
     }
   },
   build: {

@@ -1,4 +1,4 @@
-import { insertItem } from '../../src/functions/array'
+import { insertItem } from 'src/functions/array'
 
 test('insert a new item in the array', () => {
   const a = [1, 2, 3, 4]

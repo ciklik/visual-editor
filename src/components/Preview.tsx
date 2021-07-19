@@ -46,12 +46,12 @@ export function Preview({ data, previewUrl }: PreviewProps) {
     }
 
     // On écrit le contenu dans l'iframe
-    const iframeDocument = iframe.current.contentDocument!
+    const iframeDocument = iframe.current!.contentDocument!
     iframeDocument.open()
     iframeDocument.write(await r.text())
     iframeDocument.close()
     // On ajoute du style
-    const color = getComputedStyle(iframe.current).color
+    const color = getComputedStyle(iframe.current!).color
     const style = document.createElement('style')
     style.innerHTML = iframeStyle(color)
     iframeDocument.querySelector('head')!.appendChild(style)
@@ -59,7 +59,7 @@ export function Preview({ data, previewUrl }: PreviewProps) {
     const onScroll = () => {
       iframeDocument.body.style.setProperty(
         '--offsetX',
-        offsetLeft(iframe.current) + 'px'
+        offsetLeft(iframe.current!) + 'px'
       )
       iframeDocument.body.style.setProperty(
         '--offsetY',
@@ -120,6 +120,7 @@ export function PreviewItems({
   initialHTML: Record<string, string>
   previewUrl: string
 }) {
+  const a = Flipper
   return (
     <Flipper flipKey={data.map((d) => d._id).join('_')}>
       {data.map((v, k) => (
@@ -156,7 +157,7 @@ export function PreviewItem({
 
   useEffect(() => {
     if (isFocused) {
-      ref.current.scrollIntoView({
+      ref.current!.scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
       })

@@ -25,12 +25,9 @@ export class ImageUrl
     const handleBrowse = () => {
       this.args.onBrowse!(value)
         .then((v) => {
-          console.log('resolving to : ', v)
           onChange(v)
         })
-        .catch((e) => {
-          console.log('rejecting to : ', e)
-        })
+        .catch((e) => {})
     }
     return (
       <div>

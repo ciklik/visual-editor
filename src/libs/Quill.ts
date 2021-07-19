@@ -1,4 +1,5 @@
 import Quill from 'quill'
+import { RefObject } from 'preact'
 
 const Delta = Quill.import('delta')
 const Bold = Quill.import('formats/bold')
@@ -34,11 +35,14 @@ class Mark extends Bold {
 Quill.register(SmartBreak)
 Quill.register(Mark)
 
-export function lineBreakHandler(quill: { current: Quill }) {
+export function lineBreakHandler(quill: RefObject<Quill>) {
   return {
     key: 13,
     shiftKey: true,
     handler: function (range: { index: number }) {
+      if (!quill.current) {
+        return
+      }
       let currentLeaf = quill.current.getLeaf(range.index)[0]
       let nextLeaf = quill.current.getLeaf(range.index + 1)[0]
 

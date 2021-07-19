@@ -23,7 +23,6 @@ class EditHistory<T> {
     this.stack.push(entry)
     this.cursor = this.stack.length - 1
     this.debug()
-    console.log('pushing Data', entry, this.stack)
   }
 
   rollback(): T {
@@ -49,7 +48,6 @@ class EditHistory<T> {
     for (let k in this.stack) {
       entries.push(k === this.cursor.toFixed() ? 'x' : '_')
     }
-    console.log(`[${entries.join('|')}]`)
   }
 }
 
@@ -64,11 +62,9 @@ export function useHistory<T>(data: T) {
       if (['TEXTAREA', 'INPUT'].includes(document.activeElement?.tagName!)) {
         // return
       }
-      console.log(event.ctrlKey, event.metaKey, event.key)
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') {
         event.stopPropagation()
         event.preventDefault()
-        console.log('rollback')
         if (event.shiftKey) {
           updateData(history.current.forward())
         } else {
