@@ -48,19 +48,19 @@ export class Button extends AbstractField<FieldArgs, InputValue> {
             type="text"
             id={`id`}
             class="form-control"
-            defaultValue={value.title}
+            value={value.title}
             onInput={onPropertyChange('title')}
           />
           <input
             placeholder="URL"
             type="text"
             class="form-control"
-            defaultValue={value.href}
+            value={value.href}
             onInput={onPropertyChange('href')}
           />
           <select
             class="form-control"
-            defaultValue={value.type}
+            value={value.type}
             onInput={onPropertyChange('type')}
           >
             {Object.keys(TYPES).map((type) => {

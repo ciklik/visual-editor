@@ -29,7 +29,7 @@ export class Text
           <textarea
             id={id}
             class="ve-input"
-            defaultValue={value}
+            value={value}
             onInput={(e) => onChange((e.target as HTMLTextAreaElement).value)}
           />
         ) : (
@@ -37,7 +37,7 @@ export class Text
             type="text"
             id={id}
             class="ve-input"
-            defaultValue={value}
+            value={value}
             onInput={(e) => onChange((e.target as HTMLInputElement).value)}
           />
         )}

@@ -9,16 +9,22 @@ import clsx from 'clsx'
 export function SidebarBlocs({
   definitions,
   search,
+  iconsUrl,
 }: {
   definitions: EditorComponentDefinitions
   search: string
+  iconsUrl: string
 }) {
   return (
     <div class="ve-blocs">
       {Object.keys(definitions)
         .filter(searchDefinition(search, definitions))
         .map((key) => (
-          <SidebarBloc definition={definitions[key]} name={key} />
+          <SidebarBloc
+            definition={definitions[key]}
+            name={key}
+            iconsUrl={iconsUrl}
+          />
         ))}
     </div>
   )
@@ -37,9 +43,11 @@ function searchDefinition(
 function SidebarBloc({
   definition,
   name,
+  iconsUrl,
 }: {
   name: string
   definition: EditorComponentDefinition
+  iconsUrl: string
 }) {
   const { setNodeRef, listeners, attributes, transform, isDragging } =
     useDraggable({
@@ -59,7 +67,7 @@ function SidebarBloc({
         {...listeners}
       >
         <div class="ve-bloc">
-          <img src={'/' + name + '.svg'} />
+          <img src={iconsUrl + name + '.svg'} />
           {definition.title}
         </div>
       </div>

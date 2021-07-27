@@ -8,6 +8,7 @@ import { SidebarModes } from 'src/constants'
 
 import createContext from 'zustand/context'
 import { ComponentChildren } from 'preact'
+import { clamp } from './functions/number'
 
 export enum PreviewModes {
   PHONE,
@@ -19,7 +20,10 @@ type State = {
   focusIndex: null | string
   sidebarMode: SidebarModes
   previewMode: PreviewModes
+  sidebarWidth: number
 }
+
+const sidebarWidth = localStorage.getItem('veSidebarWidth')
 
 const createStore = (data: EditorComponentData[] = []) =>
   create(
@@ -30,10 +34,22 @@ const createStore = (data: EditorComponentData[] = []) =>
           focusIndex: null,
           sidebarMode: SidebarModes.FIELDS,
           previewMode: PreviewModes.DESKTOP,
+          sidebarWidth: clamp(
+            sidebarWidth ? parseInt(sidebarWidth, 10) : 600,
+            0,
+            window.innerWidth - 375
+          ),
         } as State,
         (set) => ({
           setSidebarMode: function (mode: SidebarModes) {
             set(() => ({ sidebarMode: mode }))
+          },
+          setSidebarWidth: function (width: number) {
+            const clampedValue = clamp(width, 450, window.innerWidth - 375)
+            localStorage.setItem('veSidebarWidth', clampedValue.toString())
+            set(() => ({
+              sidebarWidth: clampedValue,
+            }))
           },
           updateData: function (newData: any, path?: string) {
             return set((state) => ({
@@ -140,6 +156,14 @@ export function usePreviewMode() {
 
 export function useTogglePreviewMode() {
   return useStore((state) => state.togglePreviewMode)
+}
+
+export function useSidebarWidth() {
+  return useStore((state) => state.sidebarWidth)
+}
+
+export function useSetSidebarWidth() {
+  return useStore((state) => state.setSidebarWidth)
 }
 
 export const store = useStore

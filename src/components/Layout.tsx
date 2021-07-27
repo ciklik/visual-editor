@@ -11,8 +11,11 @@ import {
   useSensors,
 } from '@dnd-kit/core'
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
-import { useInsertData } from 'src/store'
+import { useInsertData, useSidebarWidth } from 'src/store'
 import { useState } from 'preact/hooks'
+import { ResizeBar } from './ResizeBar'
+import { useThrottle } from 'react-use'
+import { ComponentChildren } from 'preact'
 
 type LayoutProps = {
   class?: string
@@ -20,6 +23,7 @@ type LayoutProps = {
   previewUrl?: string
   definitions: EditorComponentDefinitions
   onClose: () => void
+  iconsUrl: string
 }
 
 export function Layout({
@@ -28,6 +32,7 @@ export function Layout({
   previewUrl,
   definitions,
   onClose,
+  iconsUrl,
 }: LayoutProps) {
   const insertData = useInsertData()
   const [isDragging, setIsDragging] = useState(false)
@@ -54,15 +59,33 @@ export function Layout({
   }
 
   return (
-    <DndContext
-      sensors={sensors}
-      onDragEnd={handleBlocDrop}
-      onDragStart={handleDragStart}
-    >
-      <div class={clsx('ve-layout', isDragging && 'is-dragging', className)}>
-        <Sidebar data={data} definitions={definitions} onClose={onClose} />
-        {previewUrl && <Preview data={data} previewUrl={previewUrl} />}
-      </div>
-    </DndContext>
+    <Wrapper>
+      <DndContext
+        sensors={sensors}
+        onDragEnd={handleBlocDrop}
+        onDragStart={handleDragStart}
+      >
+        <div class={clsx('ve-layout', isDragging && 'is-dragging', className)}>
+          <Sidebar
+            data={data}
+            definitions={definitions}
+            onClose={onClose}
+            iconsUrl={iconsUrl}
+          />
+          {previewUrl && <Preview data={data} previewUrl={previewUrl} />}
+        </div>
+      </DndContext>
+      <ResizeBar />
+    </Wrapper>
+  )
+}
+
+function Wrapper({ children }: { children: ComponentChildren }) {
+  const sidebarWidth = useSidebarWidth()
+
+  return (
+    <div class="ve-wrapper" style={{ '--sidebar': `${sidebarWidth}px` }}>
+      {children}
+    </div>
   )
 }

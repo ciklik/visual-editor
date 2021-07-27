@@ -10,10 +10,12 @@ export function Sidebar({
   data,
   definitions,
   onClose,
+  iconsUrl,
 }: {
   data: EditorComponentData[]
   definitions: EditorComponentDefinitions
   onClose: () => void
+  iconsUrl: string
 }) {
   const mode = useSidebarMode()
   const [search, setSearch] = useState('')
@@ -25,7 +27,11 @@ export function Sidebar({
         <SidebarFields data={data} definitions={definitions} />
       )}
       {mode === SidebarModes.BLOCS && (
-        <SidebarBlocs definitions={definitions} search={search} />
+        <SidebarBlocs
+          definitions={definitions}
+          search={search}
+          iconsUrl={iconsUrl}
+        />
       )}
     </div>
   )

@@ -59,9 +59,6 @@ export function useHistory<T>(data: T) {
   useEffect(() => {
     const listener = (event: KeyboardEvent) => {
       // Si on est sur un input, on ne fait rien
-      if (['TEXTAREA', 'INPUT'].includes(document.activeElement?.tagName!)) {
-        // return
-      }
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') {
         event.stopPropagation()
         event.preventDefault()
@@ -72,7 +69,7 @@ export function useHistory<T>(data: T) {
         }
       }
     }
-    document.addEventListener('keydown', listener)
+    document.addEventListener('keydown', listener, true)
     return () => {
       document.removeEventListener('keydown', listener)
     }

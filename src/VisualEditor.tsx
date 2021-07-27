@@ -14,6 +14,7 @@ import { indexify, stringifyFields } from 'src/functions/object'
 import { useClipboardPaste } from 'src/hooks/useClipboardPaste'
 import { useHistory } from 'src/hooks/useHistory'
 import { useUpdateEffect } from './hooks/useUpdateEffect'
+import { ResizeBar } from './components/ResizeBar'
 
 const components: EditorComponentDefinitions = {}
 
@@ -57,16 +58,9 @@ class VisualEditorElement extends HTMLElement {
   }
 
   connectedCallback() {
-    this._value = this.innerText || this.getAttribute('value') || '[]'
-    this.innerText = ''
+    this._value = this.getAttribute('value') || '[]'
     this.render()
     this._mounted = true
-    this.addEventListener(
-      VisualEditorElement.changeEventName,
-      (event: CustomEventInit<string>) => {
-        this._value = event.detail!
-      }
-    )
   }
 
   attributeChangedCallback(name: string, oldValue?: string, newValue?: string) {
@@ -75,6 +69,10 @@ class VisualEditorElement extends HTMLElement {
     }
     // Si la valeur change, on réinitialise la version traduite du JSON
     if (name === 'value') {
+      // Saute le nouveau rendu si la valeur n'est pas nouvelle
+      if (newValue === this._value) {
+        return
+      }
       this._value = newValue!
     }
     this.render()
@@ -106,15 +104,20 @@ class VisualEditorElement extends HTMLElement {
           value={data}
           definitions={components}
           previewUrl={this.getAttribute('preview') ?? ''}
+          iconsUrl={this.getAttribute('iconsUrl') ?? '/'}
           name={this.getAttribute('name') ?? ''}
           visible={this.getAttribute('hidden') === null}
-          onChange={(value: string) =>
+          onChange={(value: string) => {
+            if (this._value === value) {
+              return
+            }
+            this._value = value
             this.dispatchEvent(
               new CustomEvent('veChange', {
                 detail: value,
               })
             )
-          }
+          }}
         />
       </StoreProvider>,
       this
@@ -127,6 +130,7 @@ type VisualEditorProps = {
   definitions: EditorComponentDefinitions
   previewUrl: string
   name: string
+  iconsUrl: string
   visible: boolean
   element: Element
   onChange: (v: string) => void
@@ -138,6 +142,7 @@ export function VisualEditorComponent({
   previewUrl,
   name,
   element,
+  iconsUrl,
   visible: visibleProps,
   onChange,
 }: VisualEditorProps) {
@@ -178,6 +183,7 @@ export function VisualEditorComponent({
         definitions={definitions}
         onClose={handleClose}
         previewUrl={previewUrl}
+        iconsUrl={iconsUrl}
       />
       <textarea hidden name={name} value={cleanedData} />
     </>

@@ -18,9 +18,9 @@ editor.registerComponent('hero', {
   fields: [
     new Row(
       [
-        new HTMLText('title', {
-          multiline: false,
-          colors: textPalette,
+        new Text('title', {
+          // multiline: false,
+          // colors: textPalette,
         }),
         new Color('background', { colors: textPalette }),
       ],
