@@ -45,10 +45,9 @@ const createStore = (data: EditorComponentData[] = []) =>
             set(() => ({ sidebarMode: mode }))
           },
           setSidebarWidth: function (width: number) {
-            const clampedValue = clamp(width, 450, window.innerWidth - 375)
-            localStorage.setItem('veSidebarWidth', clampedValue.toString())
+            localStorage.setItem('veSidebarWidth', width.toString())
             set(() => ({
-              sidebarWidth: clampedValue,
+              sidebarWidth: width,
             }))
           },
           updateData: function (newData: any, path?: string) {

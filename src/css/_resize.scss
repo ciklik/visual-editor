@@ -3,13 +3,14 @@
   top: 0;
   bottom: 0;
   height: 100%;
-  left: var(--sidebar);
+  left: var(--clampedSidebar);
   width: 15px;
   z-index: 1002;
   cursor: ew-resize;
   transition: box-shadow .3s;
 }
-.ve-resizeBar:hover {
+.ve-resizeBar:hover,
+.ve-resizeBar.is-active {
   box-shadow: -1px -1px 0 1px var(--primary);
 }
 .ve-resizeBar-overlay {

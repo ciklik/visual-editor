@@ -1,6 +1,6 @@
 import { useState } from 'preact/hooks'
 import { useSetSidebarWidth, useSidebarWidth } from '../store'
-
+import cx from 'clsx'
 export function ResizeBar() {
   const [drag, setDrag] = useState(false)
   const setSidebarWidth = useSetSidebarWidth()
@@ -12,12 +12,12 @@ export function ResizeBar() {
     setDrag(true)
     const initialX = e.clientX
     const listener = (e: MouseEvent) => {
-      setSidebarWidth(e.clientX)
+      setSidebarWidth(Math.round((100 * e.clientX) / window.innerWidth))
     }
     document.documentElement.addEventListener('mousemove', listener)
     document.documentElement.addEventListener(
       'mouseup',
-      (e) => {
+      () => {
         setDrag(false)
         document.documentElement.removeEventListener('mousemove', listener)
       },
@@ -27,7 +27,10 @@ export function ResizeBar() {
 
   return (
     <>
-      <div class="ve-resizeBar" onMouseDown={handleMouseDown}></div>
+      <div
+        class={cx('ve-resizeBar', drag && 'is-active')}
+        onMouseDown={handleMouseDown}
+      ></div>
       {drag && <div className="ve-resizeBar-overlay"></div>}
     </>
   )
