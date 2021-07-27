@@ -84,3 +84,16 @@ export function indexify<T extends unknown>(object: T): T {
   }
   return object
 }
+
+/**
+ * Convertit la valeur dans le même type que le second paramètre
+ */
+export function cast<V>(value: unknown, expectedValue: V) {
+  if (typeof expectedValue === 'boolean') {
+    return !!value as typeof expectedValue
+  }
+  if (typeof expectedValue === 'string') {
+    return ('' + value ?? '') as typeof expectedValue
+  }
+  throw new Error(`Cannot cast ${typeof value} into a ${typeof expectedValue}`)
+}

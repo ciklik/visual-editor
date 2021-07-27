@@ -1,6 +1,6 @@
 import { useInsertData } from 'src/store'
 import { useEffect } from 'preact/hooks'
-import { indexify } from '../functions/object'
+import { indexify } from 'src/functions/object'
 
 export function useClipboardPaste() {
   const insertData = useInsertData()

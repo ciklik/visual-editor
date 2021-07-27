@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'preact/hooks'
-import { debounce } from '../functions/time'
+import { debounce } from 'src/functions/time'
 
 export function useEffectDebounced(
   callback: Function,

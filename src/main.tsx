@@ -26,6 +26,9 @@ editor.registerComponent('hero', {
       ],
       { columns: '1fr 1fr 40px', label: 'Titre' }
     ),
+    new Checkbox('has_video', { label: 'A une vidéo ?' }),
+    new Text('video', { label: 'URL de la vidéo' }).when('has_video', true),
+    new Text('image', { label: "URL de l'image" }).when('has_video', false),
     new HTMLText('body', { label: 'Description', colors: textPalette }),
     new Repeater('actions', {
       title: 'Actions',

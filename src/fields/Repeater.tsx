@@ -5,7 +5,7 @@ import { uniqId } from 'src/functions/string'
 import { AbstractField } from 'src/fields/AbstractField'
 import { Sortable, SortableWrapper } from 'src/components/Sortable'
 import { useToggle } from 'src/hooks/useToggle'
-import { prevent } from '../functions/functions'
+import { prevent } from 'src/functions/functions'
 
 type FieldArgs = {
   label?: string

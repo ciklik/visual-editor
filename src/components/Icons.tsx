@@ -98,3 +98,93 @@ export function IconCheck({ size = 18 }: IconProps) {
     </svg>
   )
 }
+
+export function IconAlignLeft({ size }: IconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="currentColor"
+        fill-rule="evenodd"
+        d="M10 6H5v13h5V6zM3 4v17h9V4H3z"
+        clip-rule="evenodd"
+      />
+      <path
+        fill="currentColor"
+        d="M22 7v2h-7V7h7zM22 11v2h-7v-2h7zM19 15v2h-4v-2h4z"
+      />
+    </svg>
+  )
+}
+
+export function IconAlignRight({ size }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="currentColor"
+        fill-rule="evenodd"
+        d="M19 6h-5v13h5V6zm-7-2v17h9V4h-9z"
+        clip-rule="evenodd"
+      />
+      <path
+        fill="currentColor"
+        d="M10 7v2H3V7h7zM10 11v2H3v-2h7zM7 15v2H3v-2h4z"
+      />
+    </svg>
+  )
+}
+
+export function IconAlignTop({ size }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <defs />
+      <path
+        fill="currentColor"
+        fill-rule="evenodd"
+        d="M19 5H5v5h14V5zM3 3v9h18V3H3z"
+        clip-rule="evenodd"
+      />
+      <path fill="currentColor" d="M20 14v2H3v-2h17zM14 18v2H3v-2h11z" />
+    </svg>
+  )
+}
+
+export function IconAlignBottom({ size }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="currentColor"
+        fill-rule="evenodd"
+        d="M19 14H5v5h14v-5zM3 12v9h18v-9H3z"
+        clip-rule="evenodd"
+      />
+      <path
+        fill="currentColor"
+        d="M20 4v2H3V4h17zM14 8v2H3V8h11zM7 12v2H3v-2h4z"
+      />
+    </svg>
+  )
+}

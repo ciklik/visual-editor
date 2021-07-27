@@ -5,6 +5,7 @@ export default {
     "\\.(ts)$": "ts-jest"
   },
   "moduleNameMapper": {
-    "react-dom": "preact/compat"
+    "react-dom": "preact/compat",
+    "src/(.*)$": "<rootDir>/src/$1",
   },
 };

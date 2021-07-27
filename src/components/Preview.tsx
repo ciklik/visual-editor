@@ -14,8 +14,8 @@ import {
 } from 'src/store'
 import { Flipped, Flipper } from 'react-flip-toolkit'
 import { useWindowSize } from 'react-use'
-import { PHONE_HEIGHT } from '../constants'
-import { offsetLeft } from '../functions/dom'
+import { PHONE_HEIGHT } from 'src/constants'
+import { offsetLeft } from 'src/functions/dom'
 
 type PreviewProps = {
   data: EditorComponentData[]

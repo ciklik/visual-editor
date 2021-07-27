@@ -136,12 +136,14 @@ function Fields({
             <Fields fields={field.fields} data={data} path={path} />
           </field.render>
         ) : (
-          <Field
-            key={field.name}
-            field={field}
-            value={field.name ? data[field.name] : undefined}
-            path={`${path}.${field.name}`}
-          />
+          field.shouldRender(data) && (
+            <Field
+              key={field.name}
+              field={field}
+              value={field.name ? data[field.name] : undefined}
+              path={`${path}.${field.name}`}
+            />
+          )
         )
       )}
     </>
