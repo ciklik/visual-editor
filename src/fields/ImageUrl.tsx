@@ -15,10 +15,7 @@ type FieldArgs = {
 /**
  * Enregistre un champs de type texte
  */
-export class ImageUrl
-  extends AbstractField<FieldArgs, string>
-  implements EditorField<string>
-{
+export class ImageUrl extends AbstractField<FieldArgs, string> {
   field({ value, onChange }: EditorFieldProps<string>) {
     const inputRef = useRef<HTMLInputElement>(null)
     const id = useUniqId('textinput')

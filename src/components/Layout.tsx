@@ -16,6 +16,7 @@ import { useState } from 'preact/hooks'
 import { ResizeBar } from './ResizeBar'
 import { useThrottle } from 'react-use'
 import { ComponentChildren } from 'preact'
+import { fillDefaults } from '../functions/fields'
 
 type LayoutProps = {
   class?: string
@@ -43,7 +44,11 @@ export function Layout({
     const blocName = e.active.id
     const index = e.over?.data?.current?.index
     if (index !== undefined && blocName) {
-      insertData(blocName, index)
+      insertData(
+        blocName,
+        index,
+        fillDefaults({}, definitions[blocName].fields)
+      )
     }
   }
 

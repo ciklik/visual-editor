@@ -1,11 +1,12 @@
 import { EditorField, EditorFieldProps } from 'src/types'
-import { deepSet } from 'src/functions/object'
+import { deepSet, indexify } from 'src/functions/object'
 import { moveItem } from 'src/functions/array'
 import { uniqId } from 'src/functions/string'
 import { AbstractField } from 'src/fields/AbstractField'
 import { Sortable, SortableWrapper } from 'src/components/Sortable'
 import { useToggle } from 'src/hooks/useToggle'
 import { prevent } from 'src/functions/functions'
+import { fillDefaults } from '../functions/fields'
 
 type FieldArgs = {
   label?: string
@@ -23,7 +24,18 @@ type RepeaterLine = { _id: string; [key: string]: unknown }
  * Permet de créer une liste de champs imbriqués
  */
 export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
-  defaultArgs = { addLabel: 'Ajouter un élément' }
+  get defaultArgs() {
+    return { addLabel: 'Ajouter un élément' }
+  }
+
+  get defaultValue() {
+    const value = []
+    const min = this.args.min ?? 0
+    for (let i = 0; i < min; i++) {
+      value.push(fillDefaults({}, this.args.fields))
+    }
+    return indexify(value)
+  }
 
   public field = ({
     value: valueProps,
@@ -31,6 +43,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
   }: EditorFieldProps<RepeaterLine[]>) => {
     const value: RepeaterLine[] = valueProps ?? []
     const canAdd = !this.args.max || value.length < this.args.max
+    const canRemove = !this.args.min || value.length > this.args.min
 
     const add = () => {
       onChange([...value, { _id: uniqId() }])
@@ -59,7 +72,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
                 line={line}
                 index={k}
                 onUpdate={updateProperty}
-                onRemove={remove}
+                onRemove={canRemove ? remove : null}
               />
             ))}
             {canAdd && (
@@ -83,10 +96,9 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
   }: {
     line: RepeaterLine
     index: number
-    onRemove: (line: RepeaterLine) => void
+    onRemove: null | ((line: RepeaterLine) => void)
     onUpdate: (path: string, v: unknown) => void
   }) => {
-    const handleRemove = () => onRemove(line)
     const handleUpdate = (path: string) => (value: unknown) =>
       onUpdate(path, value)
     const [collapsed, toggleCollapsed] = useToggle(
@@ -104,13 +116,15 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
             onChange={handleUpdate(`${index}.${field.name}`)}
           />
         ))}
-        <button
-          class="ve-repeater-remove"
-          onClick={handleRemove}
-          title="Supprimer l'élément"
-        >
-          &times;
-        </button>
+        {onRemove && (
+          <button
+            class="ve-repeater-remove"
+            onClick={() => onRemove(line)}
+            title="Supprimer l'élément"
+          >
+            &times;
+          </button>
+        )}
         {this.args.collapsed && (
           <button
             class="ve-repeater-collapse"

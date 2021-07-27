@@ -1,10 +1,12 @@
 import Quill from 'quill'
 import { RefObject } from 'preact'
 
-const Delta = Quill.import('delta')
-const Bold = Quill.import('formats/bold')
-const Break = Quill.import('blots/break')
-const Embed = Quill.import('blots/embed')
+class QuillMock {}
+
+const Delta = Quill?.import('delta') ?? QuillMock
+const Bold = Quill?.import('formats/bold') ?? QuillMock
+const Break = Quill?.import('blots/break') ?? QuillMock
+const Embed = Quill?.import('blots/embed') ?? QuillMock
 
 function lineBreakMatcher() {
   const newDelta = new Delta()
@@ -32,8 +34,8 @@ class Mark extends Bold {
   static tagName = ['MARK']
 }
 
-Quill.register(SmartBreak)
-Quill.register(Mark)
+Quill?.register(SmartBreak)
+Quill?.register(Mark)
 
 export function lineBreakHandler(quill: RefObject<Quill>) {
   return {

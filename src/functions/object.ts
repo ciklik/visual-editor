@@ -93,7 +93,10 @@ export function cast<V>(value: unknown, expectedValue: V) {
     return !!value as typeof expectedValue
   }
   if (typeof expectedValue === 'string') {
-    return ('' + value ?? '') as typeof expectedValue
+    if (typeof value === 'boolean') {
+      return ''
+    }
+    return ('' + (value ?? '')) as typeof expectedValue
   }
   throw new Error(`Cannot cast ${typeof value} into a ${typeof expectedValue}`)
 }

@@ -15,10 +15,7 @@ type FieldArgs = {
 /**
  * Enregistre un champs de type texte
  */
-export class Color
-  extends AbstractField<FieldArgs, string | null>
-  implements EditorField<string | null>
-{
+export class Color extends AbstractField<FieldArgs, string | null> {
   field({ value, onChange }: EditorFieldProps<string | null>) {
     const id = useUniqId('color')
 

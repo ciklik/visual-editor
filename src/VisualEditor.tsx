@@ -14,7 +14,7 @@ import { indexify, stringifyFields } from 'src/functions/object'
 import { useClipboardPaste } from 'src/hooks/useClipboardPaste'
 import { useHistory } from 'src/hooks/useHistory'
 import { useUpdateEffect } from './hooks/useUpdateEffect'
-import { ResizeBar } from './components/ResizeBar'
+import { fillDefaults } from './functions/fields'
 
 const components: EditorComponentDefinitions = {}
 
@@ -86,7 +86,9 @@ class VisualEditorElement extends HTMLElement {
     if (this._data === null) {
       try {
         const json = JSON.parse(value)
-        this._data = indexify(json)
+        this._data = indexify(json).map((value: EditorComponentData) =>
+          fillDefaults(value, components[value._name].fields)
+        )
       } catch (e) {
         console.error('Impossible de parser les données', value, e)
         this._data = []

@@ -21,7 +21,7 @@ export function CopyAction({ data }: CopyActionProps) {
         setSuccess(false)
       }, 1000)
     } catch (e) {
-      // TODO : Afficher une alerte de pas copy
+      alert(e)
     }
   }
 

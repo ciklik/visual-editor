@@ -7,15 +7,17 @@ type FieldArgs = {
   required?: boolean
   multiline?: boolean
   help?: string
+  default?: string
 }
 
 /**
  * Enregistre un champs de type texte
  */
-export class Text
-  extends AbstractField<FieldArgs, string>
-  implements EditorField<string>
-{
+export class Text extends AbstractField<FieldArgs, string> {
+  get defaultArgs() {
+    return { default: '' }
+  }
+
   field({ value, onChange }: EditorFieldProps<string>) {
     const id = useUniqId('textinput')
     return (

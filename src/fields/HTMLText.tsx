@@ -14,13 +14,12 @@ type FieldArgs = {
 /**
  * Enregistre un champs de type texte
  */
-export class HTMLText
-  extends AbstractField<FieldArgs, string>
-  implements EditorField<string>
-{
-  defaultArgs = {
-    multiline: true,
-    allowHeadings: false,
+export class HTMLText extends AbstractField<FieldArgs, string> {
+  get defaultArgs() {
+    return {
+      multiline: true,
+      allowHeadings: false,
+    }
   }
 
   field({ value, onChange }: EditorFieldProps<string>) {

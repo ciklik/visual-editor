@@ -99,7 +99,7 @@ export function IconCheck({ size = 18 }: IconProps) {
   )
 }
 
-export function IconAlignLeft({ size }: IconProps) {
+export function IconAlignLeft({ size = 24 }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -122,7 +122,7 @@ export function IconAlignLeft({ size }: IconProps) {
   )
 }
 
-export function IconAlignRight({ size }: IconProps) {
+export function IconAlignRight({ size = 24 }: IconProps) {
   return (
     <svg
       width={size}
@@ -145,7 +145,7 @@ export function IconAlignRight({ size }: IconProps) {
   )
 }
 
-export function IconAlignTop({ size }: IconProps) {
+export function IconAlignTop({ size = 24 }: IconProps) {
   return (
     <svg
       width={size}
@@ -166,7 +166,7 @@ export function IconAlignTop({ size }: IconProps) {
   )
 }
 
-export function IconAlignBottom({ size }: IconProps) {
+export function IconAlignBottom({ size = 24 }: IconProps) {
   return (
     <svg
       width={size}

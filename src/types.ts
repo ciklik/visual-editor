@@ -10,6 +10,7 @@ export type EditorComponentData = {
 export interface EditorField<V> {
   name: string
   field: FunctionComponent<EditorFieldProps<V>>
+  defaultValue: V
   shouldRender: (data: Record<string, string>) => boolean
 }
 

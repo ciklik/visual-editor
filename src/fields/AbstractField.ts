@@ -9,7 +9,6 @@ export class AbstractField<Args extends Record<string, any>, V>
 {
   name: string
   protected args: Args
-  defaultArgs: Record<string, any> = {}
   conditions: FieldCondition[] = []
 
   constructor(name: string, args?: Args) {
@@ -38,5 +37,13 @@ export class AbstractField<Args extends Record<string, any>, V>
 
   shouldRender(data: Record<string, any>) {
     return this.conditions.filter((condition) => !condition(data)).length === 0
+  }
+
+  get defaultValue() {
+    return this.args.default
+  }
+
+  get defaultArgs(): Partial<Args> {
+    return {} as Args
   }
 }
