@@ -10,12 +10,12 @@ export function useClipboardPaste() {
         .getData('text')
         .trim()
       if (paste.startsWith('{')) {
+        event.preventDefault()
         const data = JSON.parse(paste)
         if (data._name) {
           insertData(data._name, 0, indexify(data))
         }
       }
-      event.preventDefault()
     }
     document.addEventListener('paste', listener)
     return () => {
