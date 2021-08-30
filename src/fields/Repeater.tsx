@@ -7,13 +7,14 @@ import { Sortable, SortableWrapper } from 'src/components/Sortable'
 import { useToggle } from 'src/hooks/useToggle'
 import { prevent } from 'src/functions/functions'
 import { fillDefaults } from '../functions/fields'
+import { AbstractFieldGroup } from './AbstractFieldGroup'
 
 type FieldArgs = {
   label?: string
   min?: number
   max?: number
   addLabel?: string
-  fields: EditorField<any>[]
+  fields: Array<EditorField<any> | AbstractFieldGroup<any>>
   title?: string
   collapsed?: string
 }
@@ -105,17 +106,19 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
       !!(this.args.collapsed && line[this.args.collapsed])
     )
     const visibleFields = this.args.fields.filter((field) =>
-      collapsed ? field.name === this.args.collapsed : true
+      collapsed
+        ? field instanceof AbstractField && field.name === this.args.collapsed
+        : true
     )
 
     return (
       <Sortable item={line} class="ve-repeater-item">
-        {visibleFields.map((field) => (
-          <field.field
-            value={line[field.name]}
-            onChange={handleUpdate(`${index}.${field.name}`)}
-          />
-        ))}
+        <this.fields
+          fields={visibleFields}
+          line={line}
+          index={index}
+          onUpdate={handleUpdate}
+        />
         {onRemove && (
           <button
             class="ve-repeater-remove"
@@ -135,6 +138,62 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
           </button>
         )}
       </Sortable>
+    )
+  }
+
+  private fields = ({
+    fields,
+    line,
+    onUpdate,
+    index,
+  }: {
+    fields: Array<EditorField<any> | AbstractFieldGroup<any>>
+    line: RepeaterLine
+    index: number
+    onUpdate: (path: string) => (v: unknown) => void
+  }) => {
+    return (
+      <>
+        {fields.map((field) => (
+          <this.fieldComponent
+            field={field}
+            line={line}
+            onUpdate={onUpdate}
+            index={index}
+          />
+        ))}
+      </>
+    )
+  }
+
+  private fieldComponent = ({
+    field,
+    line,
+    onUpdate,
+    index,
+  }: {
+    field: EditorField<any> | AbstractFieldGroup<any>
+    line: RepeaterLine
+    index: number
+    onUpdate: (path: string) => (v: unknown) => void
+  }) => {
+    if (field instanceof AbstractFieldGroup) {
+      return (
+        <field.render>
+          <this.fields
+            fields={field.fields}
+            line={line}
+            onUpdate={onUpdate}
+            index={index}
+          />
+        </field.render>
+      )
+    }
+    return (
+      <field.field
+        value={line[field.name]}
+        onChange={onUpdate(`${index}.${field.name}`)}
+      />
     )
   }
 }

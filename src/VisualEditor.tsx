@@ -195,7 +195,6 @@ export function VisualEditorComponent({
 // Exporte les champs
 export { Text } from 'src/fields/Text'
 export { Checkbox } from 'src/fields/Checkbox'
-export { Button } from 'src/fields/Button'
 export { Repeater } from 'src/fields/Repeater'
 export { AbstractField } from 'src/fields/AbstractField'
 export { ImageUrl } from 'src/fields/ImageUrl'

@@ -3,8 +3,8 @@ import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from 'src/fields/AbstractField'
 
 type Option = {
-  value: string,
-  label: string,
+  value: string
+  label: string
 }
 
 type FieldArgs = {

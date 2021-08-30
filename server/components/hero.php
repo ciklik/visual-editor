@@ -4,8 +4,8 @@
       <h1 class="fw-light"><?= $data['title'] ?? 'Titre du héro'; ?></h1>
       <div class="lead text-muted"><?= $data['body'] ?? 'Ligne de texte'; ?></div>
       <p>
-        <?php foreach(($data['actions'] ?? []) as ['action' => $action]): ?>
-        <a href="<?= $action['href'] ?? '#' ?>" class="btn btn-<?= $action['type'] ?? 'primary' ?> my-2"><?= $action['title'] ?? 'Acheter' ?></a>
+        <?php foreach(($data['actions'] ?? []) as $action): ?>
+        <a href="<?= $action['url'] ?? '#' ?>" class="btn btn-<?= $action['type'] ?? 'primary' ?> my-2"><?= $action['label'] ?? 'Acheter' ?></a>
         <?php endforeach ?>
       </p>
     </div>

@@ -1,9 +1,9 @@
 import {
-  Button,
   Checkbox,
   Color,
   ImageUrl,
   Repeater,
+  Select,
   Text,
   VisualEditor,
 } from 'src/VisualEditor'
@@ -13,6 +13,21 @@ import { Alignment } from './fields/Alignment'
 
 let editor = new VisualEditor()
 const textPalette = ['--pink', '--purple', '--blue', '--green']
+
+function ButtonField() {
+  return new Row([
+    new Text('label', { label: 'Libellé' }),
+    new Text('url', { label: 'URL' }),
+    new Select('type', {
+      label: 'Type',
+      default: 'primary',
+      options: [
+        { value: 'primary', label: 'Primaire' },
+        { value: 'secondary', label: 'Secondaire' },
+      ],
+    }),
+  ])
+}
 
 editor.registerComponent('hero', {
   title: 'Hero',
@@ -34,7 +49,7 @@ editor.registerComponent('hero', {
     new Repeater('actions', {
       title: 'Actions',
       addLabel: 'Ajouter un bouton',
-      fields: [new Button('action')],
+      fields: [ButtonField()],
     }),
   ],
 })
