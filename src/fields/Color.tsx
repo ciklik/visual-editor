@@ -6,6 +6,7 @@ import { useRef } from 'preact/hooks'
 import { Tooltip, Tooltip2 } from 'src/components/Tooltip'
 import { useClickAway } from 'react-use'
 import clsx from 'clsx'
+import { prevent } from '../functions/functions'
 
 type FieldArgs = {
   label?: string
@@ -32,6 +33,7 @@ export class Color extends AbstractField<FieldArgs, string | null> {
               've-color-button',
               !value && 've-color-button-transparent'
             )}
+            onClick={e => e.preventDefault()}
             style={value ? `--veSelectedColor: var(${value})` : ``}
           />
         </Tooltip>
@@ -40,13 +42,14 @@ export class Color extends AbstractField<FieldArgs, string | null> {
   }
 
   tooltip = ({ onChange }: EditorFieldProps<string | null>) => {
+
     return (
       <div class="ve-color-palette">
-        <button class="ve-color-transparent" onClick={() => onChange(null)} />
+        <button class="ve-color-transparent" onClick={prevent(() => onChange(null))} />
         {this.args.colors.map((color) => (
           <button
             style={`--veColor: var(${color})`}
-            onClick={() => onChange(color)}
+            onClick={prevent(() => onChange(color))}
           />
         ))}
       </div>

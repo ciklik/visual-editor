@@ -52,6 +52,8 @@ export function QuillEditor({
 }: QuillEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null)
   const quillRef = useRef<Quill>(null)
+  const onChangeRef = useRef(onChange)
+  onChangeRef.current = onChange
 
   useEffect(() => {
     let toolbar = toolbars[mode]
@@ -77,7 +79,7 @@ export function QuillEditor({
     })
     quill.clipboard.dangerouslyPasteHTML(value || '')
     quill.on('text-change', () => {
-      onChange(
+      onChangeRef.current(
         mode === QuillEditorMode.SINGLE_LINE
           ? (quillRef.current!.root.firstChild as HTMLParagraphElement)
               .innerHTML

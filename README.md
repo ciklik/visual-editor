@@ -1,4 +1,3 @@
 ## A faire
 
-- Resize de la barre latéral
-- Champs icone ?
+- Changer la couleur de fond / texte du textarea 
