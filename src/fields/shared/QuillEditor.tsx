@@ -83,7 +83,7 @@ export function QuillEditor({
         mode === QuillEditorMode.SINGLE_LINE
           ? (quillRef.current!.root.firstChild as HTMLParagraphElement)
               .innerHTML
-          : quillRef.current!.root.innerHTML
+          : cleanHTML(quillRef.current!.root.innerHTML)
       )
     })
     quill.clipboard.addMatcher(Node.ELEMENT_NODE, function (node, delta) {
@@ -159,4 +159,14 @@ function cleanDelta<T extends { ops: DeltaOperation[] }>(
     }
   }
   return delta
+}
+
+/**
+ * Nettoie le code en sortie de QuillEditor car il a des préférences particulières
+ */
+function cleanHTML(html: string): string {
+  if (html === '<p><br></p>') {
+    return '';
+  }
+  return html
 }
