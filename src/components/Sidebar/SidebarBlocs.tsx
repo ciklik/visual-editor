@@ -68,7 +68,7 @@ function SidebarBloc({
       >
         <div class="ve-bloc">
           <img src={iconsUrl + name + '.svg'} />
-          {definition.title}
+          <span>{definition.title}</span>
         </div>
       </div>
     </div>

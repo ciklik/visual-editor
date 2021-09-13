@@ -1,5 +1,5 @@
-let renderId = 0;
+let renderId = 0
 
-export function useRenderId () {
+export function useRenderId() {
   return ++renderId
 }

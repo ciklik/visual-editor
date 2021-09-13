@@ -166,7 +166,7 @@ function cleanDelta<T extends { ops: DeltaOperation[] }>(
  */
 function cleanHTML(html: string): string {
   if (html === '<p><br></p>') {
-    return '';
+    return ''
   }
   return html
 }

@@ -5,7 +5,6 @@ import { AbstractField } from 'src/fields/AbstractField'
 type FieldArgs = {
   label?: string
   required?: boolean
-  multiline?: boolean
   help?: string
   default?: string
 }
@@ -13,13 +12,13 @@ type FieldArgs = {
 /**
  * Enregistre un champs de type texte
  */
-export class Text extends AbstractField<FieldArgs, string> {
+export class Number extends AbstractField<FieldArgs, string> {
   get defaultArgs() {
     return { default: '' }
   }
 
   field({ value, onChange }: EditorFieldProps<string>) {
-    const id = useUniqId('textinput')
+    const id = useUniqId('numberinput')
     return (
       <div>
         {this.args.label && (
@@ -27,22 +26,13 @@ export class Text extends AbstractField<FieldArgs, string> {
             {this.args.label}
           </label>
         )}
-        {this.args.multiline ? (
-          <textarea
-            id={id}
-            class="ve-input"
-            value={value}
-            onInput={(e) => onChange((e.target as HTMLTextAreaElement).value)}
-          />
-        ) : (
-          <input
-            type="text"
-            id={id}
-            class="ve-input"
-            value={value}
-            onInput={(e) => onChange((e.target as HTMLInputElement).value)}
-          />
-        )}
+        <input
+          type="number"
+          id={id}
+          class="ve-input"
+          value={value}
+          onInput={(e) => onChange((e.target as HTMLInputElement).value)}
+        />
         {this.args.help && <div class="form-text">{this.args.help}</div>}
       </div>
     )
