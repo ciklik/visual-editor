@@ -3,6 +3,12 @@
 .ve-sidebar-fields label {
   display: block;
   margin-bottom: .5em;
+  font-size: .875rem;
+}
+
+.ve-sidebar-fields label small {
+  font-size: 0.8rem;
+  opacity: .65;
 }
 
 .ve-sidebar-fields input[type="text"],
@@ -26,6 +32,11 @@
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgb(23 113 230 / 25%);
   }
+}
+
+.ve-wysiwyg {
+  color: var(--color, currentColor);
+  background: var(--background, transparent);
 }
 
 // Checkbox
@@ -110,6 +121,7 @@
   }
 
 }
+
 
 @import "./fields/quilleditor";
 @import "./fields/color";
