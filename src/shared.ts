@@ -31,7 +31,7 @@ export const ButtonField = () =>
     }),
   ]);
 
-export const SiteColor = (name, label) =>
+export const SiteColor = (name: string, label: string) =>
   new Color(name, { label: label, colors: Colors });
 
 export const Title = (name = "title", label = "Titre") =>

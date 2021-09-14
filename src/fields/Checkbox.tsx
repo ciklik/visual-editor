@@ -2,10 +2,15 @@ import { AbstractField } from 'src/fields/AbstractField'
 import { useUniqId } from 'src/hooks/useUniqId'
 
 type FieldArgs = {
-  label: string
+  label: string,
+  default?: boolean,
 }
 
 export class Checkbox extends AbstractField<FieldArgs, boolean> {
+  get defaultArgs() {
+    return { default: false }
+  }
+
   field({
     value,
     onChange,

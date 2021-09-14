@@ -77,7 +77,6 @@ const SidebarItem = memo(function SidebarItem({
         100
       )
     } else {
-
       setCollapsed(true)
     }
   }, [isFocused])
@@ -101,7 +100,7 @@ const SidebarItem = memo(function SidebarItem({
       </button>
       <div ref={ref}>
         <div className="ve-sidebar-bloc__head">
-          <h2 class="ve-sidebar-title">{title}</h2>
+          <h2 class="ve-sidebar-title" onClick={prevent(toggleCollapsed)}>{title}</h2>
           <div class="ve-sidebar-actions">
             <CopyAction data={data} />
             <button

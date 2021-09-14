@@ -77,7 +77,9 @@ export function QuillEditor({
       placeholder,
       theme: 'bubble',
     })
-    quill.clipboard.dangerouslyPasteHTML(value || '')
+    quill.root.innerHTML = value || ''
+    // This method autofocus the field :( https://github.com/zenoamaro/react-quill/issues/317#issuecomment-877155420
+    // quill.clipboard.dangerouslyPasteHTML(value || '')
     quill.on('text-change', () => {
       onChangeRef.current(
         mode === QuillEditorMode.SINGLE_LINE

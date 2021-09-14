@@ -6,7 +6,7 @@ type FieldArgs = {
   label?: string
   required?: boolean
   help?: string
-  default?: string
+  default?: string | number
 }
 
 /**

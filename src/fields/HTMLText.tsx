@@ -8,7 +8,8 @@ type FieldArgs = {
   multiline?: boolean
   help?: string
   allowHeadings?: boolean
-  colors?: string[]
+  colors?: string[],
+  default?: string,
 }
 
 /**
@@ -22,6 +23,7 @@ export class HTMLText extends AbstractField<FieldArgs, string> {
     return {
       multiline: true,
       allowHeadings: false,
+      default: '',
     }
   }
 

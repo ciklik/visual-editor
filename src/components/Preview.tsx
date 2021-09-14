@@ -161,7 +161,7 @@ export function PreviewItem({
     if (isFocused) {
       ref.current!.scrollIntoView({
         behavior: 'smooth',
-        block: 'nearest',
+        block: 'start',
       })
     }
   }, [isFocused])

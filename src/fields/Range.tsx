@@ -22,8 +22,8 @@ export class Range extends AbstractField<FieldArgs, string> {
 
   field({ value, onChange }: EditorFieldProps<string>) {
     const id = useUniqId('rangeinput')
-    const marks = Math.round((this.args.max - this.args.min + 1) / this.args.step)
-    const ticks = new Array(marks).fill(0).map((v, k) => k + this.args.min)
+    const marks = Math.round((this.args.max! - this.args.min! + 1) / this.args.step!)
+    const ticks = new Array(marks).fill(0).map((v, k) => k + this.args.min!)
     return (
       <div>
         {this.args.label && (
