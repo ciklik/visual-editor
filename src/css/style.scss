@@ -40,7 +40,9 @@ mark {
   }
 }
 
-.ve-layout * {
+.ve-layout *,
+.ve-layout *::before,
+.ve-layout *::after {
   box-sizing: border-box;
 }
 
