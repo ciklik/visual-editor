@@ -7,19 +7,16 @@
 .ve-bloc-wrapper {
   min-width: 0;
   background: rgba(0, 0, 0, 0.02);
-  box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .ve-bloc-draggable {
   outline: none;
   transition: .3s;
   position: relative;
+  cursor: pointer;
   &:hover {
     z-index: 2;
-  }
-  .is-dragging & {
-    z-index: 3;
-    transition: none;
   }
 }
 
@@ -45,7 +42,6 @@
   img {
     opacity: .45;
     max-width: 100%;
-    height: 50px;
     filter: invert(45%) sepia(8%) saturate(649%) hue-rotate(182deg) brightness(95%) contrast(89%);
     transition: filter .3s, opacity .3s;
   }
@@ -67,6 +63,13 @@
     filter: invert(36%) sepia(43%) saturate(6104%) hue-rotate(204deg) brightness(95%) contrast(90%);
   }
 }
-.is-dragging .ve-bloc {
+.ve-drag-overlay .ve-bloc {
   box-shadow: var(--shadow-dragging);
+  cursor: grabbing;
+  transform: scale(1.1);
+}
+
+.ve-drag-overlay .ve-bloc-wrapper {
+  z-index: 3;
+  transition: none;
 }

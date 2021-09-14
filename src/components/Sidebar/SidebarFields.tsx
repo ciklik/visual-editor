@@ -73,9 +73,12 @@ const SidebarItem = memo(function SidebarItem({
       setCollapsed(false)
       window.setTimeout(
         () =>
-          ref.current!.scrollIntoView({ behavior: 'smooth', block: 'nearest' }),
+          ref.current!.scrollIntoView({ behavior: 'smooth', block: 'start' }),
         100
       )
+    } else {
+
+      setCollapsed(true)
     }
   }, [isFocused])
   const title = useMemo(
@@ -142,6 +145,7 @@ function Fields({
               field={field}
               value={field.name ? data[field.name] : undefined}
               path={`${path}.${field.name}`}
+              style={field.injectStyle(data)}
             />
           )
         )
@@ -154,10 +158,12 @@ function Field({
   field,
   value,
   path,
+  style,
 }: {
   field: EditorField<any>
   value: string
   path: string
+  style: Record<string, string> | null
 }) {
   const updateData = useUpdateData()
   const Component = field.field
@@ -168,8 +174,8 @@ function Field({
     [path]
   )
   return (
-    <>
+    <div style={style as any}>
       <Component value={value} onChange={onChangeCallback} />
-    </>
+    </div>
   )
 }

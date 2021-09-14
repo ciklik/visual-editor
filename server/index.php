@@ -3,10 +3,9 @@ function renderBlock($data) {
     if (file_exists('components/' . $data['_name'] . '.php')) {
       include 'components/' . $data['_name'] . '.php';
     } else {
-      echo "<div>Bloc manquant</div>";
+      echo "<div style='padding: 2rem 0;'>Bloc manquant : {$data['_name']}</div>";
     }
 }
-
 
 $body = file_get_contents('php://input');
 $data = json_decode($body, true);
@@ -34,6 +33,7 @@ if ($data['preview'] ?? null) {
       --blue: #3d5afe;
       --green: #00e676;
       --lightblue: #00e5ff;
+      --white: #FFF;
     }
   </style>
 </head>

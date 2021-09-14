@@ -10,6 +10,7 @@ export class AbstractField<Args extends Record<string, any>, V>
   name: string
   protected args: Args
   conditions: FieldCondition[] = []
+  variables: Record<string, string> | null = null
 
   constructor(name: string, args?: Args) {
     this.name = name
@@ -27,7 +28,7 @@ export class AbstractField<Args extends Record<string, any>, V>
     throw Error('La méthode field doit être implémentée')
   }
 
-  when(fieldName: string, expectedValue: any) {
+  when(fieldName: string, expectedValue: any = true) {
     this.conditions.push(
       (data: Record<string, any>) =>
         cast(data[fieldName], expectedValue) === expectedValue
@@ -37,6 +38,19 @@ export class AbstractField<Args extends Record<string, any>, V>
 
   shouldRender(data: Record<string, any>) {
     return this.conditions.filter((condition) => !condition(data)).length === 0
+  }
+
+  injectStyle(data: Record<string, any>): Record<string, string> | null {
+    if (!this.variables) {
+      return null
+    }
+    return Object.keys(this.variables).reduce((acc, key) => {
+      const value = data[this.variables![key]]
+      if (value) {
+        return {...acc, [`--${key}`]: `var(${value})`}
+      }
+      return acc;
+    }, {})
   }
 
   get defaultValue() {

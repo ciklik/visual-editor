@@ -49,28 +49,43 @@ function SidebarBloc({
   definition: EditorComponentDefinition
   iconsUrl: string
 }) {
+  const icon = iconsUrl.replace('[name]', name)
+  const title = definition.title
   const { setNodeRef, listeners, attributes, transform, isDragging } =
     useDraggable({
       id: name,
+      data: {
+        component: SidebarBlocIcon,
+        icon,
+        title
+      }
     })
-  const style = {
-    transform: CSS.Translate.toString(transform),
-  }
 
   return (
     <div class={clsx('ve-bloc-wrapper', isDragging && 'is-dragging')}>
       <div
         class="ve-bloc-draggable"
-        style={style}
         ref={setNodeRef}
         {...attributes}
         {...listeners}
       >
-        <div class="ve-bloc">
-          <img src={iconsUrl + name + '.svg'} />
-          <span>{definition.title}</span>
-        </div>
+        {!isDragging && (
+          <SidebarBlocIcon icon={icon} title={title}/>)
+        }
       </div>
     </div>
   )
+}
+
+function SidebarBlocIcon ({
+                            title,
+                            icon,
+                          }: {
+  title: string
+  icon: string
+}) {
+  return <div class="ve-bloc">
+    <img src={icon} />
+    <span>{title}</span>
+  </div>
 }

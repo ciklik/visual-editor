@@ -23,6 +23,7 @@
         --blue: #3d5afe;
         --green: #00e676;
         --lightblue: #00e5ff;
+        --white: #FFF;
       }
     </style>
   </head>
@@ -44,9 +45,929 @@
     <visual-editor
       name="content"
       preview="http://localhost:3000/preview"
-      iconsUrl="/"
+      iconsUrl="/steps.svg"
       id="editor1"
-      value="[ { &quot;_name&quot;: &quot;hero&quot;, &quot;background&quot;: null, &quot;title&quot;: &quot;Mon titre de test&quot;,      &quot;body&quot;: &quot;lorem ipsum&quot;, &quot;actions&quot;: [ { &quot;action&quot;: { &quot;title&quot;: &quot;Acheter&quot;,      &quot;href&quot;: &quot;https://grafikart.fr&quot;, &quot;type&quot;: &quot;primary&quot; } } ] }, { &quot;_name&quot;:      &quot;steps&quot;, &quot;image&quot;: &quot;https://picsum.photos/425/458&quot;, &quot;title&quot;: &quot;Votre      programme cl&eacute; en main d&egrave;s 64&euro; / semaine&quot;, &quot;caption&quot;: &quot; Repas tout pr&ecirc;ts      livr&eacute;s chez vous&quot;, &quot;inversed&quot;: true, &quot;steps&quot;: [ { &quot;step&quot;: &quot;azeezaaez&quot; }, {      &quot;step&quot;: &quot;aezaezaezaez&quot; }, { &quot;step&quot;: &quot;aezaezaezaez&quot; }, { &quot;step&quot;:      &quot;ezaaezaezze&quot; }, { &quot;step&quot;: &quot;aezaezez&quot; } ] } ]"
+      value="[
+  {
+    &quot;title&quot;: &quot;Titre&quot;,
+    &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;
+      },
+      {
+        &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet.&quot;,
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;
+      },
+      {
+        &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet.&quot;,
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;
+      },
+      {
+        &quot;content&quot;: &quot;&lt;ul&gt;&lt;li&gt;Minim veniam, quis nostrud&lt;/li&gt;&lt;li&gt;exercitation ullamco laboris &lt;/li&gt;&lt;li&gt;nisi ut aliquip ex ea commodo &lt;/li&gt;&lt;li&gt;consequat.Lorem ipsum dolor sit amet.&lt;/li&gt;&lt;/ul&gt;&quot;,
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;icons-columns&quot;,
+    &quot;backgroundColor&quot;: &quot;--color1&quot;,
+    &quot;textColor&quot;: &quot;--color3&quot;,
+    &quot;grid&quot;: true,
+    &quot;buttons&quot;: [
+      {
+        &quot;label&quot;: &quot;Bouton 1&quot;,
+        &quot;url&quot;: &quot;#&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Bouton 2&quot;,
+        &quot;url&quot;: &quot;#&quot;,
+        &quot;type&quot;: &quot;secondary&quot;
+      }
+    ],
+    &quot;layout&quot;: &quot;column&quot;
+  },
+  {
+    &quot;title&quot;: &quot;Titre&quot;,
+    &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;
+      },
+      {
+        &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet.&quot;,
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;
+      },
+      {
+        &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet.&quot;,
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;
+      },
+      {
+        &quot;content&quot;: &quot;&lt;ul&gt;&lt;li&gt;Minim veniam, quis nostrud&lt;/li&gt;&lt;li&gt;exercitation ullamco laboris &lt;/li&gt;&lt;li&gt;nisi ut aliquip ex ea commodo &lt;/li&gt;&lt;li&gt;consequat.Lorem ipsum dolor sit amet.&lt;/li&gt;&lt;/ul&gt;&quot;,
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;icons-columns&quot;,
+    &quot;backgroundColor&quot;: &quot;--color1&quot;,
+    &quot;textColor&quot;: &quot;--color3&quot;,
+    &quot;grid&quot;: true,
+    &quot;buttons&quot;: [
+      {
+        &quot;label&quot;: &quot;Bouton 1&quot;,
+        &quot;url&quot;: &quot;#&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Bouton 2&quot;,
+        &quot;url&quot;: &quot;#&quot;,
+        &quot;type&quot;: &quot;secondary&quot;
+      }
+    ],
+    &quot;layout&quot;: &quot;grid&quot;
+  },
+  {
+    &quot;title&quot;: &quot;Titre&quot;,
+    &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;
+      },
+      {
+        &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet.&quot;,
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;
+      },
+      {
+        &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet.&quot;,
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;
+      },
+      {
+        &quot;content&quot;: &quot;&lt;ul&gt;&lt;li&gt;Minim veniam, quis nostrud&lt;/li&gt;&lt;li&gt;exercitation ullamco laboris &lt;/li&gt;&lt;li&gt;nisi ut aliquip ex ea commodo &lt;/li&gt;&lt;li&gt;consequat.Lorem ipsum dolor sit amet.&lt;/li&gt;&lt;/ul&gt;&quot;,
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;icons-columns&quot;,
+    &quot;backgroundColor&quot;: &quot;--color1&quot;,
+    &quot;textColor&quot;: &quot;--color3&quot;,
+    &quot;grid&quot;: true,
+    &quot;buttons&quot;: [
+      {
+        &quot;label&quot;: &quot;Bouton 1&quot;,
+        &quot;url&quot;: &quot;#&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Bouton 2&quot;,
+        &quot;url&quot;: &quot;#&quot;,
+        &quot;type&quot;: &quot;secondary&quot;
+      }
+    ],
+    &quot;layout&quot;: &quot;row&quot;
+  },
+  {
+    &quot;items&quot;: [
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/banni%C3%A8res_boxraiser_1.jpg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;,
+        &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Minim veniam, quis nostrud exercitation&lt;/li&gt;&lt;li&gt;ullamco laboris nisi ut aliquip ex&lt;/li&gt;&lt;li&gt;ea commodo consequat. ullamco laboris nisi ut aliquip ex ullamco laboris nisi ut aliquip ex&lt;/li&gt;&lt;/ul&gt;&quot;,
+        &quot;icons&quot;: [
+          {
+            &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+            &quot;label&quot;: &quot;LOREM IPSUM DOLOR&quot;
+          },
+          {
+            &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+            &quot;label&quot;: &quot;LOREM IPSUM DOLOR&quot;
+          },
+          {
+            &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+            &quot;label&quot;: &quot;LOREM IPSUM DOLOR&quot;
+          }
+        ],
+        &quot;checkox&quot;: true,
+        &quot;buttons&quot;: [
+          {
+            &quot;label&quot;: &quot;Bouton 1&quot;,
+            &quot;url&quot;: &quot;#&quot;
+          },
+          {
+            &quot;label&quot;: &quot;Bouton 2&quot;,
+            &quot;url&quot;: &quot;#&quot;,
+            &quot;type&quot;: &quot;secondary&quot;
+          }
+        ],
+        &quot;backgroundColor&quot;: &quot;--color4&quot;,
+        &quot;checkicon&quot;: true,
+        &quot;iconColor&quot;: &quot;--color1&quot;,
+        &quot;align&quot;: &quot;left&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/banni%C3%A8res_boxraiser_1.jpg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet2&quot;,
+        &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Minim veniam, quis nostrud exercitation&lt;/li&gt;&lt;li&gt;ullamco laboris nisi ut aliquip ex&lt;/li&gt;&lt;li&gt;ea commodo consequat. ullamco laboris nisi ut aliquip ex ullamco laboris nisi ut aliquip ex&lt;/li&gt;&lt;/ul&gt;&quot;,
+        &quot;icons&quot;: [
+          {
+            &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+            &quot;label&quot;: &quot;LOREM IPSUM DOLOR&quot;
+          },
+          {
+            &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+            &quot;label&quot;: &quot;LOREM IPSUM DOLOR&quot;
+          },
+          {
+            &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+            &quot;label&quot;: &quot;LOREM IPSUM DOLOR&quot;
+          }
+        ],
+        &quot;checkox&quot;: true,
+        &quot;buttons&quot;: [
+          {
+            &quot;label&quot;: &quot;Bouton 1&quot;,
+            &quot;url&quot;: &quot;#&quot;
+          },
+          {
+            &quot;label&quot;: &quot;Bouton 2&quot;,
+            &quot;url&quot;: &quot;#&quot;,
+            &quot;type&quot;: &quot;secondary&quot;
+          }
+        ],
+        &quot;backgroundColor&quot;: &quot;--color4&quot;,
+        &quot;checkicon&quot;: true,
+        &quot;iconColor&quot;: &quot;--color1&quot;,
+        &quot;align&quot;: &quot;right&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/banni%C3%A8res_boxraiser_1.jpg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet3&quot;,
+        &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Minim veniam, quis nostrud exercitation&lt;/li&gt;&lt;li&gt;ullamco laboris nisi ut aliquip ex&lt;/li&gt;&lt;li&gt;ea commodo consequat. ullamco laboris nisi ut aliquip ex ullamco laboris nisi ut aliquip ex&lt;/li&gt;&lt;/ul&gt;&quot;,
+        &quot;icons&quot;: [
+          {
+            &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+            &quot;label&quot;: &quot;LOREM IPSUM DOLOR&quot;
+          },
+          {
+            &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+            &quot;label&quot;: &quot;LOREM IPSUM DOLOR&quot;
+          },
+          {
+            &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+            &quot;label&quot;: &quot;LOREM IPSUM DOLOR&quot;
+          }
+        ],
+        &quot;checkox&quot;: true,
+        &quot;buttons&quot;: [
+          {
+            &quot;label&quot;: &quot;Bouton 1&quot;,
+            &quot;url&quot;: &quot;#&quot;
+          },
+          {
+            &quot;label&quot;: &quot;Bouton 2&quot;,
+            &quot;url&quot;: &quot;#&quot;,
+            &quot;type&quot;: &quot;secondary&quot;
+          }
+        ],
+        &quot;backgroundColor&quot;: &quot;--color4&quot;,
+        &quot;checkicon&quot;: true,
+        &quot;iconColor&quot;: &quot;--color1&quot;,
+        &quot;align&quot;: &quot;left&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;carousel-text-image&quot;
+  },
+  {
+    &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;,
+    &quot;buttons&quot;: [
+      {
+        &quot;label&quot;: &quot;Bouton 1&quot;,
+        &quot;url&quot;: &quot;#&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Bouton 2&quot;,
+        &quot;url&quot;: &quot;#&quot;,
+        &quot;type&quot;: &quot;secondary&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;title-buttons&quot;
+  },
+  {
+    &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;,
+    &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&quot;,
+    &quot;facebook&quot;: &quot;#&quot;,
+    &quot;instagram&quot;: true,
+    &quot;pinterest&quot;: &quot;#&quot;,
+    &quot;images&quot;: [
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;,
+        &quot;title&quot;: &quot;&quot;,
+        &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;gallery&quot;,
+    &quot;highlight&quot;: true,
+    &quot;titleLeft&quot;: false
+  },
+  {
+    &quot;items&quot;: [
+      {
+        &quot;title&quot;: &quot;X Kg&quot;,
+        &quot;hasImage&quot;: false,
+        &quot;content&quot;: &quot;&lt;p&gt;Lorem ipsum dolor sit amet eiusmod.&lt;/p&gt;&quot;
+      },
+      {
+        &quot;content&quot;: &quot;&lt;p&gt;Lorem ipsum dolor sit amet eiusmod.&lt;/p&gt;&quot;,
+        &quot;title&quot;: &quot;X %&quot;
+      },
+      {
+        &quot;content&quot;: &quot;&lt;p&gt;Lorem ipsum dolor sit amet eiusmod.&lt;/p&gt;&quot;,
+        &quot;hasImage&quot;: true,
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;stats&quot;
+  },
+  {
+    &quot;checklists&quot;: [
+      {
+        &quot;title&quot;: &quot;Titre&quot;,
+        &quot;items&quot;: [
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          },
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          },
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          }
+        ],
+        &quot;disabledItems&quot;: [
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          },
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          },
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          },
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          }
+        ],
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;
+      },
+      {
+        &quot;title&quot;: &quot;Titre&quot;,
+        &quot;items&quot;: [
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          },
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          },
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          },
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          }
+        ],
+        &quot;disabledItems&quot;: [
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          },
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          },
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          }
+        ],
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;
+      },
+      {
+        &quot;title&quot;: &quot;Titre&quot;,
+        &quot;items&quot;: [
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          },
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          },
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          },
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          },
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          },
+          {
+            &quot;title&quot;: &quot;Lorem ipsum dolor&quot;
+          }
+        ],
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;,
+        &quot;highlighted&quot;: true,
+        &quot;highlightedText&quot;: &quot;Le plus efficace&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;checklists&quot;,
+    &quot;titleBackground&quot;: &quot;--color1&quot;,
+    &quot;titleColor&quot;: &quot;--color3&quot;,
+    &quot;backgroundColor&quot;: &quot;--color2&quot;
+  },
+  {
+    &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;,
+    &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&quot;,
+    &quot;buttons&quot;: [],
+    &quot;products&quot;: [
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;,
+        &quot;price&quot;: &quot;X&euro; / mois&quot;,
+        &quot;priceInfos&quot;: &quot;Livraison inclue&quot;,
+        &quot;arguments&quot;: &quot;Livraison inclue&quot;,
+        &quot;infos&quot;: &quot;Reconduit tous les mois&quot;,
+        &quot;label&quot;: &quot;Bouton 1&quot;,
+        &quot;url&quot;: &quot;#&quot;,
+        &quot;type&quot;: &quot;primary&quot;,
+        &quot;highlight&quot;: &quot;Meilleur vente !&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;,
+        &quot;price&quot;: &quot;X&euro; / mois&quot;,
+        &quot;priceInfos&quot;: &quot;Livraison inclue&quot;,
+        &quot;label&quot;: &quot;Bouton 2&quot;,
+        &quot;url&quot;: &quot;#&quot;,
+        &quot;highlight&quot;: &quot;&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;products&quot;
+  },
+  {
+    &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;,
+    &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&quot;,
+    &quot;facebook&quot;: &quot;#&quot;,
+    &quot;instagram&quot;: false,
+    &quot;pinterest&quot;: &quot;#&quot;,
+    &quot;images&quot;: [
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;,
+        &quot;title&quot;: &quot;&quot;,
+        &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;gallery&quot;,
+    &quot;highlight&quot;: true,
+    &quot;titleLeft&quot;: true
+  },
+  {
+    &quot;title&quot;: &quot;Lorem ipsum dolor sit amet 5 x 5&quot;,
+    &quot;images&quot;: [
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;images-carousel&quot;,
+    &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&quot;,
+    &quot;slidesVisible&quot;: &quot;5&quot;,
+    &quot;slidesScroll&quot;: &quot;4&quot;,
+    &quot;slidesToScroll&quot;: &quot;5&quot;
+  },
+  {
+    &quot;title&quot;: &quot;Lorem ipsum dolor sit amet 1 / 5&quot;,
+    &quot;images&quot;: [
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;images-carousel&quot;,
+    &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&quot;,
+    &quot;slidesVisible&quot;: &quot;5&quot;,
+    &quot;slidesScroll&quot;: &quot;4&quot;,
+    &quot;slidesToScroll&quot;: &quot;1&quot;
+  },
+  {
+    &quot;title&quot;: &quot;Lorem ipsum dolor sit amet 2 /4&quot;,
+    &quot;images&quot;: [
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/bg-promo_qdrvux4.jpg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;images-carousel&quot;,
+    &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&quot;,
+    &quot;slidesVisible&quot;: &quot;4&quot;,
+    &quot;slidesScroll&quot;: &quot;4&quot;,
+    &quot;slidesToScroll&quot;: &quot;2&quot;
+  },
+  {
+    &quot;title&quot;: &quot;Titre&quot;,
+    &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;
+      },
+      {
+        &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet.&quot;,
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;
+      },
+      {
+        &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet.&quot;,
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;
+      },
+      {
+        &quot;content&quot;: &quot;&lt;ul&gt;&lt;li&gt;Minim veniam, quis nostrud&lt;/li&gt;&lt;li&gt;exercitation ullamco laboris &lt;/li&gt;&lt;li&gt;nisi ut aliquip ex ea commodo &lt;/li&gt;&lt;li&gt;consequat.Lorem ipsum dolor sit amet.&lt;/li&gt;&lt;/ul&gt;&quot;,
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;icons-columns&quot;,
+    &quot;backgroundColor&quot;: &quot;--color1&quot;,
+    &quot;textColor&quot;: &quot;--color3&quot;,
+    &quot;buttons&quot;: [],
+    &quot;layout&quot;: &quot;column&quot;
+  },
+  {
+    &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/banni%C3%A8res_boxraiser_1.jpg&quot;,
+    &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;,
+    &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Minim veniam, quis nostrud exercitation&lt;/li&gt;&lt;li&gt;ullamco laboris nisi ut aliquip ex&lt;/li&gt;&lt;li&gt;ea commodo consequat. ullamco laboris nisi ut aliquip ex ullamco laboris nisi ut aliquip ex&lt;/li&gt;&lt;/ul&gt;&quot;,
+    &quot;icons&quot;: [
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;label&quot;: &quot;LOREM IPSUM DOLOR&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;label&quot;: &quot;LOREM IPSUM DOLOR&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;label&quot;: &quot;LOREM IPSUM DOLOR&quot;
+      }
+    ],
+    &quot;checkox&quot;: true,
+    &quot;buttons&quot;: [
+      {
+        &quot;label&quot;: &quot;Bouton 1&quot;,
+        &quot;url&quot;: &quot;#&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Bouton 2&quot;,
+        &quot;url&quot;: &quot;#&quot;,
+        &quot;type&quot;: &quot;secondary&quot;
+      }
+    ],
+    &quot;backgroundColor&quot;: &quot;--color4&quot;,
+    &quot;_name&quot;: &quot;text-image&quot;,
+    &quot;checkicon&quot;: true,
+    &quot;iconColor&quot;: &quot;--color1&quot;,
+    &quot;align&quot;: &quot;left&quot;
+  },
+  {
+    &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;,
+    &quot;items&quot;: [
+      {
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;,
+        &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&quot;
+      },
+      {
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-panier.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;,
+        &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&quot;
+      },
+      {
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-panier.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;,
+        &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;alternate-icons&quot;
+  },
+  {
+    &quot;title&quot;: &quot;Titre&quot;,
+    &quot;content&quot;: &quot;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing.&lt;/p&gt;&quot;,
+    &quot;buttons&quot;: [
+      {
+        &quot;label&quot;: &quot;Bouton 1&quot;,
+        &quot;url&quot;: &quot;#&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Bouton 2&quot;,
+        &quot;url&quot;: &quot;#&quot;,
+        &quot;type&quot;: &quot;secondary&quot;
+      }
+    ],
+    &quot;backgroundColor&quot;: &quot;--color1&quot;,
+    &quot;_name&quot;: &quot;cta-hover&quot;,
+    &quot;background&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;,
+    &quot;textPosition&quot;: &quot;right&quot;
+  },
+  {
+    &quot;news&quot;: [
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit&quot;,
+        &quot;content&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna ad mini&hellip;&quot;,
+        &quot;url&quot;: &quot;#&quot;,
+        &quot;category&quot;: &quot;Cat&eacute;gorie&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit&quot;,
+        &quot;content&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna ad mini&hellip;&quot;,
+        &quot;url&quot;: &quot;#&quot;,
+        &quot;category&quot;: &quot;Cat&eacute;gorie&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/team.jpg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit&quot;,
+        &quot;content&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna ad mini&hellip;&quot;,
+        &quot;url&quot;: &quot;#&quot;,
+        &quot;category&quot;: &quot;Cat&eacute;gorie&quot;
+      }
+    ],
+    &quot;buttons&quot;: [
+      {
+        &quot;label&quot;: &quot;Bouton 1&quot;,
+        &quot;url&quot;: &quot;#&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Bouton 2&quot;,
+        &quot;url&quot;: &quot;#&quot;,
+        &quot;type&quot;: &quot;secondary&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;news&quot;,
+    &quot;categoryColor&quot;: &quot;--color1&quot;
+  },
+  {
+    &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;title&quot;: &quot;Titre&quot;,
+        &quot;content&quot;: &quot;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.&lt;/p&gt;&quot;,
+        &quot;note&quot;: &quot;4&quot;
+      },
+      {
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;content&quot;: &quot;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.&lt;/p&gt;&quot;,
+        &quot;title&quot;: &quot;Titre&quot;,
+        &quot;note&quot;: &quot;5&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;user-ratings&quot;,
+    &quot;content&quot;: &quot;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adiscing elit.&lt;/p&gt;&quot;
+  },
+  {
+    &quot;title&quot;: &quot;Lorem ipsum dolor sit amet, consectetur sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;,
+        &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&quot;
+      },
+      {
+        &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;,
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;
+      },
+      {
+        &quot;icon&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet&quot;,
+        &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.&lt;/p&gt;&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;title-icons-columns&quot;
+  },
+  {
+    &quot;title&quot;: &quot;Titre&quot;,
+    &quot;images&quot;: [
+      {
+        &quot;image&quot;: &quot;https://picsum.photos/seed/picsum/200/300&quot;,
+        &quot;content&quot;: &quot;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.&lt;/p&gt;&lt;p&gt;Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&lt;/p&gt;&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://picsum.photos/seed/picsum/200/300&quot;,
+        &quot;content&quot;: &quot;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.&lt;/p&gt;&lt;p&gt;Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&lt;/p&gt;&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://picsum.photos/seed/picsum/200/300&quot;,
+        &quot;content&quot;: &quot;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.&lt;/p&gt;&lt;p&gt;Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&lt;/p&gt;&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;images-hoverable&quot;
+  },
+  {
+    &quot;title&quot;: &quot;Titre&quot;,
+    &quot;content&quot;: &quot;&lt;p&gt;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.&lt;/p&gt;&quot;,
+    &quot;icons&quot;: [
+      {
+        &quot;label&quot;: &quot;LOREM IPSUM DOLOR&quot;,
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;label&quot;: &quot;LOREM IPSUM DOLOR&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;label&quot;: &quot;LOREM IPSUM DOLOR&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/ico-user.svg&quot;,
+        &quot;label&quot;: &quot;LOREM IPSUM DOLOR&quot;
+      }
+    ],
+    &quot;buttons&quot;: [
+      {
+        &quot;label&quot;: &quot;Bouton 1&quot;,
+        &quot;url&quot;: &quot;#&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Bouton 2&quot;,
+        &quot;url&quot;: &quot;#&quot;,
+        &quot;type&quot;: &quot;secondary&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;bloc-centered&quot;
+  },
+  {
+    &quot;image&quot;: &quot;https://picsum.photos/seed/picsum/200/300&quot;,
+    &quot;title&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do&quot;,
+    &quot;caption&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipidcing&quot;,
+    &quot;align&quot;: &quot;right&quot;,
+    &quot;steps&quot;: [
+      {
+        &quot;step&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.&quot;
+      },
+      {
+        &quot;step&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.&quot;
+      },
+      {
+        &quot;step&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.&quot;
+      },
+      {
+        &quot;step&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;steps&quot;,
+    &quot;backgroundColor&quot;: &quot;--color1&quot;,
+    &quot;textColor&quot;: &quot;--color3&quot;,
+    &quot;stepColor&quot;: &quot;--color2&quot;
+  },
+  {
+    &quot;image&quot;: &quot;https://picsum.photos/seed/picsum/200/300&quot;,
+    &quot;title&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do&quot;,
+    &quot;caption&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipidcing&quot;,
+    &quot;align&quot;: &quot;left&quot;,
+    &quot;steps&quot;: [
+      {
+        &quot;step&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.&quot;
+      },
+      {
+        &quot;step&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.&quot;
+      },
+      {
+        &quot;step&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.&quot;
+      },
+      {
+        &quot;step&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;steps&quot;
+  },
+  {
+    &quot;columns&quot;: [
+      {
+        &quot;title&quot;: &quot;Lorem ipsum dolor&quot;,
+        &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&quot;,
+        &quot;image&quot;: &quot;https://picsum.photos/id/1027/2848/4272&quot;
+      },
+      {
+        &quot;title&quot;: &quot;Lorem ipsum dolor&quot;,
+        &quot;content&quot;: &quot;Minim veniam, quis nostrud&quot;,
+        &quot;image&quot;: &quot;https://picsum.photos/id/1027/2848/4272&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://picsum.photos/id/1027/2848/4272&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor&quot;,
+        &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&quot;
+      },
+      {
+        &quot;image&quot;: &quot;https://picsum.photos/id/1027/2848/4272&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor&quot;,
+        &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;testimonials&quot;
+  },
+  {
+    &quot;_name&quot;: &quot;newsletter&quot;,
+    &quot;title&quot;: &quot;S&rsquo;inscrire &agrave; la newsletter&quot;,
+    &quot;content&quot;: &quot;Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&quot;
+  },
+  {
+    &quot;slides&quot;: [
+      {
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do&quot;,
+        &quot;content&quot;: &quot;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing &lt;strong style=\&quot;color: var(--color2);\&quot;&gt;elit&lt;/strong&gt;, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;&quot;,
+        &quot;textposition&quot;: &quot;center&quot;,
+        &quot;background&quot;: &quot;&quot;,
+        &quot;buttons&quot;: [
+          {
+            &quot;label&quot;: &quot;Bouton 1&quot;,
+            &quot;url&quot;: &quot;#&quot;
+          },
+          {
+            &quot;label&quot;: &quot;Bouton 2&quot;,
+            &quot;url&quot;: &quot;#&quot;,
+            &quot;type&quot;: &quot;secondary&quot;
+          }
+        ],
+        &quot;backgroundMobile&quot;: &quot;&quot;,
+        &quot;backgroundColor&quot;: &quot;--color2&quot;,
+        &quot;textColor&quot;: &quot;--color4&quot;
+      },
+      {
+        &quot;content&quot;: &quot;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;&quot;,
+        &quot;textposition&quot;: &quot;left&quot;,
+        &quot;background&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/banni%C3%A8res_boxraiser_1_ms6bs3g.jpg&quot;,
+        &quot;title&quot;: &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do&quot;,
+        &quot;backgroundMobile&quot;: &quot;https://brz-fezfez.s3.eu-central-1.amazonaws.com/fisher-arg-1.png&quot;
+      }
+    ],
+    &quot;_name&quot;: &quot;hero-big&quot;
+  }
+]"
       ></visual-editor
     >
 

@@ -15,6 +15,9 @@ type FieldArgs = {
  * Enregistre un champs de type texte
  */
 export class HTMLText extends AbstractField<FieldArgs, string> {
+
+  variables: Record<string, string> = {}
+
   get defaultArgs() {
     return {
       multiline: true,
@@ -26,7 +29,7 @@ export class HTMLText extends AbstractField<FieldArgs, string> {
     return (
       <div class="form-group">
         {this.args.label && <label class="form-label">{this.args.label}</label>}
-        <div className="ve-input">
+        <div className="ve-input ve-wysiwyg">
           <QuillEditor
             value={value || ''}
             onChange={onChange}
@@ -37,6 +40,16 @@ export class HTMLText extends AbstractField<FieldArgs, string> {
         {this.args.help && <div class="form-text">{this.args.help}</div>}
       </div>
     )
+  }
+
+  background (fieldName: string) {
+    this.variables.background = fieldName
+    return this
+  }
+
+  color (fieldName: string) {
+    this.variables.color = fieldName
+    return this
   }
 
   private fieldType() {

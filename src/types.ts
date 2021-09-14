@@ -11,7 +11,8 @@ export interface EditorField<V> {
   name: string
   field: FunctionComponent<EditorFieldProps<V>>
   defaultValue: V
-  shouldRender: (data: Record<string, string>) => boolean
+  shouldRender: (data: Record<string, string>) => boolean,
+  injectStyle: (data: Record<string, any>) => Record<string, string> | null
 }
 
 export interface IndexableObject {
@@ -30,5 +31,10 @@ export type EditorComponentDefinitions = Record<
   string,
   EditorComponentDefinition
 >
+
+export type DragData = {
+  component: FunctionComponent
+  [key: string]: any
+}
 
 export type EventWithTarget<T> = EventTarget & { target: T }

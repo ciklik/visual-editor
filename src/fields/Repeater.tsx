@@ -8,6 +8,7 @@ import { useToggle } from 'src/hooks/useToggle'
 import { prevent } from 'src/functions/functions'
 import { fillDefaults } from '../functions/fields'
 import { AbstractFieldGroup } from './AbstractFieldGroup'
+import cx from 'clsx'
 
 type FieldArgs = {
   label?: string
@@ -130,11 +131,11 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
         )}
         {this.args.collapsed && (
           <button
-            class="ve-repeater-collapse"
+            class={cx("ve-repeater-collapse", collapsed && 'is-collapsed')}
             onClick={prevent(toggleCollapsed)}
             title="Replier/Déplier l'élément"
           >
-            {collapsed ? '▴' : '▾'}
+            ▾
           </button>
         )}
       </Sortable>

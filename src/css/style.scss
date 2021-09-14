@@ -78,9 +78,10 @@ mark {
   transition: transform .5s cubic-bezier(0.19, 1, 0.22, 1);
   overflow: auto;
 
-  .is-dragging & {
-    overflow: visible;
+  * {
+    scroll-margin: 90px;
   }
+
 }
 
 .ve-fields {
@@ -328,6 +329,12 @@ mark {
   position: absolute;
   top: -7px;
   left: -4px;
+  font-size: 1rem;
+  line-height: 24px;
+
+  &.is-collapsed {
+    transform: rotate(-90deg);
+  }
 }
 
 @import "preview";
