@@ -56,9 +56,11 @@ const createStore = (data: EditorComponentData[] = []) =>
             }))
           },
           removeBloc: function (removedData: EditorComponentData) {
-            return set(({ data }) => ({
-              data: data.filter((d) => d !== removedData),
-            }))
+            if (confirm('Voulez vous vraiment supprimer ce bloc ?')) {
+              return set(({ data }) => ({
+                data: data.filter((d) => d !== removedData),
+              }))
+            }
           },
           insertData: function (
             name: string,
