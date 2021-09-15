@@ -35,7 +35,7 @@ export class ImageUrl extends AbstractField<FieldArgs, string> {
               ref={inputRef}
               type="text"
               id={id}
-              class="form-control"
+              class="ve-input ve-input-image"
               value={value}
               onInput={(e) => onChange((e.target as HTMLInputElement).value)}
             />

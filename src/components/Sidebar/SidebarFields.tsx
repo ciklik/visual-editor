@@ -137,19 +137,21 @@ function Fields({
       {fields
         .filter((field) => field.shouldRender(data))
         .map((field, k) =>
-          field instanceof AbstractFieldGroup ? (
-            <field.render>
-              <Fields fields={field.fields} data={data} path={path} />
-            </field.render>
-          ) : (
-            <Field
-              key={field.name}
-              field={field}
-              value={field.name ? data[field.name] : undefined}
-              path={`${path}.${field.name}`}
-              style={field.injectStyle(data)}
-            />
-          )
+          field instanceof AbstractFieldGroup
+            ? field.shouldRender(data) && (
+                <field.render>
+                  <Fields fields={field.fields} data={data} path={path} />
+                </field.render>
+              )
+            : field.shouldRender(data) && (
+                <Field
+                  key={field.name}
+                  field={field}
+                  value={field.name ? data[field.name] : undefined}
+                  path={`${path}.${field.name}`}
+                  style={field.injectStyle(data)}
+                />
+              )
         )}
     </>
   )
