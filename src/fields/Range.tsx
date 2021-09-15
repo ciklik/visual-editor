@@ -22,7 +22,9 @@ export class Range extends AbstractField<FieldArgs, string> {
 
   field({ value, onChange }: EditorFieldProps<string>) {
     const id = useUniqId('rangeinput')
-    const marks = Math.round((this.args.max! - this.args.min! + 1) / this.args.step!)
+    const marks = Math.round(
+      (this.args.max! - this.args.min! + 1) / this.args.step!
+    )
     const ticks = new Array(marks).fill(0).map((v, k) => k + this.args.min!)
     return (
       <div>
@@ -43,7 +45,9 @@ export class Range extends AbstractField<FieldArgs, string> {
           onInput={(e) => onChange((e.target as HTMLInputElement).value)}
         />
         <datalist id={id + 'marks'}>
-          {ticks.map(t => (<option key={t} value={t.toString()}/>))}
+          {ticks.map((t) => (
+            <option key={t} value={t.toString()} />
+          ))}
         </datalist>
         {this.args.help && <div class="form-text">{this.args.help}</div>}
       </div>

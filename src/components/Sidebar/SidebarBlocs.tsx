@@ -57,8 +57,8 @@ function SidebarBloc({
       data: {
         component: SidebarBlocIcon,
         icon,
-        title
-      }
+        title,
+      },
     })
 
   return (
@@ -69,23 +69,17 @@ function SidebarBloc({
         {...attributes}
         {...listeners}
       >
-        {!isDragging && (
-          <SidebarBlocIcon icon={icon} title={title}/>)
-        }
+        {!isDragging && <SidebarBlocIcon icon={icon} title={title} />}
       </div>
     </div>
   )
 }
 
-function SidebarBlocIcon ({
-                            title,
-                            icon,
-                          }: {
-  title: string
-  icon: string
-}) {
-  return <div class="ve-bloc">
-    <img src={icon} />
-    <span>{title}</span>
-  </div>
+function SidebarBlocIcon({ title, icon }: { title: string; icon: string }) {
+  return (
+    <div class="ve-bloc">
+      <img src={icon} />
+      <span>{title}</span>
+    </div>
+  )
 }

@@ -8,15 +8,14 @@ type FieldArgs = {
   multiline?: boolean
   help?: string
   allowHeadings?: boolean
-  colors?: string[],
-  default?: string,
+  colors?: string[]
+  default?: string
 }
 
 /**
  * Enregistre un champs de type texte
  */
 export class HTMLText extends AbstractField<FieldArgs, string> {
-
   variables: Record<string, string> = {}
 
   get defaultArgs() {
@@ -44,12 +43,12 @@ export class HTMLText extends AbstractField<FieldArgs, string> {
     )
   }
 
-  background (fieldName: string) {
+  background(fieldName: string) {
     this.variables.background = fieldName
     return this
   }
 
-  color (fieldName: string) {
+  color(fieldName: string) {
     this.variables.color = fieldName
     return this
   }

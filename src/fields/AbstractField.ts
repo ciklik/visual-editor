@@ -1,8 +1,6 @@
-import { EditorField } from 'src/types'
+import { EditorField, FieldCondition } from 'src/types'
 import { VNode } from 'preact'
 import { cast } from '../functions/object'
-
-type FieldCondition = (data: Record<string, any>) => boolean
 
 export class AbstractField<Args extends Record<string, any>, V>
   implements EditorField<V>
@@ -29,10 +27,12 @@ export class AbstractField<Args extends Record<string, any>, V>
   }
 
   when(fieldName: string, expectedValue: any = true) {
-    this.conditions.push(
-      (data: Record<string, any>) =>
-        cast(data[fieldName], expectedValue) === expectedValue
-    )
+    this.conditions.push((data: Record<string, any>) => {
+      if (typeof expectedValue === 'function') {
+        return expectedValue(data[fieldName])
+      }
+      return cast(data[fieldName], expectedValue) === expectedValue
+    })
     return this
   }
 
@@ -47,9 +47,9 @@ export class AbstractField<Args extends Record<string, any>, V>
     return Object.keys(this.variables).reduce((acc, key) => {
       const value = data[this.variables![key]]
       if (value) {
-        return {...acc, [`--${key}`]: `var(${value})`}
+        return { ...acc, [`--${key}`]: `var(${value})` }
       }
-      return acc;
+      return acc
     }, {})
   }
 

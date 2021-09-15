@@ -1,10 +1,15 @@
 import clsx from 'clsx'
 import { Sidebar } from 'src/components/Sidebar/Sidebar'
 import { Preview } from 'src/components/Preview'
-import { DragData, EditorComponentData, EditorComponentDefinitions } from 'src/types'
+import {
+  DragData,
+  EditorComponentData,
+  EditorComponentDefinitions,
+} from 'src/types'
 import { DragEndEvent } from '@dnd-kit/core/dist/types'
 import {
-  DndContext, DragOverlay,
+  DndContext,
+  DragOverlay,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -37,7 +42,7 @@ export function Layout({
 }: LayoutProps) {
   const insertData = useInsertData()
   const [isDragging, setIsDragging] = useState(false)
-  const [dragData, setDragData] = useState<DragData|null>(null)
+  const [dragData, setDragData] = useState<DragData | null>(null)
 
   // Lorsqu'on ajoute un nouveau bloc
   const handleBlocDrop = (e: DragEndEvent) => {
@@ -61,7 +66,7 @@ export function Layout({
     })
   )
 
-  const handleDragStart = ({active}: {active: { data: DragData }}) => {
+  const handleDragStart = ({ active }: { active: { data: DragData } }) => {
     setDragData(active.data.current)
     setIsDragging(true)
   }
@@ -82,12 +87,12 @@ export function Layout({
           />
           {previewUrl && <Preview data={data} previewUrl={previewUrl} />}
         </div>
-        <DragOverlay style={{zIndex: 9000}}>
+        <DragOverlay style={{ zIndex: 9000 }}>
           {dragData ? (
             <div class="ve-drag-overlay">
-              <dragData.component {...dragData as any} />
+              <dragData.component {...(dragData as any)} />
             </div>
-          ): null}
+          ) : null}
         </DragOverlay>
       </DndContext>
       <ResizeBar />

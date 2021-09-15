@@ -100,7 +100,9 @@ const SidebarItem = memo(function SidebarItem({
       </button>
       <div ref={ref}>
         <div className="ve-sidebar-bloc__head">
-          <h2 class="ve-sidebar-title" onClick={prevent(toggleCollapsed)}>{title}</h2>
+          <h2 class="ve-sidebar-title" onClick={prevent(toggleCollapsed)}>
+            {title}
+          </h2>
           <div class="ve-sidebar-actions">
             <CopyAction data={data} />
             <button
@@ -132,13 +134,14 @@ function Fields({
 }) {
   return (
     <>
-      {fields.map((field, k) =>
-        field instanceof AbstractFieldGroup ? (
-          <field.render>
-            <Fields fields={field.fields} data={data} path={path} />
-          </field.render>
-        ) : (
-          field.shouldRender(data) && (
+      {fields
+        .filter((field) => field.shouldRender(data))
+        .map((field, k) =>
+          field instanceof AbstractFieldGroup ? (
+            <field.render>
+              <Fields fields={field.fields} data={data} path={path} />
+            </field.render>
+          ) : (
             <Field
               key={field.name}
               field={field}
@@ -147,8 +150,7 @@ function Fields({
               style={field.injectStyle(data)}
             />
           )
-        )
-      )}
+        )}
     </>
   )
 }

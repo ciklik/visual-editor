@@ -131,7 +131,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
         )}
         {this.args.collapsed && (
           <button
-            class={cx("ve-repeater-collapse", collapsed && 'is-collapsed')}
+            class={cx('ve-repeater-collapse', collapsed && 'is-collapsed')}
             onClick={prevent(toggleCollapsed)}
             title="Replier/Déplier l'élément"
           >

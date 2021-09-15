@@ -11,7 +11,7 @@ export interface EditorField<V> {
   name: string
   field: FunctionComponent<EditorFieldProps<V>>
   defaultValue: V
-  shouldRender: (data: Record<string, string>) => boolean,
+  shouldRender: (data: Record<string, string>) => boolean
   injectStyle: (data: Record<string, any>) => Record<string, string> | null
 }
 
@@ -38,3 +38,5 @@ export type DragData = {
 }
 
 export type EventWithTarget<T> = EventTarget & { target: T }
+
+export type FieldCondition = (data: Record<string, any>) => boolean
