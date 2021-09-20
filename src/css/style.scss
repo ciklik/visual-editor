@@ -186,12 +186,20 @@ visual-editor {
 
 .ve-sidebar-title {
   margin: 0;
-  color: var(--color);
-  text-transform: uppercase;
+  color: var(--color-light);
   font-size: 0.85em;
-  font-weight: lighter;
   cursor: pointer;
   user-select: none;
+  font-weight: normal;
+  line-height: 1.4;
+
+  strong {
+    color: var(--color);
+    display: block;
+    font-size: .9rem;
+  }
+
+
 }
 
 .ve-debug {

@@ -63,9 +63,7 @@ const SidebarItem = memo(function SidebarItem({
   const [isCollapsed, toggleCollapsed, setCollapsed] = useToggle(!isFocused)
   const removeBloc = useRemoveBloc()
   const label =
-    definition.label && data[definition.label]
-      ? definition.title + ' : ' + data[definition.label]
-      : definition.title
+    definition.label && data[definition.label] ? data[definition.label] : null
 
   // Scroll vers l'élément lorsqu'il a le focus
   useUpdateEffect(() => {
@@ -80,8 +78,8 @@ const SidebarItem = memo(function SidebarItem({
       setCollapsed(true)
     }
   }, [isFocused])
-  const title = useMemo(
-    () => (label.includes('<') ? strToDom(label).innerText : label),
+  const labelHTMLSafe = useMemo(
+    () => (label?.includes('<') ? strToDom(label).innerText : label),
     [label]
   )
 
@@ -101,7 +99,8 @@ const SidebarItem = memo(function SidebarItem({
       <div ref={ref}>
         <div className="ve-sidebar-bloc__head">
           <h2 class="ve-sidebar-title" onClick={prevent(toggleCollapsed)}>
-            {title}
+            <strong>{definition.title}</strong>
+            {isCollapsed ? labelHTMLSafe : null}
           </h2>
           <div class="ve-sidebar-actions">
             <CopyAction data={data} />
