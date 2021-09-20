@@ -1,5 +1,5 @@
 import { EditorField, FieldCondition } from 'src/types'
-import { FunctionComponent, h } from 'preact'
+import { FunctionComponent, h, VNode } from 'preact'
 import { cast } from '../functions/object'
 
 export class AbstractFieldGroup<A extends Record<string, any>> {
@@ -15,7 +15,7 @@ export class AbstractFieldGroup<A extends Record<string, any>> {
     this.args = args
   }
 
-  render: FunctionComponent<{}> = () => {
+  render: FunctionComponent<{ children: VNode<any> }> = () => {
     return h('div', {}, 'Vous devez implémenter la méthode render')
   }
 

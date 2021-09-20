@@ -5,6 +5,7 @@ visual-editor {
 .ve-wrapper {
   --sidebar: 600px;
   --primary: #1771E6;
+  --primary-light: #1771E60C;
   --color: #111827;
   --color-light: #6b7280;
   --field-border: rgb(209, 213, 219);
@@ -368,3 +369,4 @@ visual-editor {
 @import "blocs";
 @import "animation";
 @import "form";
+@import "tabs";

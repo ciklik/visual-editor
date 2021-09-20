@@ -3,6 +3,7 @@ import {
   Number as NumberField,
   Repeater,
   Select,
+  Tabs,
   Text,
   VisualEditor,
 } from 'src/VisualEditor'
@@ -75,26 +76,38 @@ editor.registerComponent('hero-big', {
 editor.registerComponent('icons-columns', {
   title: 'Section avec icônes',
   fields: [
-    Title(),
-    Content(),
-    ...Style(),
-    new Select('layout', {
-      label: 'Affichage',
-      default: 'column',
-      options: [
-        { label: 'Colonnes', value: 'column' },
-        { label: 'Grille', value: 'grid' },
-        { label: 'Lignes', value: 'row' },
-      ],
-    }),
-    new Repeater('columns', {
-      label: 'Colonnes',
-      collapsed: 'title',
-      min: 1,
-      addLabel: 'Ajouter une colonne',
-      fields: [ImageField('icon', 'Icône'), Title(), Content()],
-    }),
-    Buttons(),
+    new Tabs(
+      {
+        label: 'Contenu',
+        fields: [
+          Title(),
+          Content(),
+          new Repeater('columns', {
+            label: 'Colonnes',
+            collapsed: 'title',
+            min: 1,
+            addLabel: 'Ajouter une colonne',
+            fields: [ImageField('icon', 'Icône'), Title(), Content()],
+          }),
+          Buttons(),
+        ],
+      },
+      {
+        label: 'Apparence',
+        fields: [
+          new Select('layout', {
+            label: 'Affichage',
+            default: 'column',
+            options: [
+              { label: 'Colonnes', value: 'column' },
+              { label: 'Grille', value: 'grid' },
+              { label: 'Lignes', value: 'row' },
+            ],
+          }),
+          ...Style(),
+        ],
+      }
+    ),
   ],
 })
 

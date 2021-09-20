@@ -1,0 +1,21 @@
+.ve-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--hover);
+}
+
+.ve-tabs button {
+  padding:0.5rem 1rem;
+  font-size: .875rem;
+  color: var(--color-light);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.ve-tabs button[aria-selected="true"] {
+  border-color: var(--primary);
+  color: var(--primary);
+  background-color: var(--primary-light);
+}
