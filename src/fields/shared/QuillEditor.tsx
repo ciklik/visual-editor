@@ -26,11 +26,13 @@ const toolbars: Record<QuillEditorMode, (string | Record<string, any>)[]> = {
   ],
   [QuillEditorMode.DEFAULT]: [
     [{ list: 'ordered' }, { list: 'bullet' }],
+    [{ align: [] }],
     ['bold', 'italic', 'underline', 'background', 'link', 'clean'],
   ],
   [QuillEditorMode.FULL]: [
     [{ header: [2, false] }],
     [{ list: 'ordered' }, { list: 'bullet' }],
+    [{ align: [] }],
     ['bold', 'italic', 'underline', 'background', 'link', 'clean'],
   ],
 }

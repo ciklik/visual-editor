@@ -110,7 +110,7 @@ export const Style = () => [
       ],
     }),
   ]).when('background', (b: string) => b),
-  new Range('padding', { label: 'Padding vertical' }),
+  new Range('padding', { label: 'Padding vertical', default: 3 }),
 ]
 
 export const IconsWithLabel = () =>

@@ -15,12 +15,12 @@ type FieldArgs = {
 /**
  * Enregistre un champs de type texte
  */
-export class Range extends AbstractField<FieldArgs, string> {
+export class Range extends AbstractField<FieldArgs, number> {
   get defaultArgs() {
     return { default: 5, min: 0, max: 5, step: 1 }
   }
 
-  field({ value, onChange }: EditorFieldProps<string>) {
+  field({ value, onChange }: EditorFieldProps<number>) {
     const id = useUniqId('rangeinput')
     const marks = Math.round(
       (this.args.max! - this.args.min! + 1) / this.args.step!
@@ -42,7 +42,9 @@ export class Range extends AbstractField<FieldArgs, string> {
           list={id + 'marks'}
           class="ve-input"
           value={value}
-          onInput={(e) => onChange((e.target as HTMLInputElement).value)}
+          onInput={(e) =>
+            onChange(parseInt((e.target as HTMLInputElement).value, 10))
+          }
         />
         <datalist id={id + 'marks'}>
           {ticks.map((t) => (

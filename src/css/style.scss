@@ -2,10 +2,6 @@ visual-editor {
   display: block;
 }
 
-mark {
-  background-color: yellow;
-}
-
 .ve-wrapper {
   --sidebar: 600px;
   --primary: #1771E6;
@@ -18,6 +14,22 @@ mark {
   --shadow-dragging: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;  justify-content: center;
   --gap: .5em;
   --clampedSidebar: clamp(450px, var(--sidebar), calc(100vw - 375px))
+
+}
+
+.ve-wrapper ::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.ve-wrapper ::-webkit-scrollbar-track {
+  background: transparent;
+  padding: 1px;
+}
+
+.ve-wrapper ::-webkit-scrollbar-thumb {
+  background: var(--field-border);
+  border-radius: 4px;
 }
 
 .ve-layout {
