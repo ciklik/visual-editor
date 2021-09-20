@@ -22,8 +22,11 @@ export interface IndexableObject {
 export type EditorFieldProps<V> = { value?: V; onChange: (value: V) => void }
 
 export type EditorComponentDefinition = {
+  // Titre du bloc
   title: string
+  // Champs dont la valeur sera utilisé comme label de bloc
   label?: string
+  // Champs du bloc
   fields: Array<EditorField<any> | AbstractFieldGroup<any>>
 }
 

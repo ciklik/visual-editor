@@ -10,7 +10,12 @@ import { useUpdateEffect } from 'src/hooks/useUpdateEffect'
 import { Sortable, SortableWrapper } from 'src/components/Sortable'
 import { moveItem } from 'src/functions/array'
 import { prevent } from 'src/functions/functions'
-import { useFieldFocused, useRemoveBloc, useUpdateData } from 'src/store'
+import {
+  useFieldFocused,
+  useRemoveBloc,
+  useSetFocusIndex,
+  useUpdateData,
+} from 'src/store'
 import { memo } from 'preact/compat'
 import { strToDom } from 'src/functions/dom'
 import { IconChevron } from 'src/components/Icons'
@@ -60,6 +65,7 @@ const SidebarItem = memo(function SidebarItem({
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const isFocused = useFieldFocused(data._id)
+  const setFocus = useSetFocusIndex()
   const [isCollapsed, toggleCollapsed, setCollapsed] = useToggle(!isFocused)
   const removeBloc = useRemoveBloc()
   const label =
@@ -98,7 +104,10 @@ const SidebarItem = memo(function SidebarItem({
       </button>
       <div ref={ref}>
         <div className="ve-sidebar-bloc__head">
-          <h2 class="ve-sidebar-title" onClick={prevent(toggleCollapsed)}>
+          <h2
+            class="ve-sidebar-title"
+            onClick={prevent(() => setFocus(data._id))}
+          >
             <strong>{definition.title}</strong>
             {isCollapsed ? labelHTMLSafe : null}
           </h2>

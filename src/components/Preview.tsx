@@ -1,4 +1,4 @@
-import { EditorComponentData } from 'src/types'
+import { EditorComponentData, EditorComponentDefinitions } from 'src/types'
 import { useEffect, useRef, useState } from 'preact/hooks'
 import { createPortal } from 'preact/compat'
 import { useAsyncEffect } from 'src/hooks/useAsyncEffect'
@@ -20,12 +20,13 @@ import { offsetLeft } from 'src/functions/dom'
 type PreviewProps = {
   data: EditorComponentData[]
   previewUrl: string
+  definitions: EditorComponentDefinitions
 }
 
 /**
  * Affiche un aperçu du rendu de la page dans une iframe
  */
-export function Preview({ data, previewUrl }: PreviewProps) {
+export function Preview({ data, previewUrl, definitions }: PreviewProps) {
   const iframe = useRef<HTMLIFrameElement>(null)
   const [iframeRoot, setIframeRoot] = useState<HTMLElement | null>(null)
   const initialHTML = useRef<Record<string, string>>({})
@@ -101,6 +102,7 @@ export function Preview({ data, previewUrl }: PreviewProps) {
             data={data}
             initialHTML={initialHTML.current}
             previewUrl={previewUrl}
+            definitions={definitions}
           />,
           iframeRoot
         )}
@@ -115,10 +117,12 @@ export function PreviewItems({
   data,
   initialHTML = {},
   previewUrl,
+  definitions,
 }: {
   data: EditorComponentData[]
   initialHTML: Record<string, string>
   previewUrl: string
+  definitions: EditorComponentDefinitions
 }) {
   if (data.length === 0) {
     return <PreviewItemPlaceholder />
@@ -127,6 +131,7 @@ export function PreviewItems({
     <Flipper flipKey={data.map((d) => d._id).join('_')}>
       {data.map((v, k) => (
         <PreviewItem
+          title={definitions[v._name]?.title}
           data={v}
           initialHTML={initialHTML[v._id]}
           key={v._id}
@@ -146,11 +151,13 @@ export function PreviewItem({
   initialHTML,
   previewUrl,
   index,
+  title,
 }: {
   data: EditorComponentData
   initialHTML: string
   previewUrl: string
   index: number
+  title: string
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const { loading, html } = usePreview(data, previewUrl, initialHTML)
@@ -193,6 +200,7 @@ export function PreviewItem({
           ref={ref}
           onClick={() => setFocusIndex(data._id)}
         >
+          <div class="ve-preview-label">{title}</div>
           <div dangerouslySetInnerHTML={{ __html: html }} />
         </div>
       </div>

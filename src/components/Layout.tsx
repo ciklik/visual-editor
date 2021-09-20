@@ -85,7 +85,13 @@ export function Layout({
             onClose={onClose}
             iconsUrl={iconsUrl}
           />
-          {previewUrl && <Preview data={data} previewUrl={previewUrl} />}
+          {previewUrl && (
+            <Preview
+              data={data}
+              previewUrl={previewUrl}
+              definitions={definitions}
+            />
+          )}
         </div>
         <DragOverlay style={{ zIndex: 9000 }}>
           {dragData ? (

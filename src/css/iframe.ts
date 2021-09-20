@@ -11,6 +11,23 @@ export function iframeStyle(color: string) {
 }
 .ve-preview-wrapper {
   position: relative;
+  cursor: pointer;
+}
+.ve-preview-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--ve-color);
+  color: #FFF;
+  padding: .2rem .4rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  opacity: 0;
+}
+.ve-preview-component:hover .ve-preview-label,
+.ve-preview-component.is-focused .ve-preview-label {
+  transform: translateY(-100%);
+  opacity: 1;
 }
 .ve-preview-placeholder {
   position: relative;
@@ -30,15 +47,21 @@ export function iframeStyle(color: string) {
 .ve-preview-component {
   position: relative;
 }
-.ve-preview-component.is-focused::before {
+.ve-preview-component::before {
   content:'';
   position: absolute;
   top: 0px;
   left: 0px;
   right: 0px;
   bottom: 0px;
-  border: 2px dashed var(--ve-color);
+  border: 2px solid transparent;
   z-index: 10;
+}
+.ve-preview-component:hover::before {
+  border:1px solid var(--ve-color);
+}
+.ve-preview-component.is-focused::before {
+  border: 2px solid var(--ve-color)!important;
 }
 .ve-preview-component.is-over-top::after,
 .ve-preview-component.is-over-bottom::after {
