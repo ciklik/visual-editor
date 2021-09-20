@@ -6,8 +6,11 @@ import {
   Color,
   HTMLText,
   Repeater,
-  Range,
+  Range, AbstractField, Tabs,
 } from './VisualEditor'
+import { AbstractFieldGroup } from './fields/AbstractFieldGroup'
+
+type Field = AbstractField<any, any> | AbstractFieldGroup<any>
 
 export const Colors = ['--pink', '--purple', '--blue', '--green', '--white']
 
@@ -119,3 +122,18 @@ export const IconsWithLabel = () =>
     addLabel: 'Ajouter une icône',
     fields: [ImageField(), new Text('label', { label: 'Description' })],
   })
+
+export const WithStyles = (contentFields: Field[], styleFields: Field[] = []) => {
+  return [
+    new Tabs(
+      {
+        label: "Contenu",
+        fields: contentFields,
+      },
+      {
+        label: "Apparence",
+        fields: [...styleFields, ...Style()],
+      }
+    ),
+  ];
+};

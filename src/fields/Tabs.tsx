@@ -18,7 +18,7 @@ export class Tabs extends AbstractFieldGroup<any> {
   tabs: TabDefinition[] = []
 
   constructor(...tabs: TabDefinition[]) {
-    super([], {})
+    super(tabs.reduce((acc, tab) => [...acc, ...tab.fields], [] as TabDefinition['fields']), {})
     this.tabs = tabs
   }
 
