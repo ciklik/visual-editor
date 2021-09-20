@@ -4,6 +4,7 @@ import {
   Repeater,
   Select,
   Tabs,
+  Range,
   Text,
   VisualEditor,
 } from 'src/VisualEditor'
@@ -153,7 +154,7 @@ editor.registerComponent("steps", {
         addLabel: "Ajouter une étape",
         min: 2,
         max: 4,
-        fields: [Title("step", null)],
+        fields: [Title("step")],
       }),
     ],
     [

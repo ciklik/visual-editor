@@ -10,12 +10,14 @@ import { fillDefaults } from '../functions/fields'
 import { AbstractFieldGroup } from './AbstractFieldGroup'
 import cx from 'clsx'
 
+type Field = EditorField<any> | AbstractFieldGroup<any>
+
 type FieldArgs = {
   label?: string
   min?: number
   max?: number
   addLabel?: string
-  fields: Array<EditorField<any> | AbstractFieldGroup<any>>
+  fields: Field[]
   title?: string
   collapsed?: string
 }
@@ -106,11 +108,8 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
     const [collapsed, toggleCollapsed] = useToggle(
       !!(this.args.collapsed && line[this.args.collapsed])
     )
-    const visibleFields = this.args.fields.filter((field) =>
-      collapsed
-        ? field instanceof AbstractField && field.name === this.args.collapsed
-        : true
-    )
+
+    const visibleFields = collapsed ? findFields(this.args.fields, this.args.collapsed!) : this.args.fields
 
     return (
       <Sortable item={line} class="ve-repeater-item">
@@ -197,4 +196,22 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
       />
     )
   }
+}
+
+/**
+ * Trouve tous les champs qui correspond au nom demandé
+ */
+const findFields = (fields: Field[], fieldName: string): Field[] => {
+  for(const field of fields) {
+    if (field instanceof AbstractField && field.name === fieldName) {
+      return [field]
+    }
+    if (field instanceof AbstractFieldGroup) {
+      const deepMatches = findFields(field.fields, fieldName)
+      if (deepMatches.length > 0) {
+        return deepMatches;
+      }
+    }
+  }
+  return [];
 }
