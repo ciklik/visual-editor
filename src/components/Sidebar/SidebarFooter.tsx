@@ -9,8 +9,9 @@ import {
 } from 'src/store'
 import { useEffect, useRef } from 'preact/hooks'
 import { EventWithTarget } from 'src/types'
-import { IconDesktop, IconPhone } from 'src/components/Icons'
+import { IconCopy, IconDesktop, IconPhone } from 'src/components/Icons'
 import { useWindowSize } from 'react-use'
+import { CopyPage } from './Actions/CopyPage'
 
 type SidebarFooterProps = {
   onClose: () => void
@@ -69,6 +70,7 @@ export function SidebarFooter({
         />
       )}
       <div class="ve-row">
+        <CopyPage class="ve-copy-page" />
         <button class="ve-preview-toggle" onClick={prevent(togglePreviewMode)}>
           {isPhone ? <IconDesktop size={24} /> : <IconPhone size={24} />}
         </button>

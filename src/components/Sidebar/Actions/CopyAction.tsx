@@ -7,10 +7,11 @@ import { Tooltip } from 'src/components/Tooltip'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
 type CopyActionProps = {
-  data: EditorComponentData
+  data: EditorComponentData | EditorComponentData[]
+  className?: string
 }
 
-export function CopyAction({ data }: CopyActionProps) {
+export function CopyAction({ data, className }: CopyActionProps) {
   const [success, setSuccess] = useState(false)
   const timer = useRef<number>()
   const handleCopy = async () => {
@@ -33,7 +34,7 @@ export function CopyAction({ data }: CopyActionProps) {
     <Tooltip content="Le code a bién été copié" visible={success}>
       <button
         onClick={prevent(handleCopy)}
-        class="ve-sidebar-action-hover"
+        class={className || 've-sidebar-action-hover'}
         style={{ color: success ? 'green' : null }}
       >
         {success ? <IconCheck /> : <IconCopy />}

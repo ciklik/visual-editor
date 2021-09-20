@@ -7,13 +7,14 @@
   overflow: hidden;
 }
 
-.ve-preview-toggle {
+.ve-preview-toggle,
+.ve-copy-page {
   flex: none;
   width: 36px;
   height: 36px;
   color: var(--color-light);
   cursor: pointer;
-  opacity: .4;
+  opacity: .8;
   transition: opacity .3s;
 
   &:hover {
