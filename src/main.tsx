@@ -458,19 +458,16 @@ editor.registerComponent("stats", {
 
 editor.registerComponent("carousel-text-image", {
   title: "Carousel de texte avec image",
-  fields: WithStyles(
-    [
-      new Repeater("items", {
-        label: "Slides",
-        collapsed: "title",
-        min: 1,
-        addLabel: "Ajouter un slide",
-        fields: [
+  fields: [
+    new Repeater("items", {
+      label: "Slides",
+      collapsed: "title",
+      min: 1,
+      addLabel: "Ajouter un slide",
+      fields: WithStyles(
+        [
           ImageField(),
-          new Alignment("align", {
-            label: "Position de l'image",
-            default: "left",
-          }),
+
           Title(),
           Content(),
           IconsWithLabel(),
@@ -479,10 +476,21 @@ editor.registerComponent("carousel-text-image", {
           }),
           Buttons(),
         ],
-      }),
-    ],
-    [SiteColor("iconColor", "Couleur des checkbox").when("checkicon", true)]
-  ),
+        [
+          new Row([
+            new Alignment("align", {
+              label: "Position de l'image",
+              default: "left",
+            }),
+            SiteColor("iconColor", "Couleur des checkbox").when(
+              "checkicon",
+              true
+            ),
+          ]),
+        ]
+      ),
+    }),
+  ],
 });
 
 editor.defineElement()

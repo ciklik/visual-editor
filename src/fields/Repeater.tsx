@@ -177,6 +177,9 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
     index: number
     onUpdate: (path: string) => (v: unknown) => void
   }) => {
+    if (!field.shouldRender(line)) {
+      return null
+    }
     if (field instanceof AbstractFieldGroup) {
       return (
         <field.render>
