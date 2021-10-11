@@ -70,7 +70,7 @@ export function QuillEditor({
         history: true,
         keyboard: {
           bindings: {
-            linbreak: lineBreakHandler(quillRef),
+            linebreak: lineBreakHandler(quillRef),
           },
         },
         toolbar: toolbar,
@@ -85,8 +85,8 @@ export function QuillEditor({
     quill.on('text-change', () => {
       onChangeRef.current(
         mode === QuillEditorMode.SINGLE_LINE
-          ? (quillRef.current!.root.firstChild as HTMLParagraphElement)
-              .innerHTML
+          ? autoBR((quillRef.current!.root.firstChild as HTMLParagraphElement)
+              .innerHTML)
           : cleanHTML(quillRef.current!.root.innerHTML)
       )
     })
@@ -100,11 +100,6 @@ export function QuillEditor({
       quill.keyboard.bindings[13] = [
         {
           key: 'Enter',
-          handler: () => {},
-        },
-        {
-          key: 'Enter',
-          shiftKey: true,
           handler: () => {},
         },
       ]
@@ -173,4 +168,8 @@ function cleanHTML(html: string): string {
     return ''
   }
   return html
+}
+
+function autoBR(html: string): string {
+  return html.replaceAll("\n", "<br/>");
 }
