@@ -129,7 +129,7 @@ export function PreviewItems({
   }
   return (
     <Flipper flipKey={data.map((d) => d._id).join('_')}>
-      {data.map((v, k) => (
+      {data.filter(v => definitions[v._name]).map((v, k) => (
         <PreviewItem
           title={definitions[v._name]?.title}
           data={v}

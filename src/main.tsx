@@ -24,21 +24,30 @@ import {
 
 let editor = new VisualEditor()
 
-
-
 editor.registerComponent("columns-with-title", {
-  title: "Columns with title",
-  fields: [
-    new HTMLText("title", { label: "Titre", multiline: false }),
+  title: "Colonnes",
+  fields: WithStyles([
+    Title(),
     new Repeater("columns", {
       title: "Colonnes",
       addLabel: "Ajouter une colonne",
       fields: [
         ImageField("image", "Image"),
-        new HTMLText("body", { label: "Contenu" }),
+        Content("body","Contenu"),
+        new Select("imagePosition", {
+          label: "Position de l'image",
+          default: "center",
+          options: [
+            { label: "Gauche", value: "left" },
+            { label: "Centre", value: "center" },
+            { label: "Droite", value: "right" },
+          ],
+        }),
+        Buttons(),
       ],
     }),
-  ],
+    Buttons(),
+  ]),
 });
 
 editor.registerComponent("hero-big", {

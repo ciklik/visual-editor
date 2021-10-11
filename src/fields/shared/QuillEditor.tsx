@@ -171,5 +171,9 @@ function cleanHTML(html: string): string {
 }
 
 function autoBR(html: string): string {
-  return html.replaceAll("\n", "<br/>");
+  html = html.trim().replaceAll("\n", "<br>");
+  if (html === '<br>') {
+    return '';
+  }
+  return html
 }

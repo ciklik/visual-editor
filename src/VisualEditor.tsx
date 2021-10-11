@@ -86,11 +86,12 @@ class VisualEditorElement extends HTMLElement {
     if (this._data === null) {
       try {
         const json = JSON.parse(value)
-        this._data = indexify(json).map((value: EditorComponentData) =>
-          fillDefaults(value, components[value._name].fields)
-        )
+        this._data = indexify(json).map((value: EditorComponentData) => {
+          return fillDefaults(value, components[value._name]?.fields ?? [])
+        })
       } catch (e) {
         console.error('Impossible de parser les données', value, e)
+        alert('Impossible de parser les données de l\'éditeur visuel');
         this._data = []
       }
     }

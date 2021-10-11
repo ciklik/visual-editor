@@ -4,7 +4,7 @@ import {
   EditorComponentDefinitions,
   EditorField,
 } from 'src/types'
-import { useCallback, useMemo, useRef } from 'preact/hooks'
+import { useCallback, useErrorBoundary, useMemo, useRef } from 'preact/hooks'
 import { useToggle } from 'src/hooks/useToggle'
 import { useUpdateEffect } from 'src/hooks/useUpdateEffect'
 import { Sortable, SortableWrapper } from 'src/components/Sortable'
@@ -184,6 +184,18 @@ function Field({
     },
     [path]
   )
+
+  const [error, resetError] = useErrorBoundary();
+
+  if (error) {
+    return (
+      <div>
+        <p>Impossible de rendre le bloc {path} = {typeof Component} =  {error.message}</p>
+        <button onClick={resetError}>Relancer</button>
+      </div>
+    );
+  }
+
   return (
     <div style={style as any}>
       <Component value={value} onChange={onChangeCallback} />
