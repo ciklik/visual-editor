@@ -41,7 +41,7 @@ export function SidebarFields({
   return (
     <div class="ve-fields">
       <SortableWrapper items={data} onMove={handleMove}>
-        {data.map((v, k) => (
+        {data.filter(v => definitions[v._name]).map((v, k) => (
           <SidebarItem
             key={v._id}
             data={v}
@@ -69,7 +69,7 @@ const SidebarItem = memo(function SidebarItem({
   const [isCollapsed, toggleCollapsed, setCollapsed] = useToggle(!isFocused)
   const removeBloc = useRemoveBloc()
   const label =
-    definition.label && data[definition.label] ? data[definition.label] : null
+    (definition.label && data[definition.label]) ? data[definition.label] : null
 
   // Scroll vers l'élément lorsqu'il a le focus
   useUpdateEffect(() => {
