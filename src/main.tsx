@@ -36,6 +36,7 @@ editor.registerComponent('test', {
 editor.registerComponent('columns-with-title', {
   title: 'Colonnes',
   fields: WithStyles([
+    new Text('aze', {label: 'aze', help: 'azeoazeaze'}),
     Title(),
     new Repeater('columns', {
       title: 'Colonnes',

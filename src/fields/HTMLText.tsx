@@ -38,7 +38,7 @@ export class HTMLText extends AbstractField<FieldArgs, string> {
             colors={this.args.colors}
           />
         </div>
-        {this.args.help && <div class="form-text">{this.args.help}</div>}
+        {this.args.help && <div class="ve-help">{this.args.help}</div>}
       </div>
     )
   }

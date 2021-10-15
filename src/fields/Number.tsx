@@ -33,7 +33,7 @@ export class Number extends AbstractField<FieldArgs, string> {
           value={value}
           onInput={(e) => onChange((e.target as HTMLInputElement).value)}
         />
-        {this.args.help && <div class="form-text">{this.args.help}</div>}
+        {this.args.help && <div class="ve-help">{this.args.help}</div>}
       </div>
     )
   }

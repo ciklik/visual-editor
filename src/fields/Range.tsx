@@ -51,7 +51,7 @@ export class Range extends AbstractField<FieldArgs, number> {
             <option key={t} value={t.toString()} />
           ))}
         </datalist>
-        {this.args.help && <div class="form-text">{this.args.help}</div>}
+        {this.args.help && <div class="ve-help">{this.args.help}</div>}
       </div>
     )
   }

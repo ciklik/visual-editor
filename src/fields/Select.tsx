@@ -45,7 +45,7 @@ export class Select extends AbstractField<FieldArgs, string> {
             )
           })}
         </select>
-        {this.args.help && <div class="form-text">{this.args.help}</div>}
+        {this.args.help && <div class="ve-help">{this.args.help}</div>}
       </div>
     )
   }
