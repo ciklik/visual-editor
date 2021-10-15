@@ -1,12 +1,12 @@
 .ve-tabs {
   display: flex;
-  border-bottom: 1px solid var(--hover);
+  border-bottom: 1px solid var(--ve-hover);
 }
 
 .ve-tabs button {
   padding:0.5rem 1rem;
   font-size: .875rem;
-  color: var(--color-light);
+  color: var(--ve-color-light);
   cursor: pointer;
   border-bottom: 3px solid transparent;
   margin-bottom: -1px;
@@ -15,7 +15,30 @@
 }
 
 .ve-tabs button[aria-selected="true"] {
-  border-color: var(--primary);
-  color: var(--primary);
-  background-color: var(--primary-light);
+  border-color: var(--ve-primary);
+  color: var(--ve-primary);
+  background-color: var(--ve-primary-light);
+}
+
+.ve-blocs-tabs {
+  display: flex;
+  border: 1px solid var(--ve-field-border);
+  padding: 0;
+  margin: 0;
+  font-size: .9rem;
+}
+
+.ve-blocs-tabs li {
+  border-right: 1px solid var(--ve-field-border);
+  display: block;
+  padding: .7em 1em;
+  margin: 0;
+  list-style: none;
+  color: var(--ve-color-light);
+  cursor: pointer;
+}
+
+.ve-blocs-tabs li.ve-active {
+  background-color: var(--ve-primary-light);
+  color: var(--ve-primary);
 }

@@ -28,6 +28,8 @@ export type EditorComponentDefinition = {
   label?: string
   // Champs du bloc
   fields: Array<EditorField<any> | AbstractFieldGroup<any>>
+  // Catégorie du bloc
+  category?: string
 }
 
 export type EditorComponentDefinitions = Record<

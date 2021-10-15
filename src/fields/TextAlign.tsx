@@ -5,9 +5,20 @@ import {
   IconAlignLeft,
   IconAlignRight,
   IconAlignTop,
+  IconTextCenter,
+  IconTextLeft,
+  IconTextRight,
 } from 'src/components/Icons'
 import { uniqId } from 'src/functions/string'
 import { FunctionComponent } from 'preact'
+
+const AlignmentIcons = {
+  left: IconTextLeft,
+  center: IconTextCenter,
+  right: IconTextRight,
+}
+
+type FieldValue = keyof typeof AlignmentIcons
 
 type FieldArgs = {
   label?: string
@@ -15,16 +26,7 @@ type FieldArgs = {
   default?: FieldValue
 }
 
-type FieldValue = 'top' | 'right' | 'bottom' | 'left'
-
-const AlignmentIcons = {
-  top: IconAlignTop,
-  left: IconAlignLeft,
-  bottom: IconAlignBottom,
-  right: IconAlignRight,
-} as Record<FieldValue, FunctionComponent>
-
-export class Alignment extends AbstractField<FieldArgs, FieldValue> {
+export class TextAlign extends AbstractField<FieldArgs, FieldValue> {
   get defaultArgs() {
     return {
       default: 'left' as FieldValue,
@@ -32,15 +34,10 @@ export class Alignment extends AbstractField<FieldArgs, FieldValue> {
   }
 
   field({ value, onChange }: EditorFieldProps<FieldValue>) {
-    const id = uniqId()
     const handleChange = (e: Event) => {
       onChange((e.target as HTMLInputElement).value as FieldValue)
     }
-    const alignements = [
-      'left',
-      'right',
-      ...(this.args.vertical ? ['top', 'bottom'] : []),
-    ] as FieldValue[]
+    const alignements = Object.keys(AlignmentIcons)
     return (
       <div>
         {this.args.label && <label>{this.args.label}</label>}
@@ -49,7 +46,6 @@ export class Alignment extends AbstractField<FieldArgs, FieldValue> {
             <AlignmentButton
               key={alignment}
               alignment={alignment}
-              id={id}
               checked={value === alignment}
               onChange={handleChange}
             />
@@ -62,12 +58,10 @@ export class Alignment extends AbstractField<FieldArgs, FieldValue> {
 
 function AlignmentButton({
   alignment,
-  id,
   onChange,
   checked,
 }: {
   alignment: FieldValue
-  id: string
   onChange: (e: Event) => void
   checked: boolean
 }) {
@@ -76,7 +70,6 @@ function AlignmentButton({
     <div key={alignment} class="ve-alignment">
       <input
         type="radio"
-        name={id}
         onChange={onChange}
         value={alignment}
         checked={checked}

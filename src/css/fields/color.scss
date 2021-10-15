@@ -2,8 +2,8 @@
   width: 38px;
   height: 38px;
   background-color: #fff;
-  box-shadow: var(--field-shadow);
-  border: 1px solid var(--field-border);
+  box-shadow: var(--ve-field-shadow);
+  border: 1px solid var(--ve-field-border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,21 +15,21 @@
     display: block;
     width: calc(100% - .6em);
     height: calc(100% - .6em);
-    background: var(--veSelectedColor, red);
+    background: var(--ve-veSelectedColor, red);
     border-radius: 2px;
   }
 
   &:focus {
-    border-color: var(--primary);
+    border-color: var(--ve-primary);
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgb(23 113 230 / 25%);
   }
 }
 
 %mosaic {
-  --transparentColor: #ffffff;
+  --ve-transparentColor: #ffffff;
   background-color: #d0d0d0;
-  background-image: linear-gradient(45deg, var(--transparentColor) 25%, transparent 25%), linear-gradient(-45deg, var(--transparentColor) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--transparentColor) 75%), linear-gradient(-45deg, transparent 75%, var(--transparentColor) 75%);
+  background-image: linear-gradient(45deg, var(--ve-transparentColor) 25%, transparent 25%), linear-gradient(-45deg, var(--ve-transparentColor) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--ve-transparentColor) 75%), linear-gradient(-45deg, transparent 75%, var(--ve-transparentColor) 75%);
   background-size: 10px 10px;
   background-position: 0 0, 0 5px, 5px -5px, -5px 0px;
 }
@@ -44,7 +44,7 @@
 }
 .ve-color-palette button {
   position: relative;
-  background-color: var(--veColor);
+  background-color: var(--ve-veColor);
   width: 25px;
   height: 25px;
   flex: none;

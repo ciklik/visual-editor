@@ -1,6 +1,6 @@
 import { EditorField, FieldCondition } from 'src/types'
 import { VNode } from 'preact'
-import { cast } from '../functions/object'
+import { cast } from 'src/functions/object'
 
 export class AbstractField<Args extends Record<string, any>, V>
   implements EditorField<V>

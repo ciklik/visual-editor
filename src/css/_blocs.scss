@@ -1,44 +1,36 @@
-
 .ve-blocs {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.ve-bloc-wrapper {
-  min-width: 0;
-  background: rgba(0, 0, 0, 0.02);
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.ve-bloc-draggable {
-  outline: none;
-  transition: .3s;
-  position: relative;
-  cursor: pointer;
-  &:hover {
-    z-index: 2;
-  }
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  border-bottom: 1px solid var(--ve-field-border);
+  background-color: var(--ve-blocs-background);
+  box-shadow: inset 0px -1px 10px rgba(0, 0, 0, 0.05);
 }
 
 .ve-bloc {
   position: relative;
-  height: 150px;
-  box-shadow: 0 0 0 1px var(--field-border);
+  min-height: 150px;
+  box-sizing: border-box;
+  border: 1px solid var(--ve-field-border);
+  border-right: 1px solid transparent;
+  border-top: 1px solid transparent;
   background-color: #fff;
-  color: var(--color);
+  color: var(--ve-color);
   font-weight: 500;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 1em;
-  padding: 0 .5rem;
+  padding: 1rem .5rem;
   font-size: .8rem;
   text-align: center;
-  transition: border-color .3s, color .3s, box-shadow .3s;
+  transition: border-color .3s, color .3s;
   width: 100%;
   min-width: 0;
   flex: none;
+  &:last-child {
+    border-right: 1px solid var(--ve-field-border);
+  }
   img {
     opacity: .45;
     max-width: 100%;
@@ -55,21 +47,22 @@
   }
 }
 .ve-bloc:hover {
-  box-shadow: 0 0  0 1px var(--primary);
+  border-color: var(--ve-primary);
+  background-color: var(--ve-primary-light);
   z-index: 10;
-  color: var(--primary);
+  color: var(--ve-primary);
   img {
     opacity: 1;
     filter: invert(36%) sepia(43%) saturate(6104%) hue-rotate(204deg) brightness(95%) contrast(90%);
   }
 }
-.ve-drag-overlay .ve-bloc {
-  box-shadow: var(--shadow-dragging);
-  cursor: grabbing;
-  transform: scale(1.1);
+.ve-bloc-search {
+  width: 100%;
+  font-size: 0.9rem;
+  padding: .7em 1em;
+  background-color: transparent;
+  position: relative;
+  border: 1px solid var(--ve-field-border);
+  border-top: none;
 }
 
-.ve-drag-overlay .ve-bloc-wrapper {
-  z-index: 3;
-  transition: none;
-}

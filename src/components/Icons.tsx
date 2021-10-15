@@ -188,3 +188,45 @@ export function IconAlignBottom({ size = 24 }: IconProps) {
     </svg>
   )
 }
+
+export function IconTextLeft({ size = 24 }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path fill="currentColor" d="M3 8V6h8v2zM3 13v-2h18v2zM3 18v-2h14v2z" />
+    </svg>
+  )
+}
+
+export function IconTextCenter({ size = 24 }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path fill="currentColor" d="M8 8V6h8v2zM3 13v-2h18v2zM5 18v-2h14v2z" />
+    </svg>
+  )
+}
+
+export function IconTextRight({ size = 24 }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path fill="currentColor" d="M11 8V6h10v2zM3 13v-2h18v2zM6 18v-2h15v2z" />
+    </svg>
+  )
+}

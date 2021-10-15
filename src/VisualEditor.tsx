@@ -91,7 +91,7 @@ class VisualEditorElement extends HTMLElement {
         })
       } catch (e) {
         console.error('Impossible de parser les données', value, e)
-        alert('Impossible de parser les données de l\'éditeur visuel');
+        alert("Impossible de parser les données de l'éditeur visuel")
         this._data = []
       }
     }
@@ -100,12 +100,17 @@ class VisualEditorElement extends HTMLElement {
 
   private render() {
     const data = this.parseValue(this._value)
+    const hiddenCategories =
+      this.getAttribute('hidden-categories')?.split(';') ?? []
     render(
-      <StoreProvider data={data}>
+      <StoreProvider
+        data={data}
+        definitions={components}
+        hiddenCategories={hiddenCategories}
+      >
         <VisualEditorComponent
           element={this}
           value={data}
-          definitions={components}
           previewUrl={this.getAttribute('preview') ?? ''}
           iconsUrl={this.getAttribute('iconsUrl') ?? '/'}
           name={this.getAttribute('name') ?? ''}
@@ -130,7 +135,6 @@ class VisualEditorElement extends HTMLElement {
 
 type VisualEditorProps = {
   value: EditorComponentData[]
-  definitions: EditorComponentDefinitions
   previewUrl: string
   name: string
   iconsUrl: string
@@ -141,7 +145,6 @@ type VisualEditorProps = {
 
 export function VisualEditorComponent({
   value,
-  definitions,
   previewUrl,
   name,
   element,
@@ -183,7 +186,6 @@ export function VisualEditorComponent({
       <Layout
         class={visibilityClass}
         data={data}
-        definitions={definitions}
         onClose={handleClose}
         previewUrl={previewUrl}
         iconsUrl={iconsUrl}
@@ -207,3 +209,4 @@ export { Select } from 'src/fields/Select'
 export { Number } from 'src/fields/Number'
 export { Range } from 'src/fields/Range'
 export { Tabs } from 'src/fields/Tabs'
+export { TextAlign } from 'src/fields/TextAlign'

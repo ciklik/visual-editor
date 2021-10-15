@@ -1,5 +1,5 @@
 import { EditorField } from 'src/types'
-import { AbstractFieldGroup } from '../fields/AbstractFieldGroup'
+import { AbstractFieldGroup } from 'src/fields/AbstractFieldGroup'
 
 export function fillDefaults(
   data: Record<string, any>,

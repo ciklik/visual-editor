@@ -1,6 +1,6 @@
 import { fillDefaults } from 'src/functions/fields'
 import { Text } from 'src/VisualEditor'
-import { Row } from '../../src/fields/Row'
+import { Row } from 'src/fields/Row'
 
 describe('fillDefaults', () => {
   test('fill undefined value with default', () => {

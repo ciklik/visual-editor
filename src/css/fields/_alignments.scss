@@ -1,13 +1,13 @@
 .ve-alignments {
   display: inline-flex;
-  border: 1px solid var(--field-border);
-  box-shadow: var(--field-shadow);
+  border: 1px solid var(--ve-field-border);
+  box-shadow: var(--ve-field-shadow);
   border-radius: .2rem;
 }
 
 .ve-alignment {
   position: relative;
-  border-right: 1px solid var(--field-border);
+  border-right: 1px solid var(--ve-field-border);
   cursor: pointer;
 
   &:last-child {
@@ -15,7 +15,7 @@
   }
 
   &:hover {
-    background-color: var(--hover);
+    background-color: var(--ve-hover);
   }
 }
 
@@ -42,12 +42,12 @@
 }
 
 .ve-alignment input:checked + div {
-  background-color: var(--primary);
+  background-color: var(--ve-primary);
   color: #FFF;
-  box-shadow: 0 0 0 1px var(--primary)
+  box-shadow: 0 0 0 1px var(--ve-primary)
 }
 
 .ve-alignment input:focus + div {
-  box-shadow: 0 0 0 1px var(--primary), 0 0 0 0.25rem rgb(23 113 230 / 25%)
+  box-shadow: 0 0 0 1px var(--ve-primary), 0 0 0 0.25rem rgb(23 113 230 / 25%)
 }
 

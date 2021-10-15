@@ -11,6 +11,7 @@ import { Sortable, SortableWrapper } from 'src/components/Sortable'
 import { moveItem } from 'src/functions/array'
 import { prevent } from 'src/functions/functions'
 import {
+  useFieldDefinitions,
   useFieldFocused,
   useRemoveBloc,
   useSetFocusIndex,
@@ -26,14 +27,9 @@ import { AbstractFieldGroup } from 'src/fields/AbstractFieldGroup'
 /**
  * Génère la liste des champs dans la sidebar
  */
-export function SidebarFields({
-  data,
-  definitions,
-}: {
-  data: EditorComponentData[]
-  definitions: EditorComponentDefinitions
-}) {
+export function SidebarFields({ data }: { data: EditorComponentData[] }) {
   const updateData = useUpdateData()
+  const definitions = useFieldDefinitions()
   const handleMove = (from: number, to: number) => {
     updateData(moveItem(data, from, to))
   }
@@ -41,7 +37,7 @@ export function SidebarFields({
   return (
     <div class="ve-fields">
       <SortableWrapper items={data} onMove={handleMove}>
-        {data.filter(v => definitions[v._name]).map((v, k) => (
+        {data.map((v, k) => (
           <SidebarItem
             key={v._id}
             data={v}
@@ -60,7 +56,7 @@ const SidebarItem = memo(function SidebarItem({
   path,
 }: {
   data: EditorComponentData
-  definition: EditorComponentDefinition
+  definition?: EditorComponentDefinition
   path: string
 }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -69,7 +65,7 @@ const SidebarItem = memo(function SidebarItem({
   const [isCollapsed, toggleCollapsed, setCollapsed] = useToggle(!isFocused)
   const removeBloc = useRemoveBloc()
   const label =
-    (definition.label && data[definition.label]) ? data[definition.label] : null
+    definition?.label && data[definition.label] ? data[definition.label] : null
 
   // Scroll vers l'élément lorsqu'il a le focus
   useUpdateEffect(() => {
@@ -91,6 +87,10 @@ const SidebarItem = memo(function SidebarItem({
 
   const handleRemove = () => {
     removeBloc(data)
+  }
+
+  if (!definition) {
+    return null
   }
 
   return (
@@ -147,7 +147,7 @@ function Fields({
         .map((field, k) =>
           field instanceof AbstractFieldGroup
             ? field.shouldRender(data) && (
-                <field.render>
+                <field.render key={k}>
                   <Fields fields={field.fields} data={data} path={path} />
                 </field.render>
               )
@@ -185,15 +185,18 @@ function Field({
     [path]
   )
 
-  const [error, resetError] = useErrorBoundary();
+  const [error, resetError] = useErrorBoundary()
 
   if (error) {
     return (
       <div>
-        <p>Impossible de rendre le bloc {path} = {typeof Component} =  {error.message}</p>
+        <p>
+          Impossible de rendre le bloc {path} = {typeof Component} ={' '}
+          {error.message}
+        </p>
         <button onClick={resetError}>Relancer</button>
       </div>
-    );
+    )
   }
 
   return (

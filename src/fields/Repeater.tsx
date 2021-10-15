@@ -6,7 +6,7 @@ import { AbstractField } from 'src/fields/AbstractField'
 import { Sortable, SortableWrapper } from 'src/components/Sortable'
 import { useToggle } from 'src/hooks/useToggle'
 import { prevent } from 'src/functions/functions'
-import { fillDefaults } from '../functions/fields'
+import { fillDefaults } from 'src/functions/fields'
 import { AbstractFieldGroup } from './AbstractFieldGroup'
 import cx from 'clsx'
 
@@ -109,7 +109,9 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
       !!(this.args.collapsed && line[this.args.collapsed])
     )
 
-    const visibleFields = collapsed ? findFields(this.args.fields, this.args.collapsed!) : this.args.fields
+    const visibleFields = collapsed
+      ? findFields(this.args.fields, this.args.collapsed!)
+      : this.args.fields
 
     return (
       <Sortable item={line} class="ve-repeater-item">
@@ -205,16 +207,16 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
  * Trouve tous les champs qui correspond au nom demandé
  */
 const findFields = (fields: Field[], fieldName: string): Field[] => {
-  for(const field of fields) {
+  for (const field of fields) {
     if (field instanceof AbstractField && field.name === fieldName) {
       return [field]
     }
     if (field instanceof AbstractFieldGroup) {
       const deepMatches = findFields(field.fields, fieldName)
       if (deepMatches.length > 0) {
-        return deepMatches;
+        return deepMatches
       }
     }
   }
-  return [];
+  return []
 }

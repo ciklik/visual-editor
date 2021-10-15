@@ -1,8 +1,8 @@
 import { AbstractFieldGroup } from './AbstractFieldGroup'
-import { cloneElement, FunctionComponent, toChildArray, VNode } from 'preact'
-import { EditorField } from '../types'
+import { cloneElement, FunctionComponent, VNode } from 'preact'
+import { EditorField } from 'src/types'
 import { useState } from 'preact/hooks'
-import { prevent } from '../functions/functions'
+import { prevent } from 'src/functions/functions'
 
 type RowArgs = {
   label?: string
@@ -18,7 +18,13 @@ export class Tabs extends AbstractFieldGroup<any> {
   tabs: TabDefinition[] = []
 
   constructor(...tabs: TabDefinition[]) {
-    super(tabs.reduce((acc, tab) => [...acc, ...tab.fields], [] as TabDefinition['fields']), {})
+    super(
+      tabs.reduce(
+        (acc, tab) => [...acc, ...tab.fields],
+        [] as TabDefinition['fields']
+      ),
+      {}
+    )
     this.tabs = tabs
   }
 
@@ -27,7 +33,6 @@ export class Tabs extends AbstractFieldGroup<any> {
     const currentChildren = cloneElement(children, {
       fields: currentTab.fields,
     })
-    console.log(currentChildren)
     return (
       <div class="ve-sidebar-fields">
         <div role="tablist" class="ve-tabs">

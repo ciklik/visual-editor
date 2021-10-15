@@ -1,7 +1,7 @@
 .ve-row {
   display: flex;
   align-items: center;
-  gap: var(--gap, .5em);
+  gap: var(--ve-gap, .5em);
 
   & > * {
     flex: 1;

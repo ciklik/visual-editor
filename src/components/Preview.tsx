@@ -1,32 +1,35 @@
-import { EditorComponentData, EditorComponentDefinitions } from 'src/types'
+import { EditorComponentData } from 'src/types'
 import { useEffect, useRef, useState } from 'preact/hooks'
 import { createPortal } from 'preact/compat'
 import { useAsyncEffect } from 'src/hooks/useAsyncEffect'
-import { iframeStyle } from 'src/css/iframe'
 import { usePreview } from 'src/hooks/usePreview'
 import clsx from 'clsx'
-import { useDroppable } from '@dnd-kit/core'
 import {
   PreviewModes,
+  useFieldDefinitions,
   useFieldFocused,
+  useInsertData,
   usePreviewMode,
   useSetFocusIndex,
 } from 'src/store'
 import { Flipped, Flipper } from 'react-flip-toolkit'
 import { useWindowSize } from 'react-use'
 import { PHONE_HEIGHT } from 'src/constants'
-import { offsetLeft } from 'src/functions/dom'
+import { prevent } from 'src/functions/functions'
+import { BlocList } from './Blocs/BlocList'
+import { fillDefaults } from 'src/functions/fields'
+import { BlocAdder } from './Blocs/BlocAdder'
 
 type PreviewProps = {
   data: EditorComponentData[]
   previewUrl: string
-  definitions: EditorComponentDefinitions
+  iconsUrl: string
 }
 
 /**
  * Affiche un aperçu du rendu de la page dans une iframe
  */
-export function Preview({ data, previewUrl, definitions }: PreviewProps) {
+export function Preview({ data, previewUrl, iconsUrl }: PreviewProps) {
   const iframe = useRef<HTMLIFrameElement>(null)
   const [iframeRoot, setIframeRoot] = useState<HTMLElement | null>(null)
   const initialHTML = useRef<Record<string, string>>({})
@@ -51,33 +54,13 @@ export function Preview({ data, previewUrl, definitions }: PreviewProps) {
     iframeDocument.open()
     iframeDocument.write(await r.text())
     iframeDocument.close()
-    // On ajoute du style
-    const color = getComputedStyle(iframe.current!).color
-    const style = document.createElement('style')
-    style.innerHTML = iframeStyle(color)
-    iframeDocument.querySelector('head')!.appendChild(style)
     const root = iframeDocument.querySelector('#ve-components') as HTMLElement
-    const onScroll = () => {
-      iframeDocument.body.style.setProperty(
-        '--offsetX',
-        offsetLeft(iframe.current!) + 'px'
-      )
-      iframeDocument.body.style.setProperty(
-        '--offsetY',
-        iframeDocument.documentElement.scrollTop * -1 + 'px'
-      )
-    }
-    onScroll()
-    iframeDocument.addEventListener('scroll', onScroll)
     initialHTML.current = Array.from(root.children).reduce(
       (acc, v, k) => ({ ...acc, [data[k]._id]: v.outerHTML }),
       {}
     )
     root.innerHTML = ''
     setIframeRoot(root)
-    return () => {
-      iframeDocument.removeEventListener('scroll', onScroll)
-    }
   }, [])
 
   const previewMode = usePreviewMode()
@@ -102,7 +85,7 @@ export function Preview({ data, previewUrl, definitions }: PreviewProps) {
             data={data}
             initialHTML={initialHTML.current}
             previewUrl={previewUrl}
-            definitions={definitions}
+            iconsUrl={iconsUrl}
           />,
           iframeRoot
         )}
@@ -117,29 +100,60 @@ export function PreviewItems({
   data,
   initialHTML = {},
   previewUrl,
-  definitions,
+  iconsUrl,
 }: {
   data: EditorComponentData[]
   initialHTML: Record<string, string>
   previewUrl: string
-  definitions: EditorComponentDefinitions
+  iconsUrl: string
 }) {
-  if (data.length === 0) {
-    return <PreviewItemPlaceholder />
+  const [blocsIndex, setBlocsIndex] = useState<number | null>(null)
+  const insertData = useInsertData()
+  const definitions = useFieldDefinitions()
+  const handleAddBloc = (blocName: string, index: number) => {
+    insertData(
+      blocName,
+      index + 1,
+      fillDefaults({}, definitions[blocName].fields)
+    )
+    setBlocsIndex(null)
   }
+
   return (
-    <Flipper flipKey={data.map((d) => d._id).join('_')}>
-      {data.filter(v => definitions[v._name]).map((v, k) => (
-        <PreviewItem
-          title={definitions[v._name]?.title}
-          data={v}
-          initialHTML={initialHTML[v._id]}
-          key={v._id}
-          index={k}
-          previewUrl={previewUrl}
+    <>
+      <Flipper flipKey={data.map((d) => d._id).join('_')}>
+        {data.map((v, k) => (
+          <div key={v._id}>
+            <BlocAdder
+              onToggle={() =>
+                setBlocsIndex((i) => (i === k - 1 ? null : k - 1))
+              }
+              showBlocs={blocsIndex === k - 1}
+              iconsUrl={iconsUrl}
+              onAddBloc={(name: string) => handleAddBloc(name, k - 1)}
+            />
+            <PreviewItem
+              title={definitions[v._name]?.title}
+              data={v}
+              initialHTML={initialHTML[v._id]}
+              previewUrl={previewUrl}
+            />
+          </div>
+        ))}
+      </Flipper>
+      {blocsIndex !== data.length - 1 ? (
+        <div class="ve-preview-new-bloc">
+          <button onClick={prevent(() => setBlocsIndex(data.length - 1))}>
+            Ajouter un bloc
+          </button>
+        </div>
+      ) : (
+        <BlocList
+          iconsUrl={iconsUrl}
+          onAddBloc={(name: string) => handleAddBloc(name, data.length - 1)}
         />
-      ))}
-    </Flipper>
+      )}
+    </>
   )
 }
 
@@ -150,13 +164,11 @@ export function PreviewItem({
   data,
   initialHTML,
   previewUrl,
-  index,
   title,
 }: {
   data: EditorComponentData
   initialHTML: string
   previewUrl: string
-  index: number
   title: string
 }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -173,28 +185,13 @@ export function PreviewItem({
     }
   }, [isFocused])
 
-  const { setNodeRef: setNodeRefTop, isOver: isOverTop } = useDroppable({
-    id: data._id.toString() + 'top',
-    data: { index },
-  })
-  const { setNodeRef: setNodeRefBottom, isOver: isOverBottom } = useDroppable({
-    id: data._id.toString() + 'bottom',
-    data: { index: index + 1 },
-  })
-  const isOver = isOverTop || isOverBottom
-
   return (
     <Flipped flipId={data._id}>
       <div class="ve-preview-wrapper" id={`previewItem${data._id}`}>
-        <div ref={setNodeRefTop} class="ve-preview-droppable-top" />
-        <div ref={setNodeRefBottom} class="ve-preview-droppable-bottom" />
         <div
           class={clsx(
             've-preview-component',
             loading && 'is-loading',
-            isOver && 'is-over',
-            isOverBottom && 'is-over-bottom',
-            isOverTop && 'is-over-top',
             isFocused && 'is-focused'
           )}
           ref={ref}
@@ -212,21 +209,9 @@ export function PreviewItem({
  * Gère le rendu de chaque composant
  */
 export function PreviewItemPlaceholder() {
-  const ref = useRef<HTMLDivElement>(null)
-  const { setNodeRef, isOver } = useDroppable({
-    id: 'startcenter',
-    data: { index: null },
-  })
-
   return (
-    <div
-      class={clsx(
-        've-preview-placeholder',
-        isOver && 've-preview-placeholder-hover'
-      )}
-      id="previewItemstart"
-    >
-      <div ref={setNodeRef} class="ve-preview-droppable-top" />
+    <div class={clsx('ve-preview-placeholder')} id="previewItemstart">
+      <div class="ve-preview-droppable-top" />
       Déposer votre premier bloc ici
     </div>
   )

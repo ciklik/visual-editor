@@ -1,12 +1,9 @@
-import { EditorField, EditorFieldProps } from 'src/types'
+import { EditorFieldProps } from 'src/types'
 import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from 'src/fields/AbstractField'
-import { useToggle } from 'src/hooks/useToggle'
-import { useRef } from 'preact/hooks'
-import { Tooltip, Tooltip2 } from 'src/components/Tooltip'
-import { useClickAway } from 'react-use'
+import { Tooltip } from 'src/components/Tooltip'
 import clsx from 'clsx'
-import { prevent } from '../functions/functions'
+import { prevent } from 'src/functions/functions'
 
 type FieldArgs = {
   label?: string

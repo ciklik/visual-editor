@@ -3,7 +3,7 @@
   top: 0;
   bottom: 0;
   height: 100%;
-  left: var(--clampedSidebar);
+  left: var(--ve-clampedSidebar);
   width: 15px;
   z-index: 1002;
   cursor: ew-resize;
@@ -11,7 +11,7 @@
 }
 .ve-resizeBar:hover,
 .ve-resizeBar.is-active {
-  box-shadow: -1px -1px 0 1px var(--primary);
+  box-shadow: -1px -1px 0 1px var(--ve-primary);
 }
 .ve-resizeBar-overlay {
   position: fixed;

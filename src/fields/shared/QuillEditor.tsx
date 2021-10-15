@@ -25,12 +25,12 @@ const toolbars: Record<QuillEditorMode, (string | Record<string, any>)[]> = {
     ['background', 'link', 'clean'],
   ],
   [QuillEditorMode.DEFAULT]: [
-    [{ list: 'ordered' }, { list: 'bullet' }],
+    [{ list: 'ordered' }, { list: 'bullet' }, 'blockquote'],
     [{ align: [] }],
     ['bold', 'italic', 'underline', 'background', 'link', 'clean'],
   ],
   [QuillEditorMode.FULL]: [
-    [{ header: [2, false] }],
+    [{ header: [2, 3, 4, 5, 6, false], blockquote: [] }],
     [{ list: 'ordered' }, { list: 'bullet' }],
     [{ align: [] }],
     ['bold', 'italic', 'underline', 'background', 'link', 'clean'],
@@ -79,14 +79,16 @@ export function QuillEditor({
       placeholder,
       theme: 'bubble',
     })
-    quill.root.innerHTML = value || ''
+    quill.root.innerHTML = prepareHTML(value || '')
     // This method autofocus the field :( https://github.com/zenoamaro/react-quill/issues/317#issuecomment-877155420
     // quill.clipboard.dangerouslyPasteHTML(value || '')
     quill.on('text-change', () => {
       onChangeRef.current(
         mode === QuillEditorMode.SINGLE_LINE
-          ? autoBR((quillRef.current!.root.firstChild as HTMLParagraphElement)
-              .innerHTML)
+          ? autoBR(
+              (quillRef.current!.root.firstChild as HTMLParagraphElement)
+                .innerHTML
+            )
           : cleanHTML(quillRef.current!.root.innerHTML)
       )
     })
@@ -171,9 +173,19 @@ function cleanHTML(html: string): string {
 }
 
 function autoBR(html: string): string {
-  html = html.trim().replaceAll("\n", "<br>");
+  html = html.trim().replaceAll('\n', '<br>')
   if (html === '<br>') {
-    return '';
+    return ''
   }
   return html
+}
+
+/**
+ * Prépare l'HTML avant de le passer à Quill
+ */
+function prepareHTML(html: string) {
+  if (html.startsWith('<')) {
+    return html
+  }
+  return `<p>${html}</p>`
 }

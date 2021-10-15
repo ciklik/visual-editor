@@ -1,10 +1,13 @@
 import create, { UseStore } from 'zustand'
-import { EditorComponentData } from 'src/types'
+import {
+  EditorComponentData,
+  EditorComponentDefinition,
+  EditorComponentDefinitions,
+} from 'src/types'
 import { deepSet } from 'src/functions/object'
 import { combine, devtools } from 'zustand/middleware'
 import { insertItem } from 'src/functions/array'
 import { uniqId } from 'src/functions/string'
-import { SidebarModes } from 'src/constants'
 
 import createContext from 'zustand/context'
 import { ComponentChildren } from 'preact'
@@ -17,22 +20,28 @@ export enum PreviewModes {
 
 type State = {
   data: EditorComponentData[]
+  definitions: EditorComponentDefinitions
+  hiddenCategories: string[]
   focusIndex: null | string
-  sidebarMode: SidebarModes
   previewMode: PreviewModes
   sidebarWidth: number
 }
 
 const sidebarWidth = localStorage.getItem('veSidebarWidth')
 
-const createStore = (data: EditorComponentData[] = []) =>
+const createStore = (
+  data: EditorComponentData[] = [],
+  definitions: EditorComponentDefinitions,
+  hiddenCategories: string[] = []
+) =>
   create(
     devtools(
       combine(
         {
           data,
+          definitions,
+          hiddenCategories,
           focusIndex: null,
-          sidebarMode: SidebarModes.FIELDS,
           previewMode: PreviewModes.DESKTOP,
           sidebarWidth: clamp(
             sidebarWidth ? parseInt(sidebarWidth, 10) : 600,
@@ -41,9 +50,6 @@ const createStore = (data: EditorComponentData[] = []) =>
           ),
         } as State,
         (set) => ({
-          setSidebarMode: function (mode: SidebarModes) {
-            set(() => ({ sidebarMode: mode }))
-          },
           setSidebarWidth: function (width: number) {
             localStorage.setItem('veSidebarWidth', width.toString())
             set(() => ({
@@ -75,7 +81,6 @@ const createStore = (data: EditorComponentData[] = []) =>
             set((state) => {
               return {
                 data: insertItem(state.data, index, newData),
-                sidebarMode: SidebarModes.FIELDS,
                 focusIndex: newData._id,
               }
             })
@@ -108,19 +113,21 @@ const { Provider, useStore } = createContext<StoreData<Store>>()
 export function StoreProvider({
   children,
   data,
+  definitions,
+  hiddenCategories,
 }: {
   children: ComponentChildren
   data: EditorComponentData[]
+  definitions: EditorComponentDefinitions
+  hiddenCategories: string[]
 }) {
-  return <Provider createStore={() => createStore(data)}>{children}</Provider>
-}
-
-export function useSidebarMode() {
-  return useStore((state) => state.sidebarMode)
-}
-
-export function useSetSidebarMode() {
-  return useStore((state) => state.setSidebarMode)
+  return (
+    <Provider
+      createStore={() => createStore(data, definitions, hiddenCategories)}
+    >
+      {children}
+    </Provider>
+  )
 }
 
 export function useData() {
@@ -141,6 +148,10 @@ export function useInsertData() {
 
 export function useFocusIndex() {
   return useStore((state) => state.focusIndex)
+}
+
+export function useDefinitions() {
+  return useStore((state) => state.definitions)
 }
 
 export function useSetFocusIndex() {
@@ -165,6 +176,20 @@ export function useSidebarWidth() {
 
 export function useSetSidebarWidth() {
   return useStore((state) => state.setSidebarWidth)
+}
+
+export function useFieldDefinitions() {
+  return useStore((state) => state.definitions)
+}
+
+export function useHiddenCategories() {
+  return useStore((state) => state.hiddenCategories)
+}
+
+export function useFieldDefinition(
+  name: string
+): EditorComponentDefinition | undefined {
+  return useStore((state) => state.definitions)[name]
 }
 
 export const store = useStore

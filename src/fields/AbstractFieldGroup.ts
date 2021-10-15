@@ -1,6 +1,6 @@
 import { EditorField, FieldCondition } from 'src/types'
 import { FunctionComponent, h, VNode } from 'preact'
-import { cast } from '../functions/object'
+import { cast } from 'src/functions/object'
 
 export class AbstractFieldGroup<A extends Record<string, any>> {
   fields: Array<EditorField<any> | AbstractFieldGroup<any>>

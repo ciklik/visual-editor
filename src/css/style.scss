@@ -2,19 +2,22 @@ visual-editor {
   display: block;
 }
 
-.ve-wrapper {
-  --sidebar: 600px;
-  --primary: #1771E6;
-  --primary-light: #1771E60C;
-  --color: #111827;
-  --color-light: #6b7280;
-  --field-border: rgb(209, 213, 219);
-  --hover: rgb(237, 243, 250);
-  --field-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-  --danger: red;
-  --shadow-dragging: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;  justify-content: center;
-  --gap: .5em;
-  --clampedSidebar: clamp(450px, var(--sidebar), calc(100vw - 375px))
+.ve-wrapper,
+#ve-components {
+  --ve-sidebar: 600px;
+  --ve-primary: #1771E6;
+  --ve-primary-hover: #388afa;
+  --ve-primary-light: #1771E60C;
+  --ve-color: #111827;
+  --ve-color-light: #6b7280;
+  --ve-field-border: rgb(209, 213, 219);
+  --ve-hover: rgb(237, 243, 250);
+  --ve-field-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+  --ve-blocs-background: rgba(0, 0, 0, 0.05);
+  --ve-danger: red;
+  --ve-shadow-dragging: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;  justify-content: center;
+  --ve-gap: .5em;
+  --ve-clampedSidebar: clamp(450px, var(--ve-sidebar), calc(100vw - 375px))
 
 }
 
@@ -29,12 +32,12 @@ visual-editor {
 }
 
 .ve-wrapper ::-webkit-scrollbar-thumb {
-  background: var(--field-border);
+  background: var(--ve-field-border);
   border-radius: 4px;
 }
 
 .ve-layout {
-  color: var(--color-light);
+  color: var(--ve-color-light);
   background-color: rgba(255, 255, 255, 0);
   transition: background-color .3s;
   position: fixed;
@@ -46,10 +49,10 @@ visual-editor {
   height: 100%;
   display: grid;
   z-index: 1000;
-  grid-template-columns: var(--clampedSidebar) 1fr;
+  grid-template-columns: var(--ve-clampedSidebar) 1fr;
 
   &.is-visible {
-    background-color: var(--field-border);
+    background-color: var(--ve-field-border);
   }
 }
 
@@ -71,7 +74,7 @@ visual-editor {
 // =============
 %button,
 .ve-layout .ve-button {
-  background-color: var(--primary);
+  background-color: var(--ve-primary);
   border: none;
   font-weight: 500;
   color: #FFF;
@@ -81,6 +84,11 @@ visual-editor {
   cursor: pointer;
   padding: .5rem 1rem;
   border-radius: .2rem;
+  transition: background-color .3s;
+
+  &:hover {
+    background-color: var(--ve-primary-hover);
+  }
 }
 
 // Sidebar
@@ -118,7 +126,7 @@ visual-editor {
 }
 
 .ve-sidebar-bloc.is-dragging {
-  box-shadow: var(--shadow-dragging);
+  box-shadow: var(--ve-shadow-dragging);
   transition: box-shadow .3s!important;
   z-index: 10;
 }
@@ -137,10 +145,10 @@ visual-editor {
   justify-content: center;
   cursor: pointer;
   transition: .3s;
-  color: var(--color-light);
+  color: var(--ve-color-light);
 
   &:hover {
-    color: var(--color);
+    color: var(--ve-color);
   }
 }
 
@@ -163,7 +171,6 @@ visual-editor {
   }
 }
 
-
 .ve-layout .ve-sidebar-collapse {
   position: absolute;
   top: 12px;
@@ -174,7 +181,7 @@ visual-editor {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-light)
+  color: var(--ve-color-light)
 }
 
 .ve-sidebar-fields {
@@ -187,7 +194,7 @@ visual-editor {
 
 .ve-sidebar-title {
   margin: 0;
-  color: var(--color-light);
+  color: var(--ve-color-light);
   font-size: 0.85em;
   cursor: pointer;
   user-select: none;
@@ -195,23 +202,10 @@ visual-editor {
   line-height: 1.4;
 
   strong {
-    color: var(--color);
+    color: var(--ve-color);
     display: block;
     font-size: .9rem;
   }
-
-
-}
-
-.ve-debug {
-  display: block;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  border: 1px solid red;
-  width: 500px;
-  height: 200px;
-  z-index: 9999;
 }
 
 .ve-flex {
@@ -229,23 +223,15 @@ visual-editor {
   right: 0;
   background-color: #FFF;
   z-index: 10;
-  border-bottom: 1px solid var(--field-border);
+  border-bottom: 1px solid var(--ve-field-border);
   box-shadow: rgba(0, 0, 0, 0.05) 0 1px 2px 0;
 }
 .ve-sidebar-footer button {
   flex: none;
 }
-.ve-bloc-search {
-  border: none;
-  border-bottom: solid 1px var(--field-border);
-  width: 100%;
-  flex: 1;
-  margin: 0 1em;
-  outline: none;
-}
 .ve-layout .ve-close {
   display: block;
-  color: var(--color-light);
+  color: var(--ve-color-light);
   font-size: 20px;
   margin-right: auto;
   padding-left: .5em;
@@ -254,7 +240,7 @@ visual-editor {
   cursor: pointer;
 
   &:hover {
-    color: var(--color);
+    color: var(--ve-color);
   }
 }
 
@@ -301,8 +287,8 @@ visual-editor {
   background: #FFF;
   font-family: monospace;
   font-weight: 500;
-  border: 1px solid var(--field-border);
-  color: var(--color-light);
+  border: 1px solid var(--ve-field-border);
+  color: var(--ve-color-light);
   font-size: 1.2rem;
   width: 24px;
   height: 24px;
@@ -314,7 +300,7 @@ visual-editor {
 
   &:hover {
     background-color: #f5f5f5;
-    color: var(--color);
+    color: var(--ve-color);
   }
 }
 
@@ -327,13 +313,13 @@ visual-editor {
   transform: translateX(5px) rotate(45deg);
   opacity: 0;
   transition: opacity .2s, transform .2s;
-  color: var(--danger);
+  color: var(--ve-danger);
   background-color: #fff;
-  border-color: var(--danger);
+  border-color: var(--ve-danger);
 
   &:hover {
-    border: 1px solid var(--color-light);
-    color: var(--color);
+    border: 1px solid var(--ve-color-light);
+    color: var(--ve-color);
   }
 }
 

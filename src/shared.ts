@@ -6,7 +6,10 @@ import {
   Color,
   HTMLText,
   Repeater,
-  Range, AbstractField, Tabs,
+  Range,
+  AbstractField,
+  Tabs,
+  TextAlign,
 } from './VisualEditor'
 import { AbstractFieldGroup } from './fields/AbstractFieldGroup'
 
@@ -38,12 +41,20 @@ export const SiteColor = (name: string, label: string) =>
   new Color(name, { label: label, colors: Colors })
 
 export const Title = (name = 'title', label = 'Titre') =>
-  new HTMLText(name, {
-    default: 'Lorem ipsum dolor sit amet',
-    label: label,
-    multiline: false,
-    colors: Colors,
-  })
+  new Row(
+    [
+      new HTMLText(name, {
+        default: 'Lorem ipsum dolor sit amet',
+        label: label,
+        multiline: false,
+        colors: Colors,
+      }),
+      new TextAlign(name + 'Align', {
+        label: label,
+      }),
+    ],
+    { columns: '1fr max-content' }
+  )
 
 export const Content = (name = 'content', label = 'Description') =>
   new HTMLText(name, {
@@ -123,17 +134,20 @@ export const IconsWithLabel = () =>
     fields: [ImageField(), new Text('label', { label: 'Description' })],
   })
 
-export const WithStyles = (contentFields: Field[], styleFields: Field[] = []) => {
+export const WithStyles = (
+  contentFields: Field[],
+  styleFields: Field[] = []
+) => {
   return [
     new Tabs(
       {
-        label: "Contenu",
+        label: 'Contenu',
         fields: contentFields,
       },
       {
-        label: "Apparence",
+        label: 'Apparence',
         fields: [...styleFields, ...Style()],
       }
     ),
-  ];
-};
+  ]
+}
