@@ -31,7 +31,7 @@ export class Color extends AbstractField<FieldArgs, string | null> {
               !value && 've-color-button-transparent'
             )}
             onClick={(e) => e.preventDefault()}
-            style={value ? `--veSelectedColor: var(${value})` : ``}
+            style={value ? `--ve-selected-color: var(${value})` : ``}
           />
         </Tooltip>
       </div>
@@ -47,7 +47,7 @@ export class Color extends AbstractField<FieldArgs, string | null> {
         />
         {this.args.colors.map((color) => (
           <button
-            style={`--veColor: var(${color})`}
+            style={`--ve-color: var(${color})`}
             onClick={prevent(() => onChange(color))}
           />
         ))}
