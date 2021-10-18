@@ -51,12 +51,15 @@ class EditHistory<T> {
   }
 }
 
-export function useHistory<T>(data: T) {
+export function useHistory<T>(data: T, enabled: boolean) {
   const updateData = useUpdateData()
   const history = useRef(new EditHistory<T>())
   const previousData = useRef(data)
 
   useEffect(() => {
+    if (!enabled) {
+      return;
+    }
     const listener = (event: KeyboardEvent) => {
       // Si on est sur un input, on ne fait rien
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') {
@@ -73,9 +76,12 @@ export function useHistory<T>(data: T) {
     return () => {
       document.removeEventListener('keydown', listener)
     }
-  }, [])
+  }, [enabled])
 
   useUpdateEffect(() => {
+    if (!enabled) {
+      return;
+    }
     if (data !== previousData.current) {
       history.current.push(data)
       previousData.current = data

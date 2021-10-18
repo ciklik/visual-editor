@@ -167,8 +167,8 @@ export function VisualEditorComponent({
     updateData(value)
   }, [value])
 
-  useClipboardPaste()
-  useHistory(data)
+  useClipboardPaste(visibleProps)
+  useHistory(data, visibleProps)
   useEffect(() => {
     if (skipNextChange.current) {
       skipNextChange.current = false

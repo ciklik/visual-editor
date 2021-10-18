@@ -1,10 +1,13 @@
 import { useInsertData } from 'src/store'
-import { useEffect } from 'preact/hooks'
+import { useEffect, useRef } from 'preact/hooks'
 import { indexify } from 'src/functions/object'
 
-export function useClipboardPaste() {
+export function useClipboardPaste(enabled: boolean) {
   const insertData = useInsertData()
   useEffect(() => {
+    if (!enabled) {
+      return;
+    }
     const listener = (event: ClipboardEvent) => {
       try {
         let paste = (event.clipboardData || window.clipboardData)
@@ -31,5 +34,5 @@ export function useClipboardPaste() {
     return () => {
       document.removeEventListener('paste', listener)
     }
-  }, [insertData])
+  }, [insertData, enabled])
 }
