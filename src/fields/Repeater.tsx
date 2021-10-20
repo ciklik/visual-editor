@@ -50,7 +50,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
     const canRemove = !this.args.min || value.length > this.args.min
 
     const add = () => {
-      onChange([...value, { _id: uniqId() }])
+      onChange([...value, fillDefaults({ _id: uniqId() }, this.args.fields) as RepeaterLine])
     }
 
     const remove = (line: Object) => {
