@@ -18,7 +18,6 @@ visual-editor {
   --ve-shadow-dragging: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;  justify-content: center;
   --ve-gap: .5em;
   --ve-clampedSidebar: clamp(450px, var(--ve-sidebar), calc(100vw - 375px))
-
 }
 
 .ve-wrapper ::-webkit-scrollbar {

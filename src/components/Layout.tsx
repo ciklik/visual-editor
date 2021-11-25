@@ -38,7 +38,7 @@ function Wrapper({ children }: { children: ComponentChildren }) {
   const sidebarWidth = useSidebarWidth()
 
   return (
-    <div class="ve-wrapper" style={{ '--sidebar': `${sidebarWidth}vw` }}>
+    <div class="ve-wrapper" style={{ '--ve-sidebar': `${sidebarWidth}vw` }}>
       {children}
     </div>
   )
