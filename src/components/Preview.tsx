@@ -31,7 +31,7 @@ type PreviewProps = {
 /**
  * Affiche un aperçu du rendu de la page dans une iframe
  */
-export function Preview({ data, previewUrl, iconsUrl }: PreviewProps) {
+export function Preview ({ data, previewUrl, iconsUrl }: PreviewProps) {
   const iframe = useRef<HTMLIFrameElement>(null)
   const [iframeRoot, setIframeRoot] = useState<HTMLElement | null>(null)
   const initialHTML = useRef<Record<string, string>>({})
@@ -59,7 +59,7 @@ export function Preview({ data, previewUrl, iconsUrl }: PreviewProps) {
     const root = iframeDocument.querySelector('#ve-components') as HTMLElement
     initialHTML.current = Array.from(root.children).reduce(
       (acc, v, k) => ({ ...acc, [data[k]._id]: v.outerHTML }),
-      {}
+      {},
     )
     root.innerHTML = ''
     setIframeRoot(root)
@@ -77,20 +77,20 @@ export function Preview({ data, previewUrl, iconsUrl }: PreviewProps) {
     <div
       class={clsx(
         've-preview',
-        previewMode === PreviewModes.PHONE && 've-preview-phone'
+        previewMode === PreviewModes.PHONE && 've-preview-phone',
       )}
     >
       <iframe ref={iframe} style={transform} />
       {iframeRoot &&
-        createPortal(
-          <PreviewItems
-            data={data}
-            initialHTML={initialHTML.current}
-            previewUrl={previewUrl}
-            iconsUrl={iconsUrl}
-          />,
-          iframeRoot
-        )}
+      createPortal(
+        <PreviewItems
+          data={data}
+          initialHTML={initialHTML.current}
+          previewUrl={previewUrl}
+          iconsUrl={iconsUrl}
+        />,
+        iframeRoot,
+      )}
     </div>
   )
 }
@@ -98,12 +98,12 @@ export function Preview({ data, previewUrl, iconsUrl }: PreviewProps) {
 /**
  * Gère le rendu dans l'iframe des différents composants
  */
-export function PreviewItems({
-  data,
-  initialHTML = {},
-  previewUrl,
-  iconsUrl,
-}: {
+export function PreviewItems ({
+                                data,
+                                initialHTML = {},
+                                previewUrl,
+                                iconsUrl,
+                              }: {
   data: EditorComponentData[]
   initialHTML: Record<string, string>
   previewUrl: string
@@ -116,7 +116,7 @@ export function PreviewItems({
     insertData(
       blocName,
       index + 1,
-      fillDefaults({}, definitions[blocName].fields)
+      fillDefaults({}, definitions[blocName].fields),
     )
     setBlocsIndex(null)
   }
@@ -143,18 +143,11 @@ export function PreviewItems({
           </div>
         ))}
       </Flipper>
-      {blocsIndex !== data.length - 1 ? (
-        <div class="ve-preview-new-bloc">
-          <Button icon={IconCirclePlus} onClick={prevent(() => setBlocsIndex(data.length - 1))}>
-            Ajouter un bloc
-          </Button>
-        </div>
-      ) : (
-        <BlocList
-          iconsUrl={iconsUrl}
-          onAddBloc={(name: string) => handleAddBloc(name, data.length - 1)}
-        />
-      )}
+      <div class='ve-preview-new-bloc'>
+        <Button icon={IconCirclePlus} onClick={prevent(() => setBlocsIndex(data.length - 1))}>
+          Ajouter un bloc
+        </Button>
+      </div>
     </>
   )
 }
@@ -162,12 +155,12 @@ export function PreviewItems({
 /**
  * Gère le rendu de chaque composant
  */
-export function PreviewItem({
-  data,
-  initialHTML,
-  previewUrl,
-  title,
-}: {
+export function PreviewItem ({
+                               data,
+                               initialHTML,
+                               previewUrl,
+                               title,
+                             }: {
   data: EditorComponentData
   initialHTML: string
   previewUrl: string
@@ -189,17 +182,17 @@ export function PreviewItem({
 
   return (
     <Flipped flipId={data._id}>
-      <div class="ve-preview-wrapper" id={`previewItem${data._id}`}>
+      <div class='ve-preview-wrapper' id={`previewItem${data._id}`}>
         <div
           class={clsx(
             've-preview-component',
             loading && 'is-loading',
-            isFocused && 'is-focused'
+            isFocused && 'is-focused',
           )}
           ref={ref}
           onClick={() => setFocusIndex(data._id)}
         >
-          <div class="ve-preview-label">{title}</div>
+          <div class='ve-preview-label'>{title}</div>
           <div dangerouslySetInnerHTML={{ __html: html }} />
         </div>
       </div>
@@ -210,10 +203,10 @@ export function PreviewItem({
 /**
  * Gère le rendu de chaque composant
  */
-export function PreviewItemPlaceholder() {
+export function PreviewItemPlaceholder () {
   return (
-    <div class={clsx('ve-preview-placeholder')} id="previewItemstart">
-      <div class="ve-preview-droppable-top" />
+    <div class={clsx('ve-preview-placeholder')} id='previewItemstart'>
+      <div class='ve-preview-droppable-top' />
       Déposer votre premier bloc ici
     </div>
   )

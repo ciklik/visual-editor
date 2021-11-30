@@ -927,6 +927,13 @@
     "@babel/helper-validator-option" "^7.14.5"
     "@babel/plugin-transform-typescript" "^7.14.5"
 
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.12.13":
+  version "7.16.3"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.3.tgz#b86f0db02a04187a3c17caa77de69840165d42d5"
+  integrity sha512-WBwekcqacdY2e9AF/Q7WLFUWmdJGJTkbjqTjoMDgXkVZ3ZRUvOPsLb5KdwISoQVsbP+DQzVZW4Zhci0DvpbNTQ==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/runtime@^7.1.2", "@babel/runtime@^7.8.4":
   version "7.14.6"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.6.tgz#535203bc0892efc7dec60bdc27b2ecf6e409062d"
@@ -1275,6 +1282,62 @@
     "@prefresh/core" "^1.3.1"
     "@prefresh/utils" "^1.0.0"
     "@rollup/pluginutils" "^4.1.0"
+
+"@reach/auto-id@0.16.0":
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/@reach/auto-id/-/auto-id-0.16.0.tgz#dfabc3227844e8c04f8e6e45203a8e14a8edbaed"
+  integrity sha512-5ssbeP5bCkM39uVsfQCwBBL+KT8YColdnMN5/Eto6Rj7929ql95R3HZUOkKIvj7mgPtEb60BLQxd1P3o6cjbmg==
+  dependencies:
+    "@reach/utils" "0.16.0"
+    tslib "^2.3.0"
+
+"@reach/descendants@0.16.1":
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/@reach/descendants/-/descendants-0.16.1.tgz#fa3d89c0503565369707f32985d87eef61985d9f"
+  integrity sha512-3WZgRnD9O4EORKE31rrduJDiPFNMOjUkATx0zl192ZxMq3qITe4tUj70pS5IbJl/+v9zk78JwyQLvA1pL7XAPA==
+  dependencies:
+    "@reach/utils" "0.16.0"
+    tslib "^2.3.0"
+
+"@reach/dialog@^0.16.2":
+  version "0.16.2"
+  resolved "https://registry.yarnpkg.com/@reach/dialog/-/dialog-0.16.2.tgz#567e6f59d0a6dabe84b2ba4c456404efa6cb7d03"
+  integrity sha512-qq8oX0cROgTb8LjOKWzzNm4SqaN9b89lJHr7UyVo2aQ6WbeNzZBxqXhGywFP7dkR+hNqOJnrA59PXFWhfttA9A==
+  dependencies:
+    "@reach/portal" "0.16.2"
+    "@reach/utils" "0.16.0"
+    prop-types "^15.7.2"
+    react-focus-lock "^2.5.2"
+    react-remove-scroll "^2.4.3"
+    tslib "^2.3.0"
+
+"@reach/portal@0.16.2":
+  version "0.16.2"
+  resolved "https://registry.yarnpkg.com/@reach/portal/-/portal-0.16.2.tgz#ca83696215ee03acc2bb25a5ae5d8793eaaf2f64"
+  integrity sha512-9ur/yxNkuVYTIjAcfi46LdKUvH0uYZPfEp4usWcpt6PIp+WDF57F/5deMe/uGi/B/nfDweQu8VVwuMVrCb97JQ==
+  dependencies:
+    "@reach/utils" "0.16.0"
+    tiny-warning "^1.0.3"
+    tslib "^2.3.0"
+
+"@reach/tabs@^0.16.4":
+  version "0.16.4"
+  resolved "https://registry.yarnpkg.com/@reach/tabs/-/tabs-0.16.4.tgz#7da85e46f64052bdd1c0f9582f900e379b098ac5"
+  integrity sha512-4EK+1U0OoLfg2tJ1BSZf6/tx0hF5vlXKxY7qB//bPWtlIh9Xfp/aSDIdspFf3xS8MjtKeb6IVmo5UAxDMq85ZA==
+  dependencies:
+    "@reach/auto-id" "0.16.0"
+    "@reach/descendants" "0.16.1"
+    "@reach/utils" "0.16.0"
+    prop-types "^15.7.2"
+    tslib "^2.3.0"
+
+"@reach/utils@0.16.0":
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/@reach/utils/-/utils-0.16.0.tgz#5b0777cf16a7cab1ddd4728d5d02762df0ba84ce"
+  integrity sha512-PCggBet3qaQmwFNcmQ/GqHSefadAFyNCUekq9RrWoaU9hh/S4iaFgf2MBMdM47eQj5i/Bk0Mm07cP/XPFlkN+Q==
+  dependencies:
+    tiny-warning "^1.0.3"
+    tslib "^2.3.0"
 
 "@rollup/pluginutils@^4.1.0":
   version "4.1.0"
@@ -2157,6 +2220,11 @@ detect-newline@^3.0.0:
   resolved "https://registry.yarnpkg.com/detect-newline/-/detect-newline-3.1.0.tgz#576f5dfc63ae1a192ff192d8ad3af6308991b651"
   integrity sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==
 
+detect-node-es@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/detect-node-es/-/detect-node-es-1.1.0.tgz#163acdf643330caa0b4cd7c21e7ee7755d6fa493"
+  integrity sha512-ypdmJU/TbBby2Dxibuv7ZLW3Bs1QEmM7nHjEANfohJLvE0XVujisn1qPJcZxg+qDucsr+bP6fLD1rPS3AhJ7EQ==
+
 diff-sequences@^26.6.2:
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/diff-sequences/-/diff-sequences-26.6.2.tgz#48ba99157de1923412eed41db6b6d4aa9ca7c0b1"
@@ -2436,6 +2504,13 @@ flip-toolkit@7.0.13:
   dependencies:
     rematrix "0.2.2"
 
+focus-lock@^0.9.2:
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/focus-lock/-/focus-lock-0.9.2.tgz#9d30918aaa99b1b97677731053d017f82a540d5b"
+  integrity sha512-YtHxjX7a0IC0ZACL5wsX8QdncXofWpGPNoVMuI/nZUrPGp6LmNI6+D5j0pPj+v8Kw5EpweA+T5yImK0rnWf7oQ==
+  dependencies:
+    tslib "^2.0.3"
+
 for-in@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
@@ -2490,6 +2565,11 @@ get-intrinsic@^1.0.2:
     function-bind "^1.1.1"
     has "^1.0.3"
     has-symbols "^1.0.1"
+
+get-nonce@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/get-nonce/-/get-nonce-1.0.1.tgz#fdf3f0278073820d2ce9426c18f07481b1e0cdf3"
+  integrity sha512-FJhYRoDaiatfEkUK8HKlicmu/3SGFD51q3itKDGoSTysQJBnfOcxU5GxnhE1E6soB76MbT0MBtnKJuXyAx+96Q==
 
 get-package-type@^0.1.0:
   version "0.1.0"
@@ -2685,6 +2765,13 @@ inline-style-prefixer@^6.0.0:
   integrity sha512-XTHvRUS4ZJNzC1GixJRmOlWSS45fSt+DJoyQC9ytj0WxQfcgofQtDtyKKYxHUqEsWCs+LIWftPF1ie7+i012Fg==
   dependencies:
     css-in-js-utils "^2.0.0"
+
+invariant@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
+  integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
+  dependencies:
+    loose-envify "^1.0.0"
 
 is-accessor-descriptor@^0.1.6:
   version "0.1.6"
@@ -4048,7 +4135,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.5.7:
+prop-types@^15.5.7, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -4105,6 +4192,13 @@ quill@^1.3.7:
     parchment "^1.1.4"
     quill-delta "^3.6.2"
 
+react-clientside-effect@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/react-clientside-effect/-/react-clientside-effect-1.2.5.tgz#e2c4dc3c9ee109f642fac4f5b6e9bf5bcd2219a3"
+  integrity sha512-2bL8qFW1TGBHozGGbVeyvnggRpMjibeZM2536AKNENLECutp2yfs44IL8Hmpn8qjFQ2K7A9PnYf3vc7aQq/cPA==
+  dependencies:
+    "@babel/runtime" "^7.12.13"
+
 react-fast-compare@^3.0.1:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
@@ -4117,6 +4211,18 @@ react-flip-toolkit@^7.0.13:
   dependencies:
     flip-toolkit "7.0.13"
     prop-types "^15.5.7"
+
+react-focus-lock@^2.5.2:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/react-focus-lock/-/react-focus-lock-2.6.0.tgz#97345c7abe439bf2974410b45529c2e208b1a633"
+  integrity sha512-2yB5KWyaefbvFDgqvsg/KpIjbqVlhIY2c/dyDcokDLhB3Ib7I4bjsrta5OkI5euUoIu5xBTyBwIQZPykUJAr1g==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    focus-lock "^0.9.2"
+    prop-types "^15.6.2"
+    react-clientside-effect "^1.2.5"
+    use-callback-ref "^1.2.5"
+    use-sidecar "^1.0.5"
 
 react-is@^16.8.1:
   version "16.13.1"
@@ -4135,6 +4241,34 @@ react-popper@^2.2.5:
   dependencies:
     react-fast-compare "^3.0.1"
     warning "^4.0.2"
+
+react-remove-scroll-bar@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-remove-scroll-bar/-/react-remove-scroll-bar-2.2.0.tgz#d4d545a7df024f75d67e151499a6ab5ac97c8cdd"
+  integrity sha512-UU9ZBP1wdMR8qoUs7owiVcpaPwsQxUDC2lypP6mmixaGlARZa7ZIBx1jcuObLdhMOvCsnZcvetOho0wzPa9PYg==
+  dependencies:
+    react-style-singleton "^2.1.0"
+    tslib "^1.0.0"
+
+react-remove-scroll@^2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/react-remove-scroll/-/react-remove-scroll-2.4.3.tgz#83d19b02503b04bd8141ed6e0b9e6691a2e935a6"
+  integrity sha512-lGWYXfV6jykJwbFpsuPdexKKzp96f3RbvGapDSIdcyGvHb7/eqyn46C7/6h+rUzYar1j5mdU+XECITHXCKBk9Q==
+  dependencies:
+    react-remove-scroll-bar "^2.1.0"
+    react-style-singleton "^2.1.0"
+    tslib "^1.0.0"
+    use-callback-ref "^1.2.3"
+    use-sidecar "^1.0.1"
+
+react-style-singleton@^2.1.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-2.1.1.tgz#ce7f90b67618be2b6b94902a30aaea152ce52e66"
+  integrity sha512-jNRp07Jza6CBqdRKNgGhT3u9umWvils1xsuMOjZlghBDH2MU0PL2WZor4PGYjXpnRCa9DQSlHMs/xnABWOwYbA==
+  dependencies:
+    get-nonce "^1.0.0"
+    invariant "^2.2.4"
+    tslib "^1.0.0"
 
 react-universal-interface@^0.6.2:
   version "0.6.2"
@@ -4703,6 +4837,11 @@ throttle-debounce@^3.0.1:
   resolved "https://registry.yarnpkg.com/throttle-debounce/-/throttle-debounce-3.0.1.tgz#32f94d84dfa894f786c9a1f290e7a645b6a19abb"
   integrity sha512-dTEWWNu6JmeVXY0ZYoPuH5cRIwc0MeGbJwah9KUNYSJwommQpCzTySTpEe8Gs1J23aeWEuAobe4Ag7EHVt/LOg==
 
+tiny-warning@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
+  integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
+
 tippy.js@^6.3.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/tippy.js/-/tippy.js-6.3.1.tgz#3788a007be7015eee0fd589a66b98fb3f8f10181"
@@ -4794,7 +4933,12 @@ ts-jest@^27.0.3:
     semver "7.x"
     yargs-parser "20.x"
 
-tslib@^2.0.0:
+tslib@^1.0.0, tslib@^1.9.3:
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
+  integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
+
+tslib@^2.0.0, tslib@^2.0.3, tslib@^2.3.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
   integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
@@ -4888,6 +5032,19 @@ urix@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/urix/-/urix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"
   integrity sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
+
+use-callback-ref@^1.2.3, use-callback-ref@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.2.5.tgz#6115ed242cfbaed5915499c0a9842ca2912f38a5"
+  integrity sha512-gN3vgMISAgacF7sqsLPByqoePooY3n2emTH59Ur5d/M8eg4WTWu1xp8i8DHjohftIyEx0S08RiYxbffr4j8Peg==
+
+use-sidecar@^1.0.1, use-sidecar@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/use-sidecar/-/use-sidecar-1.0.5.tgz#ffff2a17c1df42e348624b699ba6e5c220527f2b"
+  integrity sha512-k9jnrjYNwN6xYLj1iaGhonDghfvmeTmYjAiGvOr7clwKfPjMXJf4/HOr7oT5tJwYafgp2tG2l3eZEOfoELiMcA==
+  dependencies:
+    detect-node-es "^1.1.0"
+    tslib "^1.9.3"
 
 use@^3.1.0:
   version "3.1.1"

@@ -24,7 +24,8 @@ type State = {
   hiddenCategories: string[]
   focusIndex: null | string
   previewMode: PreviewModes
-  sidebarWidth: number
+  sidebarWidth: number,
+  addBlockIndex: number|null,
 }
 
 const sidebarWidth = localStorage.getItem('veSidebarWidth')
@@ -41,6 +42,7 @@ const createStore = (
           data,
           definitions,
           hiddenCategories,
+          addBlockIndex: null,
           focusIndex: null,
           previewMode: PreviewModes.DESKTOP,
           sidebarWidth: clamp(
@@ -88,6 +90,9 @@ const createStore = (
           },
           setFocusIndex: function (id: string) {
             set(() => ({ focusIndex: id }))
+          },
+          setAddBlockIndex: function (index: number|null) {
+            set(() => ({ addBlockIndex: index }))
           },
           togglePreviewMode: function () {
             set(({ previewMode }) => ({
@@ -190,6 +195,14 @@ export function useFieldDefinition(
   name: string
 ): EditorComponentDefinition | undefined {
   return useStore((state) => state.definitions)[name]
+}
+
+export function useBlocSelectionVisible(): number|null {
+  return useStore((state) => state.addBlockIndex) !== null
+}
+
+export function useSetBlockIndex(): Function {
+  return useStore((state) => state.setAddBlockIndex)
 }
 
 export const store = useStore

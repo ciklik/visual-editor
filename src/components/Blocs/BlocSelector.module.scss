@@ -1,0 +1,125 @@
+:global([data-reach-dialog-overlay]) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.BlocSelector {
+  width: calc(100% - 2rem);
+  max-width: 1280px;
+  border-radius: 8px;
+  background-color: var(--ve-background);
+  padding: 1.5rem 2rem;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.BlocSelectorTitle {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.BlocSelectorTabs {
+  display: flex;
+  gap: .5rem;
+  margin: 1.5rem 0;
+}
+
+.BlocSelectorTab {
+  background-color: var(--ve-hover);
+  border-radius: 56px;
+  padding: 1rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.BlocSelectorTab[data-selected] {
+  color: var(--ve-primary);
+  background-color: var(--ve-primary-light);
+}
+.BlocSelectorGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 250px);
+  overflow: auto;
+  max-height: calc(100vh - 300px);
+}
+.BlocSelectorGrid[hidden] {
+  display: none;
+}
+.BlocSelectorItem {
+  padding: 1rem;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.BlocSelectorItemImage {
+  width: 100%;
+  background-color: var(--ve-hover);
+  height: 107px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 4px;
+    transition: transform .3s;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    background: #1771E6;
+    mix-blend-mode: saturation;
+    border-radius: 4px;
+    transition: opacity .3s;
+  }
+}
+
+.BlocSelectorItem:hover {
+  .BlocSelectorItemImage img {
+    transform: translateY(-5px);
+  }
+  .BlocSelectorItemImage::after {
+    opacity: 1;
+  }
+}
+
+.BlocSelectorGrid {
+  &::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--ve-hover);
+    padding: 1px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--ve-field-border);
+    border-radius: 4px;
+  }
+}

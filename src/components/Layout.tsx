@@ -5,6 +5,7 @@ import { EditorComponentData } from 'src/types'
 import { useSidebarWidth } from 'src/store'
 import { ResizeBar } from './ResizeBar'
 import { ComponentChildren } from 'preact'
+import { BlocSelector } from './Blocs/BlocSelector'
 
 type LayoutProps = {
   class?: string
@@ -21,6 +22,7 @@ export function Layout({
   onClose,
   iconsUrl,
 }: LayoutProps) {
+
   return (
     <Wrapper>
       <div class={clsx('ve-layout', className)}>
@@ -30,6 +32,7 @@ export function Layout({
         )}
       </div>
       <ResizeBar />
+      <BlocSelector/>
     </Wrapper>
   )
 }
