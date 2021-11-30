@@ -1,8 +1,8 @@
-import { EditorField, EditorFieldProps } from 'src/types'
+import { EditorFieldProps } from 'src/types'
 import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from 'src/fields/AbstractField'
 import { prevent } from 'src/functions/functions'
-import { useRef } from 'preact/hooks'
+import React, { useRef } from 'react'
 import { Tooltip } from 'src/components/Tooltip'
 
 type FieldArgs = {
@@ -28,14 +28,14 @@ export class ImageUrl extends AbstractField<FieldArgs, string> {
     }
     return (
       <div>
-        {this.args.label && <label for={id}>{this.args.label}</label>}
-        <div class="ve-input-icon">
+        {this.args.label && <label htmlFor={id}>{this.args.label}</label>}
+        <div className="ve-input-icon">
           <Tooltip content={<TooltipImage url={value} />}>
             <input
               ref={inputRef}
               type="text"
               id={id}
-              class="ve-input ve-input-image"
+              className="ve-input ve-input-image"
               value={value}
               onInput={(e) => onChange((e.target as HTMLInputElement).value)}
             />
@@ -55,7 +55,7 @@ export class ImageUrl extends AbstractField<FieldArgs, string> {
             </button>
           )}
         </div>
-        {this.args.help && <div class="ve-form-help">{this.args.help}</div>}
+        {this.args.help && <div className="ve-form-help">{this.args.help}</div>}
       </div>
     )
   }
@@ -65,5 +65,5 @@ function TooltipImage({ url }: { url?: string }) {
   if (!url) {
     return null
   }
-  return <img src={url} alt="" class="ve-imageurl-tooltip" />
+  return <img src={url} alt="" className="ve-imageurl-tooltip" />
 }

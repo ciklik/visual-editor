@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks'
+import { useState } from 'react'
 
 export function useToggle(
   initial: boolean = false

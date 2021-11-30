@@ -1,13 +1,8 @@
 import { AbstractField } from 'src/fields/AbstractField'
 import { EditorFieldProps } from 'src/types'
-import {
-  IconAlignBottom,
-  IconAlignLeft,
-  IconAlignRight,
-  IconAlignTop,
-} from 'src/components/Icons'
+import { IconAlignBottom, IconAlignLeft, IconAlignRight, IconAlignTop } from 'src/components/Icons'
 import { uniqId } from 'src/functions/string'
-import { FunctionComponent } from 'preact'
+import { FunctionComponent, SyntheticEvent } from 'react'
 
 type FieldArgs = {
   label?: string
@@ -33,7 +28,7 @@ export class Alignment extends AbstractField<FieldArgs, FieldValue> {
 
   field({ value, onChange }: EditorFieldProps<FieldValue>) {
     const id = uniqId()
-    const handleChange = (e: Event) => {
+    const handleChange = (e: SyntheticEvent) => {
       onChange((e.target as HTMLInputElement).value as FieldValue)
     }
     const alignements = [
@@ -44,7 +39,7 @@ export class Alignment extends AbstractField<FieldArgs, FieldValue> {
     return (
       <div>
         {this.args.label && <label>{this.args.label}</label>}
-        <div class="ve-alignments">
+        <div className="ve-alignments">
           {alignements.map((alignment) => (
             <AlignmentButton
               key={alignment}
@@ -68,12 +63,12 @@ function AlignmentButton({
 }: {
   alignment: FieldValue
   id: string
-  onChange: (e: Event) => void
+  onChange: (e: SyntheticEvent) => void
   checked: boolean
 }) {
   const IconComponent = AlignmentIcons[alignment]
   return (
-    <div key={alignment} class="ve-alignment">
+    <div key={alignment} className="ve-alignment">
       <input
         type="radio"
         name={id}

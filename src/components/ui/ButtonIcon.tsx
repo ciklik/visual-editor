@@ -1,14 +1,16 @@
 import Styles from './Button.module.scss'
-import type { ComponentChildren } from 'preact'
 import cx from 'clsx'
+import { ReactElement } from 'react'
+import React from 'react'
 
-type ButtonProps =  JSX.HTMLAttributes<HTMLButtonElement> & {
-  children: ComponentChildren,
-  danger?: boolean
+type ButtonProps =  JSX.IntrinsicElements['button'] & {
+  children: ReactElement,
+  danger?: boolean,
+  className?: string
 }
 
 export function ButtonIcon ({children, className, danger, ...props}: ButtonProps) {
-  return <button {...props} class={cx(Styles.ButtonIcon, danger && Styles.ButtonIconDanger, className)}>
+  return <button {...props} className={cx(Styles.ButtonIcon, danger && Styles.ButtonIconDanger, className)}>
     {children}
   </button>
 }

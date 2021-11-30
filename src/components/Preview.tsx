@@ -1,6 +1,6 @@
 import { EditorComponentData } from 'src/types'
-import { useEffect, useRef, useState } from 'preact/hooks'
-import { createPortal } from 'preact/compat'
+import React, { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useAsyncEffect } from 'src/hooks/useAsyncEffect'
 import { usePreview } from 'src/hooks/usePreview'
 import clsx from 'clsx'
@@ -16,7 +16,6 @@ import { Flipped, Flipper } from 'react-flip-toolkit'
 import { useWindowSize } from 'react-use'
 import { PHONE_HEIGHT } from 'src/constants'
 import { prevent } from 'src/functions/functions'
-import { BlocList } from './Blocs/BlocList'
 import { fillDefaults } from 'src/functions/fields'
 import { BlocAdder } from './Blocs/BlocAdder'
 import { Button } from './ui/Button'
@@ -75,7 +74,7 @@ export function Preview ({ data, previewUrl, iconsUrl }: PreviewProps) {
 
   return (
     <div
-      class={clsx(
+      className={clsx(
         've-preview',
         previewMode === PreviewModes.PHONE && 've-preview-phone',
       )}
@@ -143,7 +142,7 @@ export function PreviewItems ({
           </div>
         ))}
       </Flipper>
-      <div class='ve-preview-new-bloc'>
+      <div className='ve-preview-new-bloc'>
         <Button icon={IconCirclePlus} onClick={prevent(() => setBlocsIndex(data.length - 1))}>
           Ajouter un bloc
         </Button>
@@ -182,9 +181,9 @@ export function PreviewItem ({
 
   return (
     <Flipped flipId={data._id}>
-      <div class='ve-preview-wrapper' id={`previewItem${data._id}`}>
+      <div className='ve-preview-wrapper' id={`previewItem${data._id}`}>
         <div
-          class={clsx(
+          className={clsx(
             've-preview-component',
             loading && 'is-loading',
             isFocused && 'is-focused',
@@ -192,7 +191,7 @@ export function PreviewItem ({
           ref={ref}
           onClick={() => setFocusIndex(data._id)}
         >
-          <div class='ve-preview-label'>{title}</div>
+          <div className='ve-preview-label'>{title}</div>
           <div dangerouslySetInnerHTML={{ __html: html }} />
         </div>
       </div>
@@ -205,8 +204,8 @@ export function PreviewItem ({
  */
 export function PreviewItemPlaceholder () {
   return (
-    <div class={clsx('ve-preview-placeholder')} id='previewItemstart'>
-      <div class='ve-preview-droppable-top' />
+    <div className={clsx('ve-preview-placeholder')} id='previewItemstart'>
+      <div className='ve-preview-droppable-top' />
       Déposer votre premier bloc ici
     </div>
   )

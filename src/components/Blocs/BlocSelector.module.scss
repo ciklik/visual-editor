@@ -47,15 +47,16 @@
 }
 .BlocSelectorGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 250px);
+  grid-template-columns: repeat(auto-fit, 218px);
+  gap: 2rem;
   overflow: auto;
   max-height: calc(100vh - 300px);
+  margin-top: 2rem;
 }
 .BlocSelectorGrid[hidden] {
   display: none;
 }
 .BlocSelectorItem {
-  padding: 1rem;
   background-color: transparent;
   border: none;
   display: flex;
@@ -99,6 +100,7 @@
 }
 
 .BlocSelectorItem:hover {
+  color: var(--ve-primary);
   .BlocSelectorItemImage img {
     transform: translateY(-5px);
   }

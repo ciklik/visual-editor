@@ -1,6 +1,7 @@
 import { EditorComponentData } from 'src/types'
 import { SidebarFields } from 'src/components/Sidebar/SidebarFields'
 import { SidebarFooter } from 'src/components/Sidebar/SidebarFooter'
+import React from 'react'
 
 export function Sidebar({
   data,
@@ -10,7 +11,7 @@ export function Sidebar({
   onClose: () => void
 }) {
   return (
-    <div class="ve-sidebar">
+    <div className="ve-sidebar">
       <SidebarFooter onClose={onClose} />
       <SidebarFields data={data} />
     </div>

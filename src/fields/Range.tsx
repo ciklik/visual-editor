@@ -1,7 +1,7 @@
 import { EditorFieldProps } from 'src/types'
 import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from 'src/fields/AbstractField'
-
+import React from 'react'
 type FieldArgs = {
   label?: string
   required?: boolean
@@ -29,7 +29,7 @@ export class Range extends AbstractField<FieldArgs, number> {
     return (
       <div>
         {this.args.label && (
-          <label for={id} class="form-label">
+          <label htmlFor={id} className="form-label">
             {this.args.label} <small>({value})</small>
           </label>
         )}
@@ -40,7 +40,7 @@ export class Range extends AbstractField<FieldArgs, number> {
           step={this.args.step}
           id={id}
           list={id + 'marks'}
-          class="ve-input"
+          className="ve-input"
           value={value}
           onInput={(e) =>
             onChange(parseInt((e.target as HTMLInputElement).value, 10))
@@ -51,7 +51,7 @@ export class Range extends AbstractField<FieldArgs, number> {
             <option key={t} value={t.toString()} />
           ))}
         </datalist>
-        {this.args.help && <div class="ve-help">{this.args.help}</div>}
+        {this.args.help && <div className="ve-help">{this.args.help}</div>}
       </div>
     )
   }

@@ -1,5 +1,5 @@
-import { EditorField, FieldCondition } from 'src/types'
-import { VNode } from 'preact'
+import { EditorField, EditorFieldProps, FieldCondition } from 'src/types'
+import { ReactElement } from 'react'
 import { cast } from 'src/functions/object'
 
 export class AbstractField<Args extends Record<string, any>, V>
@@ -19,10 +19,7 @@ export class AbstractField<Args extends Record<string, any>, V>
   field({
     value,
     onChange,
-  }: {
-    value?: V
-    onChange: (value: V) => void
-  }): VNode<any> {
+  }: EditorFieldProps<V>): ReactElement {
     throw Error('La méthode field doit être implémentée')
   }
 

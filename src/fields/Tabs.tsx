@@ -1,7 +1,6 @@
 import { AbstractFieldGroup } from './AbstractFieldGroup'
-import { cloneElement, FunctionComponent, VNode } from 'preact'
+import React, { cloneElement, FunctionComponent, ReactElement, ReactNode, useState } from 'react'
 import { EditorField } from 'src/types'
-import { useState } from 'preact/hooks'
 import { prevent } from 'src/functions/functions'
 
 type RowArgs = {
@@ -17,25 +16,25 @@ type TabDefinition = {
 export class Tabs extends AbstractFieldGroup<any> {
   tabs: TabDefinition[] = []
 
-  constructor(...tabs: TabDefinition[]) {
+  constructor (...tabs: TabDefinition[]) {
     super(
       tabs.reduce(
         (acc, tab) => [...acc, ...tab.fields],
-        [] as TabDefinition['fields']
+        [] as TabDefinition['fields'],
       ),
-      {}
+      {},
     )
     this.tabs = tabs
   }
 
-  render: FunctionComponent<{ children: VNode<any> }> = ({ children }) => {
+  render: FunctionComponent<{ children: ReactElement }> = ({ children }) => {
     const [currentTab, setTab] = useState<TabDefinition>(this.tabs[0])
     const currentChildren = cloneElement(children, {
       fields: currentTab.fields,
     })
     return (
-      <div class="ve-sidebar-fields">
-        <div role="tablist" class="ve-tabs">
+      <div className='ve-sidebar-fields'>
+        <div role='tablist' className='ve-tabs'>
           {this.tabs.map((tab) => (
             <button
               key={tab.label}

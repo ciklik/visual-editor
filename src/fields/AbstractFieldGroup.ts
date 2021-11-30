@@ -1,5 +1,5 @@
 import { EditorField, FieldCondition } from 'src/types'
-import { FunctionComponent, h, VNode } from 'preact'
+import { createElement, FunctionComponent, ReactElement } from 'react'
 import { cast } from 'src/functions/object'
 
 export class AbstractFieldGroup<A extends Record<string, any>> {
@@ -7,19 +7,19 @@ export class AbstractFieldGroup<A extends Record<string, any>> {
   args: A
   conditions: FieldCondition[] = []
 
-  constructor(
+  constructor (
     children: Array<EditorField<any> | AbstractFieldGroup<any>>,
-    args: A = {} as A
+    args: A = {} as A,
   ) {
     this.fields = children
     this.args = args
   }
 
-  render: FunctionComponent<{ children: VNode<any> }> = () => {
-    return h('div', {}, 'Vous devez implémenter la méthode render')
+  render: FunctionComponent<{ children: ReactElement }> = () => {
+    return createElement('div', {}, 'Vous devez implémenter la méthode render')
   }
 
-  when(fieldName: string, expectedValue: any = true) {
+  when (fieldName: string, expectedValue: any = true) {
     this.conditions.push((data: Record<string, any>) => {
       if (typeof expectedValue === 'function') {
         return expectedValue(data[fieldName])
@@ -29,7 +29,7 @@ export class AbstractFieldGroup<A extends Record<string, any>> {
     return this
   }
 
-  shouldRender(data: Record<string, any>) {
+  shouldRender (data: Record<string, any>) {
     return this.conditions.filter((condition) => !condition(data)).length === 0
   }
 }

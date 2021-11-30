@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useRef } from 'preact/hooks'
+import { useEffect, useMemo, useRef } from 'react'
 import { debounce } from 'src/functions/time'
 
-export function useEffectDebounced(
+export function useEffectDebounced (
   callback: Function,
   deps: any[],
-  time: number
+  time: number,
 ) {
   const callbackRef = useRef<Function>(callback)
   const debouncedCallback = useMemo(() => {

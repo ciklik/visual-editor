@@ -1,16 +1,17 @@
 import Styles from './Flex.module.scss'
 import cx from 'clsx'
-import type { ComponentChildren } from 'preact'
-import { FunctionComponent } from 'preact'
+import { FunctionComponent, ReactElement, ReactNode } from 'react'
+import React from 'react'
 
-type FlexProps = JSX.HTMLAttributes<HTMLElement> & {
+type FlexProps = {
   between?: boolean,
-  children: ComponentChildren,
-  as?: FunctionComponent<any> | string
+  children: ReactNode,
+  as?: FunctionComponent<any> | string,
+  className?: string
 }
 
 export function Flex ({as: ElementComponent = 'div', between, children, className, ...props}: FlexProps) {
-  return <ElementComponent {...props} class={cx(Styles.Flex, between && Styles.FlexBetween, className)}>
+  return <ElementComponent {...props} className={cx(Styles.Flex, between && Styles.FlexBetween, className)}>
     {children}
   </ElementComponent>
 }

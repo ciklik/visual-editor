@@ -1,10 +1,5 @@
-import { useEffect, useRef } from 'preact/hooks'
-import {
-  Delta,
-  lineBreakHandler,
-  lineBreakMatcher,
-  Quill,
-} from 'src/libs/Quill'
+import { useEffect, useRef } from 'react'
+import { Delta, lineBreakHandler, lineBreakMatcher, Quill } from 'src/libs/Quill'
 import type { DeltaOperation } from 'quill'
 import clsx from 'clsx'
 
@@ -53,7 +48,7 @@ export function QuillEditor({
   colors,
 }: QuillEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null)
-  const quillRef = useRef<Quill>(null)
+  const quillRef = useRef<Quill|null>(null)
   const onChangeRef = useRef(onChange)
   onChangeRef.current = onChange
 
@@ -127,7 +122,7 @@ export function QuillEditor({
 
   return (
     <div
-      class={clsx(
+      className={clsx(
         mode === QuillEditorMode.SINGLE_LINE && 'ql-container-oneline'
       )}
       ref={editorRef}

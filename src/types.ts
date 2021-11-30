@@ -1,5 +1,5 @@
-import { FunctionComponent } from 'preact'
 import { AbstractFieldGroup } from './fields/AbstractFieldGroup'
+import { FunctionComponent } from 'react'
 
 export type EditorComponentData = {
   _id: string
@@ -32,10 +32,8 @@ export type EditorComponentDefinition = {
   category?: string
 }
 
-export type EditorComponentDefinitions = Record<
-  string,
-  EditorComponentDefinition
->
+export type EditorComponentDefinitions = Record<string,
+  EditorComponentDefinition>
 
 export type DragData = {
   component: FunctionComponent

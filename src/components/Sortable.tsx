@@ -1,25 +1,15 @@
+import React, { ReactChildren, ReactElement, ReactNode, SyntheticEvent } from 'react'
 import { IndexableObject } from 'src/types'
-import {
-  DndContext,
-  closestCenter,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core'
-import {
-  restrictToParentElement,
-  restrictToVerticalAxis,
-} from '@dnd-kit/modifiers'
+import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
+import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers'
 import {
   SortableContext,
   sortableKeyboardCoordinates,
+  useSortable,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
-import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { DragEndEvent } from '@dnd-kit/core/dist/types'
-import { ComponentChildren } from 'preact'
 import clsx from 'clsx'
 
 export function SortableWrapper({
@@ -28,7 +18,7 @@ export function SortableWrapper({
   onMove,
 }: {
   items: IndexableObject[]
-  children: ComponentChildren
+  children: ReactNode
   onMove: (from: number, to: number) => void
 }) {
   const ids = items.map((item) => item._id)
@@ -64,13 +54,13 @@ export function SortableWrapper({
 export function Sortable({
   item,
   children,
-  class: className,
+  className,
   ...props
 }: {
   item: IndexableObject
-  children: ComponentChildren
-  class?: string
-  onClick?: (e: Event) => void
+  children: ReactNode
+  className?: string
+  onClick?: (e: SyntheticEvent) => void,
 }) {
   const {
     attributes,
@@ -83,17 +73,17 @@ export function Sortable({
 
   const style = {
     transform: CSS.Translate.toString(transform),
-    transition,
+    transition: transition || undefined,
   }
   return (
     <div
-      class={clsx(className, isDragging && 'is-dragging')}
+      className={clsx(className, isDragging && 'is-dragging')}
       ref={setNodeRef}
       style={style}
       {...attributes}
       {...props}
     >
-      <div class="ve-repeater-handle" {...listeners} />
+      <div className="ve-repeater-handle" {...listeners} />
       {children}
     </div>
   )

@@ -1,15 +1,16 @@
 import { Dialog } from '@reach/dialog'
 import Styles from './BlocSelector.module.scss'
-import { useMemo, useState } from 'preact/hooks'
-import { useBlocSelectionVisible, useFieldDefinitions, useHiddenCategories } from '../../store'
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@reach/tabs'
+import React, { useMemo, useState } from 'react'
+import { useBlocSelectionVisible, useFieldDefinitions, useHiddenCategories, useSetBlockIndex } from '../../store'
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@reach/tabs'
 import { EditorComponentDefinition, EditorComponentDefinitions } from '../../types'
 import { prevent } from '../../functions/functions'
 
 const ALL_TAB = 'Tous les blocs'
 
 export function BlocSelector () {
-  const isVisible = useBlocSelectionVisible() !== null
+  const isVisible = useBlocSelectionVisible()
+  const setBlockIndex = useSetBlockIndex()
   const [tab, setTab] = useState(ALL_TAB)
   const search = ''
   const definitions = useFieldDefinitions()
@@ -28,24 +29,23 @@ export function BlocSelector () {
   }, [definitions])
 
   if (!isVisible) {
-    // return null;
+    return null;
   }
 
   const handleOpenChange = (v: any) => {
-    console.log('change', v)
+    setBlockIndex(null)
   }
 
-
-  return <Dialog isOpen={false} onDismiss={handleOpenChange} className={Styles.BlocSelector}>
-    <div class={Styles.BlocSelectorTitle}>Ajouter un bloc</div>
+  return <Dialog isOpen={isVisible} onDismiss={handleOpenChange} className={Styles.BlocSelector}>
+    <div className={Styles.BlocSelectorTitle}>Ajouter un bloc</div>
 
     <Tabs>
-      <TabList>
-        {categories.map(category => <Tab class={Styles.BlocSelectorTab} key={category}>{category}</Tab>)}
+      <TabList className={Styles.BlocSelectorTabs}>
+        {categories.map(category => <Tab className={Styles.BlocSelectorTab} key={category}>{category}</Tab>)}
       </TabList>
 
       <TabPanels>
-        {categories.map(category => <TabPanel key={category} class={Styles.BlocSelectorGrid}>
+        {categories.map(category => <TabPanel key={category} className={Styles.BlocSelectorGrid}>
           {Object.keys(definitions)
             .filter(
               (key) => !hiddenCategories.includes(definitions[key].category ?? ''),
@@ -53,6 +53,7 @@ export function BlocSelector () {
             .filter(searchDefinition(search ?? '', tab, definitions))
             .map((key) => (
               <BlocSelectorItem
+                key={key}
                 definition={definitions[key]}
                 name={key}
                 iconsUrl={'/'}
@@ -80,7 +81,7 @@ function BlocSelectorItem ({
   const title = definition.title
 
   return (
-    <button class={Styles.BlocSelectorItem} onClick={prevent(onClick)}>
+    <button className={Styles.BlocSelectorItem} onClick={prevent(onClick)}>
       <div className={Styles.BlocSelectorItemImage}>
         <img src={'/html.svg'} />
       </div>

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'preact/hooks'
+import { useLayoutEffect, useState } from 'react'
 
 const CLASS_VISIBLE = 'is-visible'
 const CLASS_NOT_VISIBLE = 'is-hidden'
@@ -22,6 +22,5 @@ export function useVisibilityClass(visible: boolean): [string, boolean] {
       return () => window.clearTimeout(timer)
     }
   }, [visible])
-
   return [className, delayedVisible]
 }

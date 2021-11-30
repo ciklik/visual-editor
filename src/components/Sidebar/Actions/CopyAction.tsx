@@ -4,7 +4,7 @@ import { IconCheck, IconCopy } from 'src/components/Icons'
 import { copyToClipboard } from 'src/functions/browser'
 import { stringifyFields } from 'src/functions/object'
 import { Tooltip } from 'src/components/Tooltip'
-import { useEffect, useRef, useState } from 'preact/hooks'
+import React, { useEffect, useRef, useState } from 'react'
 
 type CopyActionProps = {
   data: EditorComponentData | EditorComponentData[]
@@ -34,8 +34,8 @@ export function CopyAction({ data, className }: CopyActionProps) {
     <Tooltip content="Le code a bién été copié" visible={success}>
       <button
         onClick={prevent(handleCopy)}
-        class={className || 've-sidebar-action-hover'}
-        style={{ color: success ? 'green' : null }}
+        className={className || 've-sidebar-action-hover'}
+        style={{ color: success ? 'green' : 'currentcolor' }}
       >
         {success ? <IconCheck /> : <IconCopy />}
       </button>

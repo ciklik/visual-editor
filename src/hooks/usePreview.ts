@@ -1,5 +1,5 @@
 import { EditorComponentData } from 'src/types'
-import { useRef, useState } from 'preact/hooks'
+import { useRef, useState } from 'react'
 import { useEffectDebounced } from './useEffectDebounced'
 
 export function usePreview(

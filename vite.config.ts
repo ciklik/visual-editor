@@ -1,11 +1,12 @@
 import { defineConfig } from 'vite'
-import preact from '@preact/preset-vite'
+import reactRefresh from '@vitejs/plugin-react-refresh'
 import path from 'path'
 import analyze from 'rollup-plugin-analyzer'
+import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [preact.default()],
+  plugins: [react()],
   server: {
     proxy: {
       '/preview': 'http://localhost:8000/index.php',
@@ -16,6 +17,7 @@ export default defineConfig({
       'src': path.resolve(__dirname, './src')
     }
   },
+  /*
   build: {
     minify: false,
     rollupOptions: {
@@ -30,4 +32,5 @@ export default defineConfig({
       name: 'VisualEditor'
     }
   }
+   */
 })

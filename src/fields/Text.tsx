@@ -1,6 +1,7 @@
 import { EditorFieldProps } from 'src/types'
 import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from 'src/fields/AbstractField'
+import React from 'react'
 
 type FieldArgs = {
   label?: string
@@ -23,14 +24,14 @@ export class Text extends AbstractField<FieldArgs, string> {
     return (
       <div>
         {this.args.label && (
-          <label for={id} class="form-label">
+          <label htmlFor={id} className="form-label">
             {this.args.label}
           </label>
         )}
         {this.args.multiline ? (
           <textarea
             id={id}
-            class="ve-input"
+            className="ve-input"
             value={value}
             onInput={(e) => onChange((e.target as HTMLTextAreaElement).value)}
           />
@@ -38,12 +39,12 @@ export class Text extends AbstractField<FieldArgs, string> {
           <input
             type="text"
             id={id}
-            class="ve-input"
+            className="ve-input"
             value={value}
             onInput={(e) => onChange((e.target as HTMLInputElement).value)}
           />
         )}
-        {this.args.help && <div class="ve-help">{this.args.help}</div>}
+        {this.args.help && <div className="ve-help">{this.args.help}</div>}
       </div>
     )
   }

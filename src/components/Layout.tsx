@@ -4,11 +4,11 @@ import { Preview } from 'src/components/Preview'
 import { EditorComponentData } from 'src/types'
 import { useSidebarWidth } from 'src/store'
 import { ResizeBar } from './ResizeBar'
-import { ComponentChildren } from 'preact'
 import { BlocSelector } from './Blocs/BlocSelector'
+import React, { ReactElement, ReactNode } from 'react'
 
 type LayoutProps = {
-  class?: string
+  className?: string
   data: EditorComponentData[]
   previewUrl?: string
   onClose: () => void
@@ -16,7 +16,7 @@ type LayoutProps = {
 }
 
 export function Layout({
-  class: className,
+  className,
   data,
   previewUrl,
   onClose,
@@ -25,7 +25,7 @@ export function Layout({
 
   return (
     <Wrapper>
-      <div class={clsx('ve-layout', className)}>
+      <div className={clsx('ve-layout', className)}>
         <Sidebar data={data} onClose={onClose} />
         {previewUrl && (
           <Preview data={data} previewUrl={previewUrl} iconsUrl={iconsUrl} />
@@ -37,11 +37,11 @@ export function Layout({
   )
 }
 
-function Wrapper({ children }: { children: ComponentChildren }) {
+function Wrapper({ children }: { children: ReactNode }) {
   const sidebarWidth = useSidebarWidth()
 
   return (
-    <div class="ve-wrapper" style={{ '--ve-sidebar': `${sidebarWidth}vw` }}>
+    <div className="ve-wrapper" style={{ '--ve-sidebar': `${sidebarWidth}vw` } as React.CSSProperties}>
       {children}
     </div>
   )

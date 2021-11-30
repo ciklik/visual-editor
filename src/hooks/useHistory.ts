@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'preact/hooks'
+import { useEffect, useRef } from 'react'
 import { useUpdateData } from 'src/store'
 import { useUpdateEffect } from './useUpdateEffect'
 

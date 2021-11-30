@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'preact/hooks'
+import { useEffect, useRef } from 'react'
 
 export function useUpdateEffect(cb: Function, deps: any[]): void {
   const isFirstRender = useRef(true)

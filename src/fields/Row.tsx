@@ -1,6 +1,6 @@
 import { AbstractFieldGroup } from 'src/fields/AbstractFieldGroup'
-import { ComponentChildren, FunctionComponent } from 'preact'
-
+import { ReactChildren, FunctionComponent } from 'react'
+import React from 'react'
 type RowArgs = {
   label?: string
   columns?: string
@@ -12,10 +12,10 @@ export class Row extends AbstractFieldGroup<RowArgs> {
       <div>
         {this.args.label && <label>{this.args.label}</label>}
         <div
-          class="ve-row"
+          className="ve-row"
           style={
             this.args.columns
-              ? `display: grid; grid-template-columns: ${this.args.columns}`
+              ? {display: 'grid', gridTemplateColumns: this.args.columns}
               : undefined
           }
         >

@@ -1,5 +1,5 @@
 import { useInsertData } from 'src/store'
-import { useEffect, useRef } from 'preact/hooks'
+import { useEffect, useRef } from 'react'
 import { indexify } from 'src/functions/object'
 
 export function useClipboardPaste(enabled: boolean) {

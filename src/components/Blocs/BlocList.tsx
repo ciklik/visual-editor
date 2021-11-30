@@ -1,9 +1,6 @@
-import {
-  EditorComponentDefinition,
-  EditorComponentDefinitions,
-} from 'src/types'
+import { EditorComponentDefinition, EditorComponentDefinitions } from 'src/types'
 import { prevent } from 'src/functions/functions'
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useFieldDefinitions, useHiddenCategories } from '../../store'
 
 const ALL_TAB = 'Tous les blocs'
@@ -40,11 +37,11 @@ export function BlocList({
 
   return (
     <>
-      <ul class="ve-blocs-tabs">
+      <ul className="ve-blocs-tabs">
         {categories.map((category) => (
           <li
             onClick={prevent(() => setTab(category))}
-            class={category === tab ? 've-active' : undefined}
+            className={category === tab ? 've-active' : undefined}
             key={category}
           >
             {category}
@@ -56,15 +53,14 @@ export function BlocList({
           ref={searchInput}
           placeholder="Filtrer..."
           type="text"
-          class="ve-bloc-search"
-          autofocus
+          className="ve-bloc-search"
           onChange={prevent((e: InputEvent) =>
             setSearch((e.target as HTMLInputElement).value)
           )}
           value={search}
         />
       )}
-      <div class="ve-blocs ve-blocs--preview">
+      <div className="ve-blocs ve-blocs--preview">
         {Object.keys(definitions)
           .filter(
             (key) => !hiddenCategories.includes(definitions[key].category ?? '')
@@ -72,6 +68,7 @@ export function BlocList({
           .filter(searchDefinition(search ?? '', tab, definitions))
           .map((key) => (
             <BlocListItem
+              key={key}
               definition={definitions[key]}
               name={key}
               iconsUrl={iconsUrl}
@@ -113,8 +110,8 @@ function BlocListItem({
   const title = definition.title
 
   return (
-    <button class="ve-bloc" onClick={prevent(onClick)}>
-      <img src={icon} />
+    <button className="ve-bloc" onClick={prevent(onClick)}>
+      <img src={icon} alt=""/>
       <span>{title}</span>
     </button>
   )

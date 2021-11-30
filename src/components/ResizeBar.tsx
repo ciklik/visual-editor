@@ -1,11 +1,11 @@
-import { useState } from 'preact/hooks'
+import React, { SyntheticEvent, useState } from 'react'
 import { useSetSidebarWidth } from 'src/store'
 import cx from 'clsx'
 
-export function ResizeBar() {
+export function ResizeBar () {
   const [drag, setDrag] = useState(false)
   const setSidebarWidth = useSetSidebarWidth()
-  const handleMouseDown = (e: MouseEvent) => {
+  const handleMouseDown = (e: SyntheticEvent) => {
     e.stopPropagation()
     e.preventDefault()
     setDrag(true)
@@ -19,17 +19,17 @@ export function ResizeBar() {
         setDrag(false)
         document.documentElement.removeEventListener('mousemove', listener)
       },
-      { once: true }
+      { once: true },
     )
   }
 
   return (
     <>
       <div
-        class={cx('ve-resizeBar', drag && 'is-active')}
+        className={cx('ve-resizeBar', drag && 'is-active')}
         onMouseDown={handleMouseDown}
       />
-      {drag && <div className="ve-resizeBar-overlay" />}
+      {drag && <div className='ve-resizeBar-overlay' />}
     </>
   )
 }

@@ -4,7 +4,7 @@ import { AbstractField } from 'src/fields/AbstractField'
 import { Tooltip } from 'src/components/Tooltip'
 import clsx from 'clsx'
 import { prevent } from 'src/functions/functions'
-
+import React, { CSSProperties } from 'react'
 type FieldArgs = {
   label?: string
   colors: string[]
@@ -18,20 +18,20 @@ export class Color extends AbstractField<FieldArgs, string | null> {
     const id = useUniqId('color')
 
     return (
-      <div class="form-group">
+      <div className="form-group">
         {this.args.label && (
-          <label for={id} class="form-label">
+          <label htmlFor={id} className="form-label">
             {this.args.label}
           </label>
         )}
         <Tooltip trigger="click" content={<this.tooltip onChange={onChange} />}>
           <button
-            class={clsx(
+            className={clsx(
               've-color-button',
               !value && 've-color-button-transparent'
             )}
             onClick={(e) => e.preventDefault()}
-            style={value ? `--ve-selected-color: var(${value})` : ``}
+            style={value ? {"--ve-selected-color": `var(${value})`} as CSSProperties : undefined}
           />
         </Tooltip>
       </div>
@@ -40,14 +40,14 @@ export class Color extends AbstractField<FieldArgs, string | null> {
 
   tooltip = ({ onChange }: EditorFieldProps<string | null>) => {
     return (
-      <div class="ve-color-palette">
+      <div className="ve-color-palette">
         <button
-          class="ve-color-transparent"
+          className="ve-color-transparent"
           onClick={prevent(() => onChange(null))}
         />
         {this.args.colors.map((color) => (
           <button
-            style={`--ve-color: var(${color})`}
+            style={{"--ve-color": `var(${color})`} as CSSProperties}
             onClick={prevent(() => onChange(color))}
           />
         ))}

@@ -1,7 +1,7 @@
 import { EditorField, EditorFieldProps } from 'src/types'
 import { AbstractField } from 'src/fields/AbstractField'
 import { QuillEditor, QuillEditorMode } from 'src/fields/shared/QuillEditor'
-
+import React from 'react'
 type FieldArgs = {
   label?: string
   required?: boolean
@@ -28,8 +28,8 @@ export class HTMLText extends AbstractField<FieldArgs, string> {
 
   field({ value, onChange }: EditorFieldProps<string>) {
     return (
-      <div class="form-group">
-        {this.args.label && <label class="form-label">{this.args.label}</label>}
+      <div className="form-group">
+        {this.args.label && <label className="form-label">{this.args.label}</label>}
         <div className="ve-input ve-wysiwyg">
           <QuillEditor
             value={value || ''}
@@ -38,7 +38,7 @@ export class HTMLText extends AbstractField<FieldArgs, string> {
             colors={this.args.colors}
           />
         </div>
-        {this.args.help && <div class="ve-help">{this.args.help}</div>}
+        {this.args.help && <div className="ve-help">{this.args.help}</div>}
       </div>
     )
   }

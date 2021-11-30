@@ -1,5 +1,5 @@
 import Quill from 'quill'
-import { RefObject } from 'preact'
+import { RefObject } from 'react'
 
 class QuillMock {}
 

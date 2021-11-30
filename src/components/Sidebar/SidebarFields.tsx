@@ -1,28 +1,17 @@
-import {
-  EditorComponentData,
-  EditorComponentDefinition,
-  EditorComponentDefinitions,
-  EditorField,
-} from 'src/types'
-import { useCallback, useErrorBoundary, useMemo, useRef } from 'preact/hooks'
+import { EditorComponentData, EditorComponentDefinition, EditorField } from 'src/types'
+import { memo, ReactElement, ReactNode, useCallback, useMemo, useRef } from 'react'
 import { useToggle } from 'src/hooks/useToggle'
 import { useUpdateEffect } from 'src/hooks/useUpdateEffect'
 import { Sortable, SortableWrapper } from 'src/components/Sortable'
 import { moveItem } from 'src/functions/array'
 import { prevent } from 'src/functions/functions'
-import {
-  useFieldDefinitions,
-  useFieldFocused,
-  useRemoveBloc,
-  useSetFocusIndex,
-  useUpdateData,
-} from 'src/store'
-import { memo } from 'preact/compat'
+import { useFieldDefinitions, useFieldFocused, useRemoveBloc, useSetFocusIndex, useUpdateData } from 'src/store'
 import { strToDom } from 'src/functions/dom'
 import { IconChevron } from 'src/components/Icons'
 import clsx from 'clsx'
 import { CopyAction } from 'src/components/Sidebar/Actions/CopyAction'
 import { AbstractFieldGroup } from 'src/fields/AbstractFieldGroup'
+import React from 'react'
 
 /**
  * Génère la liste des champs dans la sidebar
@@ -35,7 +24,7 @@ export function SidebarFields({ data }: { data: EditorComponentData[] }) {
   }
 
   return (
-    <div class="ve-fields">
+    <div className="ve-fields">
       <SortableWrapper items={data} onMove={handleMove}>
         {data.map((v, k) => (
           <SidebarItem
@@ -94,9 +83,9 @@ const SidebarItem = memo(function SidebarItem({
   }
 
   return (
-    <Sortable item={data} class="ve-sidebar-bloc">
+    <Sortable item={data} className="ve-sidebar-bloc">
       <button
-        class="ve-bloc-remove"
+        className="ve-bloc-remove"
         onClick={handleRemove}
         title="Supprimer l'élément"
       >
@@ -105,16 +94,16 @@ const SidebarItem = memo(function SidebarItem({
       <div ref={ref}>
         <div className="ve-sidebar-bloc__head">
           <h2
-            class="ve-sidebar-title"
+            className="ve-sidebar-title"
             onClick={prevent(() => setFocus(data._id))}
           >
             <strong>{definition.title}</strong>
             {isCollapsed ? labelHTMLSafe : null}
           </h2>
-          <div class="ve-sidebar-actions">
+          <div className="ve-sidebar-actions">
             <CopyAction data={data} />
             <button
-              class={clsx(!isCollapsed && 've-sidebar-expanded')}
+              className={clsx(!isCollapsed && 've-sidebar-expanded')}
               onClick={prevent(toggleCollapsed)}
             >
               <IconChevron size={14} />
@@ -184,20 +173,6 @@ function Field({
     },
     [path]
   )
-
-  const [error, resetError] = useErrorBoundary()
-
-  if (error) {
-    return (
-      <div>
-        <p>
-          Impossible de rendre le bloc {path} = {typeof Component} ={' '}
-          {error.message}
-        </p>
-        <button onClick={resetError}>Relancer</button>
-      </div>
-    )
-  }
 
   return (
     <div style={style as any}>

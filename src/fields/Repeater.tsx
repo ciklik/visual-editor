@@ -13,6 +13,7 @@ import { Button } from '../components/ui/Button'
 import { IconCirclePlus, IconDown, IconTrash } from '../components/Icons'
 import { Flex } from '../components/ui/Flex'
 import { ButtonIcon } from '../components/ui/ButtonIcon'
+import React from 'react'
 
 type Field = EditorField<any> | AbstractFieldGroup<any>
 
@@ -73,7 +74,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
       <div>
         {this.args.title && <label>{this.args.title}</label>}
         <SortableWrapper items={value} onMove={handleMove}>
-          <div class="ve-repeater">
+          <div className="ve-repeater">
             {value.map((line, k) => (
               <this.fieldLine
                 key={line._id}
@@ -84,7 +85,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
               />
             ))}
             {canAdd && (
-              <div class="ve-repeater-footer">
+              <div className="ve-repeater-footer">
                 <Button secondary onClick={prevent(add)} icon={IconCirclePlus}>
                   {this.args.addLabel}
                 </Button>
@@ -116,23 +117,23 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
     const title = this.args.collapsed ? line[this.args.collapsed] as string : `Element #${index + 1}`
 
     return (
-      <Sortable item={line} class="ve-repeater-item">
-        <Flex between class="ve-sidebar-header">
-          <div class="ve-sidebar-title">
+      <Sortable item={line} className="ve-repeater-item">
+        <Flex between className="ve-sidebar-header">
+          <div className="ve-sidebar-title">
             <strong>{title}</strong>
           </div>
           <Flex>
             {onRemove && (
               <ButtonIcon
                 danger
-                class="ve-sidebar-action-hover"
+                className="ve-sidebar-action-hover"
                 onClick={() => onRemove(line)}
                 title="Supprimer l'élément"
               >
                 <IconTrash size={20}/>
               </ButtonIcon>
             )}
-            <ButtonIcon class={cx('ve-repeater-collapse', collapsed && 'is-collapsed')} onClick={prevent(toggleCollapsed)} title="Replier/Déplier l'élément">
+            <ButtonIcon className={cx('ve-repeater-collapse', collapsed && 'is-collapsed')} onClick={prevent(toggleCollapsed)} title="Replier/Déplier l'élément">
               <IconDown size={24}/>
             </ButtonIcon>
           </Flex>
@@ -161,8 +162,9 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
   }) => {
     return (
       <>
-        {fields.map((field) => (
+        {fields.map((field, k) => (
           <this.fieldComponent
+            key={k}
             field={field}
             line={line}
             onUpdate={onUpdate}

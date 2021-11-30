@@ -1,17 +1,13 @@
-import create, { UseStore } from 'zustand'
-import {
-  EditorComponentData,
-  EditorComponentDefinition,
-  EditorComponentDefinitions,
-} from 'src/types'
+import create, { UseBoundStore } from 'zustand'
+import { EditorComponentData, EditorComponentDefinition, EditorComponentDefinitions } from 'src/types'
 import { deepSet } from 'src/functions/object'
 import { combine, devtools } from 'zustand/middleware'
 import { insertItem } from 'src/functions/array'
 import { uniqId } from 'src/functions/string'
 
 import createContext from 'zustand/context'
-import { ComponentChildren } from 'preact'
 import { clamp } from './functions/number'
+import React, { ReactElement } from 'react'
 
 export enum PreviewModes {
   PHONE,
@@ -108,8 +104,8 @@ const createStore = (
   )
 
 type Store = ReturnType<typeof createStore>
-// Extrait le type de la donnée à l'intérieur d'un UseStore<T>
-type StoreData<T extends UseStore<any>> = T extends UseStore<infer V>
+// Extrait le type de la donnée à l'intérieur d'un UseBoundStore<T>
+type StoreData<T extends UseBoundStore<any>> = T extends UseBoundStore<infer V>
   ? V
   : never
 
@@ -121,7 +117,7 @@ export function StoreProvider({
   definitions,
   hiddenCategories,
 }: {
-  children: ComponentChildren
+  children: ReactElement
   data: EditorComponentData[]
   definitions: EditorComponentDefinitions
   hiddenCategories: string[]
@@ -197,7 +193,7 @@ export function useFieldDefinition(
   return useStore((state) => state.definitions)[name]
 }
 
-export function useBlocSelectionVisible(): number|null {
+export function useBlocSelectionVisible(): boolean {
   return useStore((state) => state.addBlockIndex) !== null
 }
 

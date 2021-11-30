@@ -1,4 +1,4 @@
-import { useRef } from 'preact/hooks'
+import { useRef } from 'react'
 
 export function useDebugProp(prop: any, name: string) {
   const ref = useRef(prop)

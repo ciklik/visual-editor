@@ -3,6 +3,7 @@ import { PreviewModes, usePreviewMode, useSetBlockIndex, useTogglePreviewMode } 
 import { IconCirclePlus, IconDesktop, IconPhone } from 'src/components/Icons'
 import { CopyPage } from './Actions/CopyPage'
 import { Button } from '../ui/Button'
+import React from 'react'
 
 type SidebarFooterProps = {
   onClose: () => void
@@ -15,13 +16,13 @@ export function SidebarFooter({ onClose }: SidebarFooterProps) {
   const setAddBlock = useSetBlockIndex()
 
   return (
-    <div class="ve-sidebar-footer">
-      <button class="ve-close" onClick={prevent(onClose)} title="Fermer">
+    <div className="ve-sidebar-footer">
+      <button className="ve-close" onClick={prevent(onClose)} title="Fermer">
         &times;
       </button>
-      <div class="ve-row">
-        <CopyPage class="ve-copy-page" />
-        <button class="ve-preview-toggle" onClick={prevent(togglePreviewMode)}>
+      <div className="ve-row">
+        <CopyPage className="ve-copy-page" />
+        <button className="ve-preview-toggle" onClick={prevent(togglePreviewMode)}>
           {isPhone ? <IconDesktop size={24} /> : <IconPhone size={24} />}
         </button>
       </div>

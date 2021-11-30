@@ -1,12 +1,12 @@
 import './css/style.scss'
 
-import { render } from 'preact'
+import ReactDOM from 'react-dom'
 import {
   EditorComponentData,
   EditorComponentDefinition,
   EditorComponentDefinitions,
 } from 'src/types'
-import { useEffect, useMemo, useRef } from 'preact/hooks'
+import { useEffect, useMemo, useRef } from 'react'
 import { useVisibilityClass } from 'src/hooks/useVisibilityClass'
 import { Layout } from 'src/components/Layout'
 import { StoreProvider, useData, useUpdateData } from 'src/store'
@@ -15,6 +15,7 @@ import { useClipboardPaste } from 'src/hooks/useClipboardPaste'
 import { useHistory } from 'src/hooks/useHistory'
 import { useUpdateEffect } from './hooks/useUpdateEffect'
 import { fillDefaults } from './functions/fields'
+import React from 'react'
 
 const components: EditorComponentDefinitions = {}
 
@@ -102,7 +103,7 @@ class VisualEditorElement extends HTMLElement {
     const data = this.parseValue(this._value)
     const hiddenCategories =
       this.getAttribute('hidden-categories')?.split(';') ?? []
-    render(
+    ReactDOM.render(
       <StoreProvider
         data={data}
         definitions={components}
@@ -178,19 +179,19 @@ export function VisualEditorComponent({
   }, [cleanedData])
 
   if (!visible) {
-    return <textarea hidden name={name} value={cleanedData} />
+    return <textarea hidden name={name} value={cleanedData} onChange={() => null}/>
   }
 
   return (
     <>
       <Layout
-        class={visibilityClass}
+        className={visibilityClass}
         data={data}
         onClose={handleClose}
         previewUrl={previewUrl}
         iconsUrl={iconsUrl}
       />
-      <textarea hidden name={name} value={cleanedData} />
+      <textarea hidden name={name} value={cleanedData} onChange={() => null}/>
     </>
   )
 }
