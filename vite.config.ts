@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite'
-import reactRefresh from '@vitejs/plugin-react-refresh'
 import path from 'path'
 import analyze from 'rollup-plugin-analyzer'
 import react from '@vitejs/plugin-react'
@@ -10,14 +9,13 @@ export default defineConfig({
   server: {
     proxy: {
       '/preview': 'http://localhost:8000/index.php',
-    }
+    },
   },
   resolve: {
     alias: {
-      'src': path.resolve(__dirname, './src')
-    }
+      'src': path.resolve(__dirname, './src'),
+    },
   },
-  /*
   build: {
     minify: false,
     rollupOptions: {
@@ -32,5 +30,4 @@ export default defineConfig({
       name: 'VisualEditor'
     }
   }
-   */
 })
