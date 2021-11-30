@@ -25,11 +25,16 @@ let editor = new VisualEditor()
 editor.registerComponent('test', {
   title: 'Test',
   fields: [
-    new HTMLText('content', {
-      multiline: true,
-      allowHeadings: true,
-      default: ''
-    })
+    new Repeater('columns', {
+      title: 'Colonnes',
+      addLabel: 'Ajouter une colonne',
+      fields: [
+        new Checkbox('content', {
+          label: 'aze',
+          default: true,
+        })
+      ],
+    }),
   ]
 })
 

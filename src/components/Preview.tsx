@@ -19,6 +19,8 @@ import { prevent } from 'src/functions/functions'
 import { BlocList } from './Blocs/BlocList'
 import { fillDefaults } from 'src/functions/fields'
 import { BlocAdder } from './Blocs/BlocAdder'
+import { Button } from './ui/Button'
+import { IconCirclePlus } from './Icons'
 
 type PreviewProps = {
   data: EditorComponentData[]
@@ -143,9 +145,9 @@ export function PreviewItems({
       </Flipper>
       {blocsIndex !== data.length - 1 ? (
         <div class="ve-preview-new-bloc">
-          <button onClick={prevent(() => setBlocsIndex(data.length - 1))}>
+          <Button icon={IconCirclePlus} onClick={prevent(() => setBlocsIndex(data.length - 1))}>
             Ajouter un bloc
-          </button>
+          </Button>
         </div>
       ) : (
         <BlocList

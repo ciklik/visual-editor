@@ -9,6 +9,10 @@ import { prevent } from 'src/functions/functions'
 import { fillDefaults } from 'src/functions/fields'
 import { AbstractFieldGroup } from './AbstractFieldGroup'
 import cx from 'clsx'
+import { Button } from '../components/ui/Button'
+import { IconCirclePlus, IconDown, IconTrash } from '../components/Icons'
+import { Flex } from '../components/ui/Flex'
+import { ButtonIcon } from '../components/ui/ButtonIcon'
 
 type Field = EditorField<any> | AbstractFieldGroup<any>
 
@@ -81,9 +85,9 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
             ))}
             {canAdd && (
               <div class="ve-repeater-footer">
-                <button className="ve-repeater-add" onClick={prevent(add)}>
+                <Button secondary onClick={prevent(add)} icon={IconCirclePlus}>
                   {this.args.addLabel}
-                </button>
+                </Button>
               </div>
             )}
           </div>
@@ -109,36 +113,37 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
       !!(this.args.collapsed && line[this.args.collapsed])
     )
 
-    const visibleFields = collapsed
-      ? findFields(this.args.fields, this.args.collapsed!)
-      : this.args.fields
+    const title = this.args.collapsed ? line[this.args.collapsed] as string : `Element #${index + 1}`
 
     return (
       <Sortable item={line} class="ve-repeater-item">
+        <Flex between class="ve-sidebar-header">
+          <div class="ve-sidebar-title">
+            <strong>{title}</strong>
+          </div>
+          <Flex>
+            {onRemove && (
+              <ButtonIcon
+                danger
+                class="ve-sidebar-action-hover"
+                onClick={() => onRemove(line)}
+                title="Supprimer l'élément"
+              >
+                <IconTrash size={20}/>
+              </ButtonIcon>
+            )}
+            <ButtonIcon class={cx('ve-repeater-collapse', collapsed && 'is-collapsed')} onClick={prevent(toggleCollapsed)} title="Replier/Déplier l'élément">
+              <IconDown size={24}/>
+            </ButtonIcon>
+          </Flex>
+        </Flex>
+        {!collapsed &&
         <this.fields
-          fields={visibleFields}
+          fields={this.args.fields}
           line={line}
           index={index}
           onUpdate={handleUpdate}
-        />
-        {onRemove && (
-          <button
-            class="ve-repeater-remove"
-            onClick={() => onRemove(line)}
-            title="Supprimer l'élément"
-          >
-            &times;
-          </button>
-        )}
-        {this.args.collapsed && (
-          <button
-            class={cx('ve-repeater-collapse', collapsed && 'is-collapsed')}
-            onClick={prevent(toggleCollapsed)}
-            title="Replier/Déplier l'élément"
-          >
-            ▾
-          </button>
-        )}
+        />}
       </Sortable>
     )
   }
@@ -206,17 +211,17 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
 /**
  * Trouve tous les champs qui correspond au nom demandé
  */
-const findFields = (fields: Field[], fieldName: string): Field[] => {
+const findField = (fields: Field[], fieldName: string): Field|null => {
   for (const field of fields) {
     if (field instanceof AbstractField && field.name === fieldName) {
-      return [field]
+      return field
     }
     if (field instanceof AbstractFieldGroup) {
-      const deepMatches = findFields(field.fields, fieldName)
-      if (deepMatches.length > 0) {
+      const deepMatches = findField(field.fields, fieldName)
+      if (deepMatches) {
         return deepMatches
       }
     }
   }
-  return []
+  return null
 }

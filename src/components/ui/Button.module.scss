@@ -1,0 +1,56 @@
+.Button {
+  outline: none;
+  display: flex;
+  gap: .5em;
+  font-weight: 700;
+  background-color: var(--ve-primary);
+  border: none;
+  color: #FFF;
+  align-self: flex-end;
+  font-size: .9rem;
+  padding: 1em;
+  line-height: 1.25rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color .3s;
+
+  &:hover,
+  &:focus {
+    background-color: var(--ve-primary-hover);
+  }
+}
+
+.ButtonSecondary {
+  background-color: transparent;
+  color: var(--ve-primary);
+
+  &:hover {
+    background-color: var(--ve-primary-light);
+  }
+}
+
+.ButtonIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  transition: background-color .3s;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background-color: #F3F4F9;
+  }
+}
+
+.ButtonIconDanger {
+  color: var(--ve-danger);
+  &:hover {
+    background-color: var(--ve-danger-light);
+  }
+  }

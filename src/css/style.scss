@@ -1,20 +1,20 @@
-visual-editor {
-  display: block;
-}
+@import "reset";
 
 .ve-wrapper,
 #ve-components {
   --ve-sidebar: 600px;
   --ve-primary: #1771E6;
   --ve-primary-hover: #388afa;
-  --ve-primary-light: #1771E60C;
+  --ve-primary-light: #1771E626;
   --ve-color: #111827;
+  --ve-hover: #F3F4F9;
   --ve-color-light: #6b7280;
   --ve-field-border: rgb(209, 213, 219);
-  --ve-hover: rgb(237, 243, 250);
+  // --ve-hover: rgb(237, 243, 250);
   --ve-field-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   --ve-blocs-background: rgba(0, 0, 0, 0.05);
-  --ve-danger: red;
+  --ve-danger: #ae2121;
+  --ve-danger-light: rgba(255, 0, 0, .05);
   --ve-shadow-dragging: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;  justify-content: center;
   --ve-gap: .5em;
   --ve-clampedSidebar: clamp(450px, var(--ve-sidebar), calc(100vw - 375px))
@@ -61,36 +61,13 @@ visual-editor {
   box-sizing: border-box;
 }
 
-.ve-layout button {
-  background-color: transparent;
-  border: none;
-  padding: 0;
-  margin: 0;
-  font-family: inherit;
-}
-
 // Generics
 // =============
-%button,
-.ve-layout .ve-button {
-  background-color: var(--ve-primary);
-  border: none;
-  font-weight: 500;
-  color: #FFF;
-  align-self: flex-end;
-  font-size: .875rem;
-  line-height: 1.25rem;
-  cursor: pointer;
-  padding: .5rem 1rem;
-  border-radius: .2rem;
-  transition: background-color .3s;
-
-  &:hover {
-    background-color: var(--ve-primary-hover);
-  }
+%button{
 }
 
-// Sidebar
+
+  // Sidebar
 // =============
 .ve-sidebar {
   background-color: #FBFBFD;
@@ -165,7 +142,7 @@ visual-editor {
   opacity: 0;
   transition: opacity .3s;
 
-  .ve-sidebar-bloc:hover & {
+  .ve-sidebar-header:hover & {
     opacity: 1;
   }
 }
@@ -204,6 +181,12 @@ visual-editor {
     color: var(--ve-color);
     display: block;
     font-size: .9rem;
+  }
+}
+
+.ve-sidebar-header {
+  .ve-sidebar-action-hover {
+
   }
 }
 
@@ -256,15 +239,10 @@ visual-editor {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1em;
-  padding: .7rem .7rem .7rem calc(10px + .7rem);
+  padding: .4rem .7rem .4rem calc(10px + .7rem);
   position: relative;
   border-bottom: solid 1px rgba(0,0,0,0.06);
   background-color: #fff;
-
-  &:hover .ve-repeater-remove{
-    transform: translateX(0) rotate(0);
-    opacity: 1;
-  }
 }
 .ve-repeater-footer {
   display: flex;
@@ -303,25 +281,6 @@ visual-editor {
   }
 }
 
-.ve-repeater-item .ve-repeater-remove,
-.ve-sidebar-bloc .ve-bloc-remove {
-  @extend %roundedButton;
-  position: absolute;
-  top: 18px;
-  right: -15px;
-  transform: translateX(5px) rotate(45deg);
-  opacity: 0;
-  transition: opacity .2s, transform .2s;
-  color: var(--ve-danger);
-  background-color: #fff;
-  border-color: var(--ve-danger);
-
-  &:hover {
-    border: 1px solid var(--ve-color-light);
-    color: var(--ve-color);
-  }
-}
-
 .ve-sidebar-bloc .ve-bloc-remove {
   top: 12px;
 }
@@ -330,20 +289,11 @@ visual-editor {
   transform: translateX(0) rotate(0);
   opacity: 1;
 }
-
-.ve-layout .ve-repeater-add {
-  @extend %button;
-}
 .ve-repeater-item .ve-repeater-collapse {
-  @extend %roundedButton;
-  position: absolute;
-  top: -7px;
-  left: -4px;
-  font-size: 1rem;
-  line-height: 24px;
+  transform: rotate(0deg);
 
   &.is-collapsed {
-    transform: rotate(-90deg);
+    transform: rotate(-180deg);
   }
 }
 
