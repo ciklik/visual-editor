@@ -31,7 +31,7 @@ class EditHistory<T> {
       this.cursor = 0
     }
     this.debug()
-    return this.stack[this.cursor]
+    return this.stack[this.cursor]!
   }
 
   forward(): T {
@@ -40,7 +40,7 @@ class EditHistory<T> {
       this.cursor = this.stack.length - 1
     }
     this.debug()
-    return this.stack[this.cursor]
+    return this.stack[this.cursor]!
   }
 
   debug() {

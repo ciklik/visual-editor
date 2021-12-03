@@ -1,6 +1,6 @@
 import { prevent } from 'src/functions/functions'
 import { PreviewModes, usePreviewMode, useSetBlockIndex, useTogglePreviewMode } from 'src/store'
-import { IconCirclePlus, IconDesktop, IconPhone } from 'src/components/Icons'
+import { IconCirclePlus, IconDesktop, IconPhone } from 'src/components/ui/Icons'
 import { CopyPage } from './Actions/CopyPage'
 import { Button } from '../ui/Button'
 import React from 'react'

@@ -1,6 +1,6 @@
 import { EditorComponentData } from 'src/types'
 import { prevent } from 'src/functions/functions'
-import { IconCheck, IconCopy } from 'src/components/Icons'
+import { IconCheck, IconCopy } from 'src/components/ui/Icons'
 import { copyToClipboard } from 'src/functions/browser'
 import { stringifyFields } from 'src/functions/object'
 import { Tooltip } from 'src/components/Tooltip'

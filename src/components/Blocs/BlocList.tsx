@@ -1,7 +1,7 @@
 import { EditorComponentDefinition, EditorComponentDefinitions } from 'src/types'
 import { prevent } from 'src/functions/functions'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { useFieldDefinitions, useHiddenCategories } from '../../store'
+import { useFieldDefinitions, useHiddenCategories } from 'src/store'
 
 const ALL_TAB = 'Tous les blocs'
 
@@ -63,13 +63,13 @@ export function BlocList({
       <div className="ve-blocs ve-blocs--preview">
         {Object.keys(definitions)
           .filter(
-            (key) => !hiddenCategories.includes(definitions[key].category ?? '')
+            (key) => !hiddenCategories.includes(definitions[key]!.category ?? '')
           )
           .filter(searchDefinition(search ?? '', tab, definitions))
           .map((key) => (
             <BlocListItem
               key={key}
-              definition={definitions[key]}
+              definition={definitions[key]!}
               name={key}
               iconsUrl={iconsUrl}
               onClick={() => onAddBloc(key)}
@@ -86,13 +86,13 @@ function searchDefinition(
   definitions: EditorComponentDefinitions
 ) {
   if (category !== ALL_TAB) {
-    return (key: string) => definitions[key].category === category
+    return (key: string) => definitions[key]!.category === category
   }
   if (search === '') {
     return () => true
   }
   return (key: string) =>
-    definitions[key].title.toLowerCase().includes(search.toLowerCase())
+    definitions[key]!.title.toLowerCase().includes(search.toLowerCase())
 }
 
 function BlocListItem({

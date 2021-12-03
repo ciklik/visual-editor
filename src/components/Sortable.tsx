@@ -11,6 +11,7 @@ import {
 import { CSS } from '@dnd-kit/utilities'
 import { DragEndEvent } from '@dnd-kit/core/dist/types'
 import clsx from 'clsx'
+import { DragHandle } from './ui/DragHandle'
 
 export function SortableWrapper({
   items,
@@ -83,7 +84,7 @@ export function Sortable({
       {...attributes}
       {...props}
     >
-      <div className="ve-repeater-handle" {...listeners} />
+      <DragHandle {...listeners} />
       {children}
     </div>
   )

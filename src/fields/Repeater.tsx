@@ -10,10 +10,11 @@ import { fillDefaults } from 'src/functions/fields'
 import { AbstractFieldGroup } from './AbstractFieldGroup'
 import cx from 'clsx'
 import { Button } from '../components/ui/Button'
-import { IconCirclePlus, IconDown, IconTrash } from '../components/Icons'
+import { IconCirclePlus, IconDown, IconTrash } from '../components/ui/Icons'
 import { Flex } from '../components/ui/Flex'
 import { ButtonIcon } from '../components/ui/ButtonIcon'
-import React from 'react'
+import Style from './Repeater.module.scss'
+import { SidebarTitle } from '../components/Sidebar/SidebarTitle'
 
 type Field = EditorField<any> | AbstractFieldGroup<any>
 
@@ -74,7 +75,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
       <div>
         {this.args.title && <label>{this.args.title}</label>}
         <SortableWrapper items={value} onMove={handleMove}>
-          <div className="ve-repeater">
+          <div className={Style.Repeater}>
             {value.map((line, k) => (
               <this.fieldLine
                 key={line._id}
@@ -85,7 +86,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
               />
             ))}
             {canAdd && (
-              <div className="ve-repeater-footer">
+              <div className={Style.RepeaterFooter}>
                 <Button secondary onClick={prevent(add)} icon={IconCirclePlus}>
                   {this.args.addLabel}
                 </Button>
@@ -117,27 +118,25 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
     const title = this.args.collapsed ? line[this.args.collapsed] as string : `Element #${index + 1}`
 
     return (
-      <Sortable item={line} className="ve-repeater-item">
-        <Flex between className="ve-sidebar-header">
-          <div className="ve-sidebar-title">
-            <strong>{title}</strong>
-          </div>
+      <Sortable item={line} className={Style.RepeaterItem}>
+        <SidebarTitle onClick={prevent(toggleCollapsed)} title={title}>
           <Flex>
-            {onRemove && (
-              <ButtonIcon
-                danger
-                className="ve-sidebar-action-hover"
-                onClick={() => onRemove(line)}
-                title="Supprimer l'élément"
-              >
-                <IconTrash size={20}/>
-              </ButtonIcon>
-            )}
+            <SidebarTitle.Hover>
+              {onRemove && (
+                <ButtonIcon
+                  danger
+                  onClick={() => onRemove(line)}
+                  title="Supprimer l'élément"
+                >
+                  <IconTrash size={20}/>
+                </ButtonIcon>
+              )}
+            </SidebarTitle.Hover>
             <ButtonIcon className={cx('ve-repeater-collapse', collapsed && 'is-collapsed')} onClick={prevent(toggleCollapsed)} title="Replier/Déplier l'élément">
               <IconDown size={24}/>
             </ButtonIcon>
           </Flex>
-        </Flex>
+        </SidebarTitle>
         {!collapsed &&
         <this.fields
           fields={this.args.fields}

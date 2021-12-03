@@ -1,6 +1,6 @@
 import { AbstractField } from 'src/fields/AbstractField'
 import { EditorFieldProps } from 'src/types'
-import { IconAlignBottom, IconAlignLeft, IconAlignRight, IconAlignTop } from 'src/components/Icons'
+import { IconAlignBottom, IconAlignLeft, IconAlignRight, IconAlignTop } from 'src/components/ui/Icons'
 import { uniqId } from 'src/functions/string'
 import { FunctionComponent, SyntheticEvent } from 'react'
 

@@ -28,7 +28,7 @@ export class Tabs extends AbstractFieldGroup<any> {
   }
 
   render: FunctionComponent<{ children: ReactElement }> = ({ children }) => {
-    const [currentTab, setTab] = useState<TabDefinition>(this.tabs[0])
+    const [currentTab, setTab] = useState<TabDefinition>(this.tabs[0]!)
     const currentChildren = cloneElement(children, {
       fields: currentTab.fields,
     })

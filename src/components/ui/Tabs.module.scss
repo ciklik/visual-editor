@@ -1,0 +1,19 @@
+.Tabs {
+  display: flex;
+  gap: .5rem;
+  margin: 1.5rem 0;
+}
+
+.Tab {
+  background-color: var(--ve-hover);
+  border-radius: 56px;
+  padding: .6rem 1rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.TabSelected {
+  color: var(--ve-primary);
+  background-color: var(--ve-primary-light);
+}

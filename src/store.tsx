@@ -7,7 +7,8 @@ import { uniqId } from 'src/functions/string'
 
 import createContext from 'zustand/context'
 import { clamp } from './functions/number'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useCallback } from 'react'
+import { fillDefaults } from './functions/fields'
 
 export enum PreviewModes {
   PHONE,
@@ -15,13 +16,13 @@ export enum PreviewModes {
 }
 
 type State = {
-  data: EditorComponentData[]
+  data: EditorComponentData[],
   definitions: EditorComponentDefinitions
   hiddenCategories: string[]
   focusIndex: null | string
   previewMode: PreviewModes
   sidebarWidth: number,
-  addBlockIndex: number|null,
+  addBlockIndex: number | null,
 }
 
 const sidebarWidth = localStorage.getItem('veSidebarWidth')
@@ -29,7 +30,7 @@ const sidebarWidth = localStorage.getItem('veSidebarWidth')
 const createStore = (
   data: EditorComponentData[] = [],
   definitions: EditorComponentDefinitions,
-  hiddenCategories: string[] = []
+  hiddenCategories: string[] = [],
 ) =>
   create(
     devtools(
@@ -44,32 +45,32 @@ const createStore = (
           sidebarWidth: clamp(
             sidebarWidth ? parseInt(sidebarWidth, 10) : 600,
             0,
-            window.innerWidth - 375
+            window.innerWidth - 375,
           ),
         } as State,
         (set) => ({
-          setSidebarWidth: function (width: number) {
+          setSidebarWidth: function(width: number) {
             localStorage.setItem('veSidebarWidth', width.toString())
             set(() => ({
               sidebarWidth: width,
             }))
           },
-          updateData: function (newData: any, path?: string) {
+          updateData: function(newData: any, path?: string) {
             return set((state) => ({
               data: deepSet(state.data, path, newData),
             }))
           },
-          removeBloc: function (removedData: EditorComponentData) {
+          removeBloc: function(removedData: EditorComponentData) {
             if (confirm('Voulez vous vraiment supprimer ce bloc ?')) {
               return set(({ data }) => ({
                 data: data.filter((d) => d !== removedData),
               }))
             }
           },
-          insertData: function (
+          insertData: function(
             name: string,
             index: number,
-            extraData?: object
+            extraData?: object,
           ): EditorComponentData {
             const newData = {
               ...extraData,
@@ -84,13 +85,13 @@ const createStore = (
             })
             return newData
           },
-          setFocusIndex: function (id: string) {
+          setFocusIndex: function(id: string) {
             set(() => ({ focusIndex: id }))
           },
-          setAddBlockIndex: function (index: number|null) {
+          setAddBlockIndex: function(index: number | null) {
             set(() => ({ addBlockIndex: index }))
           },
-          togglePreviewMode: function () {
+          togglePreviewMode: function() {
             set(({ previewMode }) => ({
               previewMode:
                 previewMode === PreviewModes.DESKTOP
@@ -98,9 +99,9 @@ const createStore = (
                   : PreviewModes.DESKTOP,
             }))
           },
-        })
-      )
-    )
+        }),
+      ),
+    ),
   )
 
 type Store = ReturnType<typeof createStore>
@@ -111,16 +112,16 @@ type StoreData<T extends UseBoundStore<any>> = T extends UseBoundStore<infer V>
 
 const { Provider, useStore } = createContext<StoreData<Store>>()
 
-export function StoreProvider({
-  children,
-  data,
-  definitions,
-  hiddenCategories,
-}: {
+export function StoreProvider ({
+                                 children,
+                                 data,
+                                 definitions,
+                                 hiddenCategories,
+                               }: {
   children: ReactElement
   data: EditorComponentData[]
   definitions: EditorComponentDefinitions
-  hiddenCategories: string[]
+  hiddenCategories: string[],
 }) {
   return (
     <Provider
@@ -131,74 +132,85 @@ export function StoreProvider({
   )
 }
 
-export function useData() {
+export function useData () {
   return useStore((state) => state.data)
 }
 
-export function useUpdateData() {
+export function useUpdateData () {
   return useStore((state) => state.updateData)
 }
 
-export function useRemoveBloc() {
+export function useRemoveBloc () {
   return useStore((state) => state.removeBloc)
 }
 
-export function useInsertData() {
+export function useInsertData () {
   return useStore((state) => state.insertData)
 }
 
-export function useFocusIndex() {
+export function useFocusIndex () {
   return useStore((state) => state.focusIndex)
 }
 
-export function useDefinitions() {
+export function useDefinitions () {
   return useStore((state) => state.definitions)
 }
 
-export function useSetFocusIndex() {
+export function useSetFocusIndex () {
   return useStore((state) => state.setFocusIndex)
 }
 
-export function useFieldFocused(id: string) {
+export function useFieldFocused (id: string) {
   return useStore((state) => state.focusIndex === id)
 }
 
-export function usePreviewMode() {
+export function usePreviewMode () {
   return useStore((state) => state.previewMode)
 }
 
-export function useTogglePreviewMode() {
+export function useTogglePreviewMode () {
   return useStore((state) => state.togglePreviewMode)
 }
 
-export function useSidebarWidth() {
+export function useSidebarWidth () {
   return useStore((state) => state.sidebarWidth)
 }
 
-export function useSetSidebarWidth() {
+export function useSetSidebarWidth () {
   return useStore((state) => state.setSidebarWidth)
 }
 
-export function useFieldDefinitions() {
+export function useFieldDefinitions () {
   return useStore((state) => state.definitions)
 }
 
-export function useHiddenCategories() {
+export function useHiddenCategories () {
   return useStore((state) => state.hiddenCategories)
 }
 
-export function useFieldDefinition(
-  name: string
+export function useFieldDefinition (
+  name: string,
 ): EditorComponentDefinition | undefined {
   return useStore((state) => state.definitions)[name]
 }
 
-export function useBlocSelectionVisible(): boolean {
+export function useBlocSelectionVisible (): boolean {
   return useStore((state) => state.addBlockIndex) !== null
 }
 
-export function useSetBlockIndex(): Function {
+export function useSetBlockIndex (): Function {
   return useStore((state) => state.setAddBlockIndex)
+}
+
+export function useAddBlock () {
+  const insertData = useInsertData()
+  const blockIndex = useStore((state) => state.addBlockIndex) || 0
+  const definitions = useDefinitions()
+  const setBlockIndex = useSetBlockIndex()
+  return useCallback((blocName: string) => {
+    insertData(blocName, blockIndex, fillDefaults({}, definitions[blocName]!.fields))
+    setBlockIndex(null)
+  }, [insertData, blockIndex, definitions, setBlockIndex])
 }
 
 export const store = useStore

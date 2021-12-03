@@ -1,20 +1,26 @@
-import { Dialog } from '@reach/dialog'
 import Styles from './BlocSelector.module.scss'
-import React, { useMemo, useState } from 'react'
-import { useBlocSelectionVisible, useFieldDefinitions, useHiddenCategories, useSetBlockIndex } from '../../store'
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@reach/tabs'
+import React, { useMemo } from 'react'
+import {
+  useAddBlock,
+  useBlocSelectionVisible,
+  useFieldDefinitions,
+  useHiddenCategories,
+  useSetBlockIndex,
+} from 'src/store'
 import { EditorComponentDefinition, EditorComponentDefinitions } from '../../types'
-import { prevent } from '../../functions/functions'
+import { prevent } from 'src/functions/functions'
+import { Modal } from 'src/components/ui/Modal'
+import { Tabs } from 'src/components/ui/Tabs'
 
 const ALL_TAB = 'Tous les blocs'
 
 export function BlocSelector () {
   const isVisible = useBlocSelectionVisible()
   const setBlockIndex = useSetBlockIndex()
-  const [tab, setTab] = useState(ALL_TAB)
   const search = ''
   const definitions = useFieldDefinitions()
   const hiddenCategories = useHiddenCategories()
+  const addBlock = useAddBlock()
   const categories = useMemo(() => {
     return [
       ALL_TAB,
@@ -29,41 +35,35 @@ export function BlocSelector () {
   }, [definitions])
 
   if (!isVisible) {
-    return null;
+    return null
   }
 
-  const handleOpenChange = (v: any) => {
+  const handleVisibilityChange = (v: any) => {
     setBlockIndex(null)
   }
 
-  return <Dialog isOpen={isVisible} onDismiss={handleOpenChange} className={Styles.BlocSelector}>
-    <div className={Styles.BlocSelectorTitle}>Ajouter un bloc</div>
-
+  return <Modal visible={isVisible} onVisibilityChange={handleVisibilityChange} title='Ajouter un bloc'>
     <Tabs>
-      <TabList className={Styles.BlocSelectorTabs}>
-        {categories.map(category => <Tab className={Styles.BlocSelectorTab} key={category}>{category}</Tab>)}
-      </TabList>
-
-      <TabPanels>
-        {categories.map(category => <TabPanel key={category} className={Styles.BlocSelectorGrid}>
+      {categories.map(category => <Tabs.Tab key={category} title={category}>
+        <div className={Styles.BlocSelectorGrid}>
           {Object.keys(definitions)
             .filter(
-              (key) => !hiddenCategories.includes(definitions[key].category ?? ''),
+              (key) => !hiddenCategories.includes(definitions[key]!.category ?? ''),
             )
-            .filter(searchDefinition(search ?? '', tab, definitions))
+            .filter(searchDefinition(search ?? '', category, definitions))
             .map((key) => (
               <BlocSelectorItem
                 key={key}
-                definition={definitions[key]}
+                definition={definitions[key]!}
                 name={key}
                 iconsUrl={'/'}
-                onClick={() => console.log(key)}
+                onClick={() => addBlock(key)}
               />
             ))}
-        </TabPanel>)}
-      </TabPanels>
+        </div>
+      </Tabs.Tab>)}
     </Tabs>
-  </Dialog>
+  </Modal>
 }
 
 function BlocSelectorItem ({
@@ -83,7 +83,7 @@ function BlocSelectorItem ({
   return (
     <button className={Styles.BlocSelectorItem} onClick={prevent(onClick)}>
       <div className={Styles.BlocSelectorItemImage}>
-        <img src={'/html.svg'} />
+        <img src={icon} />
       </div>
       <div>{title}</div>
     </button>
@@ -97,12 +97,12 @@ function searchDefinition (
   definitions: EditorComponentDefinitions,
 ) {
   if (category !== ALL_TAB) {
-    return (key: string) => definitions[key].category === category
+    return (key: string) => definitions[key]!.category === category
   }
   if (search === '') {
     return () => true
   }
   return (key: string) =>
-    definitions[key].title.toLowerCase().includes(search.toLowerCase())
+    definitions[key]!.title.toLowerCase().includes(search.toLowerCase())
 }
 

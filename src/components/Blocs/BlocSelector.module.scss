@@ -1,50 +1,3 @@
-:global([data-reach-dialog-overlay]) {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.BlocSelector {
-  width: calc(100% - 2rem);
-  max-width: 1280px;
-  border-radius: 8px;
-  background-color: var(--ve-background);
-  padding: 1.5rem 2rem;
-  font-family: 'DM Sans', sans-serif;
-}
-
-.BlocSelectorTitle {
-  font-size: 1.5rem;
-  font-weight: 500;
-}
-
-.BlocSelectorTabs {
-  display: flex;
-  gap: .5rem;
-  margin: 1.5rem 0;
-}
-
-.BlocSelectorTab {
-  background-color: var(--ve-hover);
-  border-radius: 56px;
-  padding: 1rem;
-  border: none;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.BlocSelectorTab[data-selected] {
-  color: var(--ve-primary);
-  background-color: var(--ve-primary-light);
-}
 .BlocSelectorGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, 218px);
@@ -110,6 +63,7 @@
 }
 
 .BlocSelectorGrid {
+  height: 700px;
   &::-webkit-scrollbar {
     width: 7px;
     height: 7px;

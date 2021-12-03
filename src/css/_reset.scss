@@ -1,8 +1,12 @@
 visual-editor {
   display: block;
-}
+  font-size: 15px;
 
-visual-editor {
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+  }
+
   svg {
     display: block;
   }
@@ -10,6 +14,8 @@ visual-editor {
   button {
     background-color: transparent;
     border: none;
+    padding: 0;
+    margin: 0;
   }
 
   img, picture, video, canvas, svg {

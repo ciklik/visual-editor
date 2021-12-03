@@ -1,0 +1,17 @@
+.SidebarHeader {
+  font-weight: 500;
+  width: 100%;
+  text-align: left;
+}
+button.SidebarHeader {
+  cursor: pointer;
+}
+
+.SidebarHoverable {
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.SidebarHeader:hover .SidebarHoverable {
+  opacity: 1;
+}

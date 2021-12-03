@@ -42,7 +42,7 @@ export class AbstractField<Args extends Record<string, any>, V>
       return null
     }
     return Object.keys(this.variables).reduce((acc, key) => {
-      const value = data[this.variables![key]]
+      const value = data[this.variables![key]!]
       if (value) {
         return { ...acc, [`--${key}`]: `var(${value})` }
       }

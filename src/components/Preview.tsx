@@ -8,18 +8,17 @@ import {
   PreviewModes,
   useFieldDefinitions,
   useFieldFocused,
-  useInsertData,
   usePreviewMode,
+  useSetBlockIndex,
   useSetFocusIndex,
 } from 'src/store'
 import { Flipped, Flipper } from 'react-flip-toolkit'
 import { useWindowSize } from 'react-use'
 import { PHONE_HEIGHT } from 'src/constants'
 import { prevent } from 'src/functions/functions'
-import { fillDefaults } from 'src/functions/fields'
-import { BlocAdder } from './Blocs/BlocAdder'
 import { Button } from './ui/Button'
-import { IconCirclePlus } from './Icons'
+import { IconCirclePlus } from './ui/Icons'
+import Styles from './Preview.module.scss'
 
 type PreviewProps = {
   data: EditorComponentData[]
@@ -57,7 +56,7 @@ export function Preview ({ data, previewUrl, iconsUrl }: PreviewProps) {
     iframeDocument.close()
     const root = iframeDocument.querySelector('#ve-components') as HTMLElement
     initialHTML.current = Array.from(root.children).reduce(
-      (acc, v, k) => ({ ...acc, [data[k]._id]: v.outerHTML }),
+      (acc, v, k) => ({ ...acc, [data[k]!._id]: v.outerHTML }),
       {},
     )
     root.innerHTML = ''
@@ -75,8 +74,8 @@ export function Preview ({ data, previewUrl, iconsUrl }: PreviewProps) {
   return (
     <div
       className={clsx(
-        've-preview',
-        previewMode === PreviewModes.PHONE && 've-preview-phone',
+        Styles.Preview,
+        previewMode === PreviewModes.PHONE && Styles.PreviewPhone,
       )}
     >
       <iframe ref={iframe} style={transform} />
@@ -86,7 +85,6 @@ export function Preview ({ data, previewUrl, iconsUrl }: PreviewProps) {
           data={data}
           initialHTML={initialHTML.current}
           previewUrl={previewUrl}
-          iconsUrl={iconsUrl}
         />,
         iframeRoot,
       )}
@@ -101,49 +99,34 @@ export function PreviewItems ({
                                 data,
                                 initialHTML = {},
                                 previewUrl,
-                                iconsUrl,
                               }: {
   data: EditorComponentData[]
   initialHTML: Record<string, string>
   previewUrl: string
-  iconsUrl: string
 }) {
-  const [blocsIndex, setBlocsIndex] = useState<number | null>(null)
-  const insertData = useInsertData()
   const definitions = useFieldDefinitions()
-  const handleAddBloc = (blocName: string, index: number) => {
-    insertData(
-      blocName,
-      index + 1,
-      fillDefaults({}, definitions[blocName].fields),
-    )
-    setBlocsIndex(null)
-  }
+  const setAddBlockIndex = useSetBlockIndex()
 
   return (
     <>
       <Flipper flipKey={data.map((d) => d._id).join('_')}>
         {data.map((v, k) => (
           <div key={v._id}>
-            <BlocAdder
-              onToggle={() =>
-                setBlocsIndex((i) => (i === k - 1 ? null : k - 1))
-              }
-              showBlocs={blocsIndex === k - 1}
-              iconsUrl={iconsUrl}
-              onAddBloc={(name: string) => handleAddBloc(name, k - 1)}
+            <button
+              className={Styles.PreviewAddButton}
+              onClick={prevent(() => setAddBlockIndex(k))}
             />
             <PreviewItem
-              title={definitions[v._name]?.title}
+              title={definitions[v._name]?.title || ''}
               data={v}
-              initialHTML={initialHTML[v._id]}
+              initialHTML={initialHTML[v._id] || ''}
               previewUrl={previewUrl}
             />
           </div>
         ))}
       </Flipper>
-      <div className='ve-preview-new-bloc'>
-        <Button icon={IconCirclePlus} onClick={prevent(() => setBlocsIndex(data.length - 1))}>
+      <div className={Styles.PreviewAddBlock}>
+        <Button icon={IconCirclePlus} onClick={prevent(() => setAddBlockIndex(data.length))}>
           Ajouter un bloc
         </Button>
       </div>
@@ -181,17 +164,17 @@ export function PreviewItem ({
 
   return (
     <Flipped flipId={data._id}>
-      <div className='ve-preview-wrapper' id={`previewItem${data._id}`}>
+      <div className={Styles.PreviewBlockWrapper} id={`previewItem${data._id}`}>
         <div
           className={clsx(
-            've-preview-component',
-            loading && 'is-loading',
-            isFocused && 'is-focused',
+            Styles.PreviewBlock,
+            loading && Styles.PreviewBlockLoading,
+            isFocused && Styles.PreviewBlockFocused,
           )}
           ref={ref}
           onClick={() => setFocusIndex(data._id)}
         >
-          <div className='ve-preview-label'>{title}</div>
+          <div className={Styles.PreviewBlockTitle}>{title}</div>
           <div dangerouslySetInnerHTML={{ __html: html }} />
         </div>
       </div>

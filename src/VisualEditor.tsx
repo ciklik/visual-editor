@@ -15,7 +15,6 @@ import { useClipboardPaste } from 'src/hooks/useClipboardPaste'
 import { useHistory } from 'src/hooks/useHistory'
 import { useUpdateEffect } from './hooks/useUpdateEffect'
 import { fillDefaults } from './functions/fields'
-import React from 'react'
 
 const components: EditorComponentDefinitions = {}
 

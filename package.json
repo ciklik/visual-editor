@@ -15,6 +15,8 @@
     "@dnd-kit/sortable": "^4.0.0",
     "@dnd-kit/utilities": "^3.0.1",
     "@popperjs/core": "^2.9.2",
+    "@radix-ui/react-dialog": "^0.1.1",
+    "@radix-ui/react-tabs": "^0.1.1",
     "@reach/dialog": "^0.16.2",
     "@reach/tabs": "^0.16.4",
     "@tippyjs/react": "^4.2.5",
@@ -28,8 +30,8 @@
     "zustand": "^3.5.5"
   },
   "devDependencies": {
-    "@types/quill": "^2.0.9",
     "@types/jest": "^26.0.24",
+    "@types/quill": "^2.0.9",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@vitejs/plugin-react": "^1.1.0",

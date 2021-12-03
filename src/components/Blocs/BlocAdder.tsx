@@ -18,7 +18,6 @@ export function BlocAdder({ onToggle, showBlocs, iconsUrl, onAddBloc }: Props) {
   className={cx('ve-preview-add', showBlocs && 've-preview-add--active')}
   onClick={prevent(onToggle)}
   />
-      {showBlocs && <BlocList iconsUrl={iconsUrl} onAddBloc={onAddBloc} />}
     </>
   )
 }

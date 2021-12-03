@@ -1,0 +1,137 @@
+:global(#ve-components) {
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+.Preview {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.Preview iframe {
+    transform-origin: 50% 50%;
+    width: 100%;
+    height: 100%;
+    border: none;
+    color: var(--ve-primary);
+    transition: width .3s, height .3s;
+}
+
+.PreviewPhone iframe {
+  width: 390px;
+  height: 844px;
+}
+
+.PreviewAddButton {
+  position: relative;
+  margin-top: -30px;
+  margin-bottom: -30px;
+  opacity: 0;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 101;
+  background-color: transparent;
+  border: none;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &::before {
+    content:'';
+    height: 2px;
+    width: 100%;
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 0;
+    z-index: 101;
+    background-color: var(--ve-primary);
+  }
+
+  &::after {
+    content:'+';
+    z-index: 101;
+    width: 24px;
+    height: 24px;
+    background: var(--ve-primary);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFF;
+    border-radius: 24px;
+    transition: transform .3s;
+  }
+}
+
+.PreviewAddBlock {
+  background-color: transparent;
+  border: 2px dashed var(--ve-field-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--ve-ve-color);
+  width: calc(100% - 2rem);
+  margin: 1rem;
+  padding: 1rem;
+}
+
+// Item
+// =============
+.PreviewBlockWrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.PreviewBlock {
+  position: relative;
+  border:1px solid transparent;
+}
+
+.PreviewBlockWrapper:hover .PreviewBlock {
+  border:1px solid var(--ve-primary);
+}
+
+.PreviewBlockTitle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--ve-primary);
+  color: #FFF;
+  padding: .2rem .4rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  opacity: 0;
+}
+
+.PreviewBlockWrapper:hover .PreviewBlockTitle,
+.PreviewBlockFocused .PreviewBlockTitle
+{
+  transform: translateY(-100%);
+  opacity: 1;
+}
+
+
+.PreviewBlock::before {
+  content:'';
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  z-index: 10;
+}
+
+.PreviewBlockFocused::before {
+  border: 2px solid var(--ve-primary)!important;
+}
+
+.PreviewBlockLoading::before {
+  background-color:rgba(255, 255, 255, 0.6);
+}
