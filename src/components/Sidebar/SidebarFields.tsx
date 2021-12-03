@@ -11,7 +11,7 @@ import { IconChevron } from 'src/components/ui/Icons'
 import clsx from 'clsx'
 import { CopyAction } from 'src/components/Sidebar/Actions/CopyAction'
 import { AbstractFieldGroup } from 'src/fields/AbstractFieldGroup'
-import React from 'react'
+import { SidebarTitle } from './SidebarTitle'
 
 /**
  * Génère la liste des champs dans la sidebar
@@ -84,6 +84,11 @@ const SidebarItem = memo(function SidebarItem({
 
   return (
     <Sortable item={data} className="ve-sidebar-bloc">
+      <SidebarTitle title={definition.title}>
+        <SidebarTitle.Hover>
+
+        </SidebarTitle.Hover>
+      </SidebarTitle>
       <button
         className="ve-bloc-remove"
         onClick={handleRemove}

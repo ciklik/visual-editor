@@ -258,3 +258,7 @@ export function IconCross ({ size = 24 }: IconProps) {
     <path d="M6.99999 5.58599L11.95 0.635986L13.364 2.04999L8.41399 6.99999L13.364 11.95L11.95 13.364L6.99999 8.41399L2.04999 13.364L0.635986 11.95L5.58599 6.99999L0.635986 2.04999L2.04999 0.635986L6.99999 5.58599Z" fill="currentColor"/>
   </svg>
 }
+
+export function IconSearch ({size = 24}: IconProps) {
+  return <svg width={size} height={size} fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m11.02 10.078 2.856 2.855-.943.943-2.855-2.855A6.002 6.002 0 0 1 .333 6.334c0-3.313 2.688-6 6-6a6.002 6.002 0 0 1 4.688 9.744Zm-1.337-.495a4.665 4.665 0 0 0-3.35-7.917 4.665 4.665 0 0 0-4.666 4.667 4.665 4.665 0 0 0 7.916 3.35l.1-.1Z" fill="currentColor"/></svg>
+}

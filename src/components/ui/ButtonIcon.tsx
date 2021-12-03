@@ -6,11 +6,13 @@ import React from 'react'
 type ButtonProps =  JSX.IntrinsicElements['button'] & {
   children: ReactElement,
   danger?: boolean,
-  className?: string
+  className?: string,
+  rotate?: number
 }
 
-export function ButtonIcon ({children, className, danger, ...props}: ButtonProps) {
-  return <button {...props} className={cx(Styles.ButtonIcon, danger && Styles.ButtonIconDanger, className)}>
+export function ButtonIcon ({children, className, danger, rotate, ...props}: ButtonProps) {
+  const style = rotate ? {transform: `rotate(${rotate}deg)`} : undefined
+  return <button {...props} className={cx(Styles.ButtonIcon, danger && Styles.ButtonIconDanger, className)} style={style}>
     {children}
   </button>
 }

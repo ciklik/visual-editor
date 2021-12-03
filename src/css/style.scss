@@ -252,22 +252,6 @@
   }
 }
 
-.ve-sidebar-bloc .ve-bloc-remove {
-  top: 12px;
-}
-
-.ve-sidebar-bloc:hover .ve-bloc-remove {
-  transform: translateX(0) rotate(0);
-  opacity: 1;
-}
-.ve-repeater-item .ve-repeater-collapse {
-  transform: rotate(0deg);
-
-  &.is-collapsed {
-    transform: rotate(-180deg);
-  }
-}
-
 // @import "preview";
 @import "resize";
 @import "layout";

@@ -2,7 +2,6 @@ import type { ReactNode } from 'react'
 import { Content, Overlay, Root, Title } from '@radix-ui/react-dialog'
 
 import Styles from './Modal.module.scss'
-import { Flex } from './Flex'
 import { IconCross } from 'src/components/ui/Icons'
 import { ButtonIcon } from './ButtonIcon'
 import { prevent } from 'src/functions/functions'
@@ -18,13 +17,11 @@ export function Modal ({ children, title, visible, onVisibilityChange }: ModalPr
   return <Root open={visible} onOpenChange={onVisibilityChange}>
     <Overlay className={Styles.ModalOverlay} />
     <Content className={Styles.ModalContent}>
-      <Flex between>
-        <Title className={Styles.ModalTitle}>{title}</Title>
-        <ButtonIcon onClick={prevent(() => onVisibilityChange(false))}>
-          <IconCross size={16} />
-        </ButtonIcon>
-      </Flex>
+      <Title className={Styles.ModalTitle}>{title}</Title>
       {children}
+      <ButtonIcon className={Styles.ModalClose} onClick={prevent(() => onVisibilityChange(false))}>
+        <IconCross size={16} />
+      </ButtonIcon>
     </Content>
   </Root>
 }

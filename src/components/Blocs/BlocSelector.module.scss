@@ -79,3 +79,26 @@
     border-radius: 4px;
   }
 }
+
+.BlocSelectorSearchWrapper {
+  position: relative;
+  float: right;
+  margin-top: 1.5rem;
+}
+
+.BlocSelectorSearch {
+  height: 40px;
+  background: var(--ve-hover);
+  border-radius: 40px;
+  padding: 0 1rem 0 2.6rem;
+  border: 1px solid transparent;
+  font: inherit;
+}
+
+.BlocSelectorSearchWrapper svg {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  color: var(--ve-color-light);
+  transform: translateY(-50%);
+}

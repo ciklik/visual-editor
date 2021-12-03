@@ -12,6 +12,7 @@
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
+  transition: color .3s, background-color .3s;
 }
 .TabSelected {
   color: var(--ve-primary);

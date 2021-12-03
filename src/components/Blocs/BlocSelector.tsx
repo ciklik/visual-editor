@@ -1,5 +1,5 @@
 import Styles from './BlocSelector.module.scss'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   useAddBlock,
   useBlocSelectionVisible,
@@ -11,13 +11,14 @@ import { EditorComponentDefinition, EditorComponentDefinitions } from '../../typ
 import { prevent } from 'src/functions/functions'
 import { Modal } from 'src/components/ui/Modal'
 import { Tabs } from 'src/components/ui/Tabs'
+import { IconSearch } from '../ui/Icons'
 
 const ALL_TAB = 'Tous les blocs'
 
 export function BlocSelector () {
   const isVisible = useBlocSelectionVisible()
   const setBlockIndex = useSetBlockIndex()
-  const search = ''
+  const [search, setSearch] = useState('');
   const definitions = useFieldDefinitions()
   const hiddenCategories = useHiddenCategories()
   const addBlock = useAddBlock()
@@ -34,6 +35,10 @@ export function BlocSelector () {
     ]
   }, [definitions])
 
+  useEffect(() => {
+    setSearch('')
+  }, [isVisible])
+
   if (!isVisible) {
     return null
   }
@@ -43,6 +48,10 @@ export function BlocSelector () {
   }
 
   return <Modal visible={isVisible} onVisibilityChange={handleVisibilityChange} title='Ajouter un bloc'>
+    <div className={Styles.BlocSelectorSearchWrapper}>
+      <input type="search" placeholder="Rechercher un bloc" value={search} onChange={(e) => setSearch(e.target.value)} className={Styles.BlocSelectorSearch} />
+      <IconSearch size={14} />
+    </div>
     <Tabs>
       {categories.map(category => <Tabs.Tab key={category} title={category}>
         <div className={Styles.BlocSelectorGrid}>
@@ -96,13 +105,10 @@ function searchDefinition (
   category: string,
   definitions: EditorComponentDefinitions,
 ) {
-  if (category !== ALL_TAB) {
-    return (key: string) => definitions[key]!.category === category
+  return (key: string) => {
+    const categoryFilter = category === ALL_TAB ? true : definitions[key]!.category === category
+    const searchFilter = search === '' ? true : definitions[key]!.title.toLowerCase().includes(search.toLowerCase())
+    return categoryFilter && searchFilter
   }
-  if (search === '') {
-    return () => true
-  }
-  return (key: string) =>
-    definitions[key]!.title.toLowerCase().includes(search.toLowerCase())
 }
 

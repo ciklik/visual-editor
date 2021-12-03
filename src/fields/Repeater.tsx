@@ -8,7 +8,6 @@ import { useToggle } from 'src/hooks/useToggle'
 import { prevent } from 'src/functions/functions'
 import { fillDefaults } from 'src/functions/fields'
 import { AbstractFieldGroup } from './AbstractFieldGroup'
-import cx from 'clsx'
 import { Button } from '../components/ui/Button'
 import { IconCirclePlus, IconDown, IconTrash } from '../components/ui/Icons'
 import { Flex } from '../components/ui/Flex'
@@ -132,7 +131,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
                 </ButtonIcon>
               )}
             </SidebarTitle.Hover>
-            <ButtonIcon className={cx('ve-repeater-collapse', collapsed && 'is-collapsed')} onClick={prevent(toggleCollapsed)} title="Replier/Déplier l'élément">
+            <ButtonIcon rotate={collapsed ? -90 : 0} onClick={prevent(toggleCollapsed)} title="Replier/Déplier l'élément">
               <IconDown size={24}/>
             </ButtonIcon>
           </Flex>
