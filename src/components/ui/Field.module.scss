@@ -21,3 +21,21 @@
   margin-top: .5em;
   font-size: .8em;
 }
+
+.FieldWrapper {
+  position: relative;
+}
+
+.FieldIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
+  color: var(--ve-field-border);
+  cursor: pointer;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 40px
+}

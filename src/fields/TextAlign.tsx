@@ -1,7 +1,13 @@
 import { AbstractField } from 'src/fields/AbstractField'
 import { EditorFieldProps } from 'src/types'
-import { IconTextCenter, IconTextLeft, IconTextRight } from 'src/components/ui/Icons'
+import {
+  IconTextCenter,
+  IconTextLeft,
+  IconTextRight,
+} from 'src/components/ui/Icons'
 import React, { SyntheticEvent } from 'react'
+import { Field } from '../components/ui/Field'
+import Styles from './Alignment.module.scss'
 
 const AlignmentIcons = {
   left: IconTextLeft,
@@ -18,21 +24,20 @@ type FieldArgs = {
 }
 
 export class TextAlign extends AbstractField<FieldArgs, FieldValue> {
-  get defaultArgs () {
+  get defaultArgs() {
     return {
       default: 'left' as FieldValue,
     }
   }
 
-  field ({ value, onChange }: EditorFieldProps<FieldValue>) {
+  field({ value, onChange }: EditorFieldProps<FieldValue>) {
     const handleChange = (e: SyntheticEvent) => {
       onChange((e.target as HTMLInputElement).value as FieldValue)
     }
     const alignements = Object.keys(AlignmentIcons)
     return (
-      <div>
-        {this.args.label && <label>{this.args.label}</label>}
-        <div className='ve-alignments'>
+      <Field label={this.args.label}>
+        <div className={Styles.Alignments}>
           {alignements.map((alignment) => (
             <AlignmentButton
               key={alignment}
@@ -42,25 +47,25 @@ export class TextAlign extends AbstractField<FieldArgs, FieldValue> {
             />
           ))}
         </div>
-      </div>
+      </Field>
     )
   }
 }
 
-function AlignmentButton ({
-                            alignment,
-                            onChange,
-                            checked,
-                          }: {
+function AlignmentButton({
+  alignment,
+  onChange,
+  checked,
+}: {
   alignment: FieldValue
   onChange: (e: SyntheticEvent) => void
   checked: boolean
 }) {
   const IconComponent = AlignmentIcons[alignment]
   return (
-    <div key={alignment} className='ve-alignment'>
+    <div className={Styles.AlignmentsButton}>
       <input
-        type='radio'
+        type="radio"
         onChange={onChange}
         value={alignment}
         checked={checked}

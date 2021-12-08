@@ -100,9 +100,10 @@ const SidebarItem = memo(function SidebarItem({
       <SidebarTitle
         title={definition.title}
         description={isCollapsed ? labelHTMLSafe : null}
+        onClick={prevent(toggleCollapsed)}
       >
         <SidebarTitle.Hover>
-          <CopyAction data={data} />
+          <CopyAction data={data} size={20} />
           <ButtonIcon danger onClick={handleRemove} title="Supprimer l'élément">
             <IconTrash size={20} />
           </ButtonIcon>
@@ -111,7 +112,7 @@ const SidebarItem = memo(function SidebarItem({
           rotate={isCollapsed ? -90 : 0}
           onClick={prevent(toggleCollapsed)}
         >
-          <IconDown size={24} />
+          <IconDown size={20} />
         </ButtonIcon>
       </SidebarTitle>
       <div ref={ref}>

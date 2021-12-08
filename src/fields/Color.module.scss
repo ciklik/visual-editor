@@ -11,19 +11,20 @@
   border-radius: 3px;
 
   &::before {
-    content:'';
+    content: '';
     display: block;
-    width: calc(100% - .6em);
-    height: calc(100% - .6em);
+    width: 28px;
+    height: 28px;
     background: var(--ve-selected-color, red);
     border-radius: 2px;
   }
+}
 
-  &:focus {
-    border-color: var(--ve-primary);
-    outline: 0;
-    box-shadow: 0 0 0 0.25rem rgb(23 113 230 / 25%);
-  }
+.ColorPickerButton:focus,
+.ColorPickerButtonSelected {
+  border-color: var(--ve-primary);
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgb(23 113 230 / 25%);
 }
 
 %mosaic {
@@ -36,4 +37,66 @@
 
 .ColorPickerButtonTransparent::before {
   @extend %mosaic;
+}
+
+.ColorPickerContent {
+  padding: .5em;
+  background-color: #FFF;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  border-radius: 4px;
+  animation: veColorPickerIn 0.3s ease-out
+}
+
+.ColorPickerContent svg {
+  fill: #FFF;
+}
+
+.ColorPickerPalette {
+  max-width: 212px;
+  flex-wrap: wrap;
+  display: flex;
+  gap: 2px;
+}
+
+.ColorPickerPalette button {
+  position: relative;
+  background-color: var(--ve-color);
+  width: 25px;
+  height: 25px;
+  flex: none;
+  z-index: 2;
+  cursor: pointer;
+  border-radius: 2px;
+  border: 1px solid var(--ve-field-border);
+  box-shadow: var(--ve-field-shadow);
+
+  &:hover {
+    border-color: var(--ve-primary);
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(23 113 230 / 25%);
+  }
+}
+
+.ColorPickerPalette .ColorTransparent {
+  @extend %mosaic;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    position: absolute;
+    top: -9px;
+    left: calc(50% - 1px);
+    content:'';
+    width: 2px;
+    height: 40px;
+    background: red;
+    transform: rotate(45deg);
+  }
+}
+
+@keyframes veColorPickerIn {
+  from {
+    transform: translateY(-.2em);
+    opacity: 0;
+  }
 }

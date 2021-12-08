@@ -1,8 +1,24 @@
-import { Checkbox, Number as NumberField, Range, Repeater, Select, Text, VisualEditor } from 'src/VisualEditor'
+import {
+  Checkbox,
+  Number as NumberField,
+  Range,
+  Repeater,
+  Select,
+  Text,
+  VisualEditor,
+} from 'src/VisualEditor'
 import { Row } from './fields/Row'
 import { Alignment } from './fields/Alignment'
-import { ButtonField, Buttons, Content, IconsWithLabel, ImageField, SiteColor, Title, WithStyles } from './shared'
-import React from 'react'
+import {
+  ButtonField,
+  Buttons,
+  Content,
+  IconsWithLabel,
+  ImageField,
+  SiteColor,
+  Title,
+  WithStyles,
+} from './shared'
 import ReactDOM from 'react-dom'
 
 let editor = new VisualEditor()
@@ -35,7 +51,7 @@ editor.registerComponent('columns-with-title', {
         ImageField('image', 'Image'),
         Content('body', 'Contenu'),
         new Select('imagePosition', {
-          label: 'Position de l\'image',
+          label: "Position de l'image",
           default: 'center',
           options: [
             { label: 'Gauche', value: 'left' },
@@ -84,7 +100,7 @@ editor.registerComponent('hero-big', {
               { label: 'Droite', value: 'right' },
             ],
           }),
-        ],
+        ]
       ),
     }),
   ],
@@ -115,7 +131,7 @@ editor.registerComponent('icons-columns', {
           { label: 'Lignes', value: 'row' },
         ],
       }),
-    ],
+    ]
   ),
 })
 
@@ -157,7 +173,7 @@ editor.registerComponent('steps', {
     [
       ImageField(),
       Title(),
-      new Text('caption', { label: 'Mention sous l\'image' }),
+      new Text('caption', { label: "Mention sous l'image" }),
       new Repeater('steps', {
         title: 'Étapes',
         addLabel: 'Ajouter une étape',
@@ -171,13 +187,13 @@ editor.registerComponent('steps', {
         [
           SiteColor('stepColor', 'Puces'),
           new Alignment('align', {
-            label: 'Position de l\'image',
+            label: "Position de l'image",
             default: 'right',
           }),
         ],
-        { columns: '50px 1fr' },
+        { columns: '50px 1fr' }
       ),
-    ],
+    ]
   ),
 })
 
@@ -239,7 +255,7 @@ editor.registerComponent('news', {
       }),
       Buttons(),
     ],
-    [SiteColor('categoryColor', 'Couleur de la catégorie')],
+    [SiteColor('categoryColor', 'Couleur de la catégorie')]
   ),
 })
 
@@ -290,11 +306,11 @@ editor.registerComponent('text-image', {
     ],
     [
       new Alignment('align', {
-        label: 'Position de l\'image',
+        label: "Position de l'image",
         default: 'left',
       }),
       SiteColor('iconColor', 'Couleur des checkbox').when('checkicon', true),
-    ],
+    ]
   ),
 })
 
@@ -304,7 +320,7 @@ editor.registerComponent('title-buttons', {
 })
 
 editor.registerComponent('images-carousel', {
-  title: 'Carrousel d\'images',
+  title: "Carrousel d'images",
   category: 'Carousel',
   fields: WithStyles(
     [
@@ -324,20 +340,20 @@ editor.registerComponent('images-carousel', {
     ],
     [
       new NumberField('slidesVisible', {
-        label: 'Nombre d\'éléments visible',
+        label: "Nombre d'éléments visible",
         default: 5,
       }),
       new NumberField('slidesToScroll', {
-        label: 'Nombre d\'élément à faire défiler',
+        label: "Nombre d'élément à faire défiler",
         default: 1,
         help: `Pour que la boucle fonctionne assurez vous que le nombre d'image soit un multiple de ce chiffre`,
       }),
-    ],
+    ]
   ),
 })
 
 editor.registerComponent('gallery', {
-  title: 'Galerie d\'image',
+  title: "Galerie d'image",
   fields: WithStyles(
     [
       Title(),
@@ -362,7 +378,7 @@ editor.registerComponent('gallery', {
       new Checkbox('highlight', {
         label: 'Mettre en avant la première image',
       }),
-    ],
+    ]
   ),
 })
 
@@ -441,7 +457,7 @@ editor.registerComponent('checklists', {
         SiteColor('titleBackground', 'Couleur de fond du titre'),
         SiteColor('titleColor', 'Couleur de fond du titre'),
       ]),
-    ],
+    ]
   ),
 })
 
@@ -490,15 +506,15 @@ editor.registerComponent('carousel-text-image', {
         [
           new Row([
             new Alignment('align', {
-              label: 'Position de l\'image',
+              label: "Position de l'image",
               default: 'left',
             }),
             SiteColor('iconColor', 'Couleur des checkbox').when(
               'checkicon',
-              true,
+              true
             ),
           ]),
-        ],
+        ]
       ),
     }),
   ],
@@ -506,8 +522,6 @@ editor.registerComponent('carousel-text-image', {
 
 editor.defineElement()
 
-if(document.getElementById('app')) {
+if (document.getElementById('app')) {
   ReactDOM.render(<div>Hello</div>, document.getElementById('app'))
-
 }
-

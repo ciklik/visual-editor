@@ -1,7 +1,7 @@
 .Tabs {
   display: flex;
   gap: .5rem;
-  margin: 1.5rem 0;
+  margin-bottom: .5rem;
 }
 
 .Tab {
@@ -9,7 +9,6 @@
   border-radius: 56px;
   padding: .6rem 1rem;
   border: none;
-  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   transition: color .3s, background-color .3s;

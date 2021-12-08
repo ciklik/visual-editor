@@ -5,3 +5,13 @@
   z-index: 2;
   object-fit: cover;
 }
+
+.ImageUrlBrowseButton {
+  width: 32px;
+  height: 32px;
+  color: var(--ve-color-light)
+}
+
+.ImageUrlInput {
+  padding-right: 40px;
+}

@@ -7,7 +7,10 @@ import {
   useHiddenCategories,
   useSetBlockIndex,
 } from 'src/store'
-import { EditorComponentDefinition, EditorComponentDefinitions } from '../../types'
+import {
+  EditorComponentDefinition,
+  EditorComponentDefinitions,
+} from '../../types'
 import { prevent } from 'src/functions/functions'
 import { Modal } from 'src/components/ui/Modal'
 import { Tabs } from 'src/components/ui/Tabs'
@@ -15,10 +18,10 @@ import { IconSearch } from '../ui/Icons'
 
 const ALL_TAB = 'Tous les blocs'
 
-export function BlocSelector () {
+export function BlocSelector() {
   const isVisible = useBlocSelectionVisible()
   const setBlockIndex = useSetBlockIndex()
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState('')
   const definitions = useFieldDefinitions()
   const hiddenCategories = useHiddenCategories()
   const addBlock = useAddBlock()
@@ -30,7 +33,7 @@ export function BlocSelector () {
         .filter((d) => !hiddenCategories.includes(d.category ?? ''))
         .reduce(
           (acc, d) => (acc.includes(d.category!) ? acc : [...acc, d.category!]),
-          [] as string[],
+          [] as string[]
         ),
     ]
   }, [definitions])
@@ -47,40 +50,55 @@ export function BlocSelector () {
     setBlockIndex(null)
   }
 
-  return <Modal visible={isVisible} onVisibilityChange={handleVisibilityChange} title='Ajouter un bloc'>
-    <div className={Styles.BlocSelectorSearchWrapper}>
-      <input type="search" placeholder="Rechercher un bloc" value={search} onChange={(e) => setSearch(e.target.value)} className={Styles.BlocSelectorSearch} />
-      <IconSearch size={14} />
-    </div>
-    <Tabs>
-      {categories.map(category => <Tabs.Tab key={category} title={category}>
-        <div className={Styles.BlocSelectorGrid}>
-          {Object.keys(definitions)
-            .filter(
-              (key) => !hiddenCategories.includes(definitions[key]!.category ?? ''),
-            )
-            .filter(searchDefinition(search ?? '', category, definitions))
-            .map((key) => (
-              <BlocSelectorItem
-                key={key}
-                definition={definitions[key]!}
-                name={key}
-                iconsUrl={'/'}
-                onClick={() => addBlock(key)}
-              />
-            ))}
-        </div>
-      </Tabs.Tab>)}
-    </Tabs>
-  </Modal>
+  return (
+    <Modal
+      visible={isVisible}
+      onVisibilityChange={handleVisibilityChange}
+      title="Ajouter un bloc"
+    >
+      <div className={Styles.BlocSelectorSearchWrapper}>
+        <input
+          type="search"
+          placeholder="Rechercher un bloc"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className={Styles.BlocSelectorSearch}
+        />
+        <IconSearch size={14} />
+      </div>
+      <Tabs className={Styles.BlocSelectorTabs}>
+        {categories.map((category) => (
+          <Tabs.Tab key={category} title={category}>
+            <div className={Styles.BlocSelectorGrid}>
+              {Object.keys(definitions)
+                .filter(
+                  (key) =>
+                    !hiddenCategories.includes(definitions[key]!.category ?? '')
+                )
+                .filter(searchDefinition(search ?? '', category, definitions))
+                .map((key) => (
+                  <BlocSelectorItem
+                    key={key}
+                    definition={definitions[key]!}
+                    name={key}
+                    iconsUrl={'/'}
+                    onClick={() => addBlock(key)}
+                  />
+                ))}
+            </div>
+          </Tabs.Tab>
+        ))}
+      </Tabs>
+    </Modal>
+  )
 }
 
-function BlocSelectorItem ({
-                             definition,
-                             name,
-                             iconsUrl,
-                             onClick,
-                           }: {
+function BlocSelectorItem({
+  definition,
+  name,
+  iconsUrl,
+  onClick,
+}: {
   name: string
   definition: EditorComponentDefinition
   iconsUrl: string
@@ -99,16 +117,18 @@ function BlocSelectorItem ({
   )
 }
 
-
-function searchDefinition (
+function searchDefinition(
   search: string,
   category: string,
-  definitions: EditorComponentDefinitions,
+  definitions: EditorComponentDefinitions
 ) {
   return (key: string) => {
-    const categoryFilter = category === ALL_TAB ? true : definitions[key]!.category === category
-    const searchFilter = search === '' ? true : definitions[key]!.title.toLowerCase().includes(search.toLowerCase())
+    const categoryFilter =
+      category === ALL_TAB ? true : definitions[key]!.category === category
+    const searchFilter =
+      search === ''
+        ? true
+        : definitions[key]!.title.toLowerCase().includes(search.toLowerCase())
     return categoryFilter && searchFilter
   }
 }
-

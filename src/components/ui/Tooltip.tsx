@@ -4,7 +4,7 @@ import Styles from './Tooltip.module.scss'
 
 type TooltipProps = {
   content: ReactNode
-  children: ReactElement
+  children: ReactNode
   visible?: boolean
   trigger?: 'click' | 'focus'
 }
@@ -24,7 +24,7 @@ export function Tooltip({ content, children, visible, trigger }: TooltipProps) {
       {...tippyProps}
       className={Styles.Tooltip}
     >
-      {children}
+      {children as ReactElement}
     </Tippy>
   )
 }

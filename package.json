@@ -16,6 +16,7 @@
     "@dnd-kit/utilities": "^3.0.1",
     "@popperjs/core": "^2.9.2",
     "@radix-ui/react-dialog": "^0.1.1",
+    "@radix-ui/react-popover": "^0.1.1",
     "@radix-ui/react-tabs": "^0.1.1",
     "@reach/dialog": "^0.16.2",
     "@reach/tabs": "^0.16.4",

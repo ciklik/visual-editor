@@ -1,7 +1,7 @@
 import { EditorFieldProps } from 'src/types'
 import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from 'src/fields/AbstractField'
-import React from 'react'
+import { Field } from '../components/ui/Field'
 
 type Option = {
   value: string
@@ -27,27 +27,14 @@ export class Select extends AbstractField<FieldArgs, string> {
   field({ value, onChange }: EditorFieldProps<string>) {
     const id = useUniqId('textinput')
     return (
-      <div>
-        {this.args.label && (
-          <label htmlFor={id} className="form-label">
-            {this.args.label}
-          </label>
-        )}
-        <select
-          className="form-control"
-          value={value}
-          onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
-        >
-          {this.args.options.map((option: Option, key) => {
-            return (
-              <option value={option.value} key={key}>
-                {option.label}
-              </option>
-            )
-          })}
-        </select>
-        {this.args.help && <div className="ve-help">{this.args.help}</div>}
-      </div>
+      <Field
+        id={id}
+        label={this.args.label}
+        help={this.args.help}
+        options={this.args.options}
+        value={value}
+        onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
+      />
     )
   }
 }

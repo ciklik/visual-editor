@@ -29,13 +29,13 @@
   width: 100%;
   color: var(--ve-color-light);
   text-align: left;
-  font-size: .9rem;
+  font-size: .95em;
 
   strong {
     display: block;
     color: var(--ve-color);
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 1.1em;
   }
 }
 button.SidebarHeader {
@@ -76,10 +76,4 @@ button.SidebarHeader {
   grid-template-columns: 1fr;
   align-items: flex-start;
   gap: 1em;
-}
-
-.SidebarFields label {
-  display: block;
-  margin-bottom: .5em;
-  font-size: .875rem;
 }

@@ -1,7 +1,7 @@
 import { EditorFieldProps } from 'src/types'
 import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from 'src/fields/AbstractField'
-import React from 'react'
+
 type FieldArgs = {
   label?: string
   required?: boolean

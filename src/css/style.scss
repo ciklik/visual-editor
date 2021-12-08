@@ -1,4 +1,5 @@
 @import "reset";
+@import "quilleditor";
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap');
 
@@ -19,9 +20,3 @@
   --ve-shadow-dragging: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;  justify-content: center;
   --ve-gap: .5em;
 }
-
-// @import "preview";
-@import "blocs";
-@import "animation";
-@import "form";
-@import "tabs";

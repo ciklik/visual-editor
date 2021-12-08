@@ -2,9 +2,11 @@ import { EditorFieldProps } from 'src/types'
 import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from 'src/fields/AbstractField'
 import { prevent } from 'src/functions/functions'
-import React, { useRef } from 'react'
-import { Tooltip } from 'src/components/ui/Tooltip'
+import React from 'react'
 import Styles from './ImageUrl.module.scss'
+import { Field } from '../components/ui/Field'
+import { ButtonIcon } from '../components/ui/ButtonIcon'
+import { IconFolder } from '../components/ui/Icons'
 
 type FieldArgs = {
   label?: string
@@ -18,7 +20,6 @@ type FieldArgs = {
  */
 export class ImageUrl extends AbstractField<FieldArgs, string> {
   field({ value, onChange }: EditorFieldProps<string>) {
-    const inputRef = useRef<HTMLInputElement>(null)
     const id = useUniqId('textinput')
     const handleBrowse = () => {
       this.args.onBrowse!(value)
@@ -27,37 +28,27 @@ export class ImageUrl extends AbstractField<FieldArgs, string> {
         })
         .catch((e) => {})
     }
+
     return (
-      <div>
-        {this.args.label && <label htmlFor={id}>{this.args.label}</label>}
-        <div className="ve-input-icon">
-          <Tooltip content={<TooltipImage url={value} />}>
-            <input
-              ref={inputRef}
-              type="text"
-              id={id}
-              className="ve-input ve-input-image"
-              value={value}
-              onInput={(e) => onChange((e.target as HTMLInputElement).value)}
-            />
-          </Tooltip>
-          {this.args.onBrowse && (
-            <button onClick={prevent(handleBrowse)}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 18 18"
-              >
-                <path
-                  fill="currentColor"
-                  d="M15 4.5H8.21L7.05 2.91a1 1 0 00-.8-.41H3a1 1 0 00-1 1v11a1 1 0 001 1h12a1 1 0 001-1v-9a1 1 0 00-1-1zm0 10H3v-8h3.66a1 1 0 001-1H3v-2h3.25l1.3 1.8a.5.5 0 00.4.2H15v9z"
-                />
-              </svg>
-            </button>
-          )}
-        </div>
-        {this.args.help && <div className="ve-form-help">{this.args.help}</div>}
-      </div>
+      <Field
+        id={id}
+        label={this.args.label}
+        help={this.args.help}
+        value={value}
+        tooltip={value ? <TooltipImage url={value} /> : undefined}
+        onChange={(e) => onChange((e.target as HTMLInputElement).value)}
+        className={Styles.ImageUrlInput}
+        icon={
+          this.args.onBrowse ? (
+            <ButtonIcon
+              onClick={prevent(handleBrowse)}
+              className={Styles.ImageUrlBrowseButton}
+            >
+              <IconFolder size={16} />
+            </ButtonIcon>
+          ) : undefined
+        }
+      />
     )
   }
 }

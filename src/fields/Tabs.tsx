@@ -3,11 +3,10 @@ import React, {
   cloneElement,
   FunctionComponent,
   ReactElement,
-  ReactNode,
   useState,
 } from 'react'
 import { EditorField } from 'src/types'
-import { prevent } from 'src/functions/functions'
+import { Tabs as TabsComponent } from '../components/ui/Tabs'
 import { Flex } from '../components/ui/Flex'
 
 type RowArgs = {
@@ -36,24 +35,20 @@ export class Tabs extends AbstractFieldGroup<any> {
 
   render: FunctionComponent<{ children: ReactElement }> = ({ children }) => {
     const [currentTab, setTab] = useState<TabDefinition>(this.tabs[0]!)
-    const currentChildren = cloneElement(children, {
-      fields: currentTab.fields,
-    })
+    const childrenForTab = (tab: TabDefinition) => {
+      return cloneElement(children, {
+        fields: tab.fields,
+      })
+    }
+
     return (
-      <Flex column>
-        <div role="tablist" className="ve-tabs">
-          {this.tabs.map((tab) => (
-            <button
-              key={tab.label}
-              aria-selected={currentTab === tab}
-              onClick={prevent(() => setTab(tab))}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-        {currentChildren}
-      </Flex>
+      <TabsComponent>
+        {this.tabs.map((tab) => (
+          <TabsComponent.Tab key={tab.label} title={tab.label}>
+            <Flex column>{childrenForTab(tab)}</Flex>
+          </TabsComponent.Tab>
+        ))}
+      </TabsComponent>
     )
   }
 }

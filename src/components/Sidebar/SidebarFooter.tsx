@@ -38,9 +38,9 @@ export function SidebarFooter({ onClose }: SidebarFooterProps) {
         </ButtonIcon>
       </div>
       <Flex gap={0.5}>
-        <CopyAction data={data} size={24} />
+        <CopyAction data={data} size={20} />
         <ButtonIcon onClick={prevent(togglePreviewMode)} title="Vue responsive">
-          {isPhone ? <IconDesktop size={24} /> : <IconPhone size={24} />}
+          {isPhone ? <IconDesktop size={20} /> : <IconPhone size={24} />}
         </ButtonIcon>
         <Button icon={IconCirclePlus} onClick={() => setAddBlock(0)}>
           Ajouter un bloc

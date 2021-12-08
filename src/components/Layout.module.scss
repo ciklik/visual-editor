@@ -1,9 +1,12 @@
 .LayoutWrapper {
   isolation: isolate;
   z-index: 9999;
+  font-size: 15px;
   --ve-sidebar: 600px;
   --ve-clampedSidebar: clamp(450px, var(--ve-sidebar), calc(100vw - 375px));
+}
 
+.LayoutWrapper * {
   &::-webkit-scrollbar {
     width: 7px;
     height: 7px;

@@ -21,7 +21,8 @@ export function Flex({
   style: styleProps,
   ...props
 }: FlexProps) {
-  const style = gap ? { '--ve-gap': `${gap}rem`, ...styleProps } : styleProps
+  const style =
+    gap !== undefined ? { '--ve-gap': `${gap}rem`, ...styleProps } : styleProps
   return (
     <ElementComponent
       {...props}

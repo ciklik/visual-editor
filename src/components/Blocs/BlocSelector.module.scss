@@ -1,3 +1,6 @@
+.BlocSelectorTabs {
+  margin: 1.5rem 0;
+}
 .BlocSelectorGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, 218px);
@@ -83,7 +86,6 @@
 .BlocSelectorSearchWrapper {
   position: relative;
   float: right;
-  margin-top: 1.5rem;
 }
 
 .BlocSelectorSearch {

@@ -8,6 +8,7 @@ import {
 } from 'src/components/ui/Icons'
 import { uniqId } from 'src/functions/string'
 import { FunctionComponent, SyntheticEvent } from 'react'
+import Styles from './Alignment.module.scss'
 
 type FieldArgs = {
   label?: string
@@ -44,7 +45,7 @@ export class Alignment extends AbstractField<FieldArgs, FieldValue> {
     return (
       <div>
         {this.args.label && <label>{this.args.label}</label>}
-        <div className="ve-alignments">
+        <div className={Styles.Alignments}>
           {alignements.map((alignment) => (
             <AlignmentButton
               key={alignment}
@@ -73,7 +74,7 @@ function AlignmentButton({
 }) {
   const IconComponent = AlignmentIcons[alignment]
   return (
-    <div key={alignment}>
+    <div>
       <input
         type="radio"
         name={id}
