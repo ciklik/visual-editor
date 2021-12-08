@@ -1,6 +1,11 @@
 import { AbstractField } from 'src/fields/AbstractField'
 import { EditorFieldProps } from 'src/types'
-import { IconAlignBottom, IconAlignLeft, IconAlignRight, IconAlignTop } from 'src/components/ui/Icons'
+import {
+  IconAlignBottom,
+  IconAlignLeft,
+  IconAlignRight,
+  IconAlignTop,
+} from 'src/components/ui/Icons'
 import { uniqId } from 'src/functions/string'
 import { FunctionComponent, SyntheticEvent } from 'react'
 
@@ -68,7 +73,7 @@ function AlignmentButton({
 }) {
   const IconComponent = AlignmentIcons[alignment]
   return (
-    <div key={alignment} className="ve-alignment">
+    <div key={alignment}>
       <input
         type="radio"
         name={id}

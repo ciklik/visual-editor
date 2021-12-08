@@ -131,7 +131,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
                 </ButtonIcon>
               )}
             </SidebarTitle.Hover>
-            <ButtonIcon rotate={collapsed ? -90 : 0} onClick={prevent(toggleCollapsed)} title="Replier/Déplier l'élément">
+            <ButtonIcon rotate={collapsed ? -90 : 0} onClick={prevent(toggleCollapsed)}>
               <IconDown size={24}/>
             </ButtonIcon>
           </Flex>

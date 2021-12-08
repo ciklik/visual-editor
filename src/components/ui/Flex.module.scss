@@ -2,8 +2,17 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  gap: var(--ve-gap,.5em);
 }
 
 .FlexBetween {
   justify-content: space-between;
+}
+
+.FlexColumn {
+  display: grid;
+  align-content: flex-start;
+  grid-template-columns: 1fr;
+  align-items: flex-start;
+  grid-gap: var(--ve-gap,.5em);
 }

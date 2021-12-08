@@ -6,6 +6,7 @@ import { useSidebarWidth } from 'src/store'
 import { ResizeBar } from './ResizeBar'
 import { BlocSelector } from './Blocs/BlocSelector'
 import React, { ReactElement, ReactNode } from 'react'
+import Styles from './Layout.module.scss'
 
 type LayoutProps = {
   className?: string
@@ -15,24 +16,17 @@ type LayoutProps = {
   iconsUrl: string
 }
 
-export function Layout({
-  className,
-  data,
-  previewUrl,
-  onClose,
-  iconsUrl,
-}: LayoutProps) {
-
+export function Layout({ data, previewUrl, onClose, iconsUrl }: LayoutProps) {
   return (
     <Wrapper>
-      <div className={clsx('ve-layout', className)}>
+      <div className={Styles.Layout}>
         <Sidebar data={data} onClose={onClose} />
         {previewUrl && (
           <Preview data={data} previewUrl={previewUrl} iconsUrl={iconsUrl} />
         )}
       </div>
       <ResizeBar />
-      <BlocSelector/>
+      <BlocSelector />
     </Wrapper>
   )
 }
@@ -41,7 +35,10 @@ function Wrapper({ children }: { children: ReactNode }) {
   const sidebarWidth = useSidebarWidth()
 
   return (
-    <div className="ve-wrapper" style={{ '--ve-sidebar': `${sidebarWidth}vw` } as React.CSSProperties}>
+    <div
+      className={Styles.LayoutWrapper}
+      style={{ '--ve-sidebar': `${sidebarWidth}vw` } as React.CSSProperties}
+    >
       {children}
     </div>
   )

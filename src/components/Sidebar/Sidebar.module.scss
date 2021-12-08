@@ -1,8 +1,42 @@
+.Sidebar {
+  background-color: #FBFBFD;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2),0 10px 10px -5px rgba(0,0,0,0.04);
+  transition: transform .5s cubic-bezier(0.19, 1, 0.22, 1);
+  overflow: auto;
+
+  * {
+    scroll-margin: 90px;
+  }
+}
+.SidebarBloc {
+  position: relative;
+  padding: .8em 1em .8em 1.3em;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+  transition: box-shadow .3s;
+}
+
+.SidebarBloc[data-dragging] {
+  box-shadow: var(--ve-shadow-dragging);
+  transition: box-shadow .3s!important;
+  z-index: 10;
+}
+
 .SidebarHeader {
-  font-weight: 500;
   width: 100%;
-  color: var(--ve-color);
+  color: var(--ve-color-light);
   text-align: left;
+  font-size: .9rem;
+
+  strong {
+    display: block;
+    color: var(--ve-color);
+    font-weight: 500;
+    font-size: 1rem;
+  }
 }
 button.SidebarHeader {
   cursor: pointer;
@@ -15,4 +49,37 @@ button.SidebarHeader {
 
 .SidebarHeader:hover .SidebarHoverable {
   opacity: 1;
+}
+
+// Footer
+// =============
+.SidebarFooter {
+  margin-top: 0;
+  display: flex;
+  position: sticky;
+  padding: 1em;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #FFF;
+  z-index: 10;
+  border-bottom: 1px solid var(--ve-field-border);
+  box-shadow: rgba(0, 0, 0, 0.05) 0 1px 2px 0;
+}
+
+// Champs
+// =============
+.SidebarFields {
+  padding: 1em;
+  display: grid;
+  align-content: flex-start;
+  grid-template-columns: 1fr;
+  align-items: flex-start;
+  gap: 1em;
+}
+
+.SidebarFields label {
+  display: block;
+  margin-bottom: .5em;
+  font-size: .875rem;
 }

@@ -2,7 +2,9 @@ import React, { SyntheticEvent, useState } from 'react'
 import { useSetSidebarWidth } from 'src/store'
 import cx from 'clsx'
 
-export function ResizeBar () {
+import Styles from './ResizeBar.module.scss'
+
+export function ResizeBar() {
   const [drag, setDrag] = useState(false)
   const setSidebarWidth = useSetSidebarWidth()
   const handleMouseDown = (e: SyntheticEvent) => {
@@ -19,17 +21,17 @@ export function ResizeBar () {
         setDrag(false)
         document.documentElement.removeEventListener('mousemove', listener)
       },
-      { once: true },
+      { once: true }
     )
   }
 
   return (
     <>
       <div
-        className={cx('ve-resizeBar', drag && 'is-active')}
+        className={cx(Styles.ResizeBar, drag && Styles.ResizeBarActive)}
         onMouseDown={handleMouseDown}
       />
-      {drag && <div className='ve-resizeBar-overlay' />}
+      {drag && <div className={Styles.ResizeBarOverlay} />}
     </>
   )
 }

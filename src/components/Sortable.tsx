@@ -1,7 +1,22 @@
-import React, { ReactChildren, ReactElement, ReactNode, SyntheticEvent } from 'react'
+import React, {
+  ReactChildren,
+  ReactElement,
+  ReactNode,
+  SyntheticEvent,
+} from 'react'
 import { IndexableObject } from 'src/types'
-import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
-import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers'
+import {
+  closestCenter,
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core'
+import {
+  restrictToParentElement,
+  restrictToVerticalAxis,
+} from '@dnd-kit/modifiers'
 import {
   SortableContext,
   sortableKeyboardCoordinates,
@@ -61,7 +76,7 @@ export function Sortable({
   item: IndexableObject
   children: ReactNode
   className?: string
-  onClick?: (e: SyntheticEvent) => void,
+  onClick?: (e: SyntheticEvent) => void
 }) {
   const {
     attributes,
@@ -78,7 +93,8 @@ export function Sortable({
   }
   return (
     <div
-      className={clsx(className, isDragging && 'is-dragging')}
+      className={className}
+      data-dragging={isDragging ? true : undefined}
       ref={setNodeRef}
       style={style}
       {...attributes}

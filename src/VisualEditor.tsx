@@ -7,7 +7,6 @@ import {
   EditorComponentDefinitions,
 } from 'src/types'
 import { useEffect, useMemo, useRef } from 'react'
-import { useVisibilityClass } from 'src/hooks/useVisibilityClass'
 import { Layout } from 'src/components/Layout'
 import { StoreProvider, useData, useUpdateData } from 'src/store'
 import { indexify, stringifyFields } from 'src/functions/object'
@@ -149,16 +148,16 @@ export function VisualEditorComponent({
   name,
   element,
   iconsUrl,
-  visible: visibleProps,
+  visible,
   onChange,
 }: VisualEditorProps) {
   const skipNextChange = useRef(true) // Skip emitting a change event on the next update (usefull for external changes)
   const updateData = useUpdateData()
   const data = useData()
-  const [visibilityClass, visible] = useVisibilityClass(visibleProps)
   const handleClose = () => {
     element.dispatchEvent(new Event('veClose'))
   }
+  const doNothing = () => null // React wants handler :(
   // JSON nettoyé
   const cleanedData = useMemo(() => stringifyFields(data), [data])
   // Synchronise l'état du composant avec la prop value
@@ -167,8 +166,8 @@ export function VisualEditorComponent({
     updateData(value)
   }, [value])
 
-  useClipboardPaste(visibleProps)
-  useHistory(data, visibleProps)
+  useClipboardPaste(visible)
+  useHistory(data, visible)
   useEffect(() => {
     if (skipNextChange.current) {
       skipNextChange.current = false
@@ -178,19 +177,20 @@ export function VisualEditorComponent({
   }, [cleanedData])
 
   if (!visible) {
-    return <textarea hidden name={name} value={cleanedData} onChange={() => null}/>
+    return (
+      <textarea hidden name={name} value={cleanedData} onChange={doNothing} />
+    )
   }
 
   return (
     <>
       <Layout
-        className={visibilityClass}
         data={data}
         onClose={handleClose}
         previewUrl={previewUrl}
         iconsUrl={iconsUrl}
       />
-      <textarea hidden name={name} value={cleanedData} onChange={() => null}/>
+      <textarea hidden name={name} value={cleanedData} onChange={doNothing} />
     </>
   )
 }

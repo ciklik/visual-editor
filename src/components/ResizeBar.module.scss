@@ -1,0 +1,23 @@
+.ResizeBar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  left: var(--ve-clampedSidebar);
+  width: 15px;
+  z-index: 1002;
+  cursor: ew-resize;
+  transition: box-shadow .3s;
+}
+.ResizeBar:hover,
+.ResizeBarActive {
+  box-shadow: -1px -1px 0 1px var(--ve-primary);
+}
+.ResizeBarOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1001;
+}

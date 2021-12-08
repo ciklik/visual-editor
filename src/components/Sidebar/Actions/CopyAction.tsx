@@ -1,17 +1,18 @@
 import { EditorComponentData } from 'src/types'
 import { prevent } from 'src/functions/functions'
-import { IconCheck, IconCopy } from 'src/components/ui/Icons'
+import { IconCheck, IconCode, IconCopy } from 'src/components/ui/Icons'
 import { copyToClipboard } from 'src/functions/browser'
 import { stringifyFields } from 'src/functions/object'
-import { Tooltip } from 'src/components/Tooltip'
+import { Tooltip } from 'src/components/ui/Tooltip'
 import React, { useEffect, useRef, useState } from 'react'
+import { ButtonIcon } from '../../ui/ButtonIcon'
 
 type CopyActionProps = {
   data: EditorComponentData | EditorComponentData[]
-  className?: string
+  size?: number
 }
 
-export function CopyAction({ data, className }: CopyActionProps) {
+export function CopyAction({ data, size, ...props }: CopyActionProps) {
   const [success, setSuccess] = useState(false)
   const timer = useRef<number>()
   const handleCopy = async () => {
@@ -20,7 +21,7 @@ export function CopyAction({ data, className }: CopyActionProps) {
       setSuccess(true)
       timer.current = window.setTimeout(() => {
         setSuccess(false)
-      }, 1000)
+      }, 4000)
     } catch (e) {
       alert(e)
     }
@@ -31,14 +32,25 @@ export function CopyAction({ data, className }: CopyActionProps) {
   }, [])
 
   return (
-    <Tooltip content="Le code a bién été copié" visible={success}>
-      <button
-        onClick={prevent(handleCopy)}
-        className={className || 've-sidebar-action-hover'}
-        style={{ color: success ? 'green' : 'currentcolor' }}
-      >
-        {success ? <IconCheck /> : <IconCopy />}
-      </button>
+    <Tooltip
+      content={
+        success ? (
+          <>
+            Le code a bién été copié
+            <br />
+            vous pouvez le coller sur une autre page
+          </>
+        ) : (
+          'Copier le code de la page'
+        )
+      }
+      trigger="focus"
+    >
+      <div>
+        <ButtonIcon onClick={prevent(handleCopy)} success={success} {...props}>
+          {success ? <IconCheck size={size} /> : <IconCode size={size} />}
+        </ButtonIcon>
+      </div>
     </Tooltip>
   )
 }

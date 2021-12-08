@@ -1,0 +1,37 @@
+.LayoutWrapper {
+  isolation: isolate;
+  z-index: 9999;
+  --ve-sidebar: 600px;
+  --ve-clampedSidebar: clamp(450px, var(--ve-sidebar), calc(100vw - 375px));
+
+  &::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    padding: 1px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--ve-field-border);
+    border-radius: 4px;
+  }
+}
+
+.Layout {
+  color: var(--ve-color-light);
+  transition: background-color .3s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  z-index: 1000;
+  grid-template-columns: var(--ve-clampedSidebar) 1fr;
+  background-color: var(--ve-field-border);
+}

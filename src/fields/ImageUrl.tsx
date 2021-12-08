@@ -3,7 +3,8 @@ import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from 'src/fields/AbstractField'
 import { prevent } from 'src/functions/functions'
 import React, { useRef } from 'react'
-import { Tooltip } from 'src/components/Tooltip'
+import { Tooltip } from 'src/components/ui/Tooltip'
+import Styles from './ImageUrl.module.scss'
 
 type FieldArgs = {
   label?: string
@@ -65,5 +66,5 @@ function TooltipImage({ url }: { url?: string }) {
   if (!url) {
     return null
   }
-  return <img src={url} alt="" className="ve-imageurl-tooltip" />
+  return <img src={url} alt="" className={Styles.ImageUrlTooltip} />
 }

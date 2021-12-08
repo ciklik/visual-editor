@@ -6,23 +6,25 @@ import Styles from './Sidebar.module.scss'
 type SidebarTitleProps = {
   children: ReactNode,
   title: string,
+  description?: string,
   onClick?: MouseEventHandler<HTMLElement>
 }
 
-export function SidebarTitle ({ children, onClick, title }: SidebarTitleProps) {
+export function SidebarTitle ({ children, onClick, title, description }: SidebarTitleProps) {
   const ElementComponent = onClick ? 'button' : 'div'
-  return <Flex between className={Styles.SidebarHeader}>
+  return <Flex gap={.5} between className={Styles.SidebarHeader}>
     <ElementComponent className={Styles.SidebarHeader} onClick={onClick}>
-      {title}
+      <strong>{title}</strong>
+      {description}
     </ElementComponent>
     {children}
   </Flex>
 }
 
 function SidebarTitleHoverable ({children}: {children: ReactNode}) {
-  return <div className={Styles.SidebarHoverable}>
+  return <Flex className={Styles.SidebarHoverable}>
     {children}
-  </div>
+  </Flex>
 }
 
 SidebarTitle.Hover = SidebarTitleHoverable

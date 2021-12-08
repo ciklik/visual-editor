@@ -1,6 +1,8 @@
 import { AbstractField } from 'src/fields/AbstractField'
 import { useUniqId } from 'src/hooks/useUniqId'
-import React from 'react'
+
+import Styles from './Checkbox.module.scss'
+
 type FieldArgs = {
   label: string
   default?: boolean
@@ -20,11 +22,10 @@ export class Checkbox extends AbstractField<FieldArgs, boolean> {
   }) {
     const id = useUniqId('checkbox')
     return (
-      <div className="ve-checkbox">
+      <div className={Styles.Checkbox}>
         <input
           type="checkbox"
           id={id}
-          className="form-control"
           checked={value}
           onChange={(e) => onChange(!value)}
         />

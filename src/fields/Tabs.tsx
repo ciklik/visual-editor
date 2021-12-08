@@ -1,7 +1,14 @@
 import { AbstractFieldGroup } from './AbstractFieldGroup'
-import React, { cloneElement, FunctionComponent, ReactElement, ReactNode, useState } from 'react'
+import React, {
+  cloneElement,
+  FunctionComponent,
+  ReactElement,
+  ReactNode,
+  useState,
+} from 'react'
 import { EditorField } from 'src/types'
 import { prevent } from 'src/functions/functions'
+import { Flex } from '../components/ui/Flex'
 
 type RowArgs = {
   label?: string
@@ -16,13 +23,13 @@ type TabDefinition = {
 export class Tabs extends AbstractFieldGroup<any> {
   tabs: TabDefinition[] = []
 
-  constructor (...tabs: TabDefinition[]) {
+  constructor(...tabs: TabDefinition[]) {
     super(
       tabs.reduce(
         (acc, tab) => [...acc, ...tab.fields],
-        [] as TabDefinition['fields'],
+        [] as TabDefinition['fields']
       ),
-      {},
+      {}
     )
     this.tabs = tabs
   }
@@ -33,8 +40,8 @@ export class Tabs extends AbstractFieldGroup<any> {
       fields: currentTab.fields,
     })
     return (
-      <div className='ve-sidebar-fields'>
-        <div role='tablist' className='ve-tabs'>
+      <Flex column>
+        <div role="tablist" className="ve-tabs">
           {this.tabs.map((tab) => (
             <button
               key={tab.label}
@@ -46,7 +53,7 @@ export class Tabs extends AbstractFieldGroup<any> {
           ))}
         </div>
         {currentChildren}
-      </div>
+      </Flex>
     )
   }
 }

@@ -1,17 +1,30 @@
-import { EditorComponentData, EditorComponentDefinition, EditorField } from 'src/types'
-import { memo, ReactElement, ReactNode, useCallback, useMemo, useRef } from 'react'
+import {
+  EditorComponentData,
+  EditorComponentDefinition,
+  EditorField,
+} from 'src/types'
+import { memo, useCallback, useMemo, useRef } from 'react'
 import { useToggle } from 'src/hooks/useToggle'
 import { useUpdateEffect } from 'src/hooks/useUpdateEffect'
 import { Sortable, SortableWrapper } from 'src/components/Sortable'
 import { moveItem } from 'src/functions/array'
 import { prevent } from 'src/functions/functions'
-import { useFieldDefinitions, useFieldFocused, useRemoveBloc, useSetFocusIndex, useUpdateData } from 'src/store'
+import {
+  useFieldDefinitions,
+  useFieldFocused,
+  useRemoveBloc,
+  useSetFocusIndex,
+  useUpdateData,
+} from 'src/store'
 import { strToDom } from 'src/functions/dom'
-import { IconChevron } from 'src/components/ui/Icons'
-import clsx from 'clsx'
+import { IconDown, IconTrash } from 'src/components/ui/Icons'
 import { CopyAction } from 'src/components/Sidebar/Actions/CopyAction'
 import { AbstractFieldGroup } from 'src/fields/AbstractFieldGroup'
 import { SidebarTitle } from './SidebarTitle'
+
+import Styles from './Sidebar.module.scss'
+import { ButtonIcon } from '../ui/ButtonIcon'
+import { Flex } from '../ui/Flex'
 
 /**
  * Génère la liste des champs dans la sidebar
@@ -24,7 +37,7 @@ export function SidebarFields({ data }: { data: EditorComponentData[] }) {
   }
 
   return (
-    <div className="ve-fields">
+    <div className={Styles.SidebarFields}>
       <SortableWrapper items={data} onMove={handleMove}>
         {data.map((v, k) => (
           <SidebarItem
@@ -83,42 +96,29 @@ const SidebarItem = memo(function SidebarItem({
   }
 
   return (
-    <Sortable item={data} className="ve-sidebar-bloc">
-      <SidebarTitle title={definition.title}>
-        <SidebarTitle.Hover>
-
-        </SidebarTitle.Hover>
-      </SidebarTitle>
-      <button
-        className="ve-bloc-remove"
-        onClick={handleRemove}
-        title="Supprimer l'élément"
+    <Sortable item={data} className={Styles.SidebarBloc}>
+      <SidebarTitle
+        title={definition.title}
+        description={isCollapsed ? labelHTMLSafe : null}
       >
-        &times;
-      </button>
+        <SidebarTitle.Hover>
+          <CopyAction data={data} />
+          <ButtonIcon danger onClick={handleRemove} title="Supprimer l'élément">
+            <IconTrash size={20} />
+          </ButtonIcon>
+        </SidebarTitle.Hover>
+        <ButtonIcon
+          rotate={isCollapsed ? -90 : 0}
+          onClick={prevent(toggleCollapsed)}
+        >
+          <IconDown size={24} />
+        </ButtonIcon>
+      </SidebarTitle>
       <div ref={ref}>
-        <div className="ve-sidebar-bloc__head">
-          <h2
-            className="ve-sidebar-title"
-            onClick={prevent(() => setFocus(data._id))}
-          >
-            <strong>{definition.title}</strong>
-            {isCollapsed ? labelHTMLSafe : null}
-          </h2>
-          <div className="ve-sidebar-actions">
-            <CopyAction data={data} />
-            <button
-              className={clsx(!isCollapsed && 've-sidebar-expanded')}
-              onClick={prevent(toggleCollapsed)}
-            >
-              <IconChevron size={14} />
-            </button>
-          </div>
-        </div>
         {!isCollapsed && (
-          <div className="ve-sidebar-fields">
+          <Flex column gap={1}>
             <Fields fields={definition.fields} data={data} path={path} />
-          </div>
+          </Flex>
         )}
       </div>
     </Sortable>

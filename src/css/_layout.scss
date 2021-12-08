@@ -1,9 +1,0 @@
-.ve-row {
-  display: flex;
-  align-items: center;
-  gap: var(--ve-gap, .5em);
-
-  & > * {
-    flex: 1;
-  }
-}

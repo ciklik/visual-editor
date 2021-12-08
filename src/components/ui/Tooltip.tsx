@@ -1,5 +1,6 @@
 import React, { ReactElement, ReactNode } from 'react'
 import Tippy, { TippyProps } from '@tippyjs/react'
+import Styles from './Tooltip.module.scss'
 
 type TooltipProps = {
   content: ReactNode
@@ -15,10 +16,15 @@ export function Tooltip({ content, children, visible, trigger }: TooltipProps) {
     tippyProps.hideOnClick = true
     tippyProps.interactive = true
   }
+
   return (
-    <Tippy content={content} visible={visible} {...tippyProps}>
+    <Tippy
+      content={content}
+      visible={visible}
+      {...tippyProps}
+      className={Styles.Tooltip}
+    >
       {children}
     </Tippy>
   )
 }
-
