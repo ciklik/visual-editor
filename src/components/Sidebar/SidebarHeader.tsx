@@ -19,11 +19,11 @@ import { Flex } from '../ui/Flex'
 
 import Styles from './Sidebar.module.scss'
 
-type SidebarFooterProps = {
+type SidebarHeaderProps = {
   onClose: () => void
 }
 
-export function SidebarFooter({ onClose }: SidebarFooterProps) {
+export function SidebarHeader({ onClose }: SidebarHeaderProps) {
   const togglePreviewMode = useTogglePreviewMode()
   const previewMode = usePreviewMode()
   const isPhone = previewMode === PreviewModes.PHONE
@@ -31,7 +31,7 @@ export function SidebarFooter({ onClose }: SidebarFooterProps) {
   const data = useData()
 
   return (
-    <Flex className={Styles.SidebarFooter} between>
+    <Flex className={Styles.SidebarHeader} between>
       <div>
         <ButtonIcon title="Fermer" onClick={prevent(onClose)}>
           <IconCross size={12} />

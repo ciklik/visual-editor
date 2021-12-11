@@ -3,23 +3,23 @@ import { Flex } from 'src/components/ui/Flex'
 
 import Styles from './Sidebar.module.scss'
 
-type SidebarTitleProps = {
+type SidebarHeadingProps = {
   children: ReactNode
   title: string
   description?: string
   onClick?: MouseEventHandler<HTMLElement>
 }
 
-export function SidebarTitle({
+export function SidebarHeading({
   children,
   onClick,
   title,
   description,
-}: SidebarTitleProps) {
+}: SidebarHeadingProps) {
   const ElementComponent = onClick ? 'button' : 'div'
   return (
-    <Flex gap={0} between className={Styles.SidebarHeader}>
-      <ElementComponent className={Styles.SidebarHeader} onClick={onClick}>
+    <Flex gap={0} between className={Styles.SidebarHeading}>
+      <ElementComponent className={Styles.SidebarHeading} onClick={onClick}>
         <strong>{title}</strong>
         {description}
       </ElementComponent>
@@ -28,7 +28,7 @@ export function SidebarTitle({
   )
 }
 
-function SidebarTitleHoverable({ children }: { children: ReactNode }) {
+function SidebarHeadingHoverable({ children }: { children: ReactNode }) {
   return (
     <Flex className={Styles.SidebarHoverable} gap={0}>
       {children}
@@ -36,4 +36,4 @@ function SidebarTitleHoverable({ children }: { children: ReactNode }) {
   )
 }
 
-SidebarTitle.Hover = SidebarTitleHoverable
+SidebarHeading.Hover = SidebarHeadingHoverable

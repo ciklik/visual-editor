@@ -13,16 +13,17 @@ import { IconCirclePlus, IconDown, IconTrash } from '../components/ui/Icons'
 import { Flex } from '../components/ui/Flex'
 import { ButtonIcon } from '../components/ui/ButtonIcon'
 import Style from './Repeater.module.scss'
-import { SidebarTitle } from '../components/Sidebar/SidebarTitle'
+import { SidebarHeading } from '../components/Sidebar/SidebarHeading'
+import { Field } from '../components/ui/Field'
 
-type Field = EditorField<any> | AbstractFieldGroup<any>
+type FieldType = EditorField<any> | AbstractFieldGroup<any>
 
 type FieldArgs = {
   label?: string
   min?: number
   max?: number
   addLabel?: string
-  fields: Field[]
+  fields: FieldType[]
   title?: string
   collapsed?: string
 }
@@ -55,7 +56,10 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
     const canRemove = !this.args.min || value.length > this.args.min
 
     const add = () => {
-      onChange([...value, fillDefaults({ _id: uniqId() }, this.args.fields) as RepeaterLine])
+      onChange([
+        ...value,
+        fillDefaults({ _id: uniqId() }, this.args.fields) as RepeaterLine,
+      ])
     }
 
     const remove = (line: Object) => {
@@ -71,8 +75,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
     }
 
     return (
-      <div>
-        {this.args.title && <label>{this.args.title}</label>}
+      <Field label={this.args.title}>
         <SortableWrapper items={value} onMove={handleMove}>
           <div className={Style.Repeater}>
             {value.map((line, k) => (
@@ -93,7 +96,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
             )}
           </div>
         </SortableWrapper>
-      </div>
+      </Field>
     )
   }
 
@@ -114,35 +117,41 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
       !!(this.args.collapsed && line[this.args.collapsed])
     )
 
-    const title = this.args.collapsed ? line[this.args.collapsed] as string : `Element #${index + 1}`
+    const title = this.args.collapsed
+      ? (line[this.args.collapsed] as string)
+      : `Element #${index + 1}`
 
     return (
       <Sortable item={line} className={Style.RepeaterItem}>
-        <SidebarTitle onClick={prevent(toggleCollapsed)} title={title}>
+        <SidebarHeading onClick={prevent(toggleCollapsed)} title={title}>
           <Flex>
-            <SidebarTitle.Hover>
+            <SidebarHeading.Hover>
               {onRemove && (
                 <ButtonIcon
                   danger
                   onClick={() => onRemove(line)}
                   title="Supprimer l'élément"
                 >
-                  <IconTrash size={20}/>
+                  <IconTrash size={20} />
                 </ButtonIcon>
               )}
-            </SidebarTitle.Hover>
-            <ButtonIcon rotate={collapsed ? -90 : 0} onClick={prevent(toggleCollapsed)}>
-              <IconDown size={24}/>
+            </SidebarHeading.Hover>
+            <ButtonIcon
+              rotate={collapsed ? -90 : 0}
+              onClick={prevent(toggleCollapsed)}
+            >
+              <IconDown size={24} />
             </ButtonIcon>
           </Flex>
-        </SidebarTitle>
-        {!collapsed &&
-        <this.fields
-          fields={this.args.fields}
-          line={line}
-          index={index}
-          onUpdate={handleUpdate}
-        />}
+        </SidebarHeading>
+        {!collapsed && (
+          <this.fields
+            fields={this.args.fields}
+            line={line}
+            index={index}
+            onUpdate={handleUpdate}
+          />
+        )}
       </Sortable>
     )
   }
@@ -206,22 +215,4 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
       />
     )
   }
-}
-
-/**
- * Trouve tous les champs qui correspond au nom demandé
- */
-const findField = (fields: Field[], fieldName: string): Field|null => {
-  for (const field of fields) {
-    if (field instanceof AbstractField && field.name === fieldName) {
-      return field
-    }
-    if (field instanceof AbstractFieldGroup) {
-      const deepMatches = findField(field.fields, fieldName)
-      if (deepMatches) {
-        return deepMatches
-      }
-    }
-  }
-  return null
 }

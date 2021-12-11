@@ -47,4 +47,9 @@ editor.registerComponent('icons-columns', {
   ]),
 })
 
+editor.registerComponent('text', {
+  title: 'Formatted text',
+  fields: [ContentField()],
+})
+
 editor.defineElement()

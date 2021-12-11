@@ -6,6 +6,7 @@
   transition: transform .5s cubic-bezier(0.19, 1, 0.22, 1);
   overflow: auto;
   animation: SidebarIn .7s cubic-bezier(0.19, 1, 0.22, 1) both;
+  scrollbar-gutter: stable;
 
   * {
     scroll-margin: 90px;
@@ -41,7 +42,7 @@
   z-index: 10;
 }
 
-.SidebarHeader {
+.SidebarHeading {
   width: 100%;
   color: var(--ve-color-light);
   text-align: left;
@@ -54,7 +55,7 @@
     font-size: 1.1em;
   }
 }
-button.SidebarHeader {
+button.SidebarHeading {
   cursor: pointer;
 }
 
@@ -63,13 +64,13 @@ button.SidebarHeader {
   transition: opacity .3s;
 }
 
-.SidebarHeader:hover .SidebarHoverable {
+.SidebarHeading:hover .SidebarHoverable {
   opacity: 1;
 }
 
 // Footer
 // =============
-.SidebarFooter {
+.SidebarHeader {
   margin-top: 0;
   display: flex;
   position: sticky;

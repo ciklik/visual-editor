@@ -19,7 +19,7 @@ import { strToDom } from 'src/functions/dom'
 import { IconDown, IconTrash } from 'src/components/ui/Icons'
 import { CopyAction } from 'src/components/Sidebar/Actions/CopyAction'
 import { AbstractFieldGroup } from 'src/fields/AbstractFieldGroup'
-import { SidebarTitle } from './SidebarTitle'
+import { SidebarHeading } from './SidebarHeading'
 
 import Styles from './Sidebar.module.scss'
 import { ButtonIcon } from '../ui/ButtonIcon'
@@ -95,24 +95,24 @@ const SidebarItem = memo(function SidebarItem({
 
   return (
     <Sortable item={data} className={Styles.SidebarBloc}>
-      <SidebarTitle
+      <SidebarHeading
         title={definition.title}
         description={isCollapsed ? labelHTMLSafe : null}
         onClick={prevent(toggleCollapsed)}
       >
-        <SidebarTitle.Hover>
+        <SidebarHeading.Hover>
           <CopyAction data={data} size={20} />
           <ButtonIcon danger onClick={handleRemove} title="Supprimer l'élément">
             <IconTrash size={20} />
           </ButtonIcon>
-        </SidebarTitle.Hover>
+        </SidebarHeading.Hover>
         <ButtonIcon
           rotate={isCollapsed ? -90 : 0}
           onClick={prevent(toggleCollapsed)}
         >
           <IconDown size={20} />
         </ButtonIcon>
-      </SidebarTitle>
+      </SidebarHeading>
       <div ref={ref}>
         {!isCollapsed && (
           <Flex column gap={1}>

@@ -1,6 +1,6 @@
 import { EditorComponentData } from 'src/types'
 import { SidebarFields } from 'src/components/Sidebar/SidebarFields'
-import { SidebarFooter } from 'src/components/Sidebar/SidebarFooter'
+import { SidebarHeader } from 'src/components/Sidebar/SidebarHeader'
 
 import Styles from './Sidebar.module.scss'
 
@@ -13,7 +13,7 @@ export function Sidebar({
 }) {
   return (
     <div className={Styles.Sidebar}>
-      <SidebarFooter onClose={onClose} />
+      <SidebarHeader onClose={onClose} />
       <SidebarFields data={data} />
     </div>
   )
