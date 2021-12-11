@@ -1,6 +1,8 @@
 import { EditorFieldProps } from 'src/types'
-import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from 'src/fields/AbstractField'
+import { Field } from '../components/ui/Field'
+import * as Slider from '@radix-ui/react-slider'
+import Styles from './Range.module.scss'
 
 type FieldArgs = {
   label?: string
@@ -21,38 +23,29 @@ export class Range extends AbstractField<FieldArgs, number> {
   }
 
   field({ value, onChange }: EditorFieldProps<number>) {
-    const id = useUniqId('rangeinput')
-    const marks = Math.round(
-      (this.args.max! - this.args.min! + 1) / this.args.step!
-    )
-    const ticks = new Array(marks).fill(0).map((v, k) => k + this.args.min!)
     return (
-      <div>
-        {this.args.label && (
-          <label htmlFor={id} className="form-label">
+      <Field
+        label={
+          <>
             {this.args.label} <small>({value})</small>
-          </label>
-        )}
-        <input
-          type="range"
+          </>
+        }
+        help={this.args.help}
+      >
+        <Slider.Root
           min={this.args.min}
           max={this.args.max}
+          value={[value === undefined ? this.args.default || 0 : value]}
           step={this.args.step}
-          id={id}
-          list={id + 'marks'}
-          className="ve-input"
-          value={value}
-          onInput={(e) =>
-            onChange(parseInt((e.target as HTMLInputElement).value, 10))
-          }
-        />
-        <datalist id={id + 'marks'}>
-          {ticks.map((t) => (
-            <option key={t} value={t.toString()} />
-          ))}
-        </datalist>
-        {this.args.help && <div className="ve-help">{this.args.help}</div>}
-      </div>
+          className={Styles.Range}
+          onValueChange={(v) => onChange(v[0] || 0)}
+        >
+          <Slider.Track className={Styles.RangeTrack}>
+            <Slider.Range className={Styles.RangeTrackSelected} />
+          </Slider.Track>
+          <Slider.Thumb className={Styles.RangeThumb} />
+        </Slider.Root>
+      </Field>
     )
   }
 }

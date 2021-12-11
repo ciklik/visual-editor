@@ -1,7 +1,6 @@
 import Styles from './Flex.module.scss'
 import cx from 'clsx'
-import { FunctionComponent, ReactElement, ReactNode } from 'react'
-import React from 'react'
+import { FunctionComponent, ReactNode } from 'react'
 
 type FlexProps = {
   between?: boolean

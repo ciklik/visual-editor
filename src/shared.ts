@@ -1,3 +1,7 @@
+/**
+ * This is a demo file demonstrating how to use the Editor with demo blocks
+ * (it's not part of the library)
+ */
 import {
   ImageUrl,
   Row,
@@ -15,7 +19,29 @@ import { AbstractFieldGroup } from './fields/AbstractFieldGroup'
 
 type Field = AbstractField<any, any> | AbstractFieldGroup<any>
 
-export const Colors = ['--pink', '--purple', '--blue', '--green', '--white']
+export const Colors = [
+  '--bs-blue:',
+  '--bs-indigo',
+  '--bs-purple',
+  '--bs-pink',
+  '--bs-red',
+  '--bs-orange',
+  '--bs-yellow',
+  '--bs-green',
+  '--bs-teal:',
+  '--bs-cyan:',
+  '--bs-white',
+  '--bs-gray:',
+  '--bs-gray-dark',
+  '--bs-primary',
+  '--bs-secondary',
+  '--bs-success',
+  '--bs-info:',
+  '--bs-warning',
+  '--bs-danger',
+  '--bs-light',
+  '--bs-dark',
+]
 
 export const ImageField = (name: string = 'image', label: string = 'image') =>
   new ImageUrl(name, {
@@ -25,7 +51,7 @@ export const ImageField = (name: string = 'image', label: string = 'image') =>
 
 export const ButtonField = () =>
   new Row([
-    new Text('label', { label: 'Libellé' }),
+    new Text('label', { label: 'Libellé', default: 'Call to action' }),
     new Text('url', { label: 'Lien' }),
     new Select('type', {
       default: 'primary',
@@ -37,10 +63,10 @@ export const ButtonField = () =>
     }),
   ])
 
-export const SiteColor = (name: string, label: string) =>
+export const ColorField = (name: string, label: string) =>
   new Color(name, { label: label, colors: Colors })
 
-export const Title = (name = 'title', label = 'Titre') =>
+export const TitleField = (name = 'title', label = 'Titre') =>
   new Row(
     [
       new HTMLText(name, {
@@ -50,13 +76,13 @@ export const Title = (name = 'title', label = 'Titre') =>
         colors: Colors,
       }),
       new TextAlign(name + 'Align', {
-        label: label,
+        label: 'Alignement',
       }),
     ],
     { columns: '1fr max-content' }
   )
 
-export const Content = (name = 'content', label = 'Description') =>
+export const ContentField = (name = 'content', label = 'Description') =>
   new HTMLText(name, {
     label: label,
     default:
@@ -67,7 +93,7 @@ export const Content = (name = 'content', label = 'Description') =>
     .background('backgroundColor')
     .color('textColor')
 
-export const Buttons = () =>
+export const ButtonsField = () =>
   new Repeater('buttons', {
     title: 'Boutons',
     addLabel: 'Ajouter un bouton',
@@ -77,8 +103,8 @@ export const Buttons = () =>
 export const Style = () => [
   new Row(
     [
-      SiteColor('backgroundColor', 'Fond'),
-      SiteColor('textColor', 'Texte'),
+      ColorField('backgroundColor', 'Fond'),
+      ColorField('textColor', 'Texte'),
       ImageField('background', 'Fond'),
       ImageField('backgroundMobile', 'Fond (mobile)'),
     ],
@@ -126,13 +152,6 @@ export const Style = () => [
   ]).when('background', (b: string) => b),
   new Range('padding', { label: 'Padding vertical', default: 3 }),
 ]
-
-export const IconsWithLabel = () =>
-  new Repeater('icons', {
-    title: 'Icônes',
-    addLabel: 'Ajouter une icône',
-    fields: [ImageField(), new Text('label', { label: 'Description' })],
-  })
 
 export const WithStyles = (
   contentFields: Field[],

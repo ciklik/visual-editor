@@ -15,80 +15,64 @@
       font-family: DM Sans, sans-serif;
       font-size: 16px;
     }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
     :root {
-      --pink: #f50057;
-      --purple: #651fff;
-      --blue: #3d5afe;
-      --green: #00e676;
-      --lightblue: #00e5ff;
-      --white: #FFF;
+      --bs-blue: #0d6efd;
+      --bs-indigo: #6610f2;
+      --bs-purple: #6f42c1;
+      --bs-pink: #d63384;
+      --bs-red: #dc3545;
+      --bs-orange: #fd7e14;
+      --bs-yellow: #ffc107;
+      --bs-green: #198754;
+      --bs-teal: #20c997;
+      --bs-cyan: #0dcaf0;
+      --bs-white: #fff;
+      --bs-gray: #6c757d;
+      --bs-gray-dark: #343a40;
+      --bs-primary: #0d6efd;
+      --bs-secondary: #6c757d;
+      --bs-success: #198754;
+      --bs-info: #0dcaf0;
+      --bs-warning: #ffc107;
+      --bs-danger: #dc3545;
+      --bs-light: #f8f9fa;
+      --bs-dark: #212529;
     }
   </style>
 </head>
 <body>
 <div id="app"></div>
-<h1>
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur at
-  blanditiis commodi consectetur, consequuntur debitis ducimus excepturi
-  ipsum iusto nisi obcaecati omnis placeat rerum soluta suscipit voluptates
-  voluptatum. Autem, mollitia?
-</h1>
-<button class="ve-button" data-target="editor1">
-  Afficher l'éditeur 1
-</button>
-<button class="ve-button" data-target="editor2">
-  Afficher l'éditeur 2
-</button>
-<button class="ve-clone">Clone editeur 2 vers éditeur 1</button>
+<div style='max-width: 800px; margin: 40px auto;'>
+  <h1>
+    This is a demonstration of the editor
+  </h1>
+  <button class="ve-button" data-target="editor1">
+    Afficher l'éditeur 1
+  </button>
+  <button class="ve-button" data-target="editor2">
+    Afficher l'éditeur 2
+  </button>
+  <button class="ve-clone">Clone editeur 2 vers éditeur 1</button>
+</div>
 <visual-editor
   name="content"
   preview="http://localhost:3000/preview"
-  iconsUrl="/steps.svg"
+  iconsUrl="/[name].svg"
   id="editor1"
-  value="[
-  {
-    &quot;title&quot;: &quot;Des résultats <span style=\&quot;color: var(--color1);\&quot;>sympa</span>&quot;,
-    &quot;columns&quot;: [
-      {
-        &quot;body&quot;: &quot;<p class=\&quot;ql-align-center\&quot;>C'est le poids moyen que perdent nos clients dès le 1er mois*</p>&quot;,
-        &quot;imagePosition&quot;: &quot;center&quot;,
-        &quot;image&quot;: &quot;https://brz-mon-panier-minceur.s3.eu-central-1.amazonaws.com/v3/411.png&quot;
-      },
-      {
-        &quot;image&quot;: &quot;https://brz-mon-panier-minceur.s3.eu-central-1.amazonaws.com/v3/931.png&quot;,
-        &quot;body&quot;: &quot;<p class=\&quot;ql-align-center\&quot;>C'est le taux de clients heureux**</p>&quot;,
-        &quot;imagePosition&quot;: &quot;center&quot;
-      },
-      {
-        &quot;image&quot;: &quot;https://brz-mon-panier-minceur.s3.eu-central-1.amazonaws.com/v3/trustpilotnew.png&quot;,
-        &quot;body&quot;: &quot;<p class=\&quot;ql-align-center\&quot;>C'est notre note sur Trustpilot</p>&quot;,
-        &quot;imagePosition&quot;: &quot;center&quot;
-      }
-    ],
-    &quot;paddingY&quot;: 5,
-    &quot;backgroundSize&quot;: &quot;cover&quot;,
-    &quot;backgroundRepeat&quot;: &quot;no-repeat&quot;,
-    &quot;backgroundXPosition&quot;: &quot;center&quot;,
-    &quot;backgroundYPosition&quot;: &quot;center&quot;,
-    &quot;_name&quot;: &quot;columns-with-title&quot;,
-    &quot;buttons&quot;: [
-      {
-        &quot;label&quot;: &quot;Je découvre mon programme idéal&quot;
-      }
-    ]
-  }
-]"
+  value=""
 ></visual-editor>
 
 <visual-editor
   hidden
   name="content"
   preview="http://localhost:3000/preview"
-  iconsUrl="/"
+  iconsUrl="/html.svg"
   id="editor2"
   value="[]"
-></visual-editor
->
+></visual-editor>
 <script type="module" src="/src/main.tsx"></script>
 <script>
   const toggleEditor = (event) => {
@@ -99,6 +83,32 @@
       editor.setAttribute('hidden', 'hidden')
     }
   }
+  const editor1 = document.getElementById('editor1')
+  editor1.setAttribute('value', localStorage.getItem('editor1value') || JSON.stringify([
+    {
+      title: "Album example",
+      titleAlign: "left",
+      content: "<p>Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>",
+      buttons: [
+        {
+          "label": "Main call to action",
+          "url": "#",
+          "type": "primary"
+        },
+        {
+          "label": "Secondary action",
+          "url": "#",
+          "type": "secondary"
+        }
+      ],
+      _name: "hero"
+    }
+  ]))
+
+  // Set the first editor value
+
+
+  // Toggle the editor
   document.querySelectorAll('.ve-button').forEach((button) => {
     button.addEventListener('click', toggleEditor)
     const editor = document.getElementById(button.dataset.target)
@@ -110,14 +120,16 @@
     })
   })
 
+  // Show how the editor handle moving values around
   document.querySelector('.ve-clone').addEventListener('click', (e) => {
-    console.log(e)
     const editor1 = document.getElementById('editor1')
     const editor2 = document.getElementById('editor2')
     editor2.value = editor1.value
   })
 
+  // Test how the field handle being updated
   document.querySelector('#editor1').addEventListener('veChange', (e) => {
+    localStorage.setItem('editor1value', e.detail)
     e.target.setAttribute('value', e.detail);
   })
 </script>

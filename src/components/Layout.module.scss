@@ -23,6 +23,8 @@
   }
 }
 
+// Animation
+// =============
 .Layout {
   color: var(--ve-color-light);
   transition: background-color .3s;
@@ -37,4 +39,27 @@
   z-index: 1000;
   grid-template-columns: var(--ve-clampedSidebar) 1fr;
   background-color: var(--ve-field-border);
+  animation: LayoutIn .7s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+[hidden="hidden"] .Layout {
+  animation: LayoutOut .7s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+@keyframes LayoutIn {
+  from {
+    background-color: rgba(255, 255, 255, 0);
+  }
+  to {
+    background-color: var(--ve-field-border);
+  }
+}
+
+@keyframes LayoutOut {
+  from {
+    background-color: var(--ve-field-border);
+  }
+  to {
+    background-color: rgba(255, 255, 255, 0);
+  }
 }

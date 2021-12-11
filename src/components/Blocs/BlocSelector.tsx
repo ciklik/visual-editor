@@ -18,7 +18,11 @@ import { IconSearch } from '../ui/Icons'
 
 const ALL_TAB = 'Tous les blocs'
 
-export function BlocSelector() {
+type BlocSelectorProps = {
+  iconsUrl: string
+}
+
+export function BlocSelector({ iconsUrl }: BlocSelectorProps) {
   const isVisible = useBlocSelectionVisible()
   const setBlockIndex = useSetBlockIndex()
   const [search, setSearch] = useState('')
@@ -81,7 +85,7 @@ export function BlocSelector() {
                     key={key}
                     definition={definitions[key]!}
                     name={key}
-                    iconsUrl={'/'}
+                    iconsUrl={iconsUrl}
                     onClick={() => addBlock(key)}
                   />
                 ))}
@@ -104,6 +108,7 @@ function BlocSelectorItem({
   iconsUrl: string
   onClick: () => void
 }) {
+  console.log({ iconsUrl })
   const icon = iconsUrl.replace('[name]', name)
   const title = definition.title
 

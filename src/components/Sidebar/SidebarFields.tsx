@@ -13,7 +13,6 @@ import {
   useFieldDefinitions,
   useFieldFocused,
   useRemoveBloc,
-  useSetFocusIndex,
   useUpdateData,
 } from 'src/store'
 import { strToDom } from 'src/functions/dom'
@@ -63,7 +62,6 @@ const SidebarItem = memo(function SidebarItem({
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const isFocused = useFieldFocused(data._id)
-  const setFocus = useSetFocusIndex()
   const [isCollapsed, toggleCollapsed, setCollapsed] = useToggle(!isFocused)
   const removeBloc = useRemoveBloc()
   const label =

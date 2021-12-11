@@ -5,11 +5,27 @@
   box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2),0 10px 10px -5px rgba(0,0,0,0.04);
   transition: transform .5s cubic-bezier(0.19, 1, 0.22, 1);
   overflow: auto;
+  animation: SidebarIn .7s cubic-bezier(0.19, 1, 0.22, 1) both;
 
   * {
     scroll-margin: 90px;
   }
 }
+
+[hidden=hidden] .Sidebar  {
+  animation: SidebarOut .7s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+@keyframes SidebarOut {
+  from {transform: translateX(0) }
+  to {transform: translateX(-100%) }
+}
+
+@keyframes SidebarIn {
+  from {transform: translateX(-100%) }
+  to {transform: translateX(0) }
+}
+
 .SidebarBloc {
   position: relative;
   padding: .8em 1em .8em 1.3em;

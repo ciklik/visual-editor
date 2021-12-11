@@ -1,0 +1,28 @@
+.Flash {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  color: var(--ve-background);
+  background: var(--ve-dark);
+  z-index: 1001;
+  padding: 1em;
+  border-radius: 4px;
+  width: 460px;
+  font-weight: 500;
+}
+
+.Flash::before {
+  content:'';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  height: 4px;
+  background-color: var(--ve-primary);
+}
+
+.FlashButton {
+  border:solid 1px var(--ve-background);
+  background-color: transparent;
+}

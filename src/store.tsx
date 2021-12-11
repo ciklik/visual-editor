@@ -1,5 +1,5 @@
 import create, { UseBoundStore } from 'zustand'
-import { EditorComponentData, EditorComponentDefinition, EditorComponentDefinitions } from 'src/types'
+import { EditorComponentData, EditorComponentDefinitions } from 'src/types'
 import { deepSet } from 'src/functions/object'
 import { combine, devtools } from 'zustand/middleware'
 import { insertItem } from 'src/functions/array'
@@ -16,13 +16,15 @@ export enum PreviewModes {
 }
 
 type State = {
-  data: EditorComponentData[],
+  data: EditorComponentData[]
+  previousData: EditorComponentData[]
   definitions: EditorComponentDefinitions
   hiddenCategories: string[]
   focusIndex: null | string
+  rollbackMessage: null | string
   previewMode: PreviewModes
-  sidebarWidth: number,
-  addBlockIndex: number | null,
+  sidebarWidth: number
+  addBlockIndex: number | null
 }
 
 const sidebarWidth = localStorage.getItem('veSidebarWidth')
@@ -30,7 +32,7 @@ const sidebarWidth = localStorage.getItem('veSidebarWidth')
 const createStore = (
   data: EditorComponentData[] = [],
   definitions: EditorComponentDefinitions,
-  hiddenCategories: string[] = [],
+  hiddenCategories: string[] = []
 ) =>
   create(
     devtools(
@@ -39,38 +41,53 @@ const createStore = (
           data,
           definitions,
           hiddenCategories,
+          previousData: [],
+          rollbackMessage: null,
           addBlockIndex: null,
           focusIndex: null,
           previewMode: PreviewModes.DESKTOP,
           sidebarWidth: clamp(
             sidebarWidth ? parseInt(sidebarWidth, 10) : 600,
             0,
-            window.innerWidth - 375,
+            window.innerWidth - 375
           ),
         } as State,
         (set) => ({
-          setSidebarWidth: function(width: number) {
+          setSidebarWidth: function (width: number) {
             localStorage.setItem('veSidebarWidth', width.toString())
             set(() => ({
               sidebarWidth: width,
             }))
           },
-          updateData: function(newData: any, path?: string) {
+          updateData: function (newData: any, path?: string) {
             return set((state) => ({
               data: deepSet(state.data, path, newData),
             }))
           },
-          removeBloc: function(removedData: EditorComponentData) {
-            if (confirm('Voulez vous vraiment supprimer ce bloc ?')) {
-              return set(({ data }) => ({
-                data: data.filter((d) => d !== removedData),
-              }))
-            }
+          removeBloc: function (removedData: EditorComponentData) {
+            return set(({ data }) => ({
+              previousData: data,
+              data: data.filter((d) => d !== removedData),
+              rollbackMessage: 'Le bloc a bien été supprimé',
+            }))
           },
-          insertData: function(
+          rollback: function () {
+            return set(({ previousData }) => ({
+              previousData: [],
+              rollbackMessage: null,
+              data: previousData,
+            }))
+          },
+          cancelRollback: function () {
+            return set(() => ({
+              rollbackMessage: null,
+              previousData: [],
+            }))
+          },
+          insertData: function (
             name: string,
             index: number,
-            extraData?: object,
+            extraData?: object
           ): EditorComponentData {
             const newData = {
               ...extraData,
@@ -85,13 +102,13 @@ const createStore = (
             })
             return newData
           },
-          setFocusIndex: function(id: string) {
+          setFocusIndex: function (id: string) {
             set(() => ({ focusIndex: id }))
           },
-          setAddBlockIndex: function(index: number | null) {
+          setAddBlockIndex: function (index: number | null) {
             set(() => ({ addBlockIndex: index }))
           },
-          togglePreviewMode: function() {
+          togglePreviewMode: function () {
             set(({ previewMode }) => ({
               previewMode:
                 previewMode === PreviewModes.DESKTOP
@@ -99,9 +116,9 @@ const createStore = (
                   : PreviewModes.DESKTOP,
             }))
           },
-        }),
-      ),
-    ),
+        })
+      )
+    )
   )
 
 type Store = ReturnType<typeof createStore>
@@ -112,16 +129,16 @@ type StoreData<T extends UseBoundStore<any>> = T extends UseBoundStore<infer V>
 
 const { Provider, useStore } = createContext<StoreData<Store>>()
 
-export function StoreProvider ({
-                                 children,
-                                 data,
-                                 definitions,
-                                 hiddenCategories,
-                               }: {
+export function StoreProvider({
+  children,
+  data,
+  definitions,
+  hiddenCategories,
+}: {
   children: ReactElement
   data: EditorComponentData[]
   definitions: EditorComponentDefinitions
-  hiddenCategories: string[],
+  hiddenCategories: string[]
 }) {
   return (
     <Provider
@@ -132,85 +149,92 @@ export function StoreProvider ({
   )
 }
 
-export function useData () {
+export function useData() {
   return useStore((state) => state.data)
 }
 
-export function useUpdateData () {
+export function useUpdateData() {
   return useStore((state) => state.updateData)
 }
 
-export function useRemoveBloc () {
+export function useRemoveBloc() {
   return useStore((state) => state.removeBloc)
 }
 
-export function useInsertData () {
+export function useInsertData() {
   return useStore((state) => state.insertData)
 }
 
-export function useFocusIndex () {
+export function useFocusIndex() {
   return useStore((state) => state.focusIndex)
 }
 
-export function useDefinitions () {
+export function useDefinitions() {
   return useStore((state) => state.definitions)
 }
 
-export function useSetFocusIndex () {
+export function useSetFocusIndex() {
   return useStore((state) => state.setFocusIndex)
 }
 
-export function useFieldFocused (id: string) {
+export function useFieldFocused(id: string) {
   return useStore((state) => state.focusIndex === id)
 }
 
-export function usePreviewMode () {
+export function usePreviewMode() {
   return useStore((state) => state.previewMode)
 }
 
-export function useTogglePreviewMode () {
+export function useTogglePreviewMode() {
   return useStore((state) => state.togglePreviewMode)
 }
 
-export function useSidebarWidth () {
+export function useSidebarWidth() {
   return useStore((state) => state.sidebarWidth)
 }
 
-export function useSetSidebarWidth () {
+export function useSetSidebarWidth() {
   return useStore((state) => state.setSidebarWidth)
 }
 
-export function useFieldDefinitions () {
+export function useFieldDefinitions() {
   return useStore((state) => state.definitions)
 }
 
-export function useHiddenCategories () {
+export function useHiddenCategories() {
   return useStore((state) => state.hiddenCategories)
 }
 
-export function useFieldDefinition (
-  name: string,
-): EditorComponentDefinition | undefined {
-  return useStore((state) => state.definitions)[name]
-}
-
-export function useBlocSelectionVisible (): boolean {
+export function useBlocSelectionVisible(): boolean {
   return useStore((state) => state.addBlockIndex) !== null
 }
 
-export function useSetBlockIndex (): Function {
+export function useSetBlockIndex(): Function {
   return useStore((state) => state.setAddBlockIndex)
 }
 
-export function useAddBlock () {
+export function useAddBlock() {
   const insertData = useInsertData()
   const blockIndex = useStore((state) => state.addBlockIndex) || 0
   const definitions = useDefinitions()
   const setBlockIndex = useSetBlockIndex()
-  return useCallback((blocName: string) => {
-    insertData(blocName, blockIndex, fillDefaults({}, definitions[blocName]!.fields))
-    setBlockIndex(null)
-  }, [insertData, blockIndex, definitions, setBlockIndex])
+  return useCallback(
+    (blocName: string) => {
+      insertData(
+        blocName,
+        blockIndex,
+        fillDefaults({}, definitions[blocName]!.fields)
+      )
+      setBlockIndex(null)
+    },
+    [insertData, blockIndex, definitions, setBlockIndex]
+  )
+}
+
+export function useRollbackMessage() {
+  const message = useStore((state) => state.rollbackMessage)
+  const rollback = useStore((state) => state.rollback)
+  return { message, rollback }
 }
 
 export const store = useStore

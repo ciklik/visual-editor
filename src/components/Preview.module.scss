@@ -10,6 +10,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  animation: PreviewIn .7s cubic-bezier(0.19, 1, 0.22, 1) both;
 }
 
 .Preview iframe {
@@ -134,4 +135,19 @@
 
 .PreviewBlockLoading::before {
   background-color:rgba(255, 255, 255, 0.6);
+}
+
+// Animation
+// =============
+[hidden="hidden"] .Preview {
+  animation: PreviewOut .7s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+@keyframes PreviewOut {
+  from {transform: translateX(0); opacity: 1; }
+  to {transform: translateX(50px); opacity: 0; }
+}
+
+@keyframes PreviewIn {
+  from {transform: translateX(50px); opacity: 0; }
+  to {transform: translateX(0); opacity: 1; }
 }

@@ -1,12 +1,5 @@
 <?php
-function renderBlock($data) {
-    if (file_exists('components/' . $data['_name'] . '.php')) {
-      include 'components/' . $data['_name'] . '.php';
-    } else {
-      echo "<div style='padding: 2rem 0;'>Bloc manquant : {$data['_name']}</div>";
-    }
-}
-
+require_once 'helpers.php';
 $body = file_get_contents('php://input');
 $data = json_decode($body, true);
 if ($data['preview'] ?? null) {
@@ -29,11 +22,7 @@ if ($data['preview'] ?? null) {
   <meta charset="UTF-8"/>
   <link rel="icon" type="image/svg+xml" href="/src/favicon.svg"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="/stylePreview.css">
-  <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        -->
-  <title>Preview</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <style>
     :root {
       --pink: #f50057;
@@ -42,6 +31,23 @@ if ($data['preview'] ?? null) {
       --green: #00e676;
       --lightblue: #00e5ff;
       --white: #FFF;
+    }
+    .text-right {
+      text-align: right;
+    }
+    .bloc {
+      background-image: var(--background);
+      background-color: var(--backgroundColor);
+      background-position:  var(--backgroundXPosition, center) var(--backgroundYPosition, center);
+      background-repeat: var(--backgroundRepeat, no-repeat);
+      background-size: var(--backgroundSize, cover);
+      color: var(--textColor, currentColor);
+    }
+
+    @media only screen and (max-width: 760) {
+      .bloc {
+        background-image: var(--backgroundMobile);
+      }
     }
   </style>
 </head>

@@ -11,9 +11,9 @@ import { Layout } from 'src/components/Layout'
 import { StoreProvider, useData, useUpdateData } from 'src/store'
 import { indexify, stringifyFields } from 'src/functions/object'
 import { useClipboardPaste } from 'src/hooks/useClipboardPaste'
-import { useHistory } from 'src/hooks/useHistory'
 import { useUpdateEffect } from './hooks/useUpdateEffect'
 import { fillDefaults } from './functions/fields'
+import { useStateDelayed } from './hooks/useStateDelayed'
 
 const components: EditorComponentDefinitions = {}
 
@@ -148,12 +148,13 @@ export function VisualEditorComponent({
   name,
   element,
   iconsUrl,
-  visible,
+  visible: visibleProps,
   onChange,
 }: VisualEditorProps) {
   const skipNextChange = useRef(true) // Skip emitting a change event on the next update (usefull for external changes)
   const updateData = useUpdateData()
   const data = useData()
+  const visible = useStateDelayed(visibleProps)
   const handleClose = () => {
     element.dispatchEvent(new Event('veClose'))
   }
@@ -167,7 +168,6 @@ export function VisualEditorComponent({
   }, [value])
 
   useClipboardPaste(visible)
-  useHistory(data, visible)
   useEffect(() => {
     if (skipNextChange.current) {
       skipNextChange.current = false

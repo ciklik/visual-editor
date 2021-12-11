@@ -1,12 +1,12 @@
-import clsx from 'clsx'
 import { Sidebar } from 'src/components/Sidebar/Sidebar'
 import { Preview } from 'src/components/Preview'
 import { EditorComponentData } from 'src/types'
 import { useSidebarWidth } from 'src/store'
 import { ResizeBar } from './ResizeBar'
 import { BlocSelector } from './Blocs/BlocSelector'
-import React, { ReactElement, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 import Styles from './Layout.module.scss'
+import { RollbackMessage } from './RollbackMessage'
 
 type LayoutProps = {
   className?: string
@@ -26,7 +26,8 @@ export function Layout({ data, previewUrl, onClose, iconsUrl }: LayoutProps) {
         )}
       </div>
       <ResizeBar />
-      <BlocSelector />
+      <BlocSelector iconsUrl={iconsUrl} />
+      <RollbackMessage />
     </Wrapper>
   )
 }

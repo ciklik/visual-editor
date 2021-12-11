@@ -42,7 +42,7 @@ export function SidebarFooter({ onClose }: SidebarFooterProps) {
         <ButtonIcon onClick={prevent(togglePreviewMode)} title="Vue responsive">
           {isPhone ? <IconDesktop size={20} /> : <IconPhone size={24} />}
         </ButtonIcon>
-        <Button icon={IconCirclePlus} onClick={() => setAddBlock(0)}>
+        <Button icon={IconCirclePlus} onClick={prevent(() => setAddBlock(0))}>
           Ajouter un bloc
         </Button>
       </Flex>
