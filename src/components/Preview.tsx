@@ -19,6 +19,7 @@ import { prevent } from 'src/functions/functions'
 import { Button } from './ui/Button'
 import { IconCirclePlus } from './ui/Icons'
 import Styles from './Preview.module.scss'
+import { Tooltip } from './ui/Tooltip'
 
 type PreviewProps = {
   data: EditorComponentData[]
@@ -29,7 +30,7 @@ type PreviewProps = {
 /**
  * Affiche un aperçu du rendu de la page dans une iframe
  */
-export function Preview ({ data, previewUrl, iconsUrl }: PreviewProps) {
+export function Preview({ data, previewUrl, iconsUrl }: PreviewProps) {
   const iframe = useRef<HTMLIFrameElement>(null)
   const [iframeRoot, setIframeRoot] = useState<HTMLElement | null>(null)
   const initialHTML = useRef<Record<string, string>>({})
@@ -57,7 +58,7 @@ export function Preview ({ data, previewUrl, iconsUrl }: PreviewProps) {
     const root = iframeDocument.querySelector('#ve-components') as HTMLElement
     initialHTML.current = Array.from(root.children).reduce(
       (acc, v, k) => ({ ...acc, [data[k]!._id]: v.outerHTML }),
-      {},
+      {}
     )
     root.innerHTML = ''
     setIframeRoot(root)
@@ -75,19 +76,19 @@ export function Preview ({ data, previewUrl, iconsUrl }: PreviewProps) {
     <div
       className={clsx(
         Styles.Preview,
-        previewMode === PreviewModes.PHONE && Styles.PreviewPhone,
+        previewMode === PreviewModes.PHONE && Styles.PreviewPhone
       )}
     >
       <iframe ref={iframe} style={transform} />
       {iframeRoot &&
-      createPortal(
-        <PreviewItems
-          data={data}
-          initialHTML={initialHTML.current}
-          previewUrl={previewUrl}
-        />,
-        iframeRoot,
-      )}
+        createPortal(
+          <PreviewItems
+            data={data}
+            initialHTML={initialHTML.current}
+            previewUrl={previewUrl}
+          />,
+          iframeRoot
+        )}
     </div>
   )
 }
@@ -95,11 +96,11 @@ export function Preview ({ data, previewUrl, iconsUrl }: PreviewProps) {
 /**
  * Gère le rendu dans l'iframe des différents composants
  */
-export function PreviewItems ({
-                                data,
-                                initialHTML = {},
-                                previewUrl,
-                              }: {
+export function PreviewItems({
+  data,
+  initialHTML = {},
+  previewUrl,
+}: {
   data: EditorComponentData[]
   initialHTML: Record<string, string>
   previewUrl: string
@@ -115,7 +116,9 @@ export function PreviewItems ({
             <button
               className={Styles.PreviewAddButton}
               onClick={prevent(() => setAddBlockIndex(k))}
-            />
+            >
+              <span>Ajouter un bloc</span>
+            </button>
             <PreviewItem
               title={definitions[v._name]?.title || ''}
               data={v}
@@ -126,7 +129,10 @@ export function PreviewItems ({
         ))}
       </Flipper>
       <div className={Styles.PreviewAddBlock}>
-        <Button icon={IconCirclePlus} onClick={prevent(() => setAddBlockIndex(data.length))}>
+        <Button
+          icon={IconCirclePlus}
+          onClick={prevent(() => setAddBlockIndex(data.length))}
+        >
           Ajouter un bloc
         </Button>
       </div>
@@ -137,12 +143,12 @@ export function PreviewItems ({
 /**
  * Gère le rendu de chaque composant
  */
-export function PreviewItem ({
-                               data,
-                               initialHTML,
-                               previewUrl,
-                               title,
-                             }: {
+export function PreviewItem({
+  data,
+  initialHTML,
+  previewUrl,
+  title,
+}: {
   data: EditorComponentData
   initialHTML: string
   previewUrl: string
@@ -169,7 +175,7 @@ export function PreviewItem ({
           className={clsx(
             Styles.PreviewBlock,
             loading && Styles.PreviewBlockLoading,
-            isFocused && Styles.PreviewBlockFocused,
+            isFocused && Styles.PreviewBlockFocused
           )}
           ref={ref}
           onClick={() => setFocusIndex(data._id)}
@@ -185,10 +191,10 @@ export function PreviewItem ({
 /**
  * Gère le rendu de chaque composant
  */
-export function PreviewItemPlaceholder () {
+export function PreviewItemPlaceholder() {
   return (
-    <div className={clsx('ve-preview-placeholder')} id='previewItemstart'>
-      <div className='ve-preview-droppable-top' />
+    <div className={clsx('ve-preview-placeholder')} id="previewItemstart">
+      <div className="ve-preview-droppable-top" />
       Déposer votre premier bloc ici
     </div>
   )
