@@ -117,9 +117,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
   }) => {
     const handleUpdate = (path: string) => (value: unknown) =>
       onUpdate(path, value)
-    const [collapsed, toggleCollapsed] = useToggle(
-      !!(this.args.collapsed && line[this.args.collapsed])
-    )
+    const [collapsed, toggleCollapsed] = useToggle(true)
 
     const title = this.args.collapsed
       ? (line[this.args.collapsed] as string)
