@@ -37,7 +37,7 @@ export function SidebarHeader({ onClose }: SidebarHeaderProps) {
           <IconCross size={12} />
         </ButtonIcon>
       </div>
-      <Flex gap={0.5}>
+      <Flex>
         <CopyAction data={data} size={20} />
         <ButtonIcon onClick={prevent(togglePreviewMode)} title="Vue responsive">
           {isPhone ? <IconDesktop size={20} /> : <IconPhone size={24} />}

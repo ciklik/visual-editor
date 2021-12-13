@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: var(--ve-gap,.5em);
+  gap: var(--ve-gap, 1em);
+  --ve-gap: 1em;
 }
 
 .FlexBetween {

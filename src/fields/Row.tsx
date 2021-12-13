@@ -1,7 +1,7 @@
 import { AbstractFieldGroup } from 'src/fields/AbstractFieldGroup'
 import { FunctionComponent } from 'react'
-import { Label } from '../components/ui/Label'
 import { Flex } from '../components/ui/Flex'
+import { Field } from '../components/ui/Field'
 
 type RowArgs = {
   label?: string
@@ -11,8 +11,7 @@ type RowArgs = {
 export class Row extends AbstractFieldGroup<RowArgs> {
   render: FunctionComponent = ({ children }) => {
     return (
-      <div>
-        <Label>{this.args.label}</Label>
+      <Field label={this.args.label}>
         <Flex
           style={
             this.args.columns
@@ -22,7 +21,7 @@ export class Row extends AbstractFieldGroup<RowArgs> {
         >
           {children}
         </Flex>
-      </div>
+      </Field>
     )
   }
 }

@@ -7,12 +7,14 @@ type ButtonProps = Omit<JSX.IntrinsicElements['button'], 'icon'> & {
   secondary?: boolean
   icon?: (...args: any) => JSX.Element
   className?: string
+  size?: 'small' | 'default'
 }
 
 export function Button({
   children,
   icon: IconElement,
-  secondary,
+  size = 'default',
+  secondary = false,
   className,
   ...props
 }: ButtonProps) {
@@ -21,6 +23,7 @@ export function Button({
       className={cx(
         Styles.Button,
         secondary && Styles.ButtonSecondary,
+        size === 'small' && Styles.ButtonSmall,
         className
       )}
       {...props}

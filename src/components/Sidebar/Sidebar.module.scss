@@ -9,7 +9,7 @@
   scrollbar-gutter: stable;
 
   * {
-    scroll-margin: 90px;
+    scroll-margin: 130px;
   }
 }
 
@@ -34,6 +34,10 @@
   border: 1px solid rgba(0,0,0,0.06);
   box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
   transition: box-shadow .3s;
+}
+
+.SidebarBlocBody {
+  margin-top: .5em;
 }
 
 .SidebarBloc[data-dragging] {
@@ -74,7 +78,7 @@ button.SidebarHeading {
   margin-top: 0;
   display: flex;
   position: sticky;
-  padding: 1em;
+  padding: 0 1em;
   top: 0;
   left: 0;
   right: 0;
@@ -82,11 +86,12 @@ button.SidebarHeading {
   z-index: 10;
   border-bottom: 1px solid var(--ve-field-border);
   box-shadow: rgba(0, 0, 0, 0.05) 0 1px 2px 0;
+  height: 64px;
 }
 
 // Champs
 // =============
-.SidebarFields {
+.SidebarBlocs {
   padding: 1em;
   display: grid;
   align-content: flex-start;

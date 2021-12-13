@@ -36,7 +36,7 @@ export function SidebarFields({ data }: { data: EditorComponentData[] }) {
   }
 
   return (
-    <div className={Styles.SidebarFields}>
+    <div className={Styles.SidebarBlocs}>
       <SortableWrapper items={data} onMove={handleMove}>
         {data.map((v, k) => (
           <SidebarItem
@@ -115,7 +115,7 @@ const SidebarItem = memo(function SidebarItem({
       </SidebarHeading>
       <div ref={ref}>
         {!isCollapsed && (
-          <Flex column gap={1}>
+          <Flex column gap={1} className={Styles.SidebarBlocBody}>
             <Fields fields={definition.fields} data={data} path={path} />
           </Flex>
         )}

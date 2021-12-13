@@ -1,6 +1,7 @@
 .Button {
   outline: none;
   display: flex;
+  align-items: center;
   gap: .5em;
   font-weight: 700;
   background-color: var(--ve-primary);
@@ -8,7 +9,8 @@
   color: #FFF;
   align-self: flex-end;
   font-size: .9rem;
-  padding: .9em 1em;
+  height: 48px;
+  padding: 0 1em;
   line-height: 1.25rem;
   cursor: pointer;
   border-radius: 4px;
@@ -28,6 +30,10 @@
   &:focus {
     background-color: var(--ve-primary-light);
   }
+}
+
+.ButtonSmall {
+  height: 40px;
 }
 
 .ButtonIcon {

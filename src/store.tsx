@@ -78,7 +78,7 @@ const createStore = (
               data: previousData,
             }))
           },
-          cancelRollback: function () {
+          voidRollback: function () {
             return set(() => ({
               rollbackMessage: null,
               previousData: [],
@@ -234,7 +234,8 @@ export function useAddBlock() {
 export function useRollbackMessage() {
   const message = useStore((state) => state.rollbackMessage)
   const rollback = useStore((state) => state.rollback)
-  return { message, rollback }
+  const voidRollback = useStore((state) => state.voidRollback)
+  return { message, rollback, voidRollback }
 }
 
 export const store = useStore
