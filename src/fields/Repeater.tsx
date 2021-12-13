@@ -128,25 +128,23 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
     return (
       <Sortable item={line} className={Style.RepeaterItem}>
         <SidebarHeading onClick={prevent(toggleCollapsed)} title={title}>
-          <Flex>
-            <SidebarHeading.Hover>
-              {onRemove && (
-                <ButtonIcon
-                  danger
-                  onClick={() => onRemove(line)}
-                  title="Supprimer l'élément"
-                >
-                  <IconTrash size={20} />
-                </ButtonIcon>
-              )}
-            </SidebarHeading.Hover>
-            <ButtonIcon
-              rotate={collapsed ? -90 : 0}
-              onClick={prevent(toggleCollapsed)}
-            >
-              <IconDown size={24} />
-            </ButtonIcon>
-          </Flex>
+          <SidebarHeading.Hover>
+            {onRemove && (
+              <ButtonIcon
+                danger
+                onClick={() => onRemove(line)}
+                title="Supprimer l'élément"
+              >
+                <IconTrash size={20} />
+              </ButtonIcon>
+            )}
+          </SidebarHeading.Hover>
+          <ButtonIcon
+            rotate={collapsed ? -90 : 0}
+            onClick={prevent(toggleCollapsed)}
+          >
+            <IconDown size={24} />
+          </ButtonIcon>
         </SidebarHeading>
         {!collapsed && (
           <div className={Style.RepeaterItemBody}>
