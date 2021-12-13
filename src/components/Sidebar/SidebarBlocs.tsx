@@ -24,11 +24,12 @@ import { SidebarHeading } from './SidebarHeading'
 import Styles from './Sidebar.module.scss'
 import { ButtonIcon } from '../ui/ButtonIcon'
 import { Flex } from '../ui/Flex'
+import { SidebarBlocMissing } from './SidebarBlocMissing'
 
 /**
  * Génère la liste des champs dans la sidebar
  */
-export function SidebarFields({ data }: { data: EditorComponentData[] }) {
+export function SidebarBlocs({ data }: { data: EditorComponentData[] }) {
   const updateData = useUpdateData()
   const definitions = useFieldDefinitions()
   const handleMove = (from: number, to: number) => {
@@ -39,7 +40,7 @@ export function SidebarFields({ data }: { data: EditorComponentData[] }) {
     <div className={Styles.SidebarBlocs}>
       <SortableWrapper items={data} onMove={handleMove}>
         {data.map((v, k) => (
-          <SidebarItem
+          <SidebarBloc
             key={v._id}
             data={v}
             definition={definitions[v._name]}
@@ -51,7 +52,7 @@ export function SidebarFields({ data }: { data: EditorComponentData[] }) {
   )
 }
 
-const SidebarItem = memo(function SidebarItem({
+const SidebarBloc = memo(function SidebarItem({
   data,
   definition,
   path,
@@ -90,7 +91,7 @@ const SidebarItem = memo(function SidebarItem({
   }
 
   if (!definition) {
-    return null
+    return <SidebarBlocMissing data={data} />
   }
 
   return (

@@ -36,6 +36,11 @@
   transition: box-shadow .3s;
 }
 
+.SidebarBlocMissing {
+  background-color: var(--ve-hover);
+  box-shadow: none;
+}
+
 .SidebarBlocBody {
   margin-top: .5em;
 }
