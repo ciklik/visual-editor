@@ -13,6 +13,7 @@ import {
   useFieldDefinitions,
   useFieldFocused,
   useRemoveBloc,
+  useSetFocusIndex,
   useUpdateData,
 } from 'src/store'
 import { strToDom } from 'src/functions/dom'
@@ -65,6 +66,7 @@ const SidebarBloc = memo(function SidebarItem({
   const isFocused = useFieldFocused(data._id)
   const [isCollapsed, toggleCollapsed, setCollapsed] = useToggle(!isFocused)
   const removeBloc = useRemoveBloc()
+  const setFocusIndex = useSetFocusIndex()
   const label =
     definition?.label && data[definition.label] ? data[definition.label] : null
 
@@ -81,6 +83,7 @@ const SidebarBloc = memo(function SidebarItem({
       setCollapsed(true)
     }
   }, [isFocused])
+
   const labelHTMLSafe = useMemo(
     () => (label?.includes('<') ? strToDom(label).innerText : label),
     [label]
@@ -88,6 +91,13 @@ const SidebarBloc = memo(function SidebarItem({
 
   const handleRemove = () => {
     removeBloc(data)
+  }
+
+  const focusBloc = () => {
+    if (isCollapsed) {
+      setFocusIndex(path)
+    }
+    toggleCollapsed()
   }
 
   if (!definition) {
@@ -100,7 +110,7 @@ const SidebarBloc = memo(function SidebarItem({
         ref={ref}
         title={definition.title}
         description={isCollapsed ? labelHTMLSafe : null}
-        onClick={prevent(toggleCollapsed)}
+        onClick={prevent(focusBloc)}
       >
         <SidebarHeading.Hover>
           <CopyAction data={data} size={20} />

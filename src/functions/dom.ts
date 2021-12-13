@@ -1,9 +1,3 @@
-export function waitEvent(target: Element, event: string): Promise<void> {
-  return new Promise((resolve) => {
-    target.addEventListener(event, () => resolve(), { once: true })
-  })
-}
-
 export function strToDom(str: string): HTMLElement {
   return document
     .createRange()
@@ -11,12 +5,12 @@ export function strToDom(str: string): HTMLElement {
     .firstChild as HTMLElement
 }
 
-export function offsetLeft(element: HTMLElement, acc: number = 0): number {
+export function offsetTop(element: HTMLElement, acc: number = 0): number {
   if (element.offsetParent) {
-    return offsetLeft(
+    return offsetTop(
       element.offsetParent as HTMLElement,
-      acc + element.offsetLeft
+      acc + element.offsetTop
     )
   }
-  return acc + element.offsetLeft
+  return acc + element.offsetTop
 }

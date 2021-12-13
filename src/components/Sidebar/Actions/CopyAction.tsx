@@ -26,6 +26,9 @@ export function CopyAction({ data, size, ...props }: CopyActionProps) {
       alert(e)
     }
   }
+  const tooltipLabel = Array.isArray(data)
+    ? 'Copier le code de la page'
+    : 'Copier le  bloc'
 
   useEffect(() => {
     clearTimeout(timer.current)
@@ -38,10 +41,10 @@ export function CopyAction({ data, size, ...props }: CopyActionProps) {
           <>
             Le code a bién été copié
             <br />
-            vous pouvez le coller sur une autre page
+            vous pouvez le coller sur une autre page (CTRL + V)
           </>
         ) : (
-          'Copier le code de la page'
+          tooltipLabel
         )
       }
       trigger="focus"

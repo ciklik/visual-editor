@@ -19,7 +19,7 @@ import { prevent } from 'src/functions/functions'
 import { Button } from './ui/Button'
 import { IconCirclePlus } from './ui/Icons'
 import Styles from './Preview.module.scss'
-import { Tooltip } from './ui/Tooltip'
+import { offsetTop } from '../functions/dom'
 
 type PreviewProps = {
   data: EditorComponentData[]
@@ -161,10 +161,9 @@ export function PreviewItem({
 
   useEffect(() => {
     if (isFocused) {
-      ref.current!.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
+      const top = offsetTop(ref.current!) - 40
+      const root = ref.current!.closest('html')!
+      root.scrollTop = top
     }
   }, [isFocused])
 
@@ -185,17 +184,5 @@ export function PreviewItem({
         </div>
       </div>
     </Flipped>
-  )
-}
-
-/**
- * Gère le rendu de chaque composant
- */
-export function PreviewItemPlaceholder() {
-  return (
-    <div className={clsx('ve-preview-placeholder')} id="previewItemstart">
-      <div className="ve-preview-droppable-top" />
-      Déposer votre premier bloc ici
-    </div>
   )
 }
