@@ -97,6 +97,7 @@ const SidebarBloc = memo(function SidebarItem({
   return (
     <Sortable item={data} className={Styles.SidebarBloc}>
       <SidebarHeading
+        ref={ref}
         title={definition.title}
         description={isCollapsed ? labelHTMLSafe : null}
         onClick={prevent(toggleCollapsed)}
@@ -114,13 +115,11 @@ const SidebarBloc = memo(function SidebarItem({
           <IconDown size={20} />
         </ButtonIcon>
       </SidebarHeading>
-      <div ref={ref}>
-        {!isCollapsed && (
-          <Flex column gap={1} className={Styles.SidebarBlocBody}>
-            <Fields fields={definition.fields} data={data} path={path} />
-          </Flex>
-        )}
-      </div>
+      {!isCollapsed && (
+        <Flex column gap={1} className={Styles.SidebarBlocBody}>
+          <Fields fields={definition.fields} data={data} path={path} />
+        </Flex>
+      )}
     </Sortable>
   )
 })

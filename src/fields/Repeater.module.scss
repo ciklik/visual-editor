@@ -7,13 +7,19 @@
 }
 
 .RepeaterItem {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .5em;
+  padding: .4rem .7rem .4rem calc(10px + .7rem);
+  border-bottom: solid 1px rgba(0,0,0,0.06);
+  background-color: #fff;
+}
+
+.RepeaterItemBody {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1em;
-  padding: .4rem .7rem .4rem calc(10px + .7rem);
-  position: relative;
-  border-bottom: solid 1px rgba(0,0,0,0.06);
-  background-color: #fff;
 }
 
 .RepeaterFooter {

@@ -145,12 +145,14 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
           </Flex>
         </SidebarHeading>
         {!collapsed && (
-          <this.fields
-            fields={this.args.fields}
-            line={line}
-            index={index}
-            onUpdate={handleUpdate}
-          />
+          <div className={Style.RepeaterItemBody}>
+            <this.fields
+              fields={this.args.fields}
+              line={line}
+              index={index}
+              onUpdate={handleUpdate}
+            />
+          </div>
         )}
       </Sortable>
     )

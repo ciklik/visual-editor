@@ -21,6 +21,7 @@
   font: inherit;
   font-weight: 500;
   cursor: pointer;
+  transition: .3s;
 }
 
 .BlocSelectorItemImage {
@@ -31,6 +32,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  transition: .3s;
 
   img {
     width: 120px;

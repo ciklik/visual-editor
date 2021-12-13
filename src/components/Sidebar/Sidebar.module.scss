@@ -1,20 +1,23 @@
 .Sidebar {
-  background-color: #FBFBFD;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #FBFBFD;
   z-index: 2;
   box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2),0 10px 10px -5px rgba(0,0,0,0.04);
   transition: transform .5s cubic-bezier(0.19, 1, 0.22, 1);
-  overflow: auto;
   animation: SidebarIn .7s cubic-bezier(0.19, 1, 0.22, 1) both;
-  scrollbar-gutter: stable;
-
-  * {
-    scroll-margin: 130px;
-  }
 }
 
 [hidden=hidden] .Sidebar  {
   animation: SidebarOut .7s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+.SidebarCollapse {
+  position: absolute;
+  top: 0;
+  right: -50px;
 }
 
 @keyframes SidebarOut {
@@ -25,6 +28,16 @@
 @keyframes SidebarIn {
   from {transform: translateX(-100%) }
   to {transform: translateX(0) }
+}
+
+.SidebarBlocs {
+  display: grid;
+  grid-template-columns: 1fr;
+  flex-direction: column;
+  grid-gap: 1em;
+  padding: 1em;
+  overflow: auto;
+  scrollbar-gutter: stable;
 }
 
 .SidebarBloc {
@@ -56,6 +69,7 @@
   color: var(--ve-color-light);
   text-align: left;
   font-size: .95em;
+  scroll-margin: 1.8em;
 
   strong {
     display: block;
@@ -82,25 +96,10 @@ button.SidebarHeading {
 .SidebarHeader {
   margin-top: 0;
   display: flex;
-  position: sticky;
   padding: 0 1em;
-  top: 0;
-  left: 0;
-  right: 0;
+  flex: none;
   background-color: #FFF;
-  z-index: 10;
   border-bottom: 1px solid var(--ve-field-border);
   box-shadow: rgba(0, 0, 0, 0.05) 0 1px 2px 0;
   height: 64px;
-}
-
-// Champs
-// =============
-.SidebarBlocs {
-  padding: 1em;
-  display: grid;
-  align-content: flex-start;
-  grid-template-columns: 1fr;
-  align-items: flex-start;
-  gap: 1em;
 }
