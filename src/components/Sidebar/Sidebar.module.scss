@@ -14,12 +14,6 @@
   animation: SidebarOut .7s cubic-bezier(0.19, 1, 0.22, 1) both;
 }
 
-.SidebarCollapse {
-  position: absolute;
-  top: 0;
-  right: -50px;
-}
-
 @keyframes SidebarOut {
   from {transform: translateX(0) }
   to {transform: translateX(-100%) }

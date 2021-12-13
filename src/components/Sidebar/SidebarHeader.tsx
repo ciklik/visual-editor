@@ -7,6 +7,7 @@ import {
   useTogglePreviewMode,
 } from 'src/store'
 import {
+  IconBack,
   IconCirclePlus,
   IconCross,
   IconDesktop,
