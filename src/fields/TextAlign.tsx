@@ -1,12 +1,12 @@
 import { AbstractField } from 'src/fields/AbstractField'
 import { EditorFieldProps } from 'src/types'
 import {
+  Field,
   IconTextCenter,
   IconTextLeft,
   IconTextRight,
-} from 'src/components/ui/Icons'
+} from 'src/components/ui'
 import React, { SyntheticEvent } from 'react'
-import { Field } from '../components/ui/Field'
 import Styles from './Alignment.module.scss'
 
 const AlignmentIcons = {

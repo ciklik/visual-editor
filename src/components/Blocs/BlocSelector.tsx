@@ -10,11 +10,9 @@ import {
 import {
   EditorComponentDefinition,
   EditorComponentDefinitions,
-} from '../../types'
+} from 'src/types'
 import { prevent } from 'src/functions/functions'
-import { Modal } from 'src/components/ui/Modal'
-import { Tabs } from 'src/components/ui/Tabs'
-import { IconSearch } from '../ui/Icons'
+import { IconSearch, Modal, Tabs } from 'src/components/ui'
 
 const ALL_TAB = 'Tous les blocs'
 

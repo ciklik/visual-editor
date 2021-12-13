@@ -1,11 +1,10 @@
 import type { EventHandler, MouseEventHandler, ReactNode } from 'react'
-import { useEffect, useState } from 'react'
 import Styles from './Flash.module.scss'
 import { Flex } from './Flex'
 import { Button } from './Button'
 import cx from 'clsx'
 import { AnimatePresence } from './Animation/AnimatedPresence'
-import { prevent, preventPropagation } from '../../functions/functions'
+import { preventPropagation } from 'src/functions/functions'
 
 type FlashProps = {
   children: ReactNode

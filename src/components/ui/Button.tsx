@@ -1,6 +1,4 @@
 import cx from 'clsx'
-import React from 'react'
-
 import Styles from './Button.module.scss'
 
 type ButtonProps = Omit<JSX.IntrinsicElements['button'], 'icon'> & {

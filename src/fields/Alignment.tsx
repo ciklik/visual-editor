@@ -5,7 +5,7 @@ import {
   IconAlignLeft,
   IconAlignRight,
   IconAlignTop,
-} from 'src/components/ui/Icons'
+} from 'src/components/ui'
 import { uniqId } from 'src/functions/string'
 import { FunctionComponent, SyntheticEvent } from 'react'
 import Styles from './Alignment.module.scss'

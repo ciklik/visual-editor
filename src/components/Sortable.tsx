@@ -1,9 +1,4 @@
-import React, {
-  ReactChildren,
-  ReactElement,
-  ReactNode,
-  SyntheticEvent,
-} from 'react'
+import React, { ReactNode, SyntheticEvent } from 'react'
 import { IndexableObject } from 'src/types'
 import {
   closestCenter,
@@ -25,18 +20,19 @@ import {
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { DragEndEvent } from '@dnd-kit/core/dist/types'
-import clsx from 'clsx'
-import { DragHandle } from './ui/DragHandle'
+import { DragHandle } from 'src/components/ui'
+
+type SortableWrapperProps = {
+  items: IndexableObject[]
+  children: ReactNode
+  onMove: (from: number, to: number) => void
+}
 
 export function SortableWrapper({
   items,
   children,
   onMove,
-}: {
-  items: IndexableObject[]
-  children: ReactNode
-  onMove: (from: number, to: number) => void
-}) {
+}: SortableWrapperProps) {
   const ids = items.map((item) => item._id)
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -67,17 +63,19 @@ export function SortableWrapper({
   )
 }
 
+type SortableProps = {
+  item: IndexableObject
+  children: ReactNode
+  className?: string
+  onClick?: (e: SyntheticEvent) => void
+}
+
 export function Sortable({
   item,
   children,
   className,
   ...props
-}: {
-  item: IndexableObject
-  children: ReactNode
-  className?: string
-  onClick?: (e: SyntheticEvent) => void
-}) {
+}: SortableProps) {
   const {
     attributes,
     listeners,

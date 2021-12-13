@@ -1,5 +1,5 @@
-import { Flash } from './ui/Flash'
-import { useRollbackMessage } from '../store'
+import { Flash } from 'src/components/ui'
+import { useRollbackMessage } from 'src/store'
 
 export function RollbackMessage() {
   const {

@@ -6,13 +6,7 @@ import React, {
   useState,
 } from 'react'
 import { EditorField } from 'src/types'
-import { Tabs as TabsComponent } from '../components/ui/Tabs'
-import { Flex } from '../components/ui/Flex'
-
-type RowArgs = {
-  label?: string
-  columns?: string
-}
+import { Flex, Tabs as TabsComponent } from 'src/components/ui'
 
 type TabDefinition = {
   label: string
@@ -34,7 +28,6 @@ export class Tabs extends AbstractFieldGroup<any> {
   }
 
   render: FunctionComponent<{ children: ReactElement }> = ({ children }) => {
-    const [currentTab, setTab] = useState<TabDefinition>(this.tabs[0]!)
     const childrenForTab = (tab: TabDefinition) => {
       return cloneElement(children, {
         fields: tab.fields,

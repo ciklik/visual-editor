@@ -1,7 +1,7 @@
 import { EditorFieldProps } from 'src/types'
 import { AbstractField } from 'src/fields/AbstractField'
 import { QuillEditor, QuillEditorMode } from 'src/fields/shared/QuillEditor'
-import { Field } from '../components/ui/Field'
+import { Field } from 'src/components/ui'
 import Styles from './HTMLText.module.scss'
 
 type FieldArgs = {

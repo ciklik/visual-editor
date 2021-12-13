@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { Content, Overlay, Root, Title } from '@radix-ui/react-dialog'
 
 import Styles from './Modal.module.scss'
-import { IconCross } from 'src/components/ui/Icons'
+import { IconCross } from 'src/components/ui'
 import { ButtonIcon } from './ButtonIcon'
 import { prevent } from 'src/functions/functions'
 

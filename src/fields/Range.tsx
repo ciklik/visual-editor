@@ -1,6 +1,6 @@
 import { EditorFieldProps } from 'src/types'
 import { AbstractField } from 'src/fields/AbstractField'
-import { Field } from '../components/ui/Field'
+import { Field } from 'src/components/ui'
 import * as Slider from '@radix-ui/react-slider'
 import Styles from './Range.module.scss'
 

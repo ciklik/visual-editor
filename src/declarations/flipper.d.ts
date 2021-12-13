@@ -6,7 +6,5 @@ declare module 'react-flip-toolkit' {
     props: FlipperProps
     state: any
     context: any
-    setState(s: any)
-    forceUpdate(callback?: () => void)
   }
 }

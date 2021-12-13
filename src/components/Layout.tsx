@@ -8,9 +8,8 @@ import React, { ReactNode, useState } from 'react'
 import Styles from './Layout.module.scss'
 import { RollbackMessage } from './RollbackMessage'
 import cx from 'clsx'
-import { ButtonIcon } from './ui/ButtonIcon'
-import { prevent } from '../functions/functions'
-import { IconBack } from './ui/Icons'
+import { ButtonIcon, IconBack } from 'src/components/ui'
+import { prevent } from 'src/functions/functions'
 
 type LayoutProps = {
   className?: string

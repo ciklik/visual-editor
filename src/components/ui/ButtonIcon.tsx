@@ -1,7 +1,6 @@
 import Styles from './Button.module.scss'
 import cx from 'clsx'
 import { ReactElement } from 'react'
-import React from 'react'
 import { Tooltip } from './Tooltip'
 
 type ButtonProps = JSX.IntrinsicElements['button'] & {

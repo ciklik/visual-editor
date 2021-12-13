@@ -7,16 +7,15 @@ import {
   useTogglePreviewMode,
 } from 'src/store'
 import {
-  IconBack,
+  Button,
+  ButtonIcon,
+  Flex,
   IconCirclePlus,
   IconCross,
   IconDesktop,
   IconPhone,
-} from 'src/components/ui/Icons'
-import { Button } from '../ui/Button'
-import { ButtonIcon } from '../ui/ButtonIcon'
+} from 'src/components/ui'
 import { CopyAction } from './Actions/CopyAction'
-import { Flex } from '../ui/Flex'
 
 import Styles from './Sidebar.module.scss'
 

@@ -8,13 +8,17 @@ import { useToggle } from 'src/hooks/useToggle'
 import { prevent } from 'src/functions/functions'
 import { fillDefaults } from 'src/functions/fields'
 import { AbstractFieldGroup } from './AbstractFieldGroup'
-import { Button } from '../components/ui/Button'
-import { IconCirclePlus, IconDown, IconTrash } from '../components/ui/Icons'
-import { Flex } from '../components/ui/Flex'
-import { ButtonIcon } from '../components/ui/ButtonIcon'
+import {
+  Button,
+  ButtonIcon,
+  Field,
+  Flex,
+  IconCirclePlus,
+  IconDown,
+  IconTrash,
+} from 'src/components/ui'
 import Style from './Repeater.module.scss'
-import { SidebarHeading } from '../components/Sidebar/SidebarHeading'
-import { Field } from '../components/ui/Field'
+import { SidebarHeading } from 'src/components/Sidebar/SidebarHeading'
 
 type FieldType = EditorField<any> | AbstractFieldGroup<any>
 

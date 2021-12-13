@@ -1,7 +1,7 @@
 import { EditorFieldProps } from 'src/types'
 import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from 'src/fields/AbstractField'
-import { Field } from '../components/ui/Field'
+import { Field } from 'src/components/ui'
 
 type FieldArgs = {
   label?: string

@@ -1,13 +1,11 @@
 import { EditorFieldProps } from 'src/types'
-import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from 'src/fields/AbstractField'
 import clsx from 'clsx'
 import { prevent } from 'src/functions/functions'
 import React, { CSSProperties, useState } from 'react'
 import Styles from './Color.module.scss'
 import * as Popover from '@radix-ui/react-popover'
-import { Field } from '../components/ui/Field'
-import { Tooltip } from '../components/ui/Tooltip'
+import { Field } from 'src/components/ui'
 
 type FieldArgs = {
   label?: string

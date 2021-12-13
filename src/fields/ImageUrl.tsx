@@ -2,11 +2,8 @@ import { EditorFieldProps } from 'src/types'
 import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from 'src/fields/AbstractField'
 import { prevent } from 'src/functions/functions'
-import React from 'react'
 import Styles from './ImageUrl.module.scss'
-import { Field } from '../components/ui/Field'
-import { ButtonIcon } from '../components/ui/ButtonIcon'
-import { IconFolder } from '../components/ui/Icons'
+import { ButtonIcon, Field, IconFolder } from 'src/components/ui'
 
 type FieldArgs = {
   label?: string

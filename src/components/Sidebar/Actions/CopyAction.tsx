@@ -1,11 +1,9 @@
 import { EditorComponentData } from 'src/types'
 import { prevent } from 'src/functions/functions'
-import { IconCheck, IconCode, IconCopy } from 'src/components/ui/Icons'
 import { copyToClipboard } from 'src/functions/browser'
 import { stringifyFields } from 'src/functions/object'
-import { Tooltip } from 'src/components/ui/Tooltip'
+import { ButtonIcon, IconCheck, IconCode, Tooltip } from 'src/components/ui'
 import React, { useEffect, useRef, useState } from 'react'
-import { ButtonIcon } from '../../ui/ButtonIcon'
 
 type CopyActionProps = {
   data: EditorComponentData | EditorComponentData[]

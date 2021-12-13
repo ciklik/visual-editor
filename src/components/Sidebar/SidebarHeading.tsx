@@ -5,7 +5,7 @@ import type {
   ReactNode,
   RefAttributes,
 } from 'react'
-import { Flex } from 'src/components/ui/Flex'
+import { Flex } from 'src/components/ui'
 
 import Styles from './Sidebar.module.scss'
 import { forwardRef } from 'react'
