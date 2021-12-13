@@ -52,10 +52,9 @@
 }
 
 .ColorPickerPalette {
-  max-width: 212px;
   flex-wrap: wrap;
   display: flex;
-  gap: 2px;
+  width: calc(25px * var(--children) * 0.5);
 }
 
 .ColorPickerPalette button {

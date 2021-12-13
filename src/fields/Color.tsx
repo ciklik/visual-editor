@@ -52,7 +52,10 @@ export class Color extends AbstractField<FieldArgs, string | null> {
 
   palette = ({ onChange }: EditorFieldProps<string | null>) => {
     return (
-      <div className={Styles.ColorPickerPalette}>
+      <div
+        className={Styles.ColorPickerPalette}
+        style={{ '--children': this.args.colors.length + 1 } as CSSProperties}
+      >
         <button
           className={Styles.ColorTransparent}
           onClick={prevent(() => onChange(null))}
