@@ -4,7 +4,7 @@ import { Flex } from './Flex'
 import { Button } from './Button'
 import cx from 'clsx'
 import { AnimatePresence } from './Animation/AnimatedPresence'
-import { preventPropagation } from 'src/functions/functions'
+import { prevent, preventPropagation } from 'src/functions/functions'
 
 type FlashProps = {
   children: ReactNode
@@ -33,7 +33,7 @@ export function Flash({
             <Button
               size="small"
               className={Styles.FlashButton}
-              onClick={onClick}
+              onClick={prevent(onClick)}
             >
               {action}
             </Button>
