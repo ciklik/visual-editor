@@ -1,7 +1,7 @@
 import { EditorField, EditorFieldProps } from 'src/types'
 import { deepSet, indexify } from 'src/functions/object'
 import { moveItem } from 'src/functions/array'
-import { uniqId } from 'src/functions/string'
+import { textContent, uniqId } from 'src/functions/string'
 import { AbstractField } from 'src/fields/AbstractField'
 import { Sortable, SortableWrapper } from 'src/components/Sortable'
 import { useToggle } from 'src/hooks/useToggle'
@@ -19,6 +19,7 @@ import {
 } from 'src/components/ui'
 import Style from './Repeater.module.scss'
 import { SidebarHeading } from 'src/components/Sidebar/SidebarHeading'
+import { useMemo } from 'react'
 
 type FieldType = EditorField<any> | AbstractFieldGroup<any>
 
@@ -122,10 +123,11 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
     const title = this.args.collapsed
       ? (line[this.args.collapsed] as string)
       : `Element #${index + 1}`
+    const escapedTitle = useMemo(() => textContent(title), [title])
 
     return (
       <Sortable item={line} className={Style.RepeaterItem}>
-        <SidebarHeading onClick={prevent(toggleCollapsed)} title={title}>
+        <SidebarHeading onClick={prevent(toggleCollapsed)} title={escapedTitle}>
           <SidebarHeading.Hover>
             {onRemove && (
               <ButtonIcon

@@ -1,4 +1,4 @@
-import { Repeater, Text, VisualEditor } from 'src/VisualEditor'
+import { HTMLText, Repeater, Text, VisualEditor } from 'src/VisualEditor'
 import {
   ButtonField,
   ButtonsField,
@@ -23,8 +23,13 @@ editor.registerComponent('pricing', {
     new Repeater('prices', {
       min: 1,
       max: 5,
+      collapsed: 'title',
       fields: [
-        new Text('title', { label: 'Title', default: 'Pro' }),
+        new HTMLText('title', {
+          label: 'Title',
+          default: 'Pro',
+          multiline: false,
+        }),
         new Text('price', { label: 'Price', default: '15€' }),
         new Text('features', { label: 'Features', multiline: true }),
         ButtonField(),
