@@ -22,8 +22,10 @@ jobs:
         working-directory: ./
         run: |
           pnpm install
-          cd visual-editor && pnpm run build
-          cd ../docs && pnpm run build; echo 1;
+          cd visual-editor
+          pnpm run build
+          cd ../docs 
+          pnpm run build || true;
 
       # Popular action to deploy to GitHub Pages:
       # Docs: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-docusaurus
