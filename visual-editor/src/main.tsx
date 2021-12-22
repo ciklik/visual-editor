@@ -44,6 +44,7 @@ editor.registerComponent('icons-columns', {
     new Repeater('icons', {
       min: 1,
       max: 5,
+      collapsed: 'title',
       fields: [
         new Text('title', { label: 'Title', default: 'Featured title' }),
         ContentField(),

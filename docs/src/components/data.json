@@ -1,0 +1,112 @@
+[
+  {
+    "title": "Album example",
+    "titleAlign": "center",
+    "content": "<p>Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>",
+    "buttons": [
+      {
+        "label": "Main call to action",
+        "url": "#",
+        "type": "primary"
+      },
+      {
+        "label": "Secondary action",
+        "url": "#",
+        "type": "secondary"
+      }
+    ],
+    "backgroundSize": "cover",
+    "backgroundRepeat": "no-repeat",
+    "backgroundXPosition": "center",
+    "backgroundYPosition": "center",
+    "padding": 5,
+    "_name": "hero",
+    "backgroundColor": null,
+    "textColor": "--bs-primary",
+    "background": "",
+    "backgroundMobile": ""
+  },
+  {
+    "icons": [
+      {
+        "title": "First title",
+        "content": "<p>Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.</p><p><br></p>"
+      },
+      {
+        "title": "Second title",
+        "content": "<p>Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.</p>"
+      },
+      {
+        "title": "Third title",
+        "content": "<p>Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.</p>"
+      }
+    ],
+    "backgroundSize": "cover",
+    "backgroundRepeat": "no-repeat",
+    "backgroundXPosition": "center",
+    "backgroundYPosition": "center",
+    "padding": 5,
+    "_name": "icons-columns"
+  },
+  {
+    "title": "Pricing",
+    "titleAlign": "center",
+    "content": "<p>Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>",
+    "prices": [
+      {
+        "title": "Free",
+        "price": "0€",
+        "features": "10 users included\n2 GB of storage\nEmail support\nHelp center access",
+        "label": "Sign up for free",
+        "url": "#",
+        "type": "secondary"
+      },
+      {
+        "title": "Pro",
+        "price": "15€",
+        "features": "20 users included\n10 GB of storage\nPriority email support\nHelp center access",
+        "label": "Get started",
+        "url": "#",
+        "type": "primary"
+      },
+      {
+        "title": "Enterprise",
+        "price": "29€",
+        "features": "30 users included\n15 GB of storage\nPhone and email support\nHelp center access",
+        "label": "Contact us",
+        "url": "#",
+        "type": "primary"
+      }
+    ],
+    "backgroundSize": "cover",
+    "backgroundRepeat": "no-repeat",
+    "backgroundXPosition": "center",
+    "backgroundYPosition": "center",
+    "padding": 5,
+    "_name": "pricing"
+  },
+  {
+    "title": "Lorem ipsum dolor sit amet",
+    "titleAlign": "right",
+    "content": "<p>Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.</p>",
+    "buttons": [
+      {
+        "label": "Call to action",
+        "url": "",
+        "type": "primary"
+      },
+      {
+        "label": "Call to action",
+        "url": "",
+        "type": "secondary"
+      }
+    ],
+    "backgroundSize": "cover",
+    "backgroundRepeat": "no-repeat",
+    "backgroundXPosition": "center",
+    "backgroundYPosition": "center",
+    "padding": 3,
+    "_name": "hero",
+    "backgroundColor": null
+  }
+]

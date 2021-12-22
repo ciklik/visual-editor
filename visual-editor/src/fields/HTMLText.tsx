@@ -9,7 +9,9 @@ type FieldArgs = {
   required?: boolean
   multiline?: boolean
   help?: string
+  // Allow headings (h1, h2...)
   allowHeadings?: boolean
+  // A set of color for text (ex: ["--primary", "--secondary"]
   colors?: string[]
   default?: string
 }

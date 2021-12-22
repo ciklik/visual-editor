@@ -1,0 +1,24 @@
+---
+sidebar_position: 2
+---
+
+# HTMLText
+
+Generate a text field with a WYSIWYG editor (uses [quilljs](https://quilljs.com/))
+
+## Options
+
+```ts
+type FieldArgs = {
+  label?: string
+  required?: boolean
+  multiline?: boolean
+  help?: string
+  // Allow headings (h1, h2...)
+  allowHeadings?: boolean
+  // A set of color for text (ex: ["--primary", "--secondary"])
+  colors?: string[]
+  default?: string
+}
+```
+

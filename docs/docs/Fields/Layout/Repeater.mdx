@@ -1,0 +1,30 @@
+---
+sidebar_position: 2
+---
+
+# Repeater
+
+Create a repeatable field
+
+## Usage
+
+If you want to create equal columns you can simply use an array of fields
+
+```ts
+  new Repeater('buttons', {
+    title: 'Boutons',
+    addLabel: 'Ajouter un bouton',
+    fields: [
+      new Text('label', { label: 'Button Label', default: 'Call to action' }),
+      new Text('url', { label: 'Link' }),
+      new Select('type', {
+        default: 'primary',
+        label: 'type',
+        options: [
+          { label: 'Primary', value: 'primary' },
+          { label: 'Secondary', value: 'secondary' },
+        ],
+      })
+    ],
+  })
+```

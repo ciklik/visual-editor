@@ -1,5 +1,6 @@
 import './css/style.scss'
 
+import React from 'react'
 import ReactDOM from 'react-dom'
 import {
   EditorComponentData,
@@ -210,3 +211,4 @@ export { Number } from 'src/fields/Number'
 export { Range } from 'src/fields/Range'
 export { Tabs } from 'src/fields/Tabs'
 export { TextAlign } from 'src/fields/TextAlign'
+export { React }

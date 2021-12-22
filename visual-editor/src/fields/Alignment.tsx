@@ -1,6 +1,7 @@
 import { AbstractField } from 'src/fields/AbstractField'
 import { EditorFieldProps } from 'src/types'
 import {
+  Field,
   IconAlignBottom,
   IconAlignLeft,
   IconAlignRight,
@@ -43,8 +44,7 @@ export class Alignment extends AbstractField<FieldArgs, FieldValue> {
       ...(this.args.vertical ? ['top', 'bottom'] : []),
     ] as FieldValue[]
     return (
-      <div>
-        {this.args.label && <label>{this.args.label}</label>}
+      <Field label={this.args.label}>
         <div className={Styles.Alignments}>
           {alignements.map((alignment) => (
             <AlignmentButton
@@ -56,7 +56,7 @@ export class Alignment extends AbstractField<FieldArgs, FieldValue> {
             />
           ))}
         </div>
-      </div>
+      </Field>
     )
   }
 }

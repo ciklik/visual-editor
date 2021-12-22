@@ -1,0 +1,18 @@
+---
+sidebar_position: 7
+---
+
+# ImageURL
+
+Generate a text field with a button to select image. This field does not implement an image selector and it's up to you so plug it.
+
+## Options
+
+```ts
+type FieldArgs = {
+  label?: string
+  required?: boolean
+  help?: string
+  onBrowse?: (url?: string) => Promise<string>
+}
+```

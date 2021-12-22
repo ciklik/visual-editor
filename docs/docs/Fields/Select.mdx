@@ -1,0 +1,24 @@
+---
+sidebar_position: 90
+---
+
+# Select
+
+Generate a select field
+
+## Options
+
+```ts
+type Option = {
+  value: string
+  label: string
+}
+
+type FieldArgs = {
+  label?: string
+  required?: boolean
+  options: Option[]
+  help?: string
+  default?: string
+}
+```

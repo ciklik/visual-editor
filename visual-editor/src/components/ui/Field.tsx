@@ -29,6 +29,7 @@ export function Field({
   icon,
   ...props
 }: FieldProps) {
+  console.log({props, type})
   if (!children) {
     if (options) {
       children = (
@@ -42,7 +43,7 @@ export function Field({
           })}
         </select>
       )
-    } else if (['text'].includes(type)) {
+    } else if (['text', 'number'].includes(type)) {
       children = (
         <input {...props} className={cx(props.className, Styles.FieldInput)} />
       )

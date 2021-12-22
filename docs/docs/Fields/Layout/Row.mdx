@@ -1,0 +1,38 @@
+---
+sidebar_position: 1
+---
+
+# Row
+
+Group field on a single row
+
+## Usage
+
+If you want to create equal columns you can simply use an array of fields
+
+```ts
+new Row([
+  new Text('label', { label: 'Label', default: 'Call to action' }),
+  new Text('url', { label: 'Link' }),
+  new Select('type', {
+    default: 'primary',
+    label: 'type',
+    options: [
+      { label: 'Primary', value: 'primary' },
+      { label: 'Secondary', value: 'secondary' },
+    ],
+  }),
+])
+```
+
+You can also use a
+
+```ts
+new Row([
+  new Text('label', { label: 'Label', default: 'Call to action' }),
+  new Text('url', { label: 'Link' }),
+], {
+  labe: 'Button',
+  columns: '30% 70%' // uses https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns
+})
+```
