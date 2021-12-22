@@ -23,7 +23,7 @@ jobs:
         run: |
           pnpm install
           cd visual-editor && pnpm run build
-          cd docs && pnpm run build || true
+          cd docs && pnpm run build
 
       # Popular action to deploy to GitHub Pages:
       # Docs: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-docusaurus
