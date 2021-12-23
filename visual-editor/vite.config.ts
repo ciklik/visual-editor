@@ -18,7 +18,9 @@ export default defineConfig({
   },
   build: {
     minify: false,
+    sourcemap: true,
     rollupOptions: {
+      external: ['react', 'react-dom'],
       plugins: [analyze({
         summaryOnly: true,
         filter: ({ size }) => size > 5000,
@@ -26,6 +28,7 @@ export default defineConfig({
       })],
     },
     lib: {
+      formats:['es'],
       entry: path.resolve('src/VisualEditor.tsx'),
       name: 'VisualEditor'
     }

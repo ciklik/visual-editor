@@ -10,7 +10,7 @@ const config = {
   tagline: 'Edit your page block by block',
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'BoxRaiser', // Usually your GitHub org/user name.
