@@ -27,7 +27,7 @@ type State = {
   addBlockIndex: number | null
 }
 
-const sidebarWidth = localStorage.getItem('veSidebarWidth')
+const sidebarWidth = (typeof localStorage !== 'undefined') ? localStorage.getItem('veSidebarWidth') : 0
 
 const createStore = (
   data: EditorComponentData[] = [],
