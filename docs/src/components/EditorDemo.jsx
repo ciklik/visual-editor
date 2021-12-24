@@ -36,7 +36,7 @@ export function EditorDemo() {
             <visual-editor
               hidden={editorVisibility}
               name="content"
-              preview="/visual-editor/preview.html"
+              preview="https://visual-editor.droapp.com"
               iconsUrl="/[name].svg"
               value={JSON.stringify(data)}
               ref={ref}
