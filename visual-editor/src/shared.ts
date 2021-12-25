@@ -95,7 +95,7 @@ export const ContentField = (name = 'content', label = 'Description') =>
 
 export const ButtonsField = () =>
   new Repeater('buttons', {
-    title: 'Boutons',
+    label: 'Boutons',
     addLabel: 'Ajouter un bouton',
     fields: [ButtonField()],
   })
