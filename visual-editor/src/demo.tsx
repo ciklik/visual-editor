@@ -1,8 +1,21 @@
-import { HTMLText, Repeater, Text, VisualEditor } from 'src/VisualEditor'
+import {
+  HTMLText,
+  Repeater,
+  Text,
+  VisualEditor,
+  Number as NumberField,
+  Checkbox,
+  Range,
+  Select,
+  Alignment,
+  TextAlign,
+  Row,
+} from 'src/VisualEditor'
 import {
   ButtonField,
   ButtonsField,
   ContentField,
+  ImageField,
   TitleField,
   WithStyles,
 } from './shared'
@@ -51,6 +64,26 @@ editor.registerComponent('icons-columns', {
       ],
     }),
   ]),
+})
+
+editor.registerComponent('demo', {
+  title: 'All field',
+  fields: [
+    new Text('text', { label: 'Text' }),
+    new HTMLText('htmltext', { label: 'HTMLText' }),
+    new NumberField('number', { label: 'Number' }),
+    new Checkbox('checkbox', { label: 'Checkbox' }),
+    ImageField(),
+    new Range('range', { min: 0, max: 100, label: 'Range' }),
+    new Select('select', { options: [], label: 'Select' }),
+    new Alignment('alignment', { vertical: true, label: 'Alignment' }),
+    new TextAlign('text', { vertical: true, label: 'TextAlign' }),
+    new Row([new Text('text1'), new Text('text2'), new Text('text3')]),
+    new Repeater('repeater', {
+      label: 'Repeater',
+      fields: [new Text('text1'), new Text('text2'), new Text('text3')],
+    }),
+  ],
 })
 
 editor.registerComponent('text', {

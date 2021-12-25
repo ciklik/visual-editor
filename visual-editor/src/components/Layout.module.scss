@@ -31,7 +31,6 @@
   width: 100%;
   height: 100%;
   display: grid;
-  z-index: 1000;
   grid-template-columns: var(--ve-clampedSidebar) 1fr;
   background-color: var(--ve-field-border);
   animation: LayoutIn .7s cubic-bezier(0.19, 1, 0.22, 1) both;

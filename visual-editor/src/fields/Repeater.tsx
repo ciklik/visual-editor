@@ -29,7 +29,6 @@ type FieldArgs = {
   max?: number
   addLabel?: string
   fields: FieldType[]
-  title?: string
   collapsed?: string
 }
 
@@ -80,7 +79,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
     }
 
     return (
-      <Field label={this.args.title}>
+      <Field label={this.args.label}>
         <SortableWrapper items={value} onMove={handleMove}>
           <div className={Style.Repeater}>
             {value.map((line, k) => (

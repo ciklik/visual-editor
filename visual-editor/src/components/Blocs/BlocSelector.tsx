@@ -106,7 +106,6 @@ function BlocSelectorItem({
   iconsUrl: string
   onClick: () => void
 }) {
-  console.log({ iconsUrl })
   const icon = iconsUrl.replace('[name]', name)
   const title = definition.title
 

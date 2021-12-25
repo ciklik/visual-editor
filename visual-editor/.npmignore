@@ -1,0 +1,15 @@
+__mocks__
+src
+public
+server
+test
+.prettierrc
+cssstub.js
+index.html
+jest.config.js
+jsconfig.json
+README.md
+retype.yml
+tsconfig.json
+vite.config.ts
+dist/*.svg

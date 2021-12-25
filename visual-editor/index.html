@@ -18,44 +18,33 @@
     *, *::before, *::after {
       box-sizing: border-box;
     }
-    :root {
-      --bs-blue: #0d6efd;
-      --bs-indigo: #6610f2;
-      --bs-purple: #6f42c1;
-      --bs-pink: #d63384;
-      --bs-red: #dc3545;
-      --bs-orange: #fd7e14;
-      --bs-yellow: #ffc107;
-      --bs-green: #198754;
-      --bs-teal: #20c997;
-      --bs-cyan: #0dcaf0;
-      --bs-white: #fff;
-      --bs-gray: #6c757d;
-      --bs-gray-dark: #343a40;
-      --bs-primary: #0d6efd;
-      --bs-secondary: #6c757d;
-      --bs-success: #198754;
-      --bs-info: #0dcaf0;
-      --bs-warning: #ffc107;
-      --bs-danger: #dc3545;
-      --bs-light: #f8f9fa;
-      --bs-dark: #212529;
+    .button {
+      font: inherit;
+      padding: .5em 1em;
+      border-radius: 3px;
+      border: none;
+      background-color: rgb(99, 102, 241);
+      color: #FFF;
+    }
+    .hero {
+      max-width: 800px;
+      margin: 40px auto;
+      text-align: center;
     }
   </style>
 </head>
 <body>
 <div id="app"></div>
-<div style='max-width: 800px; margin: 40px auto;'>
+<div class='hero'>
   <h1>
-    This is a demonstration of the editor
+    This is a sample page to test the editor
   </h1>
-  <button class="ve-button" data-target="editor1">
-    Afficher l'éditeur 1
+  <button class="button" data-target="editor1">
+    Instance #1
   </button>
-  <button class="ve-button" data-target="editor2">
-    Afficher l'éditeur 2
+  <button class="button" data-target="editor2">
+    Instance #2
   </button>
-  <button class="ve-clone">Clone editeur 2 vers éditeur 1</button>
 </div>
 <form action="" method="get">
 <visual-editor
@@ -68,14 +57,14 @@
 
 <visual-editor
   hidden
-  name="content"
+  name="content2"
   preview="http://localhost:3000/preview"
   iconsUrl="/html.svg"
   id="editor2"
   value="[]"
 ></visual-editor>
 </form>
-<script type="module" src="/src/main.tsx"></script>
+<script type="module" src="/src/demo.tsx"></script>
 <script>
   const toggleEditor = (event) => {
     const editor = document.getElementById(event.target.dataset.target)
@@ -111,7 +100,7 @@
 
 
   // Toggle the editor
-  document.querySelectorAll('.ve-button').forEach((button) => {
+  document.querySelectorAll('.button').forEach((button) => {
     button.addEventListener('click', toggleEditor)
     const editor = document.getElementById(button.dataset.target)
     editor.addEventListener('veChange', (e) =>
@@ -120,13 +109,6 @@
     editor.addEventListener('veClose', (e) => {
       editor.setAttribute('hidden', 'hidden')
     })
-  })
-
-  // Show how the editor handle moving values around
-  document.querySelector('.ve-clone').addEventListener('click', (e) => {
-    const editor1 = document.getElementById('editor1')
-    const editor2 = document.getElementById('editor2')
-    editor2.value = editor1.value
   })
 
   // Test how the field handle being updated

@@ -50,14 +50,16 @@
     right: 0;
     bottom: 0;
     opacity: 0;
-    background: #1771E6;
+    background: var(--ve-primary);
     mix-blend-mode: saturation;
     border-radius: 4px;
     transition: opacity .3s;
   }
 }
 
-.BlocSelectorItem:hover {
+.BlocSelectorItem:hover,
+.BlocSelectorItem:focus{
+  outline: none;
   color: var(--ve-primary);
   .BlocSelectorItemImage img {
     transform: translateY(-5px);
@@ -65,6 +67,11 @@
   .BlocSelectorItemImage::after {
     opacity: 1;
   }
+}
+
+.BlocSelectorItem:focus .BlocSelectorItemImage {
+  transition: none;
+  border: 2px solid var(--ve-primary);
 }
 
 .BlocSelectorGrid {

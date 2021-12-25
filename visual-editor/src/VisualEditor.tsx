@@ -12,9 +12,9 @@ import { Layout } from 'src/components/Layout'
 import { StoreProvider, useData, useUpdateData } from 'src/store'
 import { indexify, stringifyFields } from 'src/functions/object'
 import { useClipboardPaste } from 'src/hooks/useClipboardPaste'
-import { useUpdateEffect } from './hooks/useUpdateEffect'
-import { fillDefaults } from './functions/fields'
-import { useStateDelayed } from './hooks/useStateDelayed'
+import { useUpdateEffect } from 'src/hooks/useUpdateEffect'
+import { fillDefaults } from 'src/functions/fields'
+import { useStateDelayed } from 'src/hooks/useStateDelayed'
 
 const components: EditorComponentDefinitions = {}
 

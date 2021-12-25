@@ -87,6 +87,6 @@ if ($data['preview'] ?? null) {
 array_map('renderBlock', $data)
 ?>
 </main>
-<script type="module" src="http://localhost:3000/src/main.tsx"></script>
+<script type="module" src="http://localhost:3000/src/demo.tsx"></script>
 </body>
 </html>

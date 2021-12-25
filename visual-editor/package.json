@@ -4,7 +4,7 @@
   "type": "module",
   "main": "dist/visual-editor.es.js",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"vite\" \"php -S 0.0.0.0:8000 -ddisplay_errors=1 -t server/\"",
     "build": "tsc && vite build",
     "serve": "vite preview",
     "format": "prettier --config .prettierrc 'src/**/*.{ts,tsx}' --write",
@@ -37,6 +37,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@vitejs/plugin-react": "^1.1.0",
+    "concurrently": "^6.5.1",
     "jest": "^27.0.6",
     "prettier": "^2.3.2",
     "react": "^17.0.2",

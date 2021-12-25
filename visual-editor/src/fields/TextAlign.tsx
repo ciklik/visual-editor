@@ -41,7 +41,7 @@ export class TextAlign extends AbstractField<FieldArgs, FieldValue> {
           {alignements.map((alignment) => (
             <AlignmentButton
               key={alignment}
-              alignment={alignment}
+              value={alignment}
               checked={value === alignment}
               onChange={handleChange}
             />
@@ -53,23 +53,18 @@ export class TextAlign extends AbstractField<FieldArgs, FieldValue> {
 }
 
 function AlignmentButton({
-  alignment,
+  value,
   onChange,
   checked,
 }: {
-  alignment: FieldValue
+  value: FieldValue
   onChange: (e: SyntheticEvent) => void
   checked: boolean
 }) {
-  const IconComponent = AlignmentIcons[alignment]
+  const IconComponent = AlignmentIcons[value]
   return (
     <div className={Styles.AlignmentsButton}>
-      <input
-        type="radio"
-        onChange={onChange}
-        value={alignment}
-        checked={checked}
-      />
+      <input type="radio" onChange={onChange} value={value} checked={checked} />
       <div>
         <IconComponent />
       </div>
