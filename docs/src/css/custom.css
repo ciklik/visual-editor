@@ -16,6 +16,10 @@
   --ifm-code-font-size: 95%;
 }
 
+button {
+  font: inherit;
+}
+
 .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.1);
   display: block;

@@ -4,7 +4,7 @@ import "../../../visual-editor/dist/style.css";
 import data from "./data.json";
 import BrowserOnly from "@docusaurus/core/lib/client/exports/BrowserOnly";
 
-export function EditorDemo() {
+export function EditorDemo({ className }) {
   const [editorVisibility, setEditorVisibility] = useState("hidden");
   const ref = useRef();
 
@@ -17,7 +17,7 @@ export function EditorDemo() {
   return (
     <>
       <button
-        className="button button--secondary"
+        className={`button button--secondary ${className}`}
         onClick={() =>
           setEditorVisibility((v) => (v === undefined ? "hidden" : undefined))
         }

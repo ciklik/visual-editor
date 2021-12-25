@@ -5,7 +5,7 @@ id: intro
 
 # Getting started
 
-The editor uses custom element
+The editor uses custom element, you first have to register your page before registering the element. Then you can use it anywhere you want in your HTML document.
 
 import {EditorDemo} from '../src/components/EditorDemo'
 
@@ -16,18 +16,18 @@ import {EditorDemo} from '../src/components/EditorDemo'
 Start by instantiating the editor.
 
 ```js
-import { VisualEditor } from 'vvvvvvvv'
+import { VisualEditor } from 'visual-editor'
 
 let editor = new VisualEditor()
 ```
 
-Then register a new page component using the `registerComponent` method that expect 2 parameters
+Then register your page components using the `registerComponent` method that expect 2 parameters
 
 - A unique identifier for the block (string)
 - An option object object (see [EditorComponentDefinition](https://github.com/Grafikart/VisualEditor/blob/master/src/types.ts#L24) for more information)
 
 ```js
-import { HTMLText, Repeater, Text, Row, Select } from 'src/VisualEditor'
+import { HTMLText, Repeater, Text, Row, Select } from 'visual-editor'
 
 // Register a component / block
 editor.registerComponent('hero', {

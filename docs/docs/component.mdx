@@ -1,0 +1,24 @@
+---
+sidebar_position: 2
+---
+
+# Defining your components
+
+For the editor to work you have to define the components you want to use on your page. Each component can be registered using the `registerComponent()` method
+
+```js
+// Register a component / block
+editor.registerComponent('<COMPONENT_IDENTIFIER>', {
+  category: '<CATEGORY_LABEL>',
+  title: '<COMPONENT_TITLE>',
+  fields: [/* An array of fields */]
+})
+```
+
+The fields property is an array of fields that inherits the [AbstractField](https://github.com/boxraiser/visual-editor/blob/main/visual-editor/src/fields/AbstractField.ts) or [AbstractFieldGroup](https://github.com/boxraiser/visual-editor/blob/main/visual-editor/src/fields/AbstractFieldGroup.ts). All the **AbstractField** have the same signature
+
+```js
+new AbstractFieldImplementation('identifier' /* string */, {option: 'value'} /* object */)
+```
+
+You can use the built in fields (explained in the next chapter of this documentation) or [create your own](./Fields/CustomField.md).

@@ -88,17 +88,17 @@ const ContentField = (name = "content", label = "Description") =>
 const ButtonsField = () =>
   new Repeater("buttons", {
     title: "Boutons",
-    addLabel: "Ajouter un bouton",
+    addLabel: "Add a new button",
     fields: [ButtonField()],
   });
 
 const Style = () => [
   new Row(
     [
-      ColorField("backgroundColor", "Fond"),
-      ColorField("textColor", "Texte"),
-      ImageField("background", "Fond"),
-      ImageField("backgroundMobile", "Fond (mobile)"),
+      ColorField("backgroundColor", "Background color"),
+      ColorField("textColor", "Text color"),
+      ImageField("background", "Background"),
+      ImageField("backgroundMobile", "Background (mobile)"),
     ],
     { columns: "50px 50px 1fr 1fr" }
   ),
@@ -106,7 +106,7 @@ const Style = () => [
   new Row([
     new Select("backgroundSize", {
       default: "cover",
-      label: "Taille",
+      label: "Size",
       options: [
         { label: "Remplir", value: "cover" },
         { label: "Contenir", value: "contain" },
@@ -115,7 +115,7 @@ const Style = () => [
     }),
     new Select("backgroundRepeat", {
       default: "no-repeat",
-      label: "Répétition",
+      label: "Repeat",
       options: [
         { label: "Aucune", value: "no-repeat" },
         { label: "x", value: "repeat-x" },
@@ -142,7 +142,7 @@ const Style = () => [
       ],
     }),
   ]).when("background", (b) => b),
-  new Range("padding", { label: "Padding vertical", default: 3 }),
+  new Range("padding", { label: "Vertical Padding", default: 3 }),
 ];
 
 const WithStyles = (contentFields, styleFields = []) => {
