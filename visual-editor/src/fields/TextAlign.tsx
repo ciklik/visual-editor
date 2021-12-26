@@ -34,7 +34,7 @@ export class TextAlign extends AbstractField<FieldArgs, FieldValue> {
     const handleChange = (e: SyntheticEvent) => {
       onChange((e.target as HTMLInputElement).value as FieldValue)
     }
-    const alignements = Object.keys(AlignmentIcons)
+    const alignements = Object.keys(AlignmentIcons) as FieldValue[]
     return (
       <Field label={this.args.label}>
         <div className={Styles.Alignments}>

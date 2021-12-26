@@ -13,7 +13,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      'src': path.resolve(__dirname, './src'),
+      src: path.resolve(__dirname, './src'),
     },
   },
   build: {
@@ -21,16 +21,18 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       external: ['react', 'react-dom'],
-      plugins: [analyze({
-        summaryOnly: true,
-        filter: ({ size }) => size > 5000,
-        filterSummary: true,
-      })],
+      plugins: [
+        analyze({
+          summaryOnly: true,
+          filter: ({ size }) => size > 5000,
+          filterSummary: true,
+        }),
+      ],
     },
     lib: {
-      formats:['es'],
+      formats: ['es'],
       entry: path.resolve('src/VisualEditor.tsx'),
-      name: 'VisualEditor'
-    }
-  }
+      name: 'VisualEditor',
+    },
+  },
 })

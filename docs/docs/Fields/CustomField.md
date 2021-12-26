@@ -7,7 +7,7 @@ sidebar_position: 1000
 You can create custom field 
 
 ```jsx
-import { AbstractField } from 'visual-editor'
+import { AbstractField } from '@boxraiser/visual-editor'
 
 /**
  * @property args Field arguments merged with default 

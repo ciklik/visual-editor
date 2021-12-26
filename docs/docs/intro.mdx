@@ -16,7 +16,8 @@ import {EditorDemo} from '../src/components/EditorDemo'
 Start by instantiating the editor.
 
 ```js
-import { VisualEditor } from 'visual-editor'
+import { VisualEditor } from '@boxraiser/visual-editor'
+import '@boxraiser/visual-editor/style.css'
 
 let editor = new VisualEditor()
 ```
@@ -27,7 +28,7 @@ Then register your page components using the `registerComponent` method that exp
 - An option object object (see [EditorComponentDefinition](https://github.com/Grafikart/VisualEditor/blob/master/src/types.ts#L24) for more information)
 
 ```js
-import { HTMLText, Repeater, Text, Row, Select } from 'visual-editor'
+import { HTMLText, Repeater, Text, Row, Select } from '@boxraiser/visual-editor'
 
 // Register a component / block
 editor.registerComponent('hero', {
