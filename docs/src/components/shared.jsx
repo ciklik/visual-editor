@@ -9,7 +9,7 @@ import {
   Text,
   TextAlign,
   VisualEditor,
-} from "../../../visual-editor/dist/visual-editor.es.js";
+} from "../../../visual-editor/dist/VisualEditor.js";
 
 const Colors = [
   "--bs-blue",

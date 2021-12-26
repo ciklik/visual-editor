@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-import "../../../visual-editor/dist/style.css";
+import "../../../visual-editor/dist/VisualEditor.css";
 import data from "./data.json";
-import BrowserOnly from "@docusaurus/core/lib/client/exports/BrowserOnly";
 
 export function EditorDemo({ className }) {
   const [editorVisibility, setEditorVisibility] = useState("hidden");
@@ -37,7 +36,7 @@ export function EditorDemo({ className }) {
               hidden={editorVisibility}
               name="content"
               preview="https://visual-editor.droapp.com"
-              iconsUrl="/[name].svg"
+              iconsUrl="/visual-editor/img/[name].svg"
               value={JSON.stringify(data)}
               ref={ref}
             />
