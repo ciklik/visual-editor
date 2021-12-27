@@ -6,9 +6,7 @@ if ($data['preview'] ?? null) {
   renderBlock($data);
   exit();
 }
-?>
-
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
   <script type="module" src="/@vite/client"></script>

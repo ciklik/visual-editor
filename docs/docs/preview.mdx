@@ -1,0 +1,66 @@
+---
+sidebar_position: 3
+---
+
+# Render the preview
+
+When creating the editor you have to set up a `preview` attribute with an endpoint that will be called using the POST method for rendering the initial preview and every block on change
+
+## Render the initial preview
+
+The first call will contain all the component data in a JSON array.
+
+```bash
+curl 'https://preview/' \
+  --data-raw $'[<BLOC_DATA>]' \
+  --compressed
+```
+
+The server must return an HTML document with these specifics requirements :
+
+- An element with an id "ve-components" must be present
+- A `<div>` must be used to wrap every page component and must be direct children of `#ve-components`
+
+Here is an example
+
+```html
+<!DOCTYPE>
+<html lang="en">
+<head>
+  <title>Title</title>
+  <!-- -->
+</head>
+<body>
+  <header>Header</header>
+  <div id="ve-components">
+    <div class="container">
+      First block
+    </div>
+    <div class="container py-5">
+      Second block
+    </div>
+    <div class="container py-2 bg-primary">
+      Third block
+    </div>
+  </div>
+</body>
+</html>
+```
+
+## Render an update
+
+When updating a field the same endpoint will be called with the component data and an extra "preview" property set to true.
+
+```bash
+curl 'https://visual-editor.droapp.com/' \
+  --data-raw $'{"title":"Album example","_name":"hero","_id":"0","preview":true}' \
+  --compressed
+```
+
+The server must return the HTML code of the component (without any extra HTML)
+
+```html
+<div class="container">
+  The new component
+</div>
+```
