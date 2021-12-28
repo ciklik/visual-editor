@@ -19,6 +19,8 @@ import { prevent } from 'src/functions/functions'
 import { Button, IconCirclePlus } from 'src/components/ui'
 import Styles from './Preview.module.scss'
 import { offsetTop } from '../functions/dom'
+import { useToggle } from 'src/hooks/useToggle'
+import { Spinner } from 'src/components/ui/Spinner'
 
 type PreviewProps = {
   data: EditorComponentData[]
@@ -33,9 +35,11 @@ export function Preview({ data, previewUrl, iconsUrl }: PreviewProps) {
   const iframe = useRef<HTMLIFrameElement>(null)
   const [iframeRoot, setIframeRoot] = useState<HTMLElement | null>(null)
   const initialHTML = useRef<Record<string, string>>({})
+  const [loaded, toggleLoaded] = useToggle()
 
   // Gère le chargement de la preview initiale
   useAsyncEffect(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 2000))
     // On génère le premier rendu de la page complète
     const r = await fetch(previewUrl, {
       method: 'POST',
@@ -75,10 +79,12 @@ export function Preview({ data, previewUrl, iconsUrl }: PreviewProps) {
     <div
       className={clsx(
         Styles.Preview,
+        loaded && Styles.PreviewLoaded,
         previewMode === PreviewModes.PHONE && Styles.PreviewPhone
       )}
     >
-      <iframe ref={iframe} style={transform} />
+      <Spinner className={Styles.PreviewSpinner} />
+      <iframe ref={iframe} style={transform} onLoad={toggleLoaded} />
       {iframeRoot &&
         createPortal(
           <PreviewItems
@@ -178,6 +184,7 @@ export function PreviewItem({
           ref={ref}
           onClick={() => setFocusIndex(data._id)}
         >
+          {loading && <Spinner className={Styles.PreviewBlockSpinner} />}
           <div className={Styles.PreviewBlockTitle}>{title}</div>
           <div dangerouslySetInnerHTML={{ __html: html }} />
         </div>

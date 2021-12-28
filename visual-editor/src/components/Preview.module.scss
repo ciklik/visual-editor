@@ -14,12 +14,22 @@
 }
 
 .Preview iframe {
-    transform-origin: 50% 50%;
-    width: 100%;
-    height: 100%;
-    border: none;
-    color: var(--ve-primary);
-    transition: width .3s, height .3s;
+  opacity: 0;
+  transform-origin: 50% 50%;
+  width: 100%;
+  height: 100%;
+  border: none;
+  color: var(--ve-primary);
+  transition: width .3s, height .3s, opacity .5s;
+}
+
+.PreviewLoaded iframe {
+  opacity: 1;
+}
+
+.PreviewSpinner {
+  color: white;
+  opacity: .6;
 }
 
 .PreviewPhone iframe {
@@ -47,7 +57,7 @@
   }
 
   &::before {
-    content:'';
+    content: '';
     height: 2px;
     width: 100%;
     position: absolute;
@@ -58,7 +68,7 @@
   }
 
   &::after {
-    content:'+';
+    content: '+';
     font-size: 1.5em;
     z-index: 101;
     width: 40px;
@@ -75,23 +85,22 @@
 
 .PreviewAddButton span {
   pointer-events: none;
-    font-size: 15px;
-    height: 34px;
-    background: var(--ve-primary);
-    padding: 0 .5em;
-    display: flex;
-    align-items: center;
-    position: absolute;
-    left: 50%;
-    bottom: -30px;
-    transform: translate(-50%, 5px);
-    color: var(--ve-background);
+  font-size: 15px;
+  height: 34px;
+  background: var(--ve-primary);
+  padding: 0 .5em;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  bottom: -30px;
+  transform: translate(-50%, 5px);
+  color: var(--ve-background);
   transition: transform .3s;
 
 
-
   &::before {
-    content:'';
+    content: '';
     position: absolute;
     display: block;
     left: calc(50% - 6px);
@@ -114,7 +123,7 @@
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  color: var(--ve-ve-color);
+  color: var(--ve-color);
   width: calc(100% - 2rem);
   margin: 1rem;
   padding: 1rem;
@@ -129,11 +138,11 @@
 
 .PreviewBlock {
   position: relative;
-  border:1px solid transparent;
+  border: 1px solid transparent;
 }
 
 .PreviewBlockWrapper:hover .PreviewBlock {
-  border:1px solid var(--ve-primary);
+  border: 1px solid var(--ve-primary);
 }
 
 .PreviewBlockTitle {
@@ -149,15 +158,14 @@
 }
 
 .PreviewBlockWrapper:hover .PreviewBlockTitle,
-.PreviewBlockFocused .PreviewBlockTitle
-{
+.PreviewBlockFocused .PreviewBlockTitle {
   transform: translateY(-100%);
   opacity: 1;
 }
 
 
 .PreviewBlock::before {
-  content:'';
+  content: '';
   position: absolute;
   inset: 0;
   border: 2px solid transparent;
@@ -165,11 +173,16 @@
 }
 
 .PreviewBlockFocused::before {
-  border: 2px solid var(--ve-primary)!important;
+  border: 2px solid var(--ve-primary) !important;
 }
 
-.PreviewBlockLoading::before {
-  background-color:rgba(255, 255, 255, 0.6);
+.PreviewBlock .PreviewBlockSpinner {
+  --size: 12px;
+  top: 1rem;
+  right: 1rem;
+  left: auto;
+  bottom: auto;
+  color: var(--ve-primary);
 }
 
 // Animation
@@ -177,12 +190,25 @@
 [hidden="hidden"] .Preview {
   animation: PreviewOut .7s cubic-bezier(0.19, 1, 0.22, 1) both;
 }
+
 @keyframes PreviewOut {
-  from {transform: translateX(0); opacity: 1; }
-  to {transform: translateX(50px); opacity: 0; }
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(50px);
+    opacity: 0;
+  }
 }
 
 @keyframes PreviewIn {
-  from {transform: translateX(50px); opacity: 0; }
-  to {transform: translateX(0); opacity: 1; }
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
