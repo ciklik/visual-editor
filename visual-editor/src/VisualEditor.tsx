@@ -1,5 +1,3 @@
-import './css/style.scss'
-
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {
@@ -15,6 +13,7 @@ import { useClipboardPaste } from 'src/hooks/useClipboardPaste'
 import { useUpdateEffect } from 'src/hooks/useUpdateEffect'
 import { fillDefaults } from 'src/functions/fields'
 import { useStateDelayed } from 'src/hooks/useStateDelayed'
+import { BaseStyles } from 'src/components/BaseStyles'
 
 const components: EditorComponentDefinitions = {}
 
@@ -185,12 +184,14 @@ export function VisualEditorComponent({
 
   return (
     <>
-      <Layout
-        data={data}
-        onClose={handleClose}
-        previewUrl={previewUrl}
-        iconsUrl={iconsUrl}
-      />
+      <BaseStyles>
+        <Layout
+          data={data}
+          onClose={handleClose}
+          previewUrl={previewUrl}
+          iconsUrl={iconsUrl}
+        />
+      </BaseStyles>
       <textarea hidden name={name} value={cleanedData} onChange={doNothing} />
     </>
   )

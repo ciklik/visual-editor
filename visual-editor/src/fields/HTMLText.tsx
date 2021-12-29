@@ -2,7 +2,6 @@ import { EditorFieldProps } from 'src/types'
 import { AbstractField } from 'src/fields/AbstractField'
 import { QuillEditor, QuillEditorMode } from 'src/fields/shared/QuillEditor'
 import { Field } from 'src/components/ui'
-import Styles from './HTMLText.module.scss'
 
 type FieldArgs = {
   label?: string
@@ -33,14 +32,12 @@ export class HTMLText extends AbstractField<FieldArgs, string> {
   field({ value, onChange }: EditorFieldProps<string>) {
     return (
       <Field label={this.args.label} help={this.args.help}>
-        <div className={Styles.HTMLText}>
-          <QuillEditor
-            value={value || ''}
-            onChange={onChange}
-            mode={this.fieldType()}
-            colors={this.args.colors}
-          />
-        </div>
+        <QuillEditor
+          value={value || ''}
+          onChange={onChange}
+          mode={this.fieldType()}
+          colors={this.args.colors}
+        />
       </Field>
     )
   }

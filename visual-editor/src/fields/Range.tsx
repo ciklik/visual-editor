@@ -2,7 +2,7 @@ import { EditorFieldProps } from 'src/types'
 import { AbstractField } from 'src/fields/AbstractField'
 import { Field } from 'src/components/ui'
 import * as Slider from '@radix-ui/react-slider'
-import Styles from './Range.module.scss'
+import styled from '@emotion/styled'
 
 type FieldArgs = {
   label?: string
@@ -32,20 +32,59 @@ export class Range extends AbstractField<FieldArgs, number> {
         }
         help={this.args.help}
       >
-        <Slider.Root
+        <Root
           min={this.args.min}
           max={this.args.max}
           value={[value === undefined ? this.args.default || 0 : value]}
           step={this.args.step}
-          className={Styles.Range}
           onValueChange={(v) => onChange(v[0] || 0)}
         >
-          <Slider.Track className={Styles.RangeTrack}>
-            <Slider.Range className={Styles.RangeTrackSelected} />
-          </Slider.Track>
-          <Slider.Thumb className={Styles.RangeThumb} />
-        </Slider.Root>
+          <Track>
+            <TrackSelected />
+          </Track>
+          <Cursor />
+        </Root>
       </Field>
     )
   }
 }
+
+const Root = styled(Slider.Root)({
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+  userSelect: 'none',
+  touchAction: 'none',
+  width: '100%',
+  height: '20px',
+})
+
+const Track = styled(Slider.Track)({
+  position: 'relative',
+  display: 'block',
+  height: '5px',
+  backgroundColor: 'var(--ve-field-border)',
+  width: '100%',
+  borderRadius: '5px',
+})
+
+const TrackSelected = styled(Slider.Range)({
+  position: 'absolute',
+  left: '0',
+  height: '100%',
+  display: 'block',
+  borderRadius: '5px',
+  backgroundColor: 'var(--ve-primary)',
+})
+
+const Cursor = styled(Slider.Thumb)({
+  display: 'block',
+  backgroundColor: '#FFF',
+  width: '20px',
+  height: '20px',
+  borderRadius: '20px',
+  boxShadow:
+    'rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px',
+  cursor: 'pointer',
+  border: '1px solid var(--ve-field-border)',
+})

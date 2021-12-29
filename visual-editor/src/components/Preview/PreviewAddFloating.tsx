@@ -2,6 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { prevent } from 'src/functions/functions'
 import { useSetBlockIndex } from 'src/store'
+import { UnstyledButton } from 'src/components/ui'
 
 type PreviewAddFloatingProps = {
   position: number
@@ -16,7 +17,7 @@ export function PreviewAddFloating({ position }: PreviewAddFloatingProps) {
   )
 }
 
-const Button = styled.button({
+const Button = styled(UnstyledButton)({
   position: 'relative',
   marginTop: '-40px',
   marginBottom: '-40px',

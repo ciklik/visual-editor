@@ -2,8 +2,8 @@ import { EditorFieldProps } from 'src/types'
 import { useUniqId } from 'src/hooks/useUniqId'
 import { AbstractField } from 'src/fields/AbstractField'
 import { prevent } from 'src/functions/functions'
-import Styles from './ImageUrl.module.scss'
 import { ButtonIcon, Field, IconFolder } from 'src/components/ui'
+import styled from '@emotion/styled'
 
 type FieldArgs = {
   label?: string
@@ -32,17 +32,14 @@ export class ImageUrl extends AbstractField<FieldArgs, string> {
         label={this.args.label}
         help={this.args.help}
         value={value}
-        tooltip={value ? <TooltipImage url={value} /> : undefined}
+        tooltip={value ? <TooltipImage src={value} alt="" /> : undefined}
         onChange={(e) => onChange((e.target as HTMLInputElement).value)}
-        className={Styles.ImageUrlInput}
+        css={{ paddingRight: 40 }}
         icon={
           this.args.onBrowse ? (
-            <ButtonIcon
-              onClick={prevent(handleBrowse)}
-              className={Styles.ImageUrlBrowseButton}
-            >
+            <Button onClick={prevent(handleBrowse)}>
               <IconFolder size={16} />
-            </ButtonIcon>
+            </Button>
           ) : undefined
         }
       />
@@ -50,9 +47,16 @@ export class ImageUrl extends AbstractField<FieldArgs, string> {
   }
 }
 
-function TooltipImage({ url }: { url?: string }) {
-  if (!url) {
-    return null
-  }
-  return <img src={url} alt="" className={Styles.ImageUrlTooltip} />
-}
+const Button = styled(ButtonIcon)({
+  width: '32px',
+  height: '32px',
+  color: 'var(--ve-color-light)',
+})
+
+const TooltipImage = styled.img({
+  width: '150px',
+  height: '150px',
+  position: 'relative',
+  zIndex: 2,
+  objectFit: 'cover',
+})

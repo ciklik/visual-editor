@@ -8,8 +8,9 @@ import {
   IconAlignTop,
 } from 'src/components/ui'
 import { uniqId } from 'src/functions/string'
-import { FunctionComponent, SyntheticEvent } from 'react'
-import Styles from './Alignment.module.scss'
+import { FunctionComponent } from 'react'
+import { AlignmentButton } from 'src/fields/shared/AlignmentButton'
+import { AlignmentButtons } from 'src/fields/shared/AlignmentButtons'
 
 type FieldArgs = {
   label?: string
@@ -35,9 +36,6 @@ export class Alignment extends AbstractField<FieldArgs, FieldValue> {
 
   field({ value, onChange }: EditorFieldProps<FieldValue>) {
     const id = uniqId()
-    const handleChange = (e: SyntheticEvent) => {
-      onChange((e.target as HTMLInputElement).value as FieldValue)
-    }
     const alignements = [
       'left',
       'right',
@@ -45,46 +43,18 @@ export class Alignment extends AbstractField<FieldArgs, FieldValue> {
     ] as FieldValue[]
     return (
       <Field label={this.args.label}>
-        <div className={Styles.Alignments}>
+        <AlignmentButtons>
           {alignements.map((alignment) => (
-            <AlignmentButton
+            <AlignmentButton<FieldValue>
               key={alignment}
               value={alignment}
-              id={id}
               checked={value === alignment}
-              onChange={handleChange}
+              onChange={onChange}
+              icon={AlignmentIcons[alignment]}
             />
           ))}
-        </div>
+        </AlignmentButtons>
       </Field>
     )
   }
-}
-
-function AlignmentButton({
-  value,
-  id,
-  onChange,
-  checked,
-}: {
-  value: FieldValue
-  id: string
-  onChange: (e: SyntheticEvent) => void
-  checked: boolean
-}) {
-  const IconComponent = AlignmentIcons[value]
-  return (
-    <div className={Styles.AlignmentsButton}>
-      <input
-        type="radio"
-        name={id}
-        onChange={onChange}
-        value={value}
-        checked={checked}
-      />
-      <div>
-        <IconComponent />
-      </div>
-    </div>
-  )
 }

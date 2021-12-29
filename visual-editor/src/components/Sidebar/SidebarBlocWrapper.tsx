@@ -1,7 +1,9 @@
 import styled from '@emotion/styled'
 import { Sortable } from 'src/components/Sortable'
 
-export const SidebarBlocWrapper = styled(Sortable)({
+export const SidebarBlocWrapper = styled(Sortable, {
+  target: 'SidebarBlocWrapper',
+})({
   position: 'relative',
   padding: '.8em .5em .8em 1.5em',
   backgroundColor: '#fff',

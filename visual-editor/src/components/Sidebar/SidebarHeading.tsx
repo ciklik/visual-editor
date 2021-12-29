@@ -7,8 +7,9 @@ import type {
   RefAttributes,
 } from 'react'
 import { forwardRef } from 'react'
-import { Flex } from 'src/components/ui'
+import { Flex, UnstyledButton } from 'src/components/ui'
 import styled from '@emotion/styled'
+import { SidebarBlocWrapper } from 'src/components/Sidebar/SidebarBlocWrapper'
 
 type SidebarHeadingProps = {
   children: ReactNode
@@ -37,7 +38,7 @@ const Title = styled.div({
 const HoverableActions = styled(Flex)({
   opacity: 0,
   transition: 'opacity .3s',
-  '*:hover > &': {
+  [`${SidebarBlocWrapper}:hover &`]: {
     opacity: 1,
   },
 })
@@ -47,7 +48,7 @@ export const SidebarHeading = forwardRef<HTMLDivElement, SidebarHeadingProps>(
     { children, onClick, title, description },
     ref: ForwardedRef<HTMLDivElement>
   ) => {
-    const as = onClick ? 'button' : 'div'
+    const as = onClick ? UnstyledButton : 'div'
     return (
       <Wrapper ref={ref} gap={0} between>
         <Title as={as} onClick={onClick}>

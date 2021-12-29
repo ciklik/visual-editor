@@ -14,6 +14,7 @@ import {
 import {
   ButtonField,
   ButtonsField,
+  ColorField,
   ContentField,
   ImageField,
   TitleField,
@@ -74,6 +75,7 @@ editor.registerComponent('demo', {
     new NumberField('number', { label: 'Number' }),
     new Checkbox('checkbox', { label: 'Checkbox' }),
     ImageField(),
+    ColorField('color', 'Colors'),
     new Range('range', { min: 0, max: 100, label: 'Range' }),
     new Select('select', { options: [], label: 'Select' }),
     new Alignment('alignment', { vertical: true, label: 'Alignment' }),

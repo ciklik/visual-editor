@@ -2,23 +2,16 @@ import { EditorComponentData } from 'src/types'
 import React, { useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useAsyncEffect } from 'src/hooks/useAsyncEffect'
-import clsx from 'clsx'
-import {
-  PreviewModes,
-  useFieldDefinitions,
-  usePreviewMode,
-  useSetBlockIndex,
-} from 'src/store'
-import { Flipper } from 'react-flip-toolkit'
+import { PreviewModes, usePreviewMode } from 'src/store'
 import { useWindowSize } from 'react-use'
 import { PHONE_HEIGHT } from 'src/constants'
-import Styles from '../Preview.module.scss'
 import { useToggle } from 'src/hooks/useToggle'
 import { Spinner } from 'src/components/ui/Spinner'
 import { FrameProvider } from 'src/components/Preview/FrameProvider'
-import { PreviewItem } from 'src/components/Preview/PreviewItem'
-import { PreviewAddButton } from 'src/components/Preview/PreviewAddButton'
-import { PreviewAddFloating } from 'src/components/Preview/PreviewAddFloating'
+import { BaseStyles } from 'src/components/BaseStyles'
+import styled from '@emotion/styled'
+import { keyframes } from '@emotion/react'
+import { PreviewItems } from 'src/components/Preview/PreviewItems'
 
 type PreviewProps = {
   data: EditorComponentData[]
@@ -74,61 +67,65 @@ export function Preview({ data, previewUrl, iconsUrl }: PreviewProps) {
   }
 
   return (
-    <div
-      className={clsx(
-        Styles.Preview,
-        loaded && Styles.PreviewLoaded,
-        previewMode === PreviewModes.PHONE && Styles.PreviewPhone
-      )}
-    >
+    <PreviewWrapper>
       <Spinner css={{ color: 'white', opacity: 0.6 }} />
-      <iframe ref={iframe} style={transform} onLoad={toggleLoaded} />
+      <StyledIframe
+        loaded={loaded}
+        mobile={previewMode === PreviewModes.PHONE}
+        ref={iframe}
+        style={transform}
+        onLoad={toggleLoaded}
+      />
       {iframeRoot &&
         createPortal(
           <FrameProvider container={iframe.current!.contentDocument!}>
-            <PreviewItems
-              data={data}
-              initialHTML={initialHTML.current}
-              previewUrl={previewUrl}
-            />
+            <BaseStyles>
+              <PreviewItems
+                data={data}
+                initialHTML={initialHTML.current}
+                previewUrl={previewUrl}
+              />
+            </BaseStyles>
           </FrameProvider>,
           iframeRoot
         )}
-    </div>
+    </PreviewWrapper>
   )
 }
 
-/**
- * Gère le rendu dans l'iframe des différents composants
- */
-export function PreviewItems({
-  data,
-  initialHTML = {},
-  previewUrl,
-}: {
-  data: EditorComponentData[]
-  initialHTML: Record<string, string>
-  previewUrl: string
-}) {
-  const definitions = useFieldDefinitions()
-  const setAddBlockIndex = useSetBlockIndex()
+const Out = keyframes({
+  from: { transform: 'translateX(0)', opacity: 1 },
+  to: { transform: 'translateX(50px)', opacity: 0 },
+})
 
-  return (
-    <>
-      <Flipper flipKey={data.map((d) => d._id).join('_')}>
-        {data.map((v, k) => (
-          <div key={v._id}>
-            <PreviewAddFloating position={k} />
-            <PreviewItem
-              title={definitions[v._name]?.title || ''}
-              data={v}
-              initialHTML={initialHTML[v._id] || ''}
-              previewUrl={previewUrl}
-            />
-          </div>
-        ))}
-      </Flipper>
-      <PreviewAddButton position={data.length} />
-    </>
-  )
-}
+const In = keyframes({
+  from: { transform: 'translateX(50px)', opacity: 0 },
+  to: { transform: 'translateX(0)', opacity: 1 },
+})
+
+const PreviewWrapper = styled.div({
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  overflow: 'hidden',
+  animation: `${In} .7s cubic-bezier(0.19, 1, 0.22, 1) both`,
+  '[hidden="hidden"] &': {
+    animationName: `${Out}`,
+  },
+})
+
+const StyledIframe = styled.iframe<{ loaded: boolean; mobile: boolean }>(
+  {
+    transformOrigin: '50% 50%',
+    border: 'none',
+    color: 'var(--ve-primary)',
+    transition: 'width .3s, height .3s, opacity .5s',
+  },
+  (props) => ({
+    opacity: props.loaded ? 1 : 0,
+    width: props.mobile ? '390px' : '100%',
+    height: props.mobile ? '844px' : '100%',
+  })
+)

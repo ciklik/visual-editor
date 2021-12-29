@@ -8,12 +8,13 @@ import { keyframes } from '@emotion/react'
 export function Sidebar({
   data,
   onClose,
+  ...props
 }: {
   data: EditorComponentData[]
   onClose: () => void
 }) {
   return (
-    <SidebarWrapper>
+    <SidebarWrapper {...props}>
       <SidebarHeader onClose={onClose} />
       <SidebarBlocs data={data} />
     </SidebarWrapper>

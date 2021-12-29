@@ -1,7 +1,13 @@
-import { useEffect, useRef } from 'react'
-import { Delta, lineBreakHandler, lineBreakMatcher, Quill } from 'src/libs/Quill'
+import { useEffect, useRef, useState } from 'react'
+import {
+  Delta,
+  lineBreakHandler,
+  lineBreakMatcher,
+  Quill,
+} from 'src/libs/Quill'
 import type { DeltaOperation } from 'quill'
-import clsx from 'clsx'
+import styled from '@emotion/styled'
+import { QuillEditorStyles } from 'src/fields/shared/QuillEditorStyles'
 
 export enum QuillEditorMode {
   SINGLE_LINE,
@@ -48,8 +54,9 @@ export function QuillEditor({
   colors,
 }: QuillEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null)
-  const quillRef = useRef<Quill|null>(null)
+  const quillRef = useRef<Quill | null>(null)
   const onChangeRef = useRef(onChange)
+  const [focused, setFocused] = useState(false)
   onChangeRef.current = onChange
 
   useEffect(() => {
@@ -121,14 +128,43 @@ export function QuillEditor({
   }, [])
 
   return (
-    <div
-      className={clsx(
-        mode === QuillEditorMode.SINGLE_LINE && 'ql-container-oneline'
-      )}
-      ref={editorRef}
-    />
+    <EditorWrapper
+      singleLine={mode === QuillEditorMode.SINGLE_LINE}
+      focused={focused}
+      css={QuillEditorStyles}
+    >
+      <div
+        ref={editorRef}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+      />
+    </EditorWrapper>
   )
 }
+
+const EditorWrapper = styled.div<{ focused: boolean; singleLine: boolean }>(
+  {
+    color: 'var(--ve-color)',
+    background: 'transparent',
+    padding: '.5rem .75em',
+    lineHeight: '1.25rem',
+    borderRadius: '.2rem',
+    display: 'block',
+    width: '100%',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    outline: 'none',
+  },
+  (props) => ({
+    borderColor: props.focused ? 'var(--ve-primary)' : 'var(--ve-field-border)',
+    boxShadow: props.focused
+      ? '0 0 0 0.25rem rgb(23 113 230 / 25%)'
+      : 'var(--ve-field-shadow)',
+    p: {
+      marginBottom: props.singleLine ? '0' : '1em',
+    },
+  })
+)
 
 function cleanDelta<T extends { ops: DeltaOperation[] }>(
   delta: T,

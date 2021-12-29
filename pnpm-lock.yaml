@@ -26,6 +26,7 @@ importers:
       '@dnd-kit/modifiers': ^3.0.0
       '@dnd-kit/sortable': ^4.0.0
       '@dnd-kit/utilities': ^3.0.1
+      '@emotion/babel-plugin': ^11.7.2
       '@emotion/cache': ^11.7.1
       '@emotion/core': ^11.0.0
       '@emotion/react': ^11.7.1
@@ -48,7 +49,6 @@ importers:
       concurrently: ^6.5.1
       esbuild: ^0.14.8
       esbuild-node-externals: ^1.4.1
-      esbuild-style-plugin: ^1.1.2
       framesync: ^6.1.0
       jest: ^27.0.6
       prettier: ^2.3.2
@@ -56,9 +56,7 @@ importers:
       react-flip-toolkit: ^7.0.13
       react-popper: ^2.2.5
       react-use: ^17.2.4
-      retypeapp: ^1.11.1
       rollup-plugin-analyzer: ^4.0.0
-      sass: ^1.45.1
       ts-jest: ^27.0.3
       tsc-alias: ^1.5.0
       typescript: ^4.5.2
@@ -70,6 +68,7 @@ importers:
       '@dnd-kit/modifiers': 3.0.0_@dnd-kit+core@3.1.1
       '@dnd-kit/sortable': 4.0.0_@dnd-kit+core@3.1.1
       '@dnd-kit/utilities': 3.0.2
+      '@emotion/babel-plugin': 11.7.2
       '@emotion/cache': 11.7.1
       '@emotion/core': 11.0.0
       '@emotion/react': 11.7.1_@types+react@17.0.37
@@ -99,16 +98,13 @@ importers:
       concurrently: 6.5.1
       esbuild: 0.14.8
       esbuild-node-externals: 1.4.1_esbuild@0.14.8
-      esbuild-style-plugin: 1.1.2
       jest: 27.4.5
       prettier: 2.5.1
-      retypeapp: 1.11.1
       rollup-plugin-analyzer: 4.0.0
-      sass: 1.45.1
       ts-jest: 27.1.2_5a08bfbddddfe20c034e193246f701ff
       tsc-alias: 1.5.0
       typescript: 4.5.4
-      vite: 2.7.6_sass@1.45.1
+      vite: 2.7.6
       vite-jest: 0.0.3_jest@27.4.5+vite@2.7.6
 
   visual-editor/dist:
@@ -11361,7 +11357,31 @@ packages:
       jest: 27.4.5
       jest-transform-stub: 2.0.0
       magic-string: 0.25.7
-      vite: 2.7.6_sass@1.45.1
+      vite: 2.7.6
+    dev: true
+
+  /vite/2.7.6:
+    resolution: {integrity: sha512-PBNoc87rDYLtkpFU9dbVeGdbcyKzz6c34oScqivE3FEa3BhVa4ASupCzcz0eDIiSECovfLcQnLUJt9vhiEU08g==}
+    engines: {node: '>=12.2.0'}
+    hasBin: true
+    peerDependencies:
+      less: '*'
+      sass: '*'
+      stylus: '*'
+    peerDependenciesMeta:
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+    dependencies:
+      esbuild: 0.13.15
+      postcss: 8.4.5
+      resolve: 1.20.0
+      rollup: 2.61.1
+    optionalDependencies:
+      fsevents: 2.3.2
     dev: true
 
   /vite/2.7.6_sass@1.45.1:
