@@ -1,4 +1,3 @@
-import Styles from './BlocSelector.module.scss'
 import React, { useEffect, useMemo, useState } from 'react'
 import {
   useAddBlock,
@@ -13,6 +12,9 @@ import {
 } from 'src/types'
 import { prevent } from 'src/functions/functions'
 import { IconSearch, Modal, Tabs } from 'src/components/ui'
+import { BlocSelectorItem } from 'src/components/Blocs/BlocSelectorItem'
+import { BlocSelectorSearch } from 'src/components/Blocs/BlocSelectorSearch'
+import { BlocSelectorGrid } from 'src/components/Blocs/BlocSelectorGrid'
 
 const ALL_TAB = 'Tous les blocs'
 
@@ -58,64 +60,29 @@ export function BlocSelector({ iconsUrl }: BlocSelectorProps) {
       onVisibilityChange={handleVisibilityChange}
       title="Ajouter un bloc"
     >
-      <div className={Styles.BlocSelectorSearchWrapper}>
-        <input
-          type="search"
-          placeholder="Rechercher un bloc"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className={Styles.BlocSelectorSearch}
-        />
-        <IconSearch size={14} />
-      </div>
-      <Tabs className={Styles.BlocSelectorTabs}>
+      <BlocSelectorSearch value={search} onChange={setSearch} />
+      <Tabs css={{ margin: '1.5rem 0' }}>
         {categories.map((category) => (
-          <Tabs.Tab key={category} title={category}>
-            <div className={Styles.BlocSelectorGrid}>
-              {Object.keys(definitions)
-                .filter(
-                  (key) =>
-                    !hiddenCategories.includes(definitions[key]!.category ?? '')
-                )
-                .filter(searchDefinition(search ?? '', category, definitions))
-                .map((key) => (
-                  <BlocSelectorItem
-                    key={key}
-                    definition={definitions[key]!}
-                    name={key}
-                    iconsUrl={iconsUrl}
-                    onClick={() => addBlock(key)}
-                  />
-                ))}
-            </div>
-          </Tabs.Tab>
+          <BlocSelectorGrid key={category} title={category}>
+            {Object.keys(definitions)
+              .filter(
+                (key) =>
+                  !hiddenCategories.includes(definitions[key]!.category ?? '')
+              )
+              .filter(searchDefinition(search ?? '', category, definitions))
+              .map((key) => (
+                <BlocSelectorItem
+                  key={key}
+                  definition={definitions[key]!}
+                  name={key}
+                  iconsUrl={iconsUrl}
+                  onClick={() => addBlock(key)}
+                />
+              ))}
+          </BlocSelectorGrid>
         ))}
       </Tabs>
     </Modal>
-  )
-}
-
-function BlocSelectorItem({
-  definition,
-  name,
-  iconsUrl,
-  onClick,
-}: {
-  name: string
-  definition: EditorComponentDefinition
-  iconsUrl: string
-  onClick: () => void
-}) {
-  const icon = iconsUrl.replace('[name]', name)
-  const title = definition.title
-
-  return (
-    <button className={Styles.BlocSelectorItem} onClick={prevent(onClick)}>
-      <div className={Styles.BlocSelectorItemImage}>
-        <img src={icon} />
-      </div>
-      <div>{title}</div>
-    </button>
   )
 }
 

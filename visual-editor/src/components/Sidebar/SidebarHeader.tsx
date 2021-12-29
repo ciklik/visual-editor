@@ -17,7 +17,7 @@ import {
 } from 'src/components/ui'
 import { CopyAction } from './Actions/CopyAction'
 
-import Styles from './Sidebar.module.scss'
+import styled from '@emotion/styled'
 
 type SidebarHeaderProps = {
   onClose: () => void
@@ -31,7 +31,7 @@ export function SidebarHeader({ onClose }: SidebarHeaderProps) {
   const data = useData()
 
   return (
-    <Flex className={Styles.SidebarHeader} between>
+    <Wrapper between>
       <div>
         <ButtonIcon title="Fermer" onClick={prevent(onClose)}>
           <IconCross size={12} />
@@ -46,6 +46,17 @@ export function SidebarHeader({ onClose }: SidebarHeaderProps) {
           Ajouter un bloc
         </Button>
       </Flex>
-    </Flex>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled(Flex)({
+  marginTop: 0,
+  display: 'flex',
+  padding: '0 1em',
+  flex: 'none',
+  backgroundColor: '#FFF',
+  borderBottom: '1px solid var(--ve-field-border)',
+  boxShadow: 'rgba(0, 0, 0, 0.05) 0 1px 2px 0',
+  height: 64,
+})

@@ -1,8 +1,7 @@
-import React, { SyntheticEvent, useState } from 'react'
+import { SyntheticEvent, useState } from 'react'
 import { useSetSidebarWidth } from 'src/store'
-import cx from 'clsx'
 
-import Styles from './ResizeBar.module.scss'
+import styled from '@emotion/styled'
 
 export function ResizeBar() {
   const [drag, setDrag] = useState(false)
@@ -27,11 +26,40 @@ export function ResizeBar() {
 
   return (
     <>
-      <div
-        className={cx(Styles.ResizeBar, drag && Styles.ResizeBarActive)}
-        onMouseDown={handleMouseDown}
-      />
-      {drag && <div className={Styles.ResizeBarOverlay} />}
+      <Wrapper isDragging={drag} onMouseDown={handleMouseDown} />
+      {drag && <ResizeBarOverlay />}
     </>
   )
 }
+
+const Wrapper = styled.div<{ isDragging: boolean }>(
+  {
+    position: 'fixed',
+    top: 0,
+    bottom: 0,
+    height: '100%',
+    left: 'var(--ve-clampedSidebar)',
+    width: 15,
+    zIndex: 1002,
+    cursor: 'ew-resize',
+    transition: 'box-shadow .3s',
+    ':hover': {
+      boxShadow: '-1px -1px 0 1px var(--ve-primary)',
+    },
+  },
+  ({ isDragging }) =>
+    isDragging
+      ? {
+          boxShadow: '-1px -1px 0 1px var(--ve-primary)',
+        }
+      : null
+)
+
+const ResizeBarOverlay = styled.div({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  zIndex: 1001,
+})

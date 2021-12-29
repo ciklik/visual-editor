@@ -17,9 +17,9 @@ import {
   IconDown,
   IconTrash,
 } from 'src/components/ui'
-import Style from './Repeater.module.scss'
 import { SidebarHeading } from 'src/components/Sidebar/SidebarHeading'
 import { useMemo } from 'react'
+import styled from '@emotion/styled'
 
 type FieldType = EditorField<any> | AbstractFieldGroup<any>
 
@@ -81,7 +81,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
     return (
       <Field label={this.args.label}>
         <SortableWrapper items={value} onMove={handleMove}>
-          <div className={Style.Repeater}>
+          <Wrapper>
             {value.map((line, k) => (
               <this.fieldLine
                 key={line._id}
@@ -92,13 +92,13 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
               />
             ))}
             {canAdd && (
-              <div className={Style.RepeaterFooter}>
+              <Footer>
                 <Button secondary onClick={prevent(add)} icon={IconCirclePlus}>
                   {this.args.addLabel}
                 </Button>
-              </div>
+              </Footer>
             )}
-          </div>
+          </Wrapper>
         </SortableWrapper>
       </Field>
     )
@@ -125,7 +125,7 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
     const escapedTitle = useMemo(() => textContent(title), [title])
 
     return (
-      <Sortable item={line} className={Style.RepeaterItem}>
+      <Item item={line}>
         <SidebarHeading onClick={prevent(toggleCollapsed)} title={escapedTitle}>
           <SidebarHeading.Hover>
             {onRemove && (
@@ -146,16 +146,16 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
           </ButtonIcon>
         </SidebarHeading>
         {!collapsed && (
-          <div className={Style.RepeaterItemBody}>
+          <ItemBody>
             <this.fields
               fields={this.args.fields}
               line={line}
               index={index}
               onUpdate={handleUpdate}
             />
-          </div>
+          </ItemBody>
         )}
-      </Sortable>
+      </Item>
     )
   }
 
@@ -219,3 +219,34 @@ export class Repeater extends AbstractField<FieldArgs, RepeaterLine[]> {
     )
   }
 }
+
+const Wrapper = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  backgroundColor: '#fff',
+  border: '1px solid rgba(0,0,0,0.06)',
+  boxShadow: '0 1px 2px 0 rgba(0,0,0,0.05)',
+})
+
+const Item = styled(Sortable)({
+  position: 'relative',
+  display: 'grid',
+  gridTemplateColumns: '1fr',
+  gap: '.5em',
+  padding: '.4rem .7rem .4rem calc(10px + .7rem)',
+  borderBottom: 'solid 1px rgba(0,0,0,0.06)',
+  backgroundColor: '#fff',
+})
+
+const ItemBody = styled.div({
+  display: 'grid',
+  gridTemplateColumns: '1fr',
+  gap: '1em',
+})
+
+const Footer = styled.div({
+  display: 'flex',
+  justifyContent: 'flex-end',
+  padding: '.2rem',
+  backgroundColor: 'rgba(0,0,0,0.03)',
+})

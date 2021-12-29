@@ -12,6 +12,7 @@ import * as React from 'react'
 import { useForceUpdate } from './hooks'
 import { PresenceChild } from './PresenceChild'
 import { LayoutGroupContext } from './LayoutGroupContext'
+import type { Keyframes } from '@emotion/react'
 
 type ComponentKey = string | number
 
@@ -63,10 +64,10 @@ function onlyElements(children: ReactNode): ReactElement<any>[] {
  *
  */
 export const AnimatePresence: React.FunctionComponent<{
-  in: string
-  out: string
+  in: Keyframes
+  out: Keyframes
   exitBeforeEnter?: boolean
-}> = ({ children, in: inClass, out: outClass, exitBeforeEnter }) => {
+}> = ({ children, in: inKeyframes, out: outKeyframes, exitBeforeEnter }) => {
   // We want to force a re-render once all exiting animations have finished. We
   // either use a local forceRender function, or one from a parent context if it exists.
   let [forceRender] = useForceUpdate()
@@ -109,8 +110,8 @@ export const AnimatePresence: React.FunctionComponent<{
           <PresenceChild
             key={getChildKey(child)}
             isPresent
-            in={inClass}
-            out={outClass}
+            in={inKeyframes}
+            out={outKeyframes}
           >
             {child}
           </PresenceChild>
@@ -183,8 +184,8 @@ export const AnimatePresence: React.FunctionComponent<{
         key={getChildKey(child)}
         isPresent={false}
         onExitComplete={onExit}
-        in={inClass}
-        out={outClass}
+        in={inKeyframes}
+        out={outKeyframes}
       >
         {child}
       </PresenceChild>
@@ -201,8 +202,8 @@ export const AnimatePresence: React.FunctionComponent<{
       <PresenceChild
         key={getChildKey(child)}
         isPresent
-        in={inClass}
-        out={outClass}
+        in={inKeyframes}
+        out={outKeyframes}
       >
         {child}
       </PresenceChild>

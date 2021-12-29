@@ -1,49 +1,46 @@
-import Styles from './Flex.module.scss'
-import cx from 'clsx'
-import { forwardRef, FunctionComponent, ReactNode } from 'react'
+import { forwardRef, ReactNode } from 'react'
+import styled from '@emotion/styled'
+import { css } from '@emotion/react'
 
 type FlexProps = {
   between?: boolean
-  children: ReactNode
-  as?: FunctionComponent<any> | string
   column?: boolean
   gap?: number
 } & JSX.IntrinsicElements['div']
 
 export const Flex = forwardRef<HTMLDivElement, FlexProps>(
-  (
-    {
-      as: ElementComponent = 'div',
-      between,
-      gap,
-      children,
-      className,
-      column,
-      style: styleProps,
-      ...props
-    },
-    ref
-  ) => {
-    const style =
-      gap !== undefined
-        ? { '--ve-gap': `${gap}rem`, ...styleProps }
-        : styleProps
+  ({ between, column, ...props }, ref) => {
     return (
-      <ElementComponent
+      <Wrapper
         {...props}
         ref={ref}
-        className={cx(
-          Styles.Flex,
-          between && Styles.FlexBetween,
-          column && Styles.FlexColumn,
-          className
-        )}
-        style={style}
-      >
-        {children}
-      </ElementComponent>
+        css={[between && Between, column && Column]}
+      />
     )
   }
 )
 
 Flex.displayName = 'Flex'
+
+const Wrapper = styled.div<FlexProps>(
+  {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  ({ gap = 1 }) => ({
+    gap: gap + 'em',
+    gridGap: gap + 'em',
+  })
+)
+
+const Between = {
+  justifyContent: 'space-between',
+}
+
+const Column = {
+  display: 'grid',
+  alignContent: 'flex-start',
+  gridTemplateColumns: '1fr',
+  alignItems: 'flex-start',
+}

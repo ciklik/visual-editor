@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["node", "vite/client", "@emotion/react/types/css-prop"],
     "target": "ESNext",
     "useDefineForClassFields": true,
     "declaration": true,
@@ -18,6 +19,7 @@
     "noEmit": true,
     "baseUrl": "./",
     "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
     "outDir": "dist",
     "paths": {
       "src/*": ["src/*"]

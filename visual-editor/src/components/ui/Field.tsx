@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
-import Styles from './Field.module.scss'
 import { Label } from './Label'
 import cx from 'clsx'
 import { Tooltip } from './Tooltip'
+import styled from '@emotion/styled'
 
 type Option = {
   value: string
@@ -29,11 +29,10 @@ export function Field({
   icon,
   ...props
 }: FieldProps) {
-  console.log({props, type})
   if (!children) {
     if (options) {
       children = (
-        <select {...props} className={cx(props.className, Styles.FieldInput)}>
+        <Input as="select" {...props}>
           {options.map((option: Option, key) => {
             return (
               <option value={option.value} key={key}>
@@ -41,19 +40,12 @@ export function Field({
               </option>
             )
           })}
-        </select>
+        </Input>
       )
     } else if (['text', 'number'].includes(type)) {
-      children = (
-        <input {...props} className={cx(props.className, Styles.FieldInput)} />
-      )
+      children = <Input {...props} />
     } else if (type === 'textarea') {
-      children = (
-        <textarea
-          {...props}
-          className={cx(props.className, Styles.FieldInput)}
-        />
-      )
+      children = <Input as="textarea" {...props} />
     } else {
       throw new Error('Cannot render this type of field : ' + type)
     }
@@ -66,11 +58,52 @@ export function Field({
   return (
     <div>
       {label && <Label htmlFor={props.id}>{label}</Label>}
-      <div className={Styles.FieldWrapper}>
+      <Wrapper>
         {children}
-        {icon && <div className={Styles.FieldIcon}>{icon}</div>}
-      </div>
-      {help && <div className={Styles.FieldHelp}>{help}</div>}
+        {icon && <Icon>{icon}</Icon>}
+      </Wrapper>
+      {help && <HelpMessage>{help}</HelpMessage>}
     </div>
   )
 }
+
+const Input = styled.input({
+  color: 'var(--ve-color)',
+  background: 'transparent',
+  padding: '.5rem .75em',
+  lineHeight: '1.25rem',
+  borderRadius: '.2rem',
+  display: 'block',
+  width: '100%',
+  border: '1px solid var(--ve-field-border)',
+  boxShadow: 'var(--ve-field-shadow)',
+  '&:focus': {
+    borderColor: 'var(--ve-primary)',
+    outline: '0',
+    boxShadow: '0 0 0 0.25rem rgb(23 113 230 / 25%)',
+  },
+})
+
+const HelpMessage = styled.div({
+  fontStyle: 'italic',
+  marginTop: '.5em',
+  fontSize: '.8em',
+})
+
+const Wrapper = styled.div({
+  position: 'relative',
+})
+
+const Icon = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  bottom: 0,
+  color: 'var(--ve-field-border)',
+  cursor: 'pointer',
+  height: '100%',
+  position: 'absolute',
+  right: 0,
+  top: 0,
+  width: 40,
+})

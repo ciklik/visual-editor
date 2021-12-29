@@ -1,5 +1,5 @@
 import { Sidebar } from 'src/components/Sidebar/Sidebar'
-import { Preview } from 'src/components/Preview'
+import { Preview } from 'src/components/Preview/Preview'
 import { EditorComponentData } from 'src/types'
 import { useSidebarWidth } from 'src/store'
 import { ResizeBar } from './ResizeBar'

@@ -1,9 +1,41 @@
-import Styles from './Spinner.module.scss'
-import clsx from 'clsx'
+import { keyframes } from '@emotion/react'
+import styled from '@emotion/styled'
 
-export function Spinner({ className }: { className?: string }) {
+type SpinnerProps = {
+  size?: number
+}
+
+const SpinnerKeyframes = keyframes({
+  from: {
+    transform: 'rotate(0deg)',
+  },
+  to: {
+    transform: 'rotate(-360deg)',
+  },
+})
+
+const SpinnerWrapper = styled.div<SpinnerProps>(
+  {
+    position: 'absolute',
+    top: 'calc(50% - var(--size) * 0.5)',
+    left: 'calc(50% - var(--size) * 0.5)',
+    width: 'var(--size)',
+    height: 'var(--size)',
+    animation: `${SpinnerKeyframes} 1.4s infinite linear`,
+    svg: {
+      display: 'block',
+      width: 'var(--size)',
+      height: 'var(--size)',
+    },
+  },
+  ({ size = 30 }) => ({
+    '--size': `${size}px`,
+  })
+)
+
+export function Spinner(props: SpinnerProps) {
   return (
-    <div className={clsx(Styles.Spinner, className)}>
+    <SpinnerWrapper {...props}>
       <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           fillRule="evenodd"
@@ -41,6 +73,6 @@ export function Spinner({ className }: { className?: string }) {
           </linearGradient>
         </defs>
       </svg>
-    </div>
+    </SpinnerWrapper>
   )
 }

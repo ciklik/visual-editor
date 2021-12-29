@@ -12,6 +12,7 @@ import { prevent } from 'src/functions/functions'
 import { ButtonIcon, Flex, IconDown, IconTrash } from 'src/components/ui'
 import { SidebarFields } from './SidebarFields'
 import { CopyAction } from './Actions/CopyAction'
+import { SidebarBlocWrapper } from 'src/components/Sidebar/SidebarBlocWrapper'
 
 type SidebarBlocProps = {
   data: EditorComponentData
@@ -67,7 +68,7 @@ export const SidebarBloc = memo(function SidebarItem({
   }
 
   return (
-    <Sortable item={data} className={Styles.SidebarBloc}>
+    <SidebarBlocWrapper item={data}>
       <SidebarHeading
         ref={ref}
         title={definition.title}
@@ -88,10 +89,10 @@ export const SidebarBloc = memo(function SidebarItem({
         </ButtonIcon>
       </SidebarHeading>
       {!isCollapsed && (
-        <Flex column gap={1} className={Styles.SidebarBlocBody}>
+        <Flex column gap={1} css={{ marginTop: '.5em' }}>
           <SidebarFields fields={definition.fields} data={data} path={path} />
         </Flex>
       )}
-    </Sortable>
+    </SidebarBlocWrapper>
   )
 })

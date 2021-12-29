@@ -1,11 +1,9 @@
-import Styles from './Sidebar.module.scss'
 import { SidebarHeading } from './SidebarHeading'
+import { SidebarBlocWrapper } from 'src/components/Sidebar/SidebarBlocWrapper'
 import { prevent } from 'src/functions/functions'
 import { ButtonIcon, IconTrash } from 'src/components/ui'
 import { useRemoveBloc } from 'src/store'
 import { EditorComponentData } from 'src/types'
-import cx from 'clsx'
-import { Sortable } from '../Sortable'
 
 type SidebarBlocMissingProps = {
   data: EditorComponentData
@@ -14,9 +12,12 @@ type SidebarBlocMissingProps = {
 export function SidebarBlocMissing({ data }: SidebarBlocMissingProps) {
   const removeBloc = useRemoveBloc()
   return (
-    <Sortable
+    <SidebarBlocWrapper
       item={data}
-      className={cx(Styles.SidebarBloc, Styles.SidebarBlocMissing)}
+      css={{
+        backgroundColor: 'var(--ve-hover)',
+        boxShadow: 'none',
+      }}
     >
       <SidebarHeading title={`Bloc inconnu : ${data._name}`}>
         <ButtonIcon
@@ -27,6 +28,6 @@ export function SidebarBlocMissing({ data }: SidebarBlocMissingProps) {
           <IconTrash size={20} />
         </ButtonIcon>
       </SidebarHeading>
-    </Sortable>
+    </SidebarBlocWrapper>
   )
 }

@@ -3,54 +3,70 @@ import React, { useState } from 'react'
 import {
   Tabs as RadixTabs,
   TabsContent,
-  TabsList,
+  TabsList as RadixTabsList,
   TabsTrigger,
 } from '@radix-ui/react-tabs'
 
-import Styles from './Tabs.module.scss'
-import cx from 'clsx'
+import styled from '@emotion/styled'
 
 type TabsProps = {
   children: ReactNode
-  className?: string
 }
 type TabProps = {
   children: ReactNode
   title: string
 }
 
-export function Tabs({ children, className }: TabsProps) {
+const TabsList = styled(RadixTabsList)({
+  display: 'flex',
+  gap: '.5rem',
+  marginBottom: '1em',
+})
+
+const TabButton = styled(TabsTrigger)({
+  backgroundColor: 'var(--ve-hover)',
+  borderRadius: 56,
+  padding: '.6rem 1rem',
+  border: 'none',
+  fontWeight: 500,
+  cursor: 'pointer',
+  transition: 'color .3s, background-color .3s',
+})
+
+const TabButtonSelected = {
+  color: 'var(--ve-primary)',
+  backgroundColor: 'var(--ve-primary-light)',
+}
+
+export function Tabs({ children, ...props }: TabsProps) {
   const childrenArray = React.Children.toArray(
     children
   ) as ReactElement<TabProps>[]
   const [currentTab, setCurrentTab] = useState(childrenArray[0]?.props.title)
   return (
     <RadixTabs value={currentTab} onValueChange={setCurrentTab}>
-      <TabsList className={cx(Styles.Tabs, className)}>
+      <TabsList {...props}>
         {childrenArray.map((child) => (
-          <TabsTrigger
-            className={cx(
-              Styles.Tab,
-              currentTab === child.props.title && Styles.TabSelected
-            )}
+          <TabButton
+            css={[currentTab === child.props.title && TabButtonSelected]}
             value={child.props.title}
             key={child.props.title}
           >
             {child.props.title}
-          </TabsTrigger>
+          </TabButton>
         ))}
       </TabsList>
       {childrenArray.map((child) => (
         <TabsContent key={child.props.title} value={child.props.title}>
-          {child.props.children}
+          {child}
         </TabsContent>
       ))}
     </RadixTabs>
   )
 }
 
-function Tab({ children }: TabProps) {
-  return <div>{children}</div>
+function Tab(props: TabProps) {
+  return <div {...props} />
 }
 
 Tabs.Tab = Tab

@@ -102,9 +102,9 @@ export function IconAlignLeft({ size = 24 }: IconProps) {
     >
       <path
         fill="currentColor"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M10 6H5v13h5V6zM3 4v17h9V4H3z"
-        clip-rule="evenodd"
+        clipRule="evenodd"
       />
       <path
         fill="currentColor"
@@ -125,9 +125,9 @@ export function IconAlignRight({ size = 24 }: IconProps) {
     >
       <path
         fill="currentColor"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M19 6h-5v13h5V6zm-7-2v17h9V4h-9z"
-        clip-rule="evenodd"
+        clipRule="evenodd"
       />
       <path
         fill="currentColor"
@@ -149,9 +149,9 @@ export function IconAlignTop({ size = 24 }: IconProps) {
       <defs />
       <path
         fill="currentColor"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M19 5H5v5h14V5zM3 3v9h18V3H3z"
-        clip-rule="evenodd"
+        clipRule="evenodd"
       />
       <path fill="currentColor" d="M20 14v2H3v-2h17zM14 18v2H3v-2h11z" />
     </svg>
@@ -169,9 +169,9 @@ export function IconAlignBottom({ size = 24 }: IconProps) {
     >
       <path
         fill="currentColor"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M19 14H5v5h14v-5zM3 12v9h18v-9H3z"
-        clip-rule="evenodd"
+        clipRule="evenodd"
       />
       <path
         fill="currentColor"

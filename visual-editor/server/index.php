@@ -9,14 +9,6 @@ if ($data['preview'] ?? null) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
-  <script type="module" src="/@vite/client"></script>
-  <script type="module">
-    import RefreshRuntime from "/@react-refresh"
-    RefreshRuntime.injectIntoGlobalHook(window)
-    window.$RefreshReg$ = () => {}
-    window.$RefreshSig$ = () => (type) => type
-    window.__vite_plugin_react_preamble_installed__ = true
-  </script>
   <meta charset="UTF-8"/>
   <link rel="icon" type="image/svg+xml" href="/src/favicon.svg"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>

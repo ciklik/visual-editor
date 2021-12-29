@@ -1,26 +1,24 @@
 import { EditorComponentData } from 'src/types'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useAsyncEffect } from 'src/hooks/useAsyncEffect'
-import { usePreview } from 'src/hooks/usePreview'
 import clsx from 'clsx'
 import {
   PreviewModes,
   useFieldDefinitions,
-  useFieldFocused,
   usePreviewMode,
   useSetBlockIndex,
-  useSetFocusIndex,
 } from 'src/store'
-import { Flipped, Flipper } from 'react-flip-toolkit'
+import { Flipper } from 'react-flip-toolkit'
 import { useWindowSize } from 'react-use'
 import { PHONE_HEIGHT } from 'src/constants'
-import { prevent } from 'src/functions/functions'
-import { Button, IconCirclePlus } from 'src/components/ui'
-import Styles from './Preview.module.scss'
-import { offsetTop } from '../functions/dom'
+import Styles from '../Preview.module.scss'
 import { useToggle } from 'src/hooks/useToggle'
 import { Spinner } from 'src/components/ui/Spinner'
+import { FrameProvider } from 'src/components/Preview/FrameProvider'
+import { PreviewItem } from 'src/components/Preview/PreviewItem'
+import { PreviewAddButton } from 'src/components/Preview/PreviewAddButton'
+import { PreviewAddFloating } from 'src/components/Preview/PreviewAddFloating'
 
 type PreviewProps = {
   data: EditorComponentData[]
@@ -83,15 +81,17 @@ export function Preview({ data, previewUrl, iconsUrl }: PreviewProps) {
         previewMode === PreviewModes.PHONE && Styles.PreviewPhone
       )}
     >
-      <Spinner className={Styles.PreviewSpinner} />
+      <Spinner css={{ color: 'white', opacity: 0.6 }} />
       <iframe ref={iframe} style={transform} onLoad={toggleLoaded} />
       {iframeRoot &&
         createPortal(
-          <PreviewItems
-            data={data}
-            initialHTML={initialHTML.current}
-            previewUrl={previewUrl}
-          />,
+          <FrameProvider container={iframe.current!.contentDocument!}>
+            <PreviewItems
+              data={data}
+              initialHTML={initialHTML.current}
+              previewUrl={previewUrl}
+            />
+          </FrameProvider>,
           iframeRoot
         )}
     </div>
@@ -118,12 +118,7 @@ export function PreviewItems({
       <Flipper flipKey={data.map((d) => d._id).join('_')}>
         {data.map((v, k) => (
           <div key={v._id}>
-            <button
-              className={Styles.PreviewAddButton}
-              onClick={prevent(() => setAddBlockIndex(k))}
-            >
-              <span>Ajouter un bloc</span>
-            </button>
+            <PreviewAddFloating position={k} />
             <PreviewItem
               title={definitions[v._name]?.title || ''}
               data={v}
@@ -133,62 +128,7 @@ export function PreviewItems({
           </div>
         ))}
       </Flipper>
-      <div className={Styles.PreviewAddBlock}>
-        <Button
-          icon={IconCirclePlus}
-          onClick={prevent(() => setAddBlockIndex(data.length))}
-        >
-          Ajouter un bloc
-        </Button>
-      </div>
+      <PreviewAddButton position={data.length} />
     </>
-  )
-}
-
-/**
- * Gère le rendu de chaque composant
- */
-export function PreviewItem({
-  data,
-  initialHTML,
-  previewUrl,
-  title,
-}: {
-  data: EditorComponentData
-  initialHTML: string
-  previewUrl: string
-  title: string
-}) {
-  const ref = useRef<HTMLDivElement>(null)
-  const { loading, html } = usePreview(data, previewUrl, initialHTML)
-  const setFocusIndex = useSetFocusIndex()
-  const isFocused = useFieldFocused(data._id)
-
-  useEffect(() => {
-    if (isFocused) {
-      const top = offsetTop(ref.current!) - 40
-      const root = ref.current!.closest('html')!
-      root.scrollTop = top
-    }
-  }, [isFocused])
-
-  return (
-    <Flipped flipId={data._id}>
-      <div className={Styles.PreviewBlockWrapper} id={`previewItem${data._id}`}>
-        <div
-          className={clsx(
-            Styles.PreviewBlock,
-            loading && Styles.PreviewBlockLoading,
-            isFocused && Styles.PreviewBlockFocused
-          )}
-          ref={ref}
-          onClick={() => setFocusIndex(data._id)}
-        >
-          {loading && <Spinner className={Styles.PreviewBlockSpinner} />}
-          <div className={Styles.PreviewBlockTitle}>{title}</div>
-          <div dangerouslySetInnerHTML={{ __html: html }} />
-        </div>
-      </div>
-    </Flipped>
   )
 }

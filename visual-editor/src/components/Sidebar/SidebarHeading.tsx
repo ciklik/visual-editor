@@ -1,14 +1,14 @@
 import type {
   ForwardedRef,
   ForwardRefExoticComponent,
+  FunctionComponent,
   MouseEventHandler,
   ReactNode,
   RefAttributes,
 } from 'react'
-import { Flex } from 'src/components/ui'
-
-import Styles from './Sidebar.module.scss'
 import { forwardRef } from 'react'
+import { Flex } from 'src/components/ui'
+import styled from '@emotion/styled'
 
 type SidebarHeadingProps = {
   children: ReactNode
@@ -17,20 +17,45 @@ type SidebarHeadingProps = {
   onClick?: MouseEventHandler<HTMLElement>
 }
 
+const Wrapper = styled(Flex)({})
+
+const Title = styled.div({
+  width: '100%',
+  color: 'var(--ve-color-light)',
+  textAlign: 'left',
+  fontSize: '.95em',
+  scrollMargin: '1.8em',
+  cursor: 'pointer',
+  strong: {
+    display: 'block',
+    color: 'var(--ve-color)',
+    fontWeight: 500,
+    fontSize: '1.1em',
+  },
+})
+
+const HoverableActions = styled(Flex)({
+  opacity: 0,
+  transition: 'opacity .3s',
+  '*:hover > &': {
+    opacity: 1,
+  },
+})
+
 export const SidebarHeading = forwardRef<HTMLDivElement, SidebarHeadingProps>(
   (
     { children, onClick, title, description },
     ref: ForwardedRef<HTMLDivElement>
   ) => {
-    const ElementComponent = onClick ? 'button' : 'div'
+    const as = onClick ? 'button' : 'div'
     return (
-      <Flex ref={ref} gap={0} between className={Styles.SidebarHeading}>
-        <ElementComponent className={Styles.SidebarHeading} onClick={onClick}>
+      <Wrapper ref={ref} gap={0} between>
+        <Title as={as} onClick={onClick}>
           <strong>{title}</strong>
           {description}
-        </ElementComponent>
+        </Title>
         {children}
-      </Flex>
+      </Wrapper>
     )
   }
 ) as ForwardRefExoticComponent<
@@ -39,12 +64,8 @@ export const SidebarHeading = forwardRef<HTMLDivElement, SidebarHeadingProps>(
 
 SidebarHeading.displayName = 'SidebarHeading'
 
-function SidebarHeadingHoverable({ children }: { children: ReactNode }) {
-  return (
-    <Flex className={Styles.SidebarHoverable} gap={0}>
-      {children}
-    </Flex>
-  )
+const SidebarHeadingHoverable: FunctionComponent<{}> = (props) => {
+  return <HoverableActions gap={0} {...props} />
 }
 
 SidebarHeading.Hover = SidebarHeadingHoverable

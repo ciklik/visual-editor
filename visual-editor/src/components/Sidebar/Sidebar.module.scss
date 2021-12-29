@@ -1,29 +1,3 @@
-.Sidebar {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background-color: #FBFBFD;
-  z-index: 2;
-  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2),0 10px 10px -5px rgba(0,0,0,0.04);
-  transition: transform .5s cubic-bezier(0.19, 1, 0.22, 1);
-  animation: SidebarIn .7s cubic-bezier(0.19, 1, 0.22, 1) both;
-}
-
-[hidden=hidden] .Sidebar  {
-  animation: SidebarOut .7s cubic-bezier(0.19, 1, 0.22, 1) both;
-}
-
-@keyframes SidebarOut {
-  from {transform: translateX(0) }
-  to {transform: translateX(-100%) }
-}
-
-@keyframes SidebarIn {
-  from {transform: translateX(-100%) }
-  to {transform: translateX(0) }
-}
-
 .SidebarBlocs {
   display: grid;
   grid-template-columns: 1fr;
@@ -34,29 +8,10 @@
   scrollbar-gutter: stable;
 }
 
-.SidebarBloc {
-  position: relative;
-  padding: .8em .5em .8em 1.5em;
-  background-color: #fff;
-  border: 1px solid rgba(0,0,0,0.06);
-  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
-  transition: box-shadow .3s;
-}
-
-.SidebarBlocMissing {
-  background-color: var(--ve-hover);
-  box-shadow: none;
-}
-
 .SidebarBlocBody {
   margin-top: .5em;
 }
 
-.SidebarBloc[data-dragging] {
-  box-shadow: var(--ve-shadow-dragging);
-  transition: box-shadow .3s!important;
-  z-index: 10;
-}
 
 .SidebarHeading {
   width: 100%;

@@ -3,8 +3,8 @@ import { SortableWrapper } from 'src/components/Sortable'
 import { moveItem } from 'src/functions/array'
 import { useFieldDefinitions, useUpdateData } from 'src/store'
 
-import Styles from './Sidebar.module.scss'
 import { SidebarBloc } from './SidebarBloc'
+import styled from '@emotion/styled'
 
 /**
  * Génère la liste des champs dans la sidebar
@@ -17,7 +17,7 @@ export function SidebarBlocs({ data }: { data: EditorComponentData[] }) {
   }
 
   return (
-    <div className={Styles.SidebarBlocs}>
+    <Wrapper>
       <SortableWrapper items={data} onMove={handleMove}>
         {data.map((v, k) => (
           <SidebarBloc
@@ -28,6 +28,16 @@ export function SidebarBlocs({ data }: { data: EditorComponentData[] }) {
           />
         ))}
       </SortableWrapper>
-    </div>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled.div({
+  display: 'grid',
+  gridTemplateColumns: '1fr',
+  flexDirection: 'column',
+  gridGap: '1em',
+  padding: '1em',
+  overflow: 'auto',
+  scrollbarGutter: 'stable',
+})

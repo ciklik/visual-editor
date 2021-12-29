@@ -1,10 +1,10 @@
 import type { EventHandler, MouseEventHandler, ReactNode } from 'react'
-import Styles from './Flash.module.scss'
 import { Flex } from './Flex'
 import { Button } from './Button'
-import cx from 'clsx'
 import { AnimatePresence } from './Animation/AnimatedPresence'
 import { prevent, preventPropagation } from 'src/functions/functions'
+import styled from '@emotion/styled'
+import { keyframes } from '@emotion/react'
 
 type FlashProps = {
   children: ReactNode
@@ -25,28 +25,84 @@ export function Flash({
   className,
 }: FlashProps) {
   return (
-    <AnimatePresence in={Styles.FlashIn!} out={Styles.FlashOut!}>
+    <AnimatePresence in={FlashIn} out={FlashOut}>
       {children && (
-        <Flex between className={cx(Styles.Flash, className)}>
+        <Wrapper between>
           <div>{children}</div>
           {action && (
-            <Button
-              size="small"
-              className={Styles.FlashButton}
-              onClick={prevent(onClick)}
-            >
+            <FlashButton size="small" onClick={prevent(onClick)}>
               {action}
-            </Button>
+            </FlashButton>
           )}
           {duration && (
-            <div
+            <Progress
               onAnimationEnd={preventPropagation(onHide)}
-              className={Styles.FlashProgress}
               style={{ animationDuration: `${duration}s` }}
             />
           )}
-        </Flex>
+        </Wrapper>
       )}
     </AnimatePresence>
   )
 }
+
+const Wrapper = styled(Flex)({
+  position: 'fixed',
+  bottom: '1rem',
+  right: '2rem',
+  color: 'var(--ve-background)',
+  background: 'var(--ve-dark)',
+  zIndex: 1001,
+  padding: '1em',
+  borderRadius: '4px',
+  width: '460px',
+  fontWeight: 500,
+})
+
+const FlashButton = styled(Button)({
+  border: 'solid 1px var(--ve-background)',
+  backgroundColor: 'transparent',
+})
+
+const ProgressKeyframe = keyframes({
+  from: {
+    transform: 'scaleX(0)',
+  },
+  to: {
+    transform: 'scaleX(1)',
+  },
+})
+
+const Progress = styled.div({
+  display: 'block',
+  position: 'absolute',
+  bottom: '0',
+  left: '0',
+  width: '100%',
+  height: '4px',
+  transformOrigin: '0 0',
+  backgroundColor: 'var(--ve-primary)',
+  animation: `${ProgressKeyframe} 1s both linear`,
+})
+
+const FlashIn = keyframes({
+  from: {
+    transform: 'translateX(3em);',
+    opacity: 0,
+  },
+  to: {
+    transform: 'translateX(0)',
+    opacity: 1,
+  },
+})
+
+const FlashOut = keyframes({
+  from: {
+    transform: 'translateX(0)',
+    opacity: 1,
+  },
+  to: {
+    transform: 'translateX(-3em);',
+    opacity: 0,
+  },
+})

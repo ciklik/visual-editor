@@ -1,27 +1,30 @@
 import { AbstractFieldGroup } from 'src/fields/AbstractFieldGroup'
 import { FunctionComponent } from 'react'
 import { Field, Flex } from 'src/components/ui'
-import Styles from './Row.module.scss'
+import styled from '@emotion/styled'
 
 type RowArgs = {
   label?: string
   columns?: string
 }
 
+const Wrapper = styled(Flex)({}, ({ columns }: { columns?: string }) =>
+  columns
+    ? {
+        display: 'grid',
+        gridTemplateColumns: columns,
+        '& > *': {
+          width: '100%',
+        },
+      }
+    : {}
+)
+
 export class Row extends AbstractFieldGroup<RowArgs> {
   render: FunctionComponent = ({ children }) => {
     return (
       <Field label={this.args.label}>
-        <Flex
-          className={this.args.columns ? undefined : Styles.Row}
-          style={
-            this.args.columns
-              ? { display: 'grid', gridTemplateColumns: this.args.columns }
-              : undefined
-          }
-        >
-          {children}
-        </Flex>
+        <Wrapper columns={this.args.columns}>{children}</Wrapper>
       </Field>
     )
   }
