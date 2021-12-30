@@ -5,7 +5,7 @@ export const SidebarBlocWrapper = styled(Sortable, {
   target: 'SidebarBlocWrapper',
 })({
   position: 'relative',
-  padding: '.8em .5em .8em 1.5em',
+  padding: '.8em .6em .8em 1.4em',
   backgroundColor: '#fff',
   border: '1px solid rgba(0,0,0,0.06)',
   boxShadow: '0 1px 2px 0 rgba(0,0,0,0.05)',

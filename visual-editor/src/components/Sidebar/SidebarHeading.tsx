@@ -38,7 +38,7 @@ const Title = styled.div({
 const HoverableActions = styled(Flex)({
   opacity: 0,
   transition: 'opacity .3s',
-  [`${SidebarBlocWrapper}:hover &`]: {
+  [`*:hover > * > &`]: {
     opacity: 1,
   },
 })
