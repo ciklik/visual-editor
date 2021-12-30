@@ -98,8 +98,9 @@ const In = keyframes({
 })
 
 const Tooltip = styled(Popover.Content)({
-  padding: '.5em',
+  padding: 3,
   backgroundColor: 'white',
+  border: 'solid 1px rgba(0, 0, 0, 0.1)',
   boxShadow:
     'rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px',
   borderRadius: '4px',
@@ -109,7 +110,7 @@ const Tooltip = styled(Popover.Content)({
 const Palette = styled.div({
   flexWrap: 'wrap',
   display: 'flex',
-  width: 'calc(25px * var(--children) * 0.5)',
+  width: 'calc(27px * var(--children) * 0.5)',
 })
 
 const PaletteItem = styled(UnstyledButton)({
@@ -117,6 +118,7 @@ const PaletteItem = styled(UnstyledButton)({
   backgroundColor: 'var(--ve-color)',
   width: '25px',
   height: '25px',
+  margin: 1,
   flex: 'none',
   zIndex: 2,
   cursor: 'pointer',
@@ -124,6 +126,8 @@ const PaletteItem = styled(UnstyledButton)({
   border: '1px solid var(--ve-field-border)',
   boxShadow: 'var(--ve-field-shadow)',
   '&:hover': {
+    zIndex: 3,
+    transform: 'scale(1.2)',
     borderColor: 'var(--ve-primary)',
     outline: '0',
     boxShadow: '0 0 0 0.25rem rgb(23 113 230 / 25%)',
