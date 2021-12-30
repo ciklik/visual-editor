@@ -1,27 +1,23 @@
 import {
-  HTMLText,
-  Repeater,
-  Text,
-  VisualEditor,
-  Number as NumberField,
-  Checkbox,
-  Range,
-  Select,
   Alignment,
+  Checkbox,
+  EN,
+  HTMLText,
+  Number as NumberField,
+  Range,
+  Repeater,
+  Row,
+  Select,
+  Tabs,
+  Text,
   TextAlign,
-  Row, Tabs,
+  VisualEditor,
 } from 'src/VisualEditor'
-import {
-  ButtonField,
-  ButtonsField,
-  ColorField,
-  ContentField,
-  ImageField,
-  TitleField,
-  WithStyles,
-} from './shared'
+import { ButtonField, ButtonsField, ColorField, ContentField, ImageField, TitleField, WithStyles } from './shared'
 
-let editor = new VisualEditor()
+let editor = new VisualEditor({
+  lang: EN
+})
 
 editor.registerComponent('hero', {
   title: 'Hero',

@@ -35,16 +35,16 @@ editor.registerComponent('hero', {
   title: 'Hero',
   category: 'Banner',
   fields: [
-    new Text('title', {multiline: false}),
-    new HTMLText('content'),
-    new Repeater('buttons', {
+    Text('title', {multiline: false}),
+    HTMLText('content'),
+    Repeater('buttons', {
       title: 'Boutons',
       addLabel: 'Add a new button',
       fields: [
-        new Row([
-          new Text('label', { label: 'Libellé', default: 'Call to action' }),
-          new Text('url', { label: 'Lien' }),
-          new Select('type', {
+        Row([
+          Text('label', { label: 'Libellé', default: 'Call to action' }),
+          Text('url', { label: 'Lien' }),
+          Select('type', {
             default: 'primary',
             label: 'type',
             options: [

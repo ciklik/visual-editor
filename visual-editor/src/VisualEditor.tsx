@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {
+import type {
   EditorComponentData,
   EditorComponentDefinition,
-  EditorComponentDefinitions,
+  EditorComponentDefinitions, Translation,
+  TranslationKey,
 } from 'src/types'
 import { useEffect, useMemo, useRef } from 'react'
 import { Layout } from 'src/components/Layout'
@@ -15,6 +16,7 @@ import { fillDefaults } from 'src/functions/fields'
 import { useStateDelayed } from 'src/hooks/useStateDelayed'
 import { BaseStyles } from 'src/components/BaseStyles'
 import { disableEmotionWarnings } from 'src/functions/css'
+import { Translations as EN } from 'src/langs/en'
 
 const components: EditorComponentDefinitions = {}
 
@@ -22,6 +24,13 @@ const components: EditorComponentDefinitions = {}
  * Interface publique du module
  */
 export class VisualEditor {
+
+  static i18n: Translation = EN
+
+  constructor (options: {lang?: Translation}) {
+    VisualEditor.i18n = options.lang || EN
+  }
+
   registerComponent(name: string, definition: EditorComponentDefinition) {
     components[name] = { label: 'title', ...definition }
   }
@@ -213,4 +222,6 @@ export { Number } from 'src/fields/Number'
 export { Range } from 'src/fields/Range'
 export { Tabs } from 'src/fields/Tabs'
 export { TextAlign } from 'src/fields/TextAlign'
+export { Translations as FR } from 'src/langs/fr'
+export { Translations as EN } from 'src/langs/en'
 export { React }

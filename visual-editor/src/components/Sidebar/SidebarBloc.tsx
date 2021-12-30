@@ -11,6 +11,7 @@ import { ButtonIcon, Flex, IconDown, IconTrash } from 'src/components/ui'
 import { SidebarFields } from './SidebarFields'
 import { CopyAction } from './Actions/CopyAction'
 import { SidebarBlocWrapper } from 'src/components/Sidebar/SidebarBlocWrapper'
+import { t } from 'src/functions/i18n'
 
 type SidebarBlocProps = {
   data: EditorComponentData
@@ -75,7 +76,7 @@ export const SidebarBloc = memo(function SidebarItem({
       >
         <SidebarHeading.Hover>
           <CopyAction data={data} size={20} />
-          <ButtonIcon danger onClick={handleRemove} title="Supprimer l'élément">
+          <ButtonIcon danger onClick={handleRemove} title={t('deleteComponent')}>
             <IconTrash size={20} />
           </ButtonIcon>
         </SidebarHeading.Hover>

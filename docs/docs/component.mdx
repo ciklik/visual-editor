@@ -15,10 +15,6 @@ editor.registerComponent('<COMPONENT_IDENTIFIER>', {
 })
 ```
 
-The fields property is an array of fields that inherits the [AbstractField](https://github.com/boxraiser/visual-editor/blob/main/visual-editor/src/fields/AbstractField.ts) or [AbstractFieldGroup](https://github.com/boxraiser/visual-editor/blob/main/visual-editor/src/fields/AbstractFieldGroup.ts). All the **AbstractField** have the same signature
-
-```js
-new AbstractFieldImplementation('identifier' /* string */, {option: 'value'} /* object */)
-```
+The fields property is an array of field definition
 
 You can use the built in fields (explained in the next chapter of this documentation) or [create your own](./Fields/CustomField.md).

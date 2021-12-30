@@ -9,6 +9,7 @@ import createContext from 'zustand/context'
 import { clamp } from './functions/number'
 import React, { ReactElement, useCallback } from 'react'
 import { fillDefaults } from './functions/fields'
+import { t } from 'src/functions/i18n'
 
 export enum PreviewModes {
   PHONE,
@@ -68,7 +69,7 @@ const createStore = (
             return set(({ data }) => ({
               previousData: data,
               data: data.filter((d) => d !== removedData),
-              rollbackMessage: 'Le bloc a bien été supprimé',
+              rollbackMessage: t('deleteItemConfirm'),
             }))
           },
           rollback: function () {

@@ -1,4 +1,8 @@
 import { FunctionComponent, ReactElement } from 'react'
+import {Translations} from 'src/langs/fr'
+
+export type TranslationKey = keyof typeof Translations
+export type Translation = Record<TranslationKey, string>
 
 // The data exported by a component
 export type EditorComponentData = {

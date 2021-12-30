@@ -4,6 +4,7 @@ import { prevent } from 'src/functions/functions'
 import { ButtonIcon, IconTrash } from 'src/components/ui'
 import { useRemoveBloc } from 'src/store'
 import { EditorComponentData } from 'src/types'
+import { t } from 'src/functions/i18n'
 
 type SidebarBlocMissingProps = {
   data: EditorComponentData
@@ -19,11 +20,11 @@ export function SidebarBlocMissing({ data }: SidebarBlocMissingProps) {
         boxShadow: 'none',
       }}
     >
-      <SidebarHeading title={`Bloc inconnu : ${data._name}`}>
+      <SidebarHeading title={`${t('unknownComponent')} : ${data._name}`}>
         <ButtonIcon
           danger
           onClick={prevent(() => removeBloc(data))}
-          title="Supprimer l'élément"
+          title={t('deleteComponent')}
         >
           <IconTrash size={20} />
         </ButtonIcon>

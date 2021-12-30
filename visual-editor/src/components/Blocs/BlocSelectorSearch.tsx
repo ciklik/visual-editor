@@ -1,5 +1,6 @@
 import { IconSearch } from 'src/components/ui'
 import styled from '@emotion/styled'
+import { t } from 'src/functions/i18n'
 
 type BlocSelectorSearchProps = {
   value: string
@@ -35,7 +36,7 @@ export function BlocSelectorSearch({
     <Wrapper>
       <Input
         type="search"
-        placeholder="Rechercher un bloc"
+        placeholder={t('searchComponent')}
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />

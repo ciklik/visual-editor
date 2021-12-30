@@ -11,6 +11,7 @@ import { Modal, Tabs } from 'src/components/ui'
 import { BlocSelectorItem } from 'src/components/Blocs/BlocSelectorItem'
 import { BlocSelectorSearch } from 'src/components/Blocs/BlocSelectorSearch'
 import { BlocSelectorGrid } from 'src/components/Blocs/BlocSelectorGrid'
+import { t } from 'src/functions/i18n'
 
 const ALL_TAB = 'Tous les blocs'
 
@@ -54,7 +55,7 @@ export function BlocSelector({ iconsUrl }: BlocSelectorProps) {
     <Modal
       visible={isVisible}
       onVisibilityChange={handleVisibilityChange}
-      title="Ajouter un bloc"
+      title={t('addComponent')}
     >
       <BlocSelectorSearch value={search} onChange={setSearch} />
       <Tabs css={{ margin: '1.5rem 0' }}>

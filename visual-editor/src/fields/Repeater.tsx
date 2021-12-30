@@ -11,6 +11,7 @@ import { SidebarHeading } from 'src/components/Sidebar/SidebarHeading'
 import { FunctionComponent, useMemo } from 'react'
 import styled from '@emotion/styled'
 import { defineField } from 'src/fields/utils'
+import { t } from 'src/functions/i18n'
 
 type FieldValue = RepeaterLine[]
 
@@ -138,7 +139,7 @@ const FieldLine: FunctionComponent<{
             <ButtonIcon
               danger
               onClick={() => onRemove(line)}
-              title="Supprimer l'élément"
+              title={t('deleteItem')}
             >
               <IconTrash size={20} />
             </ButtonIcon>
@@ -227,7 +228,7 @@ const FieldItem: FunctionComponent<{
 }
 
 export const Repeater = defineField<FieldArgs, FieldValue>({
-  defaultOptions: { addLabel: 'Ajouter un élément', fields: [], default: [] },
+  defaultOptions: { addLabel: 'addItem', fields: [], default: [] },
   render: Component
 })
 

@@ -4,6 +4,7 @@ import { copyToClipboard } from 'src/functions/browser'
 import { stringifyFields } from 'src/functions/object'
 import { ButtonIcon, IconCheck, IconCode, Tooltip } from 'src/components/ui'
 import React, { useEffect, useRef, useState } from 'react'
+import { t } from 'src/functions/i18n'
 
 type CopyActionProps = {
   data: EditorComponentData | EditorComponentData[]
@@ -25,8 +26,8 @@ export function CopyAction({ data, size, ...props }: CopyActionProps) {
     }
   }
   const tooltipLabel = Array.isArray(data)
-    ? 'Copier le code de la page'
-    : 'Copier le  bloc'
+    ? t('copyPage')
+    : t('copyComponent')
 
   useEffect(() => {
     clearTimeout(timer.current)
@@ -37,9 +38,9 @@ export function CopyAction({ data, size, ...props }: CopyActionProps) {
       content={
         success ? (
           <>
-            Le code a bién été copié
+            {t('copySuccess')}
             <br />
-            vous pouvez le coller sur une autre page (CTRL + V)
+            {t('copyInstructions')}
           </>
         ) : (
           tooltipLabel

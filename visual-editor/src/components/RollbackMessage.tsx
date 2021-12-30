@@ -1,5 +1,6 @@
 import { Flash } from 'src/components/ui'
 import { useRollbackMessage } from 'src/store'
+import { t } from 'src/functions/i18n'
 
 export function RollbackMessage() {
   const {
@@ -10,7 +11,7 @@ export function RollbackMessage() {
 
   return (
     <Flash
-      action="Rétablir"
+      action={t('rollback')}
       onClick={rollback}
       duration={3}
       onHide={voidRollback}

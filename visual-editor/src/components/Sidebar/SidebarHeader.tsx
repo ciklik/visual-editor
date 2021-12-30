@@ -18,6 +18,7 @@ import {
 import { CopyAction } from './Actions/CopyAction'
 
 import styled from '@emotion/styled'
+import { t } from 'src/functions/i18n'
 
 type SidebarHeaderProps = {
   onClose: () => void
@@ -39,11 +40,11 @@ export function SidebarHeader({ onClose }: SidebarHeaderProps) {
       </div>
       <Flex>
         <CopyAction data={data} size={20} />
-        <ButtonIcon onClick={prevent(togglePreviewMode)} title="Vue responsive">
+        <ButtonIcon onClick={prevent(togglePreviewMode)} title={t('responsiveView')}>
           {isPhone ? <IconDesktop size={20} /> : <IconPhone size={24} />}
         </ButtonIcon>
         <Button icon={IconCirclePlus} onClick={prevent(() => setAddBlock(0))}>
-          Ajouter un bloc
+          {t('addComponent')}
         </Button>
       </Flex>
     </Wrapper>

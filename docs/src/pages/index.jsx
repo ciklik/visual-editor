@@ -13,9 +13,9 @@ editor.registerComponent('hero', {
   title: 'Hero',
   category: 'Banner',
   fields: [
-    new Text('title', {multiline: false}),
-    new HTMLText('content'),
-    new Repeater('buttons', {
+    Text('title', {multiline: false}),
+    HTMLText('content'),
+    Repeater('buttons', {
       title: 'Buttons',
       addLabel: 'Add a new button',
       fields: [
