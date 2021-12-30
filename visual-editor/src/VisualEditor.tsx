@@ -27,7 +27,7 @@ export class VisualEditor {
 
   static i18n: Translation = EN
 
-  constructor (options: {lang?: Translation}) {
+  constructor (options: {lang?: Translation} = {}) {
     VisualEditor.i18n = options.lang || EN
   }
 

@@ -30,15 +30,15 @@ const Component: FieldGroupComponent<FieldOptions> = ({ children, options }) => 
   )
 }
 
-export function Tabs (...tabs: TabDefinition[]): FieldGroupDefinition<FieldOptions> {
+export function Tabs (...tabs: TabDefinition[]) {
   return {
     ...defaultFieldProperties(),
-    group: true,
+    group: true as const,
     options: {tabs: tabs},
     render: Component,
     fields: tabs.reduce(
       (acc, tab) => [...acc, ...tab.fields],
       [] as TabDefinition['fields']
-    )
+    ) as FieldDefinition<any, any>[]
   }
 }

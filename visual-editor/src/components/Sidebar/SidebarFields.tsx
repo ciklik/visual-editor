@@ -30,7 +30,7 @@ export function SidebarFields({ fields, data, path }: SidebarFieldsProps) {
                   field={field}
                   value={field.name ? data[field.name] : undefined}
                   path={`${path}.${field.name}`}
-                  style={field.injectStyle ? field.injectStyle(data) : null}
+                  extraProps={field.extraProps ? field.extraProps(data) : undefined}
                 />
               )
         )}
@@ -42,12 +42,12 @@ function SidebarField({
   field,
   value,
   path,
-  style,
+  extraProps,
 }: {
-  field: FieldDefinition<any, any> & {group: false}
+  field: FieldDefinition & {group?: false}
   value: string
   path: string
-  style: Record<string, string> | null
+  extraProps?: Record<string, any>
 }) {
   const updateData = useUpdateData()
   const Component = field.render
@@ -59,14 +59,11 @@ function SidebarField({
   )
 
   return (
-    <div
-      style={style as any}
-      >
       <Component
         value={value}
         onChange={onChangeCallback}
         options={field.options}
+        {...extraProps}
       />
-    </div>
   )
 }

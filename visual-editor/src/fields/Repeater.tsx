@@ -167,7 +167,7 @@ const FieldLine: FunctionComponent<{
 }
 
 const Fields: FunctionComponent<{
-  fields: Array<FieldDefinition<any, any>>
+  fields: Array<FieldDefinition>
   line: RepeaterLine
   index: number
   onUpdate: (path: string) => (v: unknown) => void
@@ -193,7 +193,7 @@ const Fields: FunctionComponent<{
 }
 
 const FieldItem: FunctionComponent<{
-  field: FieldDefinition<any, any>
+  field: FieldDefinition
   line: RepeaterLine
   index: number
   onUpdate: (path: string) => (v: unknown) => void
@@ -227,8 +227,8 @@ const FieldItem: FunctionComponent<{
   )
 }
 
-export const Repeater = defineField<FieldArgs, FieldValue>({
-  defaultOptions: { addLabel: 'addItem', fields: [], default: [] },
+export const Repeater = defineField<FieldArgs, FieldValue>(() => ({
+  defaultOptions: { addLabel: t('addItem'), fields: [], default: [] },
   render: Component
-})
+}))
 

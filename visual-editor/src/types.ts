@@ -11,28 +11,24 @@ export type EditorComponentData = {
   [key: string]: any
 }
 
-export type FieldFactory<O, V> = (name: string, options?: O) => FieldDefinition<O, V>
-export type FieldComponent<O, V> = FunctionComponent<{ value: V, onChange: (v: V) => void, options: O }>
-
-export type FieldGroupFactory<O> = (fields: FieldDefinition<any, any>[], options?: O) => FieldDefinition<O, never> & { group: true }
+export type FieldComponent<FieldOptions, FieldValue, FieldExtraParams = {}> = FunctionComponent<{ value: FieldValue, onChange: (v: FieldValue) => void, options: FieldOptions } & FieldExtraParams>
 export type FieldGroupComponent<O> = FunctionComponent<{ options: O, children: ReactElement }>
 
-export type FieldDefinition<O, V> = {
+export type FieldDefinition<O = Record<string, unknown>, V = unknown> = SingleFieldDefinition<O, V> | FieldGroupDefinition<O>
+export type SingleFieldDefinition<O, V> = {
   name: string,
   options: O,
   render: FieldComponent<O, V>,
   shouldRender: (data: Record<string, unknown>) => boolean,
-  group: false,
-  when:  (fieldName: string, expectedValue: any) => FieldDefinition<O, V>
-  injectStyle?: (data: Record<string, any>) => Record<string, string> | null
-} | FieldGroupDefinition<O>
+  group?: false,
+  extraProps?: (data: Record<string, unknown>) => Record<string, any>,
+}
 export type FieldGroupDefinition<O> = {
   options: O,
   render: FieldGroupComponent<O>,
   shouldRender: (data: Record<string, unknown>) => boolean,
   group: true
-  fields: FieldDefinition<any, any>[],
-  when: (fieldName: string, expectedValue: any) => FieldGroupDefinition<O>
+  fields: FieldDefinition[],
 }
 
 export interface IndexableObject {

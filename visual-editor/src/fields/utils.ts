@@ -1,11 +1,4 @@
-import {
-  FieldComponent,
-  FieldCondition,
-  FieldDefinition,
-  FieldFactory,
-  FieldGroupComponent,
-  FieldGroupFactory,
-} from 'src/types'
+import type { FieldComponent, FieldCondition, FieldDefinition, FieldGroupComponent } from 'src/types'
 import { cast } from 'src/functions/object'
 
 type FieldOption = Record<string, any>
@@ -13,38 +6,28 @@ type FieldOption = Record<string, any>
 /**
  * Helpers to ease the creation of new field type
  */
-
-export function defineField<Options extends FieldOption, Value>(args: {defaultOptions: Options, render: FieldComponent<Options, Value>}): FieldFactory<Options, Value>
+export function defineField<Options extends FieldOption, Value>(args: {
+  defaultOptions: Options,
+  render: FieldComponent<Options, Value>,
+} | (() => {
+  defaultOptions: Options,
+    render: FieldComponent<Options, Value>,
+}))
 {
   return (name: string, options = {} as Options) => {
+    const fieldArgs = typeof args === 'function' ? args() : args
     return {
-      ...genericFieldDefinition(args, options),
-      ...args,
-      options: {...args.defaultOptions, ...options},
+      ...genericFieldDefinition(fieldArgs, options),
+      ...fieldArgs,
+      options: {...fieldArgs.defaultOptions, ...options},
       name,
       group: false as const,
-      // Inject CSS variables for the component using the "variables" options
-      // For instance variables: {background: 'backgroundColor'} will look for a 'backgroundColor' field for the current component
-      // and will create a `--ve-field-background: <backgroundColor Value>` property
-      injectStyle (data: Record<string, any>): Record<string, string> | null {
-        if (this.options.variables) {
-          const variables = this.options.variables as Record<string, string>
-          return Object.keys(variables).reduce((acc, key) => {
-            const value = data[variables![key]!]
-            if (value) {
-              return { ...acc, [`--ve-field-${key}`]: `var(${value})` }
-            }
-            return acc
-          }, {})
-        }
-        return null
-      }
     }
   }
 }
 
 
-export function defineFieldGroup<Options extends FieldOption>(args: {defaultOptions: Options, render: FieldGroupComponent<Options>}): FieldGroupFactory<Options>
+export function defineFieldGroup<Options extends FieldOption>(args: {defaultOptions: Options, render: FieldGroupComponent<Options>})
 {
   return (fields: FieldDefinition<any, any>[], options: Options = {} as Options) => {
     return {
@@ -62,7 +45,7 @@ export function defaultFieldProperties () {
     shouldRender(data: Record<string, any>) {
       return this.conditions.filter((condition) => !condition(data)).length === 0
     },
-    when (fieldName: string, expectedValue: any = true) {
+    when (fieldName: string, expectedValue: unknown = true) {
       return {
         ...this,
         conditions: [

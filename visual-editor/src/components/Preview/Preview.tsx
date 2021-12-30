@@ -29,7 +29,6 @@ export function Preview({ data, previewUrl }: PreviewProps) {
 
   // Gère le chargement de la preview initiale
   useAsyncEffect(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 2000))
     // On génère le premier rendu de la page complète
     const r = await fetch(previewUrl, {
       method: 'POST',

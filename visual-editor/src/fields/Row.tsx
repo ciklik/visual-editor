@@ -1,6 +1,6 @@
 import { Field, Flex } from 'src/components/ui'
 import styled from '@emotion/styled'
-import { FieldGroupComponent, FieldGroupFactory } from 'src/types'
+import { FieldGroupComponent } from 'src/types'
 import { defineFieldGroup } from 'src/fields/utils'
 
 type RowArgs = {
@@ -16,7 +16,7 @@ const RowComponent: FieldGroupComponent<RowArgs> = ({ options, children }) => {
   )
 }
 
-export const Row: FieldGroupFactory<RowArgs> = defineFieldGroup({
+export const Row = defineFieldGroup<RowArgs>({
   defaultOptions: {},
   render: RowComponent,
 })

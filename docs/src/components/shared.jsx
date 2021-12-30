@@ -98,8 +98,8 @@ const ButtonsField = () =>
 const Style = () => [
   Row(
     [
-      ColorField("backgroundColor", "Background color"),
-      ColorField("textColor", "Text color"),
+      ColorField("backgroundColor", "Background"),
+      ColorField("textColor", "Text"),
       ImageField("background", "Background"),
       ImageField("backgroundMobile", "Background (mobile)"),
     ],

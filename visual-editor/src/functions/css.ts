@@ -20,3 +20,20 @@ export const disableEmotionWarnings = () => {
     log(...args);
   };
 };
+
+/**
+ * Convert a color into a CSS property
+ * #FF0000 => #FF0000
+ * --blue  => var(--blue)
+ */
+export function colorToProperty(color: string | undefined) {
+  if (typeof color !== 'string') {
+    return undefined
+  }
+  if (color.startsWith('--')) {
+    return `var(${color})`
+  }
+  return color
+}
+
+

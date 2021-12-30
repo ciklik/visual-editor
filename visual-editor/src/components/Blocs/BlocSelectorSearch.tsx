@@ -1,4 +1,4 @@
-import { IconSearch } from 'src/components/ui'
+import { IconSearch, Styles } from 'src/components/ui'
 import styled from '@emotion/styled'
 import { t } from 'src/functions/i18n'
 
@@ -26,6 +26,7 @@ const Input = styled.input({
   padding: '0 1rem 0 2.6rem',
   border: '1px solid transparent',
   font: 'inherit',
+  '&:focus': Styles.FocusState
 })
 
 export function BlocSelectorSearch({

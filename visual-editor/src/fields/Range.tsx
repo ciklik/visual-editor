@@ -1,5 +1,5 @@
 import { FieldComponent } from 'src/types'
-import { Field } from 'src/components/ui'
+import { Field, Styles } from 'src/components/ui'
 import * as Slider from '@radix-ui/react-slider'
 import styled from '@emotion/styled'
 import { defineField } from 'src/fields/utils'
@@ -85,4 +85,5 @@ const Cursor = styled(Slider.Thumb)({
     'rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px',
   cursor: 'pointer',
   border: '1px solid var(--ve-field-border)',
+  '&:focus': Styles.FocusState
 })

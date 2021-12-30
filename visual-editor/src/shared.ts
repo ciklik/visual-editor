@@ -48,14 +48,14 @@ export const ImageField = (name: string = 'image', label: string = 'image') =>
 
 export const ButtonField = () =>
   Row([
-    Text('label', { label: 'Libellé', default: 'Call to action' }),
-    Text('url', { label: 'Lien' }),
+    Text('label', { label: 'Label', default: 'Call to action' }),
+    Text('url', { label: 'Link' }),
     Select('type', {
       default: 'primary',
       label: 'type',
       options: [
-        { label: 'Primaire', value: 'primary' },
-        { label: 'Secondaire', value: 'secondary' },
+        { label: 'Primary', value: 'primary' },
+        { label: 'Secondary', value: 'secondary' },
       ],
     }),
   ])
@@ -73,7 +73,7 @@ export const TitleField = (name = 'title', label = 'Titre') =>
         colors: Colors,
       }),
       TextAlign(name + 'Align', {
-        label: 'Alignement',
+        label: 'Alignment',
       }),
     ],
     { columns: '1fr max-content' }
@@ -86,26 +86,24 @@ export const ContentField = (name = 'content', label = 'Description') =>
       '<p>Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.</p>',
     multiline: true,
     colors: Colors,
-    variables: {
-      background: 'backgroundColor',
-      color: 'textColor'
-    }
+    backgroundColor: 'backgroundColor',
+    textColor: 'textColor',
   })
 
 export const ButtonsField = () =>
   Repeater('buttons', {
     label: 'Boutons',
-    addLabel: 'Ajouter un bouton',
+    addLabel: 'Add a bouton',
     fields: [ButtonField()],
   })
 
 export const Style = () => [
   Row(
     [
-      ColorField('backgroundColor', 'Fond'),
-      ColorField('textColor', 'Texte'),
-      ImageField('background', 'Fond'),
-      ImageField('backgroundMobile', 'Fond (mobile)'),
+      ColorField('backgroundColor', 'Bg'),
+      ColorField('textColor', 'Text'),
+      ImageField('background', 'Background'),
+      ImageField('backgroundMobile', 'Background (mobile)'),
     ],
     { columns: '50px 50px 1fr 1fr' }
   ),
@@ -113,18 +111,18 @@ export const Style = () => [
   Row([
     Select('backgroundSize', {
       default: 'cover',
-      label: 'Taille',
+      label: 'Size',
       options: [
-        { label: 'Remplir', value: 'cover' },
-        { label: 'Contenir', value: 'contain' },
+        { label: 'Cover', value: 'cover' },
+        { label: 'Contain', value: 'contain' },
         { label: 'Original', value: 'auto' },
       ],
     }),
     Select('backgroundRepeat', {
       default: 'no-repeat',
-      label: 'Répétition',
+      label: 'Repeat',
       options: [
-        { label: 'Aucune', value: 'no-repeat' },
+        { label: 'None', value: 'no-repeat' },
         { label: 'x', value: 'repeat-x' },
         { label: 'y', value: 'repeat-y' },
         { label: 'x & y', value: 'repeat' },
@@ -159,11 +157,11 @@ export const WithStyles = (
   return [
     Tabs(
       {
-        label: 'Contenu',
+        label: 'Content',
         fields: contentFields,
       },
       {
-        label: 'Apparence',
+        label: 'Appearance',
         fields: [...styleFields, ...Style()],
       }
     ),

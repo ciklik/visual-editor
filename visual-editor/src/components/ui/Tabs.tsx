@@ -8,6 +8,7 @@ import {
 } from '@radix-ui/react-tabs'
 
 import styled from '@emotion/styled'
+import { Styles } from 'src/components/ui/Styles'
 
 type TabsProps = {
   children: ReactNode

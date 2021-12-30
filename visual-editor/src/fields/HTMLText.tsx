@@ -1,7 +1,7 @@
 import { FieldComponent } from 'src/types'
 import { QuillEditor, QuillEditorMode } from 'src/fields/shared/QuillEditor'
 import { Field } from 'src/components/ui'
-import { defineField } from 'src/fields/utils'
+import { defaultFieldProperties, defineField } from 'src/fields/utils'
 
 type FieldArgs = {
   label?: string
@@ -12,8 +12,11 @@ type FieldArgs = {
   // A set of color for text (ex: ["--primary", "--secondary"]
   colors?: string[]
   default?: string,
-  variables?: Record<string, string>
+  backgroundColor?: string,
+  textColor?: string
 }
+
+type ExtraParams = {backgroundColor?: string, textColor?: string}
 
 const fieldType = (options: FieldArgs): QuillEditorMode => {
     if (options.multiline === false) {
@@ -25,23 +28,33 @@ const fieldType = (options: FieldArgs): QuillEditorMode => {
     return QuillEditorMode.DEFAULT
 }
 
-const Component: FieldComponent<FieldArgs, string> = ({value, onChange, options}) => {
+const Component: FieldComponent<FieldArgs, string, ExtraParams> = ({value, onChange, options, backgroundColor, textColor}) => {
 return <Field label={options.label} help={options.help}>
   <QuillEditor
     value={value || ''}
     onChange={onChange}
     mode={fieldType(options)}
     colors={options.colors}
+    backgroundColor={backgroundColor}
+    color={textColor}
   />
 </Field>
 }
 
-export const HTMLText = defineField<FieldArgs, string>({
-  defaultOptions: {
-    multiline: true,
-    allowHeadings: false,
-    default: '',
-    variables: {},
-  },
-  render: Component
-})
+export const HTMLText = (name: string, options: FieldArgs) => {
+  return {
+    name: name,
+    options: {
+      multiline: true,
+      allowHeadings: false,
+      default: '',
+       ...options
+    },
+    extraProps: (data: Record<string, unknown>) => ({
+      backgroundColor: options.backgroundColor ? data[options.backgroundColor] : undefined,
+      textColor: options.textColor ? data[options.textColor] : undefined
+    }),
+    render: Component,
+    ...defaultFieldProperties()
+  }
+}

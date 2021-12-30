@@ -2,7 +2,7 @@ import { FieldDefinition } from 'src/types'
 
 export function fillDefaults(
   data: Record<string, any>,
-  fields: FieldDefinition<any, any>[]
+  fields: FieldDefinition[]
 ) {
   let newData = { ...data }
   for (const field of fields) {
@@ -11,7 +11,7 @@ export function fillDefaults(
       continue
     }
     const name = field.name
-    if (data[name] === undefined) {
+    if (data[name] === undefined && 'default' in field.options) {
       newData[name] = field.options.default
     }
   }

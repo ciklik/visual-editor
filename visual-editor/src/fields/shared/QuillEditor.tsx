@@ -9,6 +9,7 @@ import type { DeltaOperation } from 'quill'
 import styled from '@emotion/styled'
 import { QuillEditorStyles } from 'src/fields/shared/QuillEditorStyles'
 import { Styles } from 'src/components/ui'
+import { colorToProperty } from 'src/functions/css'
 
 export enum QuillEditorMode {
   SINGLE_LINE,
@@ -44,7 +45,9 @@ type QuillEditorProps = {
   onChange: (v: string) => void
   mode?: QuillEditorMode
   placeholder?: string
-  colors?: string[]
+  colors?: string[],
+  backgroundColor?: string,
+  color?: string,
 }
 
 export function QuillEditor({
@@ -53,6 +56,8 @@ export function QuillEditor({
   mode = QuillEditorMode.BASIC,
   placeholder,
   colors,
+  backgroundColor,
+  color,
 }: QuillEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null)
   const quillRef = useRef<Quill | null>(null)
@@ -133,6 +138,10 @@ export function QuillEditor({
       singleLine={mode === QuillEditorMode.SINGLE_LINE}
       focused={focused}
       css={QuillEditorStyles}
+      style={{
+        backgroundColor: colorToProperty(backgroundColor),
+        color: colorToProperty(color),
+      }}
     >
       <div
         ref={editorRef}
@@ -145,8 +154,8 @@ export function QuillEditor({
 
 const EditorWrapper = styled.div<{ focused: boolean; singleLine: boolean }>(
   {
-    color: 'var(--ve-field-color, var(--ve-color))',
-    background: 'var(--ve-field-background, transparent)',
+    color: 'var(--ve-color)',
+    background: 'transparent',
     padding: '.5rem .75em',
     lineHeight: '1.25rem',
     borderRadius: '.2rem',
