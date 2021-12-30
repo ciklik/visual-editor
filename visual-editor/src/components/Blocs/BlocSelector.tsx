@@ -6,12 +6,8 @@ import {
   useHiddenCategories,
   useSetBlockIndex,
 } from 'src/store'
-import {
-  EditorComponentDefinition,
-  EditorComponentDefinitions,
-} from 'src/types'
-import { prevent } from 'src/functions/functions'
-import { IconSearch, Modal, Tabs } from 'src/components/ui'
+import { EditorComponentDefinitions } from 'src/types'
+import { Modal, Tabs } from 'src/components/ui'
 import { BlocSelectorItem } from 'src/components/Blocs/BlocSelectorItem'
 import { BlocSelectorSearch } from 'src/components/Blocs/BlocSelectorSearch'
 import { BlocSelectorGrid } from 'src/components/Blocs/BlocSelectorGrid'

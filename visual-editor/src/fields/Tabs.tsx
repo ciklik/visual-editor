@@ -1,47 +1,44 @@
-import { AbstractFieldGroup } from './AbstractFieldGroup'
-import React, {
-  cloneElement,
-  FunctionComponent,
-  ReactElement,
-  useState,
-} from 'react'
-import { EditorField } from 'src/types'
+import React, { cloneElement } from 'react'
+import { FieldDefinition, FieldGroupComponent, FieldGroupDefinition } from 'src/types'
+import { defaultFieldProperties } from 'src/fields/utils'
 import { Flex, Tabs as TabsComponent } from 'src/components/ui'
 
 type TabDefinition = {
   label: string
-  fields: Array<EditorField<any> | AbstractFieldGroup<any>>
+  fields: Array<FieldDefinition<any, any>>
 }
 
-export class Tabs extends AbstractFieldGroup<any> {
-  tabs: TabDefinition[] = []
+type FieldOptions = {
+  tabs: TabDefinition[]
+}
 
-  constructor(...tabs: TabDefinition[]) {
-    super(
-      tabs.reduce(
-        (acc, tab) => [...acc, ...tab.fields],
-        [] as TabDefinition['fields']
-      ),
-      {}
-    )
-    this.tabs = tabs
+const Component: FieldGroupComponent<FieldOptions> = ({ children, options }) => {
+  const childrenForTab = (tab: TabDefinition) => {
+    return cloneElement(children, {
+      fields: tab.fields,
+    })
   }
 
-  render: FunctionComponent<{ children: ReactElement }> = ({ children }) => {
-    const childrenForTab = (tab: TabDefinition) => {
-      return cloneElement(children, {
-        fields: tab.fields,
-      })
-    }
+  return (
+    <TabsComponent>
+      {options.tabs.map((tab) => (
+        <TabsComponent.Tab key={tab.label} title={tab.label}>
+          <Flex column>{childrenForTab(tab)}</Flex>
+        </TabsComponent.Tab>
+      ))}
+    </TabsComponent>
+  )
+}
 
-    return (
-      <TabsComponent>
-        {this.tabs.map((tab) => (
-          <TabsComponent.Tab key={tab.label} title={tab.label}>
-            <Flex column>{childrenForTab(tab)}</Flex>
-          </TabsComponent.Tab>
-        ))}
-      </TabsComponent>
+export function Tabs (...tabs: TabDefinition[]): FieldGroupDefinition<FieldOptions> {
+  return {
+    ...defaultFieldProperties(),
+    group: true,
+    options: {tabs: tabs},
+    render: Component,
+    fields: tabs.reduce(
+      (acc, tab) => [...acc, ...tab.fields],
+      [] as TabDefinition['fields']
     )
   }
 }

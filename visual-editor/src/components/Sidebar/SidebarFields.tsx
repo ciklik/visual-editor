@@ -1,9 +1,4 @@
-import {
-  EditorComponentData,
-  EditorComponentDefinition,
-  EditorField,
-} from 'src/types'
-import { AbstractFieldGroup } from 'src/fields/AbstractFieldGroup'
+import { EditorComponentData, EditorComponentDefinition, FieldDefinition } from 'src/types'
 import { useUpdateData } from 'src/store'
 import { useCallback } from 'react'
 
@@ -19,9 +14,9 @@ export function SidebarFields({ fields, data, path }: SidebarFieldsProps) {
       {fields
         .filter((field) => field.shouldRender(data))
         .map((field, k) =>
-          field instanceof AbstractFieldGroup
-            ? field.shouldRender(data) && (
-                <field.render key={k}>
+          field.group
+            ? (
+                <field.render key={k} options={field.options}>
                   <SidebarFields
                     fields={field.fields}
                     data={data}
@@ -29,13 +24,13 @@ export function SidebarFields({ fields, data, path }: SidebarFieldsProps) {
                   />
                 </field.render>
               )
-            : field.shouldRender(data) && (
+            : (
                 <SidebarField
                   key={field.name}
                   field={field}
                   value={field.name ? data[field.name] : undefined}
                   path={`${path}.${field.name}`}
-                  style={field.injectStyle(data)}
+                  style={field.injectStyle ? field.injectStyle(data) : null}
                 />
               )
         )}
@@ -49,13 +44,13 @@ function SidebarField({
   path,
   style,
 }: {
-  field: EditorField<any>
+  field: FieldDefinition<any, any> & {group: false}
   value: string
   path: string
   style: Record<string, string> | null
 }) {
   const updateData = useUpdateData()
-  const Component = field.field
+  const Component = field.render
   const onChangeCallback = useCallback(
     (value: any) => {
       updateData(value, path)
@@ -64,8 +59,14 @@ function SidebarField({
   )
 
   return (
-    <div style={style as any}>
-      <Component value={value} onChange={onChangeCallback} />
+    <div
+      style={style as any}
+      >
+      <Component
+        value={value}
+        onChange={onChangeCallback}
+        options={field.options}
+      />
     </div>
   )
 }

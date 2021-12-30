@@ -5,7 +5,6 @@ import { useAsyncEffect } from 'src/hooks/useAsyncEffect'
 import { PreviewModes, usePreviewMode } from 'src/store'
 import { useWindowSize } from 'react-use'
 import { PHONE_HEIGHT } from 'src/constants'
-import { useToggle } from 'src/hooks/useToggle'
 import { Spinner } from 'src/components/ui/Spinner'
 import { FrameProvider } from 'src/components/Preview/FrameProvider'
 import { BaseStyles } from 'src/components/BaseStyles'
@@ -16,17 +15,17 @@ import { PreviewItems } from 'src/components/Preview/PreviewItems'
 type PreviewProps = {
   data: EditorComponentData[]
   previewUrl: string
-  iconsUrl: string
 }
 
 /**
  * Affiche un aperçu du rendu de la page dans une iframe
  */
-export function Preview({ data, previewUrl, iconsUrl }: PreviewProps) {
+export function Preview({ data, previewUrl }: PreviewProps) {
   const iframe = useRef<HTMLIFrameElement>(null)
   const [iframeRoot, setIframeRoot] = useState<HTMLElement | null>(null)
   const initialHTML = useRef<Record<string, string>>({})
-  const [loaded, toggleLoaded] = useToggle()
+  const [loaded, setLoaded] = useState(false)
+  const showSpinner = !loaded
 
   // Gère le chargement de la preview initiale
   useAsyncEffect(async () => {
@@ -68,13 +67,13 @@ export function Preview({ data, previewUrl, iconsUrl }: PreviewProps) {
 
   return (
     <PreviewWrapper>
-      <Spinner css={{ color: 'white', opacity: 0.6 }} />
+      {showSpinner && <Spinner css={{ color: 'white', opacity: 0.6 }} />}
       <StyledIframe
         loaded={loaded}
         mobile={previewMode === PreviewModes.PHONE}
         ref={iframe}
         style={transform}
-        onLoad={toggleLoaded}
+        onLoad={() => setLoaded(true)}
       />
       {iframeRoot &&
         createPortal(

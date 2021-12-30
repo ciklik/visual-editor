@@ -1,51 +1,53 @@
-import { EditorFieldProps } from 'src/types'
+import { FieldComponent } from 'src/types'
 import { useUniqId } from 'src/hooks/useUniqId'
-import { AbstractField } from 'src/fields/AbstractField'
 import { prevent } from 'src/functions/functions'
 import { ButtonIcon, Field, IconFolder } from 'src/components/ui'
 import styled from '@emotion/styled'
+import { defineField } from 'src/fields/utils'
 
 type FieldArgs = {
   label?: string
-  required?: boolean
   help?: string
+  default?: string,
   onBrowse?: (url?: string) => Promise<string>
 }
 
-/**
- * Enregistre un champs de type texte
- */
-export class ImageUrl extends AbstractField<FieldArgs, string> {
-  field({ value, onChange }: EditorFieldProps<string>) {
-    const id = useUniqId('textinput')
-    const handleBrowse = () => {
-      this.args.onBrowse!(value)
-        .then((v) => {
-          onChange(v)
-        })
-        .catch((e) => {})
-    }
-
-    return (
-      <Field
-        id={id}
-        label={this.args.label}
-        help={this.args.help}
-        value={value}
-        tooltip={value ? <TooltipImage src={value} alt="" /> : undefined}
-        onChange={(e) => onChange((e.target as HTMLInputElement).value)}
-        css={{ paddingRight: 40 }}
-        icon={
-          this.args.onBrowse ? (
-            <Button onClick={prevent(handleBrowse)}>
-              <IconFolder size={16} />
-            </Button>
-          ) : undefined
-        }
-      />
-    )
+const Component: FieldComponent<FieldArgs, string> = ({value, onChange, options}) => {
+  const id = useUniqId('imageinput')
+  const handleBrowse = () => {
+    options.onBrowse!(value)
+      .then((v) => {
+        onChange(v)
+      })
+      .catch((e) => {})
   }
+
+  return (
+    <Field
+      id={id}
+      label={options.label}
+      help={options.help}
+      value={value}
+      tooltip={value ? <TooltipImage src={value} alt="" /> : undefined}
+      onChange={(e) => onChange((e.target as HTMLInputElement).value)}
+      css={{ paddingRight: 40 }}
+      icon={
+        options.onBrowse ? (
+          <Button onClick={prevent(handleBrowse)}>
+            <IconFolder size={16} />
+          </Button>
+        ) : undefined
+      }
+    />
+  )
 }
+
+export const ImageUrl = defineField<FieldArgs, string>({
+  defaultOptions: {
+    default: ''
+  },
+  render: Component
+})
 
 const Button = styled(ButtonIcon)({
   width: '32px',

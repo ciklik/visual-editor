@@ -8,6 +8,7 @@ import {
   Tabs,
   Text,
   TextAlign,
+  Range,
   VisualEditor,
 } from "../../../visual-editor/dist/VisualEditor.js";
 
@@ -20,15 +21,15 @@ const Colors = [
   "--bs-orange",
   "--bs-yellow",
   "--bs-green",
-  "--bs-teal:",
-  "--bs-cyan:",
+  "--bs-teal",
+  "--bs-cyan",
   "--bs-white",
-  "--bs-gray:",
+  "--bs-gray",
   "--bs-gray-dark",
   "--bs-primary",
   "--bs-secondary",
   "--bs-success",
-  "--bs-info:",
+  "--bs-info",
   "--bs-warning",
   "--bs-danger",
   "--bs-light",
@@ -36,16 +37,16 @@ const Colors = [
 ];
 
 const ImageField = (name = "image", label = "image") =>
-  new ImageUrl(name, {
+  ImageUrl(name, {
     label: label,
     onBrowse: (url) => Promise.resolve("https://picsum.photos/425/458"),
   });
 
 const ButtonField = () =>
-  new Row([
-    new Text("label", { label: "Libellé", default: "Call to action" }),
-    new Text("url", { label: "Lien" }),
-    new Select("type", {
+  Row([
+    Text("label", { label: "Libellé", default: "Call to action" }),
+    Text("url", { label: "Lien" }),
+    Select("type", {
       default: "primary",
       label: "type",
       options: [
@@ -56,18 +57,18 @@ const ButtonField = () =>
   ]);
 
 const ColorField = (name, label) =>
-  new Color(name, { label: label, colors: Colors });
+  Color(name, { label: label, colors: Colors });
 
 const TitleField = (name = "title", label = "Titre") =>
-  new Row(
+  Row(
     [
-      new HTMLText(name, {
+      HTMLText(name, {
         default: "Lorem ipsum dolor sit amet",
         label: label,
         multiline: false,
         colors: Colors,
       }),
-      new TextAlign(name + "Align", {
+      TextAlign(name + "Align", {
         label: "Alignement",
       }),
     ],
@@ -75,25 +76,27 @@ const TitleField = (name = "title", label = "Titre") =>
   );
 
 const ContentField = (name = "content", label = "Description") =>
-  new HTMLText(name, {
+  HTMLText(name, {
     label: label,
     default:
       "<p>Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.</p>",
     multiline: true,
     colors: Colors,
+    variables: {
+        background: 'backgroundColor',
+        color: 'textColor'
+    }
   })
-    .background("backgroundColor")
-    .color("textColor");
 
 const ButtonsField = () =>
-  new Repeater("buttons", {
+  Repeater("buttons", {
     title: "Boutons",
-    addLabel: "Add a new button",
+    addLabel: "Add a button",
     fields: [ButtonField()],
   });
 
 const Style = () => [
-  new Row(
+  Row(
     [
       ColorField("backgroundColor", "Background color"),
       ColorField("textColor", "Text color"),
@@ -103,8 +106,8 @@ const Style = () => [
     { columns: "50px 50px 1fr 1fr" }
   ),
 
-  new Row([
-    new Select("backgroundSize", {
+  Row([
+    Select("backgroundSize", {
       default: "cover",
       label: "Size",
       options: [
@@ -113,7 +116,7 @@ const Style = () => [
         { label: "Original", value: "auto" },
       ],
     }),
-    new Select("backgroundRepeat", {
+    Select("backgroundRepeat", {
       default: "no-repeat",
       label: "Repeat",
       options: [
@@ -123,7 +126,7 @@ const Style = () => [
         { label: "x & y", value: "repeat" },
       ],
     }),
-    new Select("backgroundXPosition", {
+    Select("backgroundXPosition", {
       default: "center",
       label: "Position (X)",
       options: [
@@ -132,7 +135,7 @@ const Style = () => [
         { label: "Droite", value: "right" },
       ],
     }),
-    new Select("backgroundYPosition", {
+    Select("backgroundYPosition", {
       default: "center",
       label: "Position (Y)",
       options: [
@@ -142,12 +145,12 @@ const Style = () => [
       ],
     }),
   ]).when("background", (b) => b),
-  new Range("padding", { label: "Vertical Padding", default: 3 }),
+  Range("padding", { label: "Vertical Padding", default: 3 }),
 ];
 
 const WithStyles = (contentFields, styleFields = []) => {
   return [
-    new Tabs(
+    Tabs(
       {
         label: "Contenu",
         fields: contentFields,
@@ -173,18 +176,18 @@ editor.registerComponent("pricing", {
   fields: WithStyles([
     TitleField(),
     ContentField(),
-    new Repeater("prices", {
+    Repeater("prices", {
       min: 1,
       max: 5,
       collapsed: "title",
       fields: [
-        new HTMLText("title", {
+        HTMLText("title", {
           label: "Title",
           default: "Pro",
           multiline: false,
         }),
-        new Text("price", { label: "Price", default: "15€" }),
-        new Text("features", { label: "Features", multiline: true }),
+        Text("price", { label: "Price", default: "15€" }),
+        Text("features", { label: "Features", multiline: true }),
         ButtonField(),
       ],
     }),
@@ -194,12 +197,12 @@ editor.registerComponent("pricing", {
 editor.registerComponent("icons-columns", {
   title: "Icons columns",
   fields: WithStyles([
-    new Repeater("icons", {
+    Repeater("icons", {
       min: 1,
       max: 5,
       collapsed: "title",
       fields: [
-        new Text("title", { label: "Title", default: "Featured title" }),
+        Text("title", { label: "Title", default: "Featured title" }),
         ContentField(),
       ],
     }),

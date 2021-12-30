@@ -1,38 +1,39 @@
-import { AbstractField } from 'src/fields/AbstractField'
 import { useUniqId } from 'src/hooks/useUniqId'
 import styled from '@emotion/styled'
+import { FieldComponent } from 'src/types'
+import { defineField } from 'src/fields/utils'
+import { Field } from 'src/components/ui'
 
 type FieldArgs = {
   label: string
+  help?: string
   default?: boolean
 }
 
-export class Checkbox extends AbstractField<FieldArgs, boolean> {
-  get defaultArgs() {
-    return { default: false }
-  }
-
-  field({
-    value,
-    onChange,
-  }: {
-    value?: boolean
-    onChange: (value: boolean) => void
-  }) {
-    const id = useUniqId('checkbox')
-    return (
+const Component: FieldComponent<FieldArgs, boolean> = ({value, onChange, options}) => {
+  const id = useUniqId('checkbox')
+  return (
+    <Field help={options.help}>
       <Wrapper>
         <Input
           type="checkbox"
           id={id}
           checked={value}
-          onChange={(e) => onChange(!value)}
+          onChange={() => onChange(!value)}
         />
-        <Label htmlFor={id}>{this.args.label}</Label>
+        <Label htmlFor={id}>{options.label}</Label>
       </Wrapper>
-    )
-  }
+    </Field>
+  )
 }
+
+export const Checkbox = defineField<FieldArgs, boolean>({
+  defaultOptions: {
+    label: '',
+    default: false
+  },
+  render: Component
+})
 
 const Wrapper = styled.div({
   position: 'relative',

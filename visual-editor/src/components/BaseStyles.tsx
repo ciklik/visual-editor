@@ -1,7 +1,17 @@
 import styled from '@emotion/styled'
-import { css } from '@emotion/react'
+import { css, Global } from '@emotion/react'
+import { FunctionComponent } from 'react'
 
-export const BaseStyles = styled.div(css`
+export const BaseStyles: FunctionComponent = ({children}) => {
+  return <>
+    <Global styles={{'visual-editor': {display: 'block'}}}/>
+    <Reset>
+      {children}
+    </Reset>
+  </>
+}
+
+export const Reset = styled.div(css`
   --ve-background: #fff;
   --ve-primary: #1771e6;
   --ve-dark: #202227;
@@ -17,10 +27,10 @@ export const BaseStyles = styled.div(css`
   --ve-danger-light: rgba(255, 0, 0, 0.05);
   --ve-shadow-dragging: rgba(0, 0, 0, 0.1) 0 10px 15px -3px,
     rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-  justify-content: center;
   --ve-gap: 0.5em;
   display: block;
-  font-size: 15px;
+  font-size: 16px;
+  justify-content: center;
 
   *,
   *::before,

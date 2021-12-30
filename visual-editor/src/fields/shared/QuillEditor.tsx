@@ -8,6 +8,7 @@ import {
 import type { DeltaOperation } from 'quill'
 import styled from '@emotion/styled'
 import { QuillEditorStyles } from 'src/fields/shared/QuillEditorStyles'
+import { Styles } from 'src/components/ui'
 
 export enum QuillEditorMode {
   SINGLE_LINE,
@@ -144,22 +145,19 @@ export function QuillEditor({
 
 const EditorWrapper = styled.div<{ focused: boolean; singleLine: boolean }>(
   {
-    color: 'var(--ve-color)',
-    background: 'transparent',
+    color: 'var(--ve-field-color, var(--ve-color))',
+    background: 'var(--ve-field-background, transparent)',
     padding: '.5rem .75em',
     lineHeight: '1.25rem',
     borderRadius: '.2rem',
     display: 'block',
     width: '100%',
-    borderStyle: 'solid',
-    borderWidth: 1,
+    border: 'solid 1px var(--ve-field-border)',
+    boxShadow: 'var(--ve-field-shadow)',
     outline: 'none',
   },
   (props) => ({
-    borderColor: props.focused ? 'var(--ve-primary)' : 'var(--ve-field-border)',
-    boxShadow: props.focused
-      ? '0 0 0 0.25rem rgb(23 113 230 / 25%)'
-      : 'var(--ve-field-shadow)',
+    ...(props.focused ? Styles.FocusState : undefined),
     p: {
       marginBottom: props.singleLine ? '0' : '1em',
     },

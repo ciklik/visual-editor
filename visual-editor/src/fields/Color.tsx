@@ -1,72 +1,65 @@
-import { EditorFieldProps } from 'src/types'
-import { AbstractField } from 'src/fields/AbstractField'
+import { FieldComponent } from 'src/types'
 import { prevent } from 'src/functions/functions'
 import React, { CSSProperties, useState } from 'react'
 import * as Popover from '@radix-ui/react-popover'
 import { Field, Styles, UnstyledButton } from 'src/components/ui'
 import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
+import { defineField } from 'src/fields/utils'
 
 type FieldArgs = {
-  label?: string
+  label?: string,
+  default?: string,
   colors: string[]
 }
 
-/**
- * Enregistre un champs de type texte
- */
-export class Color extends AbstractField<FieldArgs, string | null> {
-  field({ value, onChange }: EditorFieldProps<string | null>) {
-    const [isOpen, setOpen] = useState(false)
+const Component: FieldComponent<FieldArgs, string | null> = ({value, onChange, options}) => {
+  const [isOpen, setOpen] = useState(false)
 
-    const handleChange = (e: string | null) => {
-      onChange(e)
-      setOpen(false)
-    }
-
-    return (
-      <Field label={this.args.label}>
-        <Popover.Root open={isOpen} onOpenChange={() => setOpen((v) => !v)}>
-          <Button
-            focused={isOpen}
-            color={value || ''}
-            style={
-              value
-                ? ({
-                    '--ve-selected-color': `var(${value})`,
-                  } as CSSProperties)
-                : undefined
-            }
-          />
-          <Tooltip side="top">
-            <this.palette onChange={handleChange} />
-            <Arrow />
-          </Tooltip>
-        </Popover.Root>
-      </Field>
-    )
-  }
-
-  palette = ({ onChange }: EditorFieldProps<string | null>) => {
-    return (
-      <Palette
-        style={{ '--children': this.args.colors.length + 1 } as CSSProperties}
-      >
-        <PaletteItemTransparent onClick={prevent(() => onChange(null))} />
-        {this.args.colors.map((color) => (
-          <PaletteItem
-            key={color}
-            style={{ '--ve-color': `var(${color})` } as CSSProperties}
-            onClick={prevent(() => onChange(color))}
-          />
-        ))}
-      </Palette>
-    )
-  }
+  return (
+    <Field label={options.label}>
+      <Popover.Root open={isOpen} onOpenChange={() => setOpen((v) => !v)}>
+        <Button
+          focused={isOpen || undefined}
+          color={value || ''}
+          style={
+            value
+              ? ({
+                '--ve-selected-color': `var(${value})`,
+              } as CSSProperties)
+              : undefined
+          }
+        />
+        <Tooltip side="top">
+          <Palette
+            style={{ '--children': options.colors.length + 1 } as CSSProperties}
+          >
+            <PaletteItemTransparent onClick={prevent(() => onChange(null))} />
+            {options.colors.map((color) => (
+              <PaletteItem
+                key={color}
+                style={{ '--ve-color': `var(${color})` } as CSSProperties}
+                onClick={prevent(() => onChange(color))}
+              />
+            ))}
+          </Palette>
+          <Arrow />
+        </Tooltip>
+      </Popover.Root>
+    </Field>
+  )
 }
 
+export const Color = defineField<FieldArgs, string | null>({
+  defaultOptions: {
+    default: '',
+    colors: [] as string[],
+  },
+  render: Component
+})
+
 const Button = styled(Popover.Trigger)<{
-  focused: boolean
+  focused?: boolean
   color: string
 }>(
   {
@@ -85,6 +78,7 @@ const Button = styled(Popover.Trigger)<{
       display: 'block',
       width: '28px',
       height: '28px',
+      flex: 'none',
       background: 'var(--ve-selected-color, red)',
       borderRadius: '2px',
     },

@@ -1,12 +1,11 @@
-import { EditorFieldProps } from 'src/types'
-import { AbstractField } from 'src/fields/AbstractField'
+import { FieldComponent } from 'src/types'
 import { Field } from 'src/components/ui'
 import * as Slider from '@radix-ui/react-slider'
 import styled from '@emotion/styled'
+import { defineField } from 'src/fields/utils'
 
 type FieldArgs = {
   label?: string
-  required?: boolean
   help?: string
   default?: number
   min?: number
@@ -14,40 +13,39 @@ type FieldArgs = {
   step?: number
 }
 
-/**
- * Enregistre un champs de type texte
- */
-export class Range extends AbstractField<FieldArgs, number> {
-  get defaultArgs() {
-    return { default: 5, min: 0, max: 5, step: 1 }
-  }
-
-  field({ value, onChange }: EditorFieldProps<number>) {
-    return (
-      <Field
-        label={
-          <>
-            {this.args.label} <small>({value})</small>
-          </>
-        }
-        help={this.args.help}
+const Component: FieldComponent<FieldArgs, number> = ({ value, onChange, options }) => {
+  return (
+    <Field
+      label={
+        <>
+          {options.label} <small>({value})</small>
+        </>
+      }
+      help={options.help}
+    >
+      <Root
+        min={options.min}
+        max={options.max}
+        value={[value === undefined ? options.default || 0 : value]}
+        step={options.step}
+        onValueChange={(v) => onChange(v[0] || 0)}
       >
-        <Root
-          min={this.args.min}
-          max={this.args.max}
-          value={[value === undefined ? this.args.default || 0 : value]}
-          step={this.args.step}
-          onValueChange={(v) => onChange(v[0] || 0)}
-        >
-          <Track>
-            <TrackSelected />
-          </Track>
-          <Cursor />
-        </Root>
-      </Field>
-    )
-  }
+        <Track>
+          <TrackSelected />
+        </Track>
+        <Cursor />
+      </Root>
+    </Field>
+  )
 }
+
+export const Range = defineField<FieldArgs, number>({
+  defaultOptions: {
+    default: 5, min: 0, max: 5, step: 1,
+  },
+  render: Component,
+})
+
 
 const Root = styled(Slider.Root)({
   position: 'relative',

@@ -11,16 +11,13 @@ import {
   HTMLText,
   Repeater,
   Range,
-  AbstractField,
   Tabs,
   TextAlign,
 } from './VisualEditor'
-import { AbstractFieldGroup } from './fields/AbstractFieldGroup'
-
-type Field = AbstractField<any, any> | AbstractFieldGroup<any>
+import { FieldDefinition } from 'src/types'
 
 export const Colors = [
-  '--bs-blue:',
+  '--bs-blue',
   '--bs-indigo',
   '--bs-purple',
   '--bs-pink',
@@ -28,15 +25,15 @@ export const Colors = [
   '--bs-orange',
   '--bs-yellow',
   '--bs-green',
-  '--bs-teal:',
-  '--bs-cyan:',
+  '--bs-teal',
+  '--bs-cyan',
   '--bs-white',
-  '--bs-gray:',
+  '--bs-gray',
   '--bs-gray-dark',
   '--bs-primary',
   '--bs-secondary',
   '--bs-success',
-  '--bs-info:',
+  '--bs-info',
   '--bs-warning',
   '--bs-danger',
   '--bs-light',
@@ -44,16 +41,16 @@ export const Colors = [
 ]
 
 export const ImageField = (name: string = 'image', label: string = 'image') =>
-  new ImageUrl(name, {
+  ImageUrl(name, {
     label: label,
     onBrowse: (url) => Promise.resolve('https://picsum.photos/425/458'),
   })
 
 export const ButtonField = () =>
-  new Row([
-    new Text('label', { label: 'Libellé', default: 'Call to action' }),
-    new Text('url', { label: 'Lien' }),
-    new Select('type', {
+  Row([
+    Text('label', { label: 'Libellé', default: 'Call to action' }),
+    Text('url', { label: 'Lien' }),
+    Select('type', {
       default: 'primary',
       label: 'type',
       options: [
@@ -64,18 +61,18 @@ export const ButtonField = () =>
   ])
 
 export const ColorField = (name: string, label: string) =>
-  new Color(name, { label: label, colors: Colors })
+  Color(name, { label: label, colors: Colors })
 
 export const TitleField = (name = 'title', label = 'Titre') =>
-  new Row(
+  Row(
     [
-      new HTMLText(name, {
+      HTMLText(name, {
         default: 'Lorem ipsum dolor sit amet',
         label: label,
         multiline: false,
         colors: Colors,
       }),
-      new TextAlign(name + 'Align', {
+      TextAlign(name + 'Align', {
         label: 'Alignement',
       }),
     ],
@@ -83,25 +80,27 @@ export const TitleField = (name = 'title', label = 'Titre') =>
   )
 
 export const ContentField = (name = 'content', label = 'Description') =>
-  new HTMLText(name, {
+  HTMLText(name, {
     label: label,
     default:
       '<p>Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.</p>',
     multiline: true,
     colors: Colors,
+    variables: {
+      background: 'backgroundColor',
+      color: 'textColor'
+    }
   })
-    .background('backgroundColor')
-    .color('textColor')
 
 export const ButtonsField = () =>
-  new Repeater('buttons', {
+  Repeater('buttons', {
     label: 'Boutons',
     addLabel: 'Ajouter un bouton',
     fields: [ButtonField()],
   })
 
 export const Style = () => [
-  new Row(
+  Row(
     [
       ColorField('backgroundColor', 'Fond'),
       ColorField('textColor', 'Texte'),
@@ -111,8 +110,8 @@ export const Style = () => [
     { columns: '50px 50px 1fr 1fr' }
   ),
 
-  new Row([
-    new Select('backgroundSize', {
+  Row([
+    Select('backgroundSize', {
       default: 'cover',
       label: 'Taille',
       options: [
@@ -121,7 +120,7 @@ export const Style = () => [
         { label: 'Original', value: 'auto' },
       ],
     }),
-    new Select('backgroundRepeat', {
+    Select('backgroundRepeat', {
       default: 'no-repeat',
       label: 'Répétition',
       options: [
@@ -131,7 +130,7 @@ export const Style = () => [
         { label: 'x & y', value: 'repeat' },
       ],
     }),
-    new Select('backgroundXPosition', {
+    Select('backgroundXPosition', {
       default: 'center',
       label: 'Position (X)',
       options: [
@@ -140,7 +139,7 @@ export const Style = () => [
         { label: 'Droite', value: 'right' },
       ],
     }),
-    new Select('backgroundYPosition', {
+    Select('backgroundYPosition', {
       default: 'center',
       label: 'Position (Y)',
       options: [
@@ -150,15 +149,15 @@ export const Style = () => [
       ],
     }),
   ]).when('background', (b: string) => b),
-  new Range('padding', { label: 'Padding vertical', default: 3 }),
+  Range('padding', { label: 'Padding vertical', default: 3 }),
 ]
 
 export const WithStyles = (
-  contentFields: Field[],
-  styleFields: Field[] = []
+  contentFields: FieldDefinition<any, any>[],
+  styleFields: FieldDefinition<any, any>[] = []
 ) => {
   return [
-    new Tabs(
+    Tabs(
       {
         label: 'Contenu',
         fields: contentFields,

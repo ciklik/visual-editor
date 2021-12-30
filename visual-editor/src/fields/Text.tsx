@@ -1,35 +1,30 @@
-import { EditorFieldProps } from 'src/types'
+import { FieldComponent } from 'src/types'
 import { useUniqId } from 'src/hooks/useUniqId'
-import { AbstractField } from 'src/fields/AbstractField'
 import { Field } from 'src/components/ui'
+import { defineField } from 'src/fields/utils'
 
 type FieldArgs = {
   label?: string
-  required?: boolean
   multiline?: boolean
   help?: string
   default?: string
 }
 
-/**
- * Enregistre un champs de type texte
- */
-export class Text extends AbstractField<FieldArgs, string> {
-  get defaultArgs() {
-    return { default: '' }
-  }
-
-  field({ value, onChange }: EditorFieldProps<string>) {
-    const id = useUniqId('textinput')
-    return (
-      <Field
-        label={this.args.label}
-        type={this.args.multiline ? 'textarea' : 'text'}
-        id={id}
-        value={value}
-        onInput={(e) => onChange((e.target as HTMLTextAreaElement).value)}
-        help={this.args.help}
-      />
-    )
-  }
+const Component: FieldComponent<FieldArgs, string> = ({value, onChange, options}) => {
+  const id = useUniqId('textinput')
+  return <Field
+    label={options.label}
+    type={options.multiline ? 'textarea' : 'text'}
+    id={id}
+    value={value}
+    onInput={(e) => onChange((e.target as HTMLTextAreaElement).value)}
+    help={options.help}
+  />
 }
+
+export const Text = defineField<FieldArgs, string>({
+  defaultOptions: {
+    default: ''
+  },
+  render: Component
+})

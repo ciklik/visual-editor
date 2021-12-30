@@ -1,7 +1,7 @@
-import { EditorFieldProps } from 'src/types'
+import { FieldComponent } from 'src/types'
 import { useUniqId } from 'src/hooks/useUniqId'
-import { AbstractField } from 'src/fields/AbstractField'
 import { Field } from 'src/components/ui'
+import { defineField } from 'src/fields/utils'
 
 type Option = {
   value: string
@@ -10,31 +10,30 @@ type Option = {
 
 type FieldArgs = {
   label?: string
-  required?: boolean
   options: Option[]
   help?: string
   default?: string
 }
 
-/**
- * Enregistre un champs de type texte
- */
-export class Select extends AbstractField<FieldArgs, string> {
-  get defaultArgs() {
-    return { default: '' }
-  }
-
-  field({ value, onChange }: EditorFieldProps<string>) {
-    const id = useUniqId('textinput')
-    return (
-      <Field
-        id={id}
-        label={this.args.label}
-        help={this.args.help}
-        options={this.args.options}
-        value={value}
-        onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
-      />
-    )
-  }
+const Component: FieldComponent<FieldArgs, string> = ({value, onChange, options}) => {
+  const id = useUniqId('selectinput')
+  return (
+    <Field
+      id={id}
+      label={options.label}
+      help={options.help}
+      options={options.options}
+      value={value}
+      onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
+    />
+  )
 }
+
+export const Select = defineField<FieldArgs, string>({
+  defaultOptions: {
+    default: '',
+    options: [],
+  },
+  render: Component
+})
+

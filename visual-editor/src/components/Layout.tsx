@@ -24,6 +24,7 @@ export function Layout({ data, previewUrl, onClose, iconsUrl }: LayoutProps) {
   const [sidebarCollapsed, toggleSidebar] = useToggle(false)
   const showResizeControl = !sidebarCollapsed
   return (
+    <>
     <Wrapper withSidebar={!sidebarCollapsed}>
       <Sidebar
         data={data}
@@ -33,7 +34,7 @@ export function Layout({ data, previewUrl, onClose, iconsUrl }: LayoutProps) {
         }}
       />
       {previewUrl && (
-        <Preview data={data} previewUrl={previewUrl} iconsUrl={iconsUrl} />
+        <Preview data={data} previewUrl={previewUrl} />
       )}
       <SidebarToggleButton
         collapsed={sidebarCollapsed}
@@ -43,6 +44,7 @@ export function Layout({ data, previewUrl, onClose, iconsUrl }: LayoutProps) {
       <BlocSelector iconsUrl={iconsUrl} />
       <RollbackMessage />
     </Wrapper>
+    </>
   )
 }
 

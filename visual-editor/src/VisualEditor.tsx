@@ -14,6 +14,7 @@ import { useUpdateEffect } from 'src/hooks/useUpdateEffect'
 import { fillDefaults } from 'src/functions/fields'
 import { useStateDelayed } from 'src/hooks/useStateDelayed'
 import { BaseStyles } from 'src/components/BaseStyles'
+import { disableEmotionWarnings } from 'src/functions/css'
 
 const components: EditorComponentDefinitions = {}
 
@@ -57,6 +58,7 @@ class VisualEditorElement extends HTMLElement {
   }
 
   connectedCallback() {
+    disableEmotionWarnings()
     this._value = this.getAttribute('value') || '[]'
     this.render()
     this._mounted = true
@@ -201,7 +203,6 @@ export function VisualEditorComponent({
 export { Text } from 'src/fields/Text'
 export { Checkbox } from 'src/fields/Checkbox'
 export { Repeater } from 'src/fields/Repeater'
-export { AbstractField } from 'src/fields/AbstractField'
 export { ImageUrl } from 'src/fields/ImageUrl'
 export { HTMLText } from 'src/fields/HTMLText'
 export { Color } from 'src/fields/Color'

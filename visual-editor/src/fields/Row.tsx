@@ -1,12 +1,25 @@
-import { AbstractFieldGroup } from 'src/fields/AbstractFieldGroup'
-import { FunctionComponent } from 'react'
 import { Field, Flex } from 'src/components/ui'
 import styled from '@emotion/styled'
+import { FieldGroupComponent, FieldGroupFactory } from 'src/types'
+import { defineFieldGroup } from 'src/fields/utils'
 
 type RowArgs = {
   label?: string
   columns?: string
 }
+
+const RowComponent: FieldGroupComponent<RowArgs> = ({ options, children }) => {
+  return (
+    <Field label={options.label}>
+      <Wrapper columns={options.columns}>{children}</Wrapper>
+    </Field>
+  )
+}
+
+export const Row: FieldGroupFactory<RowArgs> = defineFieldGroup({
+  defaultOptions: {},
+  render: RowComponent,
+})
 
 const Wrapper = styled(Flex)({}, ({ columns }: { columns?: string }) =>
   columns
@@ -19,13 +32,3 @@ const Wrapper = styled(Flex)({}, ({ columns }: { columns?: string }) =>
       }
     : {}
 )
-
-export class Row extends AbstractFieldGroup<RowArgs> {
-  render: FunctionComponent = ({ children }) => {
-    return (
-      <Field label={this.args.label}>
-        <Wrapper columns={this.args.columns}>{children}</Wrapper>
-      </Field>
-    )
-  }
-}

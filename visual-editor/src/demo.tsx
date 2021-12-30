@@ -9,7 +9,7 @@ import {
   Select,
   Alignment,
   TextAlign,
-  Row,
+  Row, Tabs,
 } from 'src/VisualEditor'
 import {
   ButtonField,
@@ -25,6 +25,16 @@ let editor = new VisualEditor()
 
 editor.registerComponent('hero', {
   title: 'Hero',
+  fields: [
+    Text('title', {
+      label: 'Hello world',
+      multiline: true
+    })
+  ]
+})
+
+editor.registerComponent('hero', {
+  title: 'Hero',
   fields: WithStyles([TitleField(), ContentField(), ButtonsField()]),
 })
 
@@ -34,18 +44,18 @@ editor.registerComponent('pricing', {
   fields: WithStyles([
     TitleField(),
     ContentField(),
-    new Repeater('prices', {
+    Repeater('prices', {
       min: 1,
       max: 5,
       collapsed: 'title',
       fields: [
-        new HTMLText('title', {
+        HTMLText('title', {
           label: 'Title',
           default: 'Pro',
           multiline: false,
         }),
-        new Text('price', { label: 'Price', default: '15€' }),
-        new Text('features', { label: 'Features', multiline: true }),
+        Text('price', { label: 'Price', default: '15€' }),
+        Text('features', { label: 'Features', multiline: true }),
         ButtonField(),
       ],
     }),
@@ -55,12 +65,12 @@ editor.registerComponent('pricing', {
 editor.registerComponent('icons-columns', {
   title: 'Icons columns',
   fields: WithStyles([
-    new Repeater('icons', {
+    Repeater('icons', {
       min: 1,
       max: 5,
       collapsed: 'title',
       fields: [
-        new Text('title', { label: 'Title', default: 'Featured title' }),
+        Text('title', { label: 'Title', default: 'Featured title' }),
         ContentField(),
       ],
     }),
@@ -70,20 +80,36 @@ editor.registerComponent('icons-columns', {
 editor.registerComponent('demo', {
   title: 'All field',
   fields: [
-    new Text('text', { label: 'Text' }),
-    new HTMLText('htmltext', { label: 'HTMLText' }),
-    new NumberField('number', { label: 'Number' }),
-    new Checkbox('checkbox', { label: 'Checkbox' }),
+    Text('text', { label: 'Text' }),
+    HTMLText('htmltext', { label: 'HTMLText' }),
+    ContentField('htmltextarea'),
+    NumberField('number', { label: 'Number' }),
+    Checkbox('checkbox', { label: 'Checkbox' }),
+    Checkbox('checkbox1', { label: 'Checkbox 1' }).when('checkbox', true),
+    Checkbox('checkbox2', { label: 'Checkbox 2' }).when('checkbox1', (v: boolean) => v),
     ImageField(),
     ColorField('color', 'Colors'),
-    new Range('range', { min: 0, max: 100, label: 'Range' }),
-    new Select('select', { options: [], label: 'Select' }),
-    new Alignment('alignment', { vertical: true, label: 'Alignment' }),
-    new TextAlign('text', { vertical: true, label: 'TextAlign' }),
-    new Row([new Text('text1'), new Text('text2'), new Text('text3')]),
-    new Repeater('repeater', {
+    Range('range', { min: 0, max: 100, label: 'Range' }),
+    Select('select', { options: [
+        {label: 'Option 1', value: '1'},
+        {label: 'Option 2', value: '2'}
+      ], label: 'Select' }),
+    Alignment('alignment', { vertical: true, label: 'Alignment' }),
+    TextAlign('textalign', { vertical: true, label: 'TextAlign' }),
+    Row([Text('text1'), Text('text2'), Text('text3')]),
+    Tabs(
+      {
+        label: 'Content',
+        fields: [Text('text4', {label: 'Content'})],
+      },
+      {
+        label: 'Settings',
+        fields: [Text('text5', {label: 'Settings'})],
+      }
+    ),
+    Repeater('repeater', {
       label: 'Repeater',
-      fields: [new Text('text1'), new Text('text2'), new Text('text3')],
+      fields: [Text('text1'), Text('text2'), Text('text3')],
     }),
   ],
 })

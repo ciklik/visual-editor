@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-import "../../../visual-editor/dist/VisualEditor.css";
 import data from "./data.json";
 
 export function EditorDemo({ className }) {

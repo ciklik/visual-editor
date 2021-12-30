@@ -1,15 +1,9 @@
-import { AbstractField } from 'src/fields/AbstractField'
-import { EditorFieldProps } from 'src/types'
-import {
-  Field,
-  IconTextCenter,
-  IconTextLeft,
-  IconTextRight,
-} from 'src/components/ui'
-import React, { FunctionComponent, SyntheticEvent } from 'react'
-import Styles from './Alignment.module.scss'
+import { FieldComponent } from 'src/types'
+import { Field, IconTextCenter, IconTextLeft, IconTextRight } from 'src/components/ui'
+import React, { FunctionComponent } from 'react'
 import { AlignmentButtons } from 'src/fields/shared/AlignmentButtons'
 import { AlignmentButton } from 'src/fields/shared/AlignmentButton'
+import { defineField } from 'src/fields/utils'
 
 const AlignmentIcons = {
   left: IconTextLeft,
@@ -25,29 +19,29 @@ type FieldArgs = {
   default?: FieldValue
 }
 
-export class TextAlign extends AbstractField<FieldArgs, FieldValue> {
-  get defaultArgs() {
-    return {
-      default: 'left' as FieldValue,
-    }
-  }
-
-  field({ value, onChange }: EditorFieldProps<FieldValue>) {
-    const alignements = Object.keys(AlignmentIcons) as FieldValue[]
-    return (
-      <Field label={this.args.label}>
-        <AlignmentButtons>
-          {alignements.map((alignment) => (
-            <AlignmentButton<FieldValue>
-              key={alignment}
-              value={alignment}
-              checked={value === alignment}
-              onChange={onChange}
-              icon={AlignmentIcons[alignment] as FunctionComponent}
-            />
-          ))}
-        </AlignmentButtons>
-      </Field>
-    )
-  }
+const Component: FieldComponent<FieldArgs, string> = ({value, onChange, options}) => {
+  const alignements = Object.keys(AlignmentIcons) as FieldValue[]
+  return (
+    <Field label={options.label}>
+      <AlignmentButtons>
+        {alignements.map((alignment) => (
+          <AlignmentButton<FieldValue>
+            key={alignment}
+            value={alignment}
+            checked={value === alignment}
+            onChange={onChange}
+            icon={AlignmentIcons[alignment] as FunctionComponent}
+          />
+        ))}
+      </AlignmentButtons>
+    </Field>
+  )
 }
+
+export const TextAlign = defineField<FieldArgs, string>({
+  defaultOptions: {
+    default: 'left' as FieldValue,
+  },
+  render: Component
+})
+

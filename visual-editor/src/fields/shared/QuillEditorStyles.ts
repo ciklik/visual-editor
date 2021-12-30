@@ -1,5 +1,7 @@
 import { css } from '@emotion/react'
 
+const ignoreError = '/* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */';
+
 export const QuillEditorStyles = css`
   .ql-disabled .ql-tooltip {
     visibility: hidden;
@@ -711,15 +713,15 @@ export const QuillEditorStyles = css`
     opacity: 0.4;
   }
 
-  .ql-bubble .ql-direction svg:last-child {
+  .ql-bubble .ql-direction svg:last-child${ignoreError} {
     display: none;
   }
 
-  .ql-bubble .ql-direction.ql-active svg:last-child {
+  .ql-bubble .ql-direction.ql-active svg:last-child${ignoreError} {
     display: inline;
   }
 
-  .ql-bubble .ql-direction.ql-active svg:first-child {
+  .ql-bubble .ql-direction.ql-active svg:first-child${ignoreError} {
     display: none;
   }
 
@@ -1060,7 +1062,7 @@ export const QuillEditorStyles = css`
     margin: 8px 12px 8px 0px;
   }
 
-  .ql-bubble .ql-toolbar .ql-formats:first-child {
+  .ql-bubble .ql-toolbar .ql-formats:first-child${ignoreError} {
     margin-left: 12px;
   }
 

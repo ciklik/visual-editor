@@ -57,6 +57,7 @@ const ContentIn = keyframes({
 const ModalOverlay = styled(Overlay)({
   position: 'fixed',
   inset: 0,
+  zIndex: 50,
   overflow: 'auto',
   backgroundColor: 'rgba(0, 0, 0, 0.5)',
   animation: `${FadeIn} 300ms cubic-bezier(0.16, 1, 0.3, 1)`,
@@ -67,6 +68,7 @@ const ModalContent = styled(Content)({
   top: '50%',
   left: '0',
   right: '0',
+  zIndex: 51,
   marginLeft: 'auto',
   marginRight: 'auto',
   width: 'calc(100% - 2rem)',
