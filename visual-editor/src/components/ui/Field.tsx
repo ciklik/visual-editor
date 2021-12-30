@@ -43,7 +43,7 @@ export function Field({
         </Input>
       )
     } else if (['text', 'number'].includes(type)) {
-      children = <Input {...props} />
+      children = <Input type={type} {...props} />
     } else if (type === 'textarea') {
       children = <Input as="textarea" {...props} />
     } else {
