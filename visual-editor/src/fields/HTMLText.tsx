@@ -1,7 +1,7 @@
 import { FieldComponent } from 'src/types'
-import { QuillEditor, QuillEditorMode } from 'src/fields/shared/QuillEditor'
+import { QuillEditor, QuillEditorMode } from 'src/components/Editor/QuillEditor/QuillEditor'
 import { Field } from 'src/components/ui'
-import { defaultFieldProperties, defineField } from 'src/fields/utils'
+import { defaultFieldProperties } from 'src/fields/utils'
 
 type FieldArgs = {
   label?: string

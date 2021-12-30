@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import path from 'path'
 import react from '@vitejs/plugin-react'
+import analyze from 'rollup-plugin-analyzer'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -27,4 +28,18 @@ export default defineConfig({
       src: path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    minify: false,
+    rollupOptions: {
+      plugins: [analyze({
+        summaryOnly: true,
+        filter: ({ size }) => size > 5000,
+        filterSummary: true,
+      })],
+    },
+    lib: {
+      entry: path.resolve('src/VisualEditor.tsx'),
+      name: 'VisualEditor'
+    }
+  }
 })

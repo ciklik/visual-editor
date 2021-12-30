@@ -7,7 +7,7 @@ import {
 } from 'src/libs/Quill'
 import type { DeltaOperation } from 'quill'
 import styled from '@emotion/styled'
-import { QuillEditorStyles } from 'src/fields/shared/QuillEditorStyles'
+import { QuillEditorStyles } from './QuillEditorStyles'
 import { Styles } from 'src/components/ui'
 import { colorToProperty } from 'src/functions/css'
 
