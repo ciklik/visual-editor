@@ -1,8 +1,8 @@
 import { FunctionComponent } from 'react'
-import { IconAlign } from 'src/components/Editor/TiptapEditor/TiptapIcons'
+import { IconAlign } from './TiptapIcons'
 import { Editor } from '@tiptap/core'
-import { TiptapToolbarButton as Button } from 'src/components/Editor/TiptapEditor/TiptapToolbarButton'
-import styled from '@emotion/styled'
+import { TiptapToolbarButton as Button } from './TiptapToolbarButton'
+import { TiptapDropdown as Dropdown } from './TiptapDropdown'
 
 export const TiptapToolbarAlign: FunctionComponent<{ editor: Editor }> = ({
   editor,
@@ -27,7 +27,6 @@ export const TiptapToolbarAlign: FunctionComponent<{ editor: Editor }> = ({
           <Button
             key={align}
             onClick={() => editor.chain().focus().setTextAlign(align).run()}
-            active={editor.isActive({ textAlign: align })}
             css={{ height: 30 }}
           >
             <IconAlign size={16} direction={align} />
@@ -36,40 +35,3 @@ export const TiptapToolbarAlign: FunctionComponent<{ editor: Editor }> = ({
     </Dropdown>
   )
 }
-
-const baseHeight = 40
-
-const Dropdown = styled.div<{ size: number }>(
-  {
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
-    background: '#444',
-    height: baseHeight,
-    flex: 'none',
-    overflow: 'hidden',
-    alignItems: 'center',
-    transition: 'height .2s, transform .3s',
-    transformOrigin: '50% 0',
-    borderRadius: 3,
-    '& > *': {
-      height: baseHeight - 10,
-    },
-    '& > *:first-of-type': {
-      marginTop: 0,
-      transition: 'margin .3s',
-      height: baseHeight,
-    },
-    '&:hover > *:first-of-type': {
-      marginTop: -3,
-    },
-    '&:hover': {
-      transform: 'scale(1.2)',
-    },
-  },
-  (props) => ({
-    '&:hover': {
-      height: baseHeight * props.size - 10 * (props.size - 1),
-    },
-  })
-)

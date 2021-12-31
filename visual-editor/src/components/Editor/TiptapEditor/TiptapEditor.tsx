@@ -16,6 +16,9 @@ import ListItem from '@tiptap/extension-list-item'
 import Document from '@tiptap/extension-document'
 import Heading from '@tiptap/extension-heading'
 import TextAlign from '@tiptap/extension-text-align'
+import { Color } from '@tiptap/extension-color'
+import TextStyle from '@tiptap/extension-text-style'
+import HardBreak from '@tiptap/extension-hard-break'
 
 const SingleDocument = Node.create({
   name: 'doc',
@@ -31,12 +34,17 @@ type TiptapEditorProps = {
   backgroundColor?: string
   color?: string
   multiline?: boolean
+  defaultAlign?: 'left' | 'right' | 'center'
 }
 
 export function TiptapEditor({
   value,
   onChange,
   multiline = false,
+  colors = [],
+  defaultAlign = 'left',
+  backgroundColor,
+  color,
 }: TiptapEditorProps) {
   const editor = useEditor({
     extensions: [
@@ -50,11 +58,14 @@ export function TiptapEditor({
       Italic,
       Highlight,
       Underline,
+      TextStyle,
+      Color,
+      HardBreak,
       Link.configure({ openOnClick: false }),
       Heading.configure({ levels: [2, 3, 4] }),
       TextAlign.configure({
         types: ['heading', 'paragraph'],
-        defaultAlignment: 'right',
+        defaultAlignment: defaultAlign,
       }),
     ],
     onUpdate: ({ editor }) => onChange(editor.getHTML()),
@@ -66,9 +77,9 @@ export function TiptapEditor({
   }
 
   return (
-    <div>
+    <div style={{ textAlign: defaultAlign, color, backgroundColor }}>
       <EditorContent editor={editor} />
-      {editor && <TiptapToolbar editor={editor} />}
+      {editor && <TiptapToolbar editor={editor} colors={colors} />}
     </div>
   )
 }

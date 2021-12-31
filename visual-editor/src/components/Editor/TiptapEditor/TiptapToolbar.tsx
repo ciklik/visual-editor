@@ -16,9 +16,12 @@ import {
 import { Flex } from 'src/components/ui'
 import { FormEventHandler, KeyboardEventHandler, useState } from 'react'
 import { TiptapToolbarAlign } from 'src/components/Editor/TiptapEditor/TiptapToolbarAlign'
+import { TiptapToolbarHeadings } from 'src/components/Editor/TiptapEditor/TiptapToolbarHeadings'
+import { TiptapColorPicker } from 'src/components/Editor/TiptapEditor/TiptapColorPicker'
 
 type TiptapToolbarProps = {
   editor: Editor
+  colors: string[]
 }
 
 enum Mode {
@@ -28,7 +31,7 @@ enum Mode {
 
 const iconSize = 16
 
-export function TiptapToolbar({ editor }: TiptapToolbarProps) {
+export function TiptapToolbar({ editor, colors }: TiptapToolbarProps) {
   const [mode, setMode] = useState(Mode.Buttons)
   const setLinkMode = () => setMode(Mode.Link)
   const setButtonsMode = () => setMode(Mode.Buttons)
@@ -48,7 +51,11 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
       {mode === Mode.Link ? (
         <ToolbarLink onSubmit={insertLink} onCancel={setButtonsMode} />
       ) : (
-        <ToolbarButtons editor={editor} onLinkClick={setLinkMode} />
+        <ToolbarButtons
+          editor={editor}
+          onLinkClick={setLinkMode}
+          colors={colors}
+        />
       )}
     </Toolbar>
   )
@@ -88,6 +95,7 @@ function ToolbarLink({
 function ToolbarButtons({
   editor,
   onLinkClick,
+  colors,
 }: TiptapToolbarProps & { onLinkClick: Function }) {
   const clearFormat = () =>
     editor.chain().focus().clearNodes().unsetAllMarks().run()
@@ -122,19 +130,7 @@ function ToolbarButtons({
           <IconList size={iconSize} />
         </Button>
       )}
-      {([2, 3, 4] as const)
-        .filter((level) => editor.can().toggleHeading({ level }))
-        .map((level) => (
-          <Button
-            key={level}
-            onClick={() =>
-              editor.chain().focus().toggleHeading({ level }).run()
-            }
-            active={editor.isActive('heading', { level })}
-          >
-            <IconHeading size={iconSize} level={level} />
-          </Button>
-        ))}
+      <TiptapToolbarHeadings editor={editor} />
       {editor.can().toggleBulletList() && <Separator />}
       <TiptapToolbarAlign editor={editor} />
       <Button
@@ -161,6 +157,7 @@ function ToolbarButtons({
       >
         <IconMark size={iconSize} />
       </Button>
+      <TiptapColorPicker editor={editor} colors={colors} />
       <Separator />
       <Button onClick={prevent(toggleLink)} active={editor.isActive('link')}>
         <IconLink size={iconSize} />
@@ -179,6 +176,9 @@ const Toolbar = styled(BubbleMenu)({
   height: 40,
   display: 'flex',
   padding: '0 1em',
+  // TODO : Remove this
+  position: 'relative',
+  zIndex: '9999',
 })
 
 const Separator = styled.div({
