@@ -14,7 +14,12 @@ import {
   IconUnderline,
 } from './TiptapIcons'
 import { Flex } from 'src/components/ui'
-import { FormEventHandler, KeyboardEventHandler, useState } from 'react'
+import {
+  FormEventHandler,
+  KeyboardEventHandler,
+  useEffect,
+  useState,
+} from 'react'
 import { TiptapToolbarAlign } from 'src/components/Editor/TiptapEditor/TiptapToolbarAlign'
 import { TiptapToolbarHeadings } from 'src/components/Editor/TiptapEditor/TiptapToolbarHeadings'
 import { TiptapColorPicker } from 'src/components/Editor/TiptapEditor/TiptapColorPicker'
@@ -38,6 +43,12 @@ export function TiptapToolbar({ editor, colors }: TiptapToolbarProps) {
   const insertLink = (link: string) => {
     editor.commands.setLink({ href: link })
   }
+
+  useEffect(() => {
+    if (editor.isFocused) {
+      setMode(Mode.Buttons)
+    }
+  }, [editor.isFocused])
 
   return (
     <Toolbar

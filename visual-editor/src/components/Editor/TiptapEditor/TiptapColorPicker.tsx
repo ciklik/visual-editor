@@ -1,6 +1,6 @@
 import { TiptapToolbarButton as Button } from 'src/components/Editor/TiptapEditor/TiptapToolbarButton'
 import { Editor } from '@tiptap/react'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { colorToProperty } from 'src/functions/css'
 import styled from '@emotion/styled'
 import { prevent } from 'src/functions/functions'
@@ -17,12 +17,18 @@ export function TiptapColorPicker({ editor, colors }: Props) {
     () => colors.map(colorToProperty),
     [colors]
   ) as string[]
-  const [expanded, toggleExpanded] = useToggle()
+  const [expanded, toggleExpanded, setExpanded] = useToggle()
 
   const handleChange = (color: string) => {
     toggleExpanded()
     editor.chain().focus().setColor(color).run()
   }
+
+  useEffect(() => {
+    if (editor.isFocused) {
+      setExpanded(false)
+    }
+  }, [editor.isFocused])
 
   if (colors.length === 0) {
     return null
