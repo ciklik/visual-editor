@@ -88,6 +88,7 @@ export const ContentField = (name = 'content', label = 'Description') =>
     colors: Colors,
     backgroundColor: 'backgroundColor',
     textColor: 'textColor',
+    defaultAlign: 'titleAlign',
   })
 
 export const ButtonsField = () =>

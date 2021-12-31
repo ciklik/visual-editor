@@ -37,16 +37,6 @@ let editor = new VisualEditor({
 
 editor.registerComponent('hero', {
   title: 'Hero',
-  fields: [
-    Text('title', {
-      label: 'Hello world',
-      multiline: true,
-    }),
-  ],
-})
-
-editor.registerComponent('hero', {
-  title: 'Hero',
   fields: WithStyles([TitleField(), ContentField(), ButtonsField()]),
 })
 
@@ -138,76 +128,3 @@ editor.registerComponent('text', {
 })
 
 editor.defineElement()
-
-const html =
-  '<h2>Je suis un h2</h2><ul><li>Hello</li><li>World</li></ul><p><strong><span style="color: var(--bs-blue)">Ut aut reiciendis voluptatibus</span> maiores alias <a href="#">consequatur aut </a> perferendis doloribus asperiores repellat.</strong> <em> Corrupti quos dolores et quas molestias excepturi sint occaecati.</em> Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.</p>'
-
-function Editors() {
-  const [state, setState] = useState(html)
-
-  const Colors = [
-    '--bs-blue',
-    '--bs-indigo',
-    '--bs-purple',
-    '--bs-pink',
-    '--bs-red',
-    '--bs-orange',
-    '--bs-yellow',
-    '--bs-green',
-    '--bs-teal',
-    '--bs-cyan',
-    '--bs-white',
-    '--bs-gray',
-    '--bs-gray-dark',
-    '--bs-primary',
-    '--bs-secondary',
-    '--bs-success',
-    '--bs-info',
-    '--bs-warning',
-    '--bs-danger',
-    '--bs-light',
-    '--bs-dark',
-  ]
-
-  return (
-    <>
-      <pre>{state}</pre>
-      <Wrapper>
-        <TiptapEditor
-          colors={Colors}
-          value={state}
-          onChange={setState}
-          multiline={true}
-          defaultAlign="left"
-        />
-        <QuillEditor
-          colors={Colors}
-          value={state}
-          onChange={setState}
-          mode={QuillEditorMode.FULL}
-        />
-      </Wrapper>
-      <div css={{ height: 200 }} />
-      <Wrapper>
-        <TiptapEditor value={state} onChange={setState} />
-        <QuillEditor
-          value={state}
-          onChange={setState}
-          mode={QuillEditorMode.SINGLE_LINE}
-        />
-      </Wrapper>
-    </>
-  )
-}
-
-const Wrapper = styled.div({
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  gridGap: '1rem',
-  border: 'solid 1px grey',
-  '& > *': {
-    border: 'solid 1px grey',
-  },
-})
-
-ReactDOM.render(<Editors />, document.querySelector('#editor'))

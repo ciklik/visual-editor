@@ -1,7 +1,8 @@
 import { FieldComponent } from 'src/types'
-import { QuillEditor, QuillEditorMode } from 'src/components/Editor/QuillEditor/QuillEditor'
 import { Field } from 'src/components/ui'
 import { defaultFieldProperties } from 'src/fields/utils'
+import { TiptapEditor } from 'src/components/Editor/TiptapEditor/TiptapEditor'
+import { colorToProperty } from 'src/functions/css'
 
 type FieldArgs = {
   label?: string
@@ -11,34 +12,39 @@ type FieldArgs = {
   allowHeadings?: boolean
   // A set of color for text (ex: ["--primary", "--secondary"]
   colors?: string[]
-  default?: string,
-  backgroundColor?: string,
+  default?: string
+  backgroundColor?: string
   textColor?: string
+  defaultAlign?: string
 }
 
-type ExtraParams = {backgroundColor?: string, textColor?: string}
-
-const fieldType = (options: FieldArgs): QuillEditorMode => {
-    if (options.multiline === false) {
-      return QuillEditorMode.SINGLE_LINE
-    }
-    if (options.allowHeadings) {
-      return QuillEditorMode.FULL
-    }
-    return QuillEditorMode.DEFAULT
+type ExtraParams = {
+  backgroundColor?: string
+  textColor?: string
+  defaultAlign?: 'left' | 'right' | 'center' | 'justify'
 }
 
-const Component: FieldComponent<FieldArgs, string, ExtraParams> = ({value, onChange, options, backgroundColor, textColor}) => {
-return <Field label={options.label} help={options.help}>
-  <QuillEditor
-    value={value || ''}
-    onChange={onChange}
-    mode={fieldType(options)}
-    colors={options.colors}
-    backgroundColor={backgroundColor}
-    color={textColor}
-  />
-</Field>
+const Component: FieldComponent<FieldArgs, string, ExtraParams> = ({
+  value,
+  onChange,
+  options,
+  backgroundColor,
+  textColor,
+  defaultAlign,
+}) => {
+  return (
+    <Field label={options.label} help={options.help}>
+      <TiptapEditor
+        value={value}
+        onChange={onChange}
+        backgroundColor={backgroundColor}
+        color={textColor}
+        colors={options.colors}
+        multiline={options.multiline}
+        defaultAlign={defaultAlign}
+      />
+    </Field>
+  )
 }
 
 export const HTMLText = (name: string, options: FieldArgs) => {
@@ -48,13 +54,20 @@ export const HTMLText = (name: string, options: FieldArgs) => {
       multiline: true,
       allowHeadings: false,
       default: '',
-       ...options
+      ...options,
     },
     extraProps: (data: Record<string, unknown>) => ({
-      backgroundColor: options.backgroundColor ? data[options.backgroundColor] : undefined,
-      textColor: options.textColor ? data[options.textColor] : undefined
+      backgroundColor: colorToProperty(
+        options.backgroundColor && (data[options.backgroundColor] as string)
+      ),
+      textColor: colorToProperty(
+        options.textColor && (data[options.textColor] as string)
+      ),
+      defaultAlign: colorToProperty(
+        options.defaultAlign && (data[options.defaultAlign] as string)
+      ),
     }),
     render: Component,
-    ...defaultFieldProperties()
+    ...defaultFieldProperties(),
   }
 }

@@ -5,12 +5,12 @@ import { TiptapToolbarButton as Button } from './TiptapToolbarButton'
 import {
   IconBold,
   IconClear,
-  IconHeading,
   IconItalic,
   IconLink,
   IconList,
   IconMark,
   IconOrderedList,
+  IconQuote,
   IconUnderline,
 } from './TiptapIcons'
 import { Flex } from 'src/components/ui'
@@ -23,6 +23,7 @@ import {
 import { TiptapToolbarAlign } from 'src/components/Editor/TiptapEditor/TiptapToolbarAlign'
 import { TiptapToolbarHeadings } from 'src/components/Editor/TiptapEditor/TiptapToolbarHeadings'
 import { TiptapColorPicker } from 'src/components/Editor/TiptapEditor/TiptapColorPicker'
+import { useRootElement } from 'src/store'
 
 type TiptapToolbarProps = {
   editor: Editor
@@ -43,6 +44,7 @@ export function TiptapToolbar({ editor, colors }: TiptapToolbarProps) {
   const insertLink = (link: string) => {
     editor.commands.setLink({ href: link })
   }
+  const rootElement = useRootElement()
 
   useEffect(() => {
     if (editor.isFocused) {
@@ -56,7 +58,7 @@ export function TiptapToolbar({ editor, colors }: TiptapToolbarProps) {
       shouldShow={({ from, to }) => from !== to}
       tippyOptions={{
         maxWidth: 500,
-        // appendTo: (div) => div.closest('visual-editor')!
+        appendTo: () => rootElement,
       }}
     >
       {mode === Mode.Link ? (
@@ -139,6 +141,16 @@ function ToolbarButtons({
           active={editor.isActive('bulletList')}
         >
           <IconList size={iconSize} />
+        </Button>
+      )}
+      {editor.can().toggleBlockquote() && (
+        <Button
+          onClick={prevent(() =>
+            editor.chain().focus().toggleBlockquote().run()
+          )}
+          active={editor.isActive('blockquote')}
+        >
+          <IconQuote size={iconSize} />
         </Button>
       )}
       <TiptapToolbarHeadings editor={editor} />

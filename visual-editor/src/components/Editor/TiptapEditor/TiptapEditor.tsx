@@ -1,6 +1,4 @@
-import { useState } from 'react'
-
-import { BubbleMenu, Editor, EditorContent, useEditor } from '@tiptap/react'
+import { EditorContent, useEditor } from '@tiptap/react'
 import { Node } from '@tiptap/core'
 import Text from '@tiptap/extension-text'
 import Bold from '@tiptap/extension-bold'
@@ -19,6 +17,11 @@ import TextAlign from '@tiptap/extension-text-align'
 import { Color } from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
 import HardBreak from '@tiptap/extension-hard-break'
+import styled from '@emotion/styled'
+import History from '@tiptap/extension-history'
+import Blockquote from '@tiptap/extension-blockquote'
+import { Styles } from 'src/components/ui'
+import { useState } from 'react'
 
 const SingleDocument = Node.create({
   name: 'doc',
@@ -34,7 +37,7 @@ type TiptapEditorProps = {
   backgroundColor?: string
   color?: string
   multiline?: boolean
-  defaultAlign?: 'left' | 'right' | 'center'
+  defaultAlign?: 'left' | 'right' | 'center' | 'justify'
 }
 
 export function TiptapEditor({
@@ -46,6 +49,7 @@ export function TiptapEditor({
   backgroundColor,
   color,
 }: TiptapEditorProps) {
+  const [isFocused, setFocus] = useState(false)
   const editor = useEditor({
     extensions: [
       ...(multiline ? [Document] : [SingleDocument]),
@@ -61,25 +65,88 @@ export function TiptapEditor({
       TextStyle,
       Color,
       HardBreak,
+      History,
+      Blockquote,
       Link.configure({ openOnClick: false }),
       Heading.configure({ levels: [2, 3, 4] }),
       TextAlign.configure({
-        types: ['heading', 'paragraph'],
+        types: [
+          'heading',
+          'bulletList',
+          'listItem',
+          'orderedList',
+          'blockquote',
+          'paragraph',
+        ],
         defaultAlignment: defaultAlign,
       }),
     ],
-    onUpdate: ({ editor }) => onChange(editor.getHTML()),
+    onUpdate: ({ editor }) => onChange(cleanHTML(editor.getHTML())),
+    onFocus: () => setFocus(true),
+    onBlur: () => setFocus(false),
     content: value,
   })
 
-  if (editor && editor.getHTML() !== value) {
-    // editor.commands.setContent(value)
-  }
-
   return (
-    <div style={{ textAlign: defaultAlign, color, backgroundColor }}>
+    <EditorWrapper
+      focused={isFocused}
+      style={{ textAlign: defaultAlign, color, backgroundColor }}
+    >
       <EditorContent editor={editor} />
       {editor && <TiptapToolbar editor={editor} colors={colors} />}
-    </div>
+    </EditorWrapper>
   )
 }
+
+/**
+ * Tiptap output <p> inside <li>, we need to do some cleanup
+ */
+const cleanHTML = (str: string) => {
+  console.log(str)
+  return str.replaceAll(
+    /(<[uo]l[^>]*>)(.*?)(<\/[uo]l>)/gi,
+    (_, openingTag, inner, closingTag) =>
+      `${openingTag}${removeParagraphs(inner)}${closingTag}`
+  )
+}
+
+function removeParagraphs(str: string) {
+  console.log(str)
+  return str
+    .replaceAll(/<\/p><p[^>]*>/gi, '<br>')
+    .replaceAll(/<p[^>]*>/gi, '')
+    .replaceAll(/<\/p>/gi, '')
+}
+
+const EditorWrapper = styled.div<{ focused: boolean; singleLine?: boolean }>(
+  {
+    color: 'var(--ve-color)',
+    background: 'transparent',
+    padding: '.5rem .75em',
+    lineHeight: '1.25rem',
+    borderRadius: '.2rem',
+    display: 'block',
+    width: '100%',
+    border: 'solid 1px var(--ve-field-border)',
+    boxShadow: 'var(--ve-field-shadow)',
+    outline: 'none',
+    'p, ul, ol, h2, h3, h4, h5, h1': {
+      margin: '0 0 1em 0',
+    },
+    'li p': {
+      margin: 0,
+    },
+    '.ProseMirror': {
+      outline: 'none',
+    },
+    '.ProseMirror > *:last-child': {
+      margin: 0,
+    },
+  },
+  (props) => ({
+    ...(props.focused ? Styles.FocusState : undefined),
+    p: {
+      marginBottom: props.singleLine ? '0' : '1em',
+    },
+  })
+)

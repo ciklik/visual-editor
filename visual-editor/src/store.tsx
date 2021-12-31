@@ -26,14 +26,19 @@ type State = {
   previewMode: PreviewModes
   sidebarWidth: number
   addBlockIndex: number | null
+  rootElement: HTMLElement
 }
 
-const sidebarWidth = (typeof localStorage !== 'undefined') ? localStorage.getItem('veSidebarWidth') : 0
+const sidebarWidth =
+  typeof localStorage !== 'undefined'
+    ? localStorage.getItem('veSidebarWidth')
+    : 0
 
 const createStore = (
   data: EditorComponentData[] = [],
   definitions: EditorComponentDefinitions,
-  hiddenCategories: string[] = []
+  hiddenCategories: string[] = [],
+  rootElement: HTMLElement
 ) =>
   create(
     devtools(
@@ -42,6 +47,7 @@ const createStore = (
           data,
           definitions,
           hiddenCategories,
+          rootElement,
           previousData: [],
           rollbackMessage: null,
           addBlockIndex: null,
@@ -135,15 +141,19 @@ export function StoreProvider({
   data,
   definitions,
   hiddenCategories,
+  rootElement,
 }: {
   children: ReactElement
   data: EditorComponentData[]
   definitions: EditorComponentDefinitions
   hiddenCategories: string[]
+  rootElement: HTMLElement
 }) {
   return (
     <Provider
-      createStore={() => createStore(data, definitions, hiddenCategories)}
+      createStore={() =>
+        createStore(data, definitions, hiddenCategories, rootElement)
+      }
     >
       {children}
     </Provider>
@@ -152,6 +162,10 @@ export function StoreProvider({
 
 export function useData() {
   return useStore((state) => state.data)
+}
+
+export function useRootElement() {
+  return useStore((state) => state.rootElement)
 }
 
 export function useUpdateData() {

@@ -3,6 +3,7 @@ import { IconAlign } from './TiptapIcons'
 import { Editor } from '@tiptap/core'
 import { TiptapToolbarButton as Button } from './TiptapToolbarButton'
 import { TiptapDropdown as Dropdown } from './TiptapDropdown'
+import { prevent } from 'src/functions/functions'
 
 export const TiptapToolbarAlign: FunctionComponent<{ editor: Editor }> = ({
   editor,
@@ -26,7 +27,9 @@ export const TiptapToolbarAlign: FunctionComponent<{ editor: Editor }> = ({
         .map((align) => (
           <Button
             key={align}
-            onClick={() => editor.chain().focus().setTextAlign(align).run()}
+            onClick={prevent(() =>
+              editor.chain().focus().setTextAlign(align).run()
+            )}
             css={{ height: 30 }}
           >
             <IconAlign size={16} direction={align} />
