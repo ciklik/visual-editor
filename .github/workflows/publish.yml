@@ -27,7 +27,7 @@ jobs:
       - uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.22.2
-      - run: pnpm
+          run_install: true
       - run: cd visual-editor && pnpm run build
       - name: npm publish
         run: |

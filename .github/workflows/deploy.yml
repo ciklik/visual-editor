@@ -21,13 +21,13 @@ jobs:
       - uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.22.2
+          run_install: true
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
       - name: Build website
         working-directory: ./
         run: |
-          pnpm install
           cd visual-editor
           pnpm run build
           cd ../docs 

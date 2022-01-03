@@ -3,7 +3,7 @@ name: Integration test
 on: [push]
 
 jobs:
-  cypress-run:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,8 +27,7 @@ jobs:
         uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.22.2
-      - name: Install dependencies
-        run: pnpm
+          run_install: true
       - name: Build the library
         run: cd visual-editor && pnpm run build
       - name: Run the tests
