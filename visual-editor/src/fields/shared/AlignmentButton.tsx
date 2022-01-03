@@ -1,13 +1,14 @@
-import type { ReactElement } from 'react'
-import styled from '@emotion/styled'
 import type { FunctionComponent } from 'react'
-import { UnstyledButton } from 'src/components/ui'
+import styled from '@emotion/styled'
+import { capitalize } from 'src/functions/string'
+import { prevent } from 'src/functions/functions'
 
 type Props<T extends unknown> = {
   value: T
   checked: boolean
   icon: FunctionComponent
   onChange: (v: T) => void
+  name?: string
 }
 
 export function AlignmentButton<T extends unknown>({
@@ -22,6 +23,7 @@ export function AlignmentButton<T extends unknown>({
         type="radio"
         value={value as string}
         onChange={() => onChange(value)}
+        title={capitalize(value as string)}
         {...props}
       />
       <div>

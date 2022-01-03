@@ -21,7 +21,7 @@ import styled from '@emotion/styled'
 import History from '@tiptap/extension-history'
 import Blockquote from '@tiptap/extension-blockquote'
 import { Styles } from 'src/components/ui'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const SingleDocument = Node.create({
   name: 'doc',
@@ -81,11 +81,22 @@ export function TiptapEditor({
         defaultAlignment: defaultAlign,
       }),
     ],
-    onUpdate: ({ editor }) => onChange(cleanHTML(editor.getHTML())),
+    onUpdate: ({ editor }) => onChange(cleanHTML(editor.getHTML(), multiline)),
     onFocus: () => setFocus(true),
     onBlur: () => setFocus(false),
     content: value,
   })
+
+  // Update the default alignment for the TextAlign extension
+  useEffect(() => {
+    if (editor) {
+      editor.extensionManager.extensions.find(
+        (e) => e.name === 'textAlign'
+      )!.options.defaultAlignment = defaultAlign
+      // Reset the content to reset the default alignment
+      editor.commands.setContent(value)
+    }
+  }, [defaultAlign])
 
   return (
     <EditorWrapper
@@ -101,17 +112,19 @@ export function TiptapEditor({
 /**
  * Tiptap output <p> inside <li>, we need to do some cleanup
  */
-const cleanHTML = (str: string) => {
-  console.log(str)
-  return str.replaceAll(
+const cleanHTML = (str: string, multiline: boolean) => {
+  let content = str.replaceAll(
     /(<[uo]l[^>]*>)(.*?)(<\/[uo]l>)/gi,
     (_, openingTag, inner, closingTag) =>
       `${openingTag}${removeParagraphs(inner)}${closingTag}`
   )
+  if (!multiline) {
+    content = removeParagraphs(content)
+  }
+  return content.trim()
 }
 
 function removeParagraphs(str: string) {
-  console.log(str)
   return str
     .replaceAll(/<\/p><p[^>]*>/gi, '<br>')
     .replaceAll(/<p[^>]*>/gi, '')

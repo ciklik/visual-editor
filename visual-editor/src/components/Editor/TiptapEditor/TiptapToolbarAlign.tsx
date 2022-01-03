@@ -4,6 +4,7 @@ import { Editor } from '@tiptap/core'
 import { TiptapToolbarButton as Button } from './TiptapToolbarButton'
 import { TiptapDropdown as Dropdown } from './TiptapDropdown'
 import { prevent } from 'src/functions/functions'
+import { capitalize } from 'src/functions/string'
 
 export const TiptapToolbarAlign: FunctionComponent<{ editor: Editor }> = ({
   editor,
@@ -19,7 +20,7 @@ export const TiptapToolbarAlign: FunctionComponent<{ editor: Editor }> = ({
 
   return (
     <Dropdown size={alignments.length}>
-      <Button>
+      <Button title={capitalize(currentAlign)} type="button">
         <IconAlign size={16} direction={currentAlign} />
       </Button>
       {alignments
@@ -31,6 +32,7 @@ export const TiptapToolbarAlign: FunctionComponent<{ editor: Editor }> = ({
               editor.chain().focus().setTextAlign(align).run()
             )}
             css={{ height: 30 }}
+            title={capitalize(align)}
           >
             <IconAlign size={16} direction={align} />
           </Button>

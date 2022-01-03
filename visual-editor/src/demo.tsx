@@ -22,14 +22,6 @@ import {
   TitleField,
   WithStyles,
 } from './shared'
-import ReactDOM from 'react-dom'
-import { TiptapEditor } from 'src/components/Editor/TiptapEditor/TiptapEditor'
-import {
-  QuillEditor,
-  QuillEditorMode,
-} from 'src/components/Editor/QuillEditor/QuillEditor'
-import { useState } from 'react'
-import styled from '@emotion/styled'
 
 let editor = new VisualEditor({
   lang: EN,
@@ -83,7 +75,7 @@ editor.registerComponent('demo', {
   title: 'All field',
   fields: [
     Text('text', { label: 'Text' }),
-    HTMLText('htmltext', { label: 'HTMLText' }),
+    HTMLText('htmltext', { label: 'HTMLText', multiline: false }),
     ContentField('htmltextarea'),
     NumberField('number', { label: 'Number' }),
     Checkbox('checkbox', { label: 'Checkbox' }),

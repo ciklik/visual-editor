@@ -54,6 +54,7 @@ export function TiptapToolbar({ editor, colors }: TiptapToolbarProps) {
 
   return (
     <Toolbar
+      className="WysiwygToolbar"
       editor={editor}
       shouldShow={({ from, to }) => from !== to}
       tippyOptions={{
@@ -129,6 +130,7 @@ function ToolbarButtons({
             editor.chain().focus().toggleOrderedList().run()
           )}
           active={editor.isActive('orderedList')}
+          title="Ordered List"
         >
           <IconOrderedList size={iconSize} />
         </Button>
@@ -139,6 +141,7 @@ function ToolbarButtons({
             editor.chain().focus().toggleBulletList().run()
           )}
           active={editor.isActive('bulletList')}
+          title="Unordered List"
         >
           <IconList size={iconSize} />
         </Button>
@@ -149,6 +152,7 @@ function ToolbarButtons({
             editor.chain().focus().toggleBlockquote().run()
           )}
           active={editor.isActive('blockquote')}
+          title="Blockquote"
         >
           <IconQuote size={iconSize} />
         </Button>
@@ -159,33 +163,41 @@ function ToolbarButtons({
       <Button
         onClick={prevent(() => editor.chain().focus().toggleBold().run())}
         active={editor.isActive('bold')}
+        title="Bold"
       >
         <IconBold size={iconSize} />
       </Button>
       <Button
         onClick={prevent(() => editor.chain().focus().toggleItalic().run())}
         active={editor.isActive('italic')}
+        title="Italic"
       >
         <IconItalic size={iconSize} />
       </Button>
       <Button
         onClick={prevent(() => editor.chain().focus().toggleUnderline().run())}
         active={editor.isActive('underline')}
+        title="Underline"
       >
         <IconUnderline size={iconSize} />
       </Button>
       <Button
         onClick={prevent(() => editor.chain().focus().toggleHighlight().run())}
         active={editor.isActive('highlight')}
+        title="Mark"
       >
         <IconMark size={iconSize} />
       </Button>
       <TiptapColorPicker editor={editor} colors={colors} />
       <Separator />
-      <Button onClick={prevent(toggleLink)} active={editor.isActive('link')}>
+      <Button
+        onClick={prevent(toggleLink)}
+        active={editor.isActive('link')}
+        title="Link"
+      >
         <IconLink size={iconSize} />
       </Button>
-      <Button onClick={prevent(clearFormat)}>
+      <Button onClick={prevent(clearFormat)} title="Clear">
         <IconClear size={iconSize} />
       </Button>
     </>
@@ -199,9 +211,6 @@ const Toolbar = styled(BubbleMenu)({
   height: 40,
   display: 'flex',
   padding: '0 1em',
-  // TODO : Remove this
-  position: 'relative',
-  zIndex: '9999',
 })
 
 const Separator = styled.div({

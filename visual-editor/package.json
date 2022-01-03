@@ -6,11 +6,12 @@
   "types": "./VisualEditor.d.ts",
   "scripts": {
     "dev": "concurrently \"vite\" \"php -S 0.0.0.0:8000 -ddisplay_errors=1 -t server/\"",
-    "build": "tsc && rm -rf dist && node build.js && npm run declaration && cp package.json dist/package.json",
+    "build": "tsc && rm -rf dist && node esbuild.js && npm run declaration && cp package.json dist/package.json",
     "serve": "vite preview",
     "format": "prettier --config .prettierrc 'src/**/*.{ts,tsx}' --write",
     "declaration": "tsc --declaration --emitDeclarationOnly --jsx react-jsx --esModuleInterop --target es2020 -p tsconfig.json --noEmit false && tsc-alias",
-    "test": "jest"
+    "test-watch": "start-server-and-test 'php -S 0.0.0.0:8000 -ddisplay_errors=1 -q' 8000 'npx cypress open'",
+    "test": "start-server-and-test 'php -S 0.0.0.0:8000 -ddisplay_errors=1 -q' 8000 'npx cypress run'"
   },
   "dependencies": {
     "@dnd-kit/core": "^3.1.1",
@@ -67,11 +68,13 @@
     "@types/react-dom": "^17.0.0",
     "@vitejs/plugin-react": "^1.1.0",
     "concurrently": "^6.5.1",
+    "cypress": "^9.2.0",
     "esbuild": "^0.14.8",
     "esbuild-node-externals": "^1.4.1",
     "jest": "^27.0.6",
     "prettier": "^2.3.2",
     "rollup-plugin-analyzer": "^4.0.0",
+    "start-server-and-test": "^1.14.0",
     "ts-jest": "^27.0.3",
     "tsc-alias": "^1.5.0",
     "typescript": "^4.5.2",
