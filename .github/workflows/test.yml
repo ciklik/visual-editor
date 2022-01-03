@@ -19,7 +19,7 @@ jobs:
       - name: Use PNPM
         uses: pnpm/action-setup@v2.0.1
       - name: Install dependencies
-      - run: pnpm
+        run: pnpm
       - name: Build the library
         run: cd visual-editor && pnpm run build
       - name: Run the tests
