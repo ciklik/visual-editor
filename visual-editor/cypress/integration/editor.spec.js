@@ -41,7 +41,7 @@ describe('Editor behaviour', () => {
     assertValueMatch('text', 'Hello world')
   })
 
-  it('Should not now the checkbox by default', () => {
+  it('Should not show the checkbox by default', () => {
     addBlock()
     cy.contains('Checkbox 1').should('not.exist')
     cy.contains('Checkbox').click()
