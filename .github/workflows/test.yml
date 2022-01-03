@@ -12,12 +12,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+          cache: pnpm
       - name: Use PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.0'
       - name: Use PNPM
         uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.22.2
       - name: Install dependencies
         run: pnpm
       - name: Build the library
