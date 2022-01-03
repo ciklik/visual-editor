@@ -1,18 +1,17 @@
 export default {
   preset: 'ts-jest',
   globals: {
-    "ts-jest": {
-      "babelConfig": true
-    }
+    'ts-jest': {
+      babelConfig: true,
+    },
   },
   testEnvironment: 'jsdom',
+  testRegex: '/test/.*\\.test.ts$',
   transform: {
-    "^.+\\.(ts|tsx)$": "ts-jest",
-    '^.+\\.(scss)$': '<rootDir>/__mocks__/styles.js',
-    "\\.[jt]sx?$": "babel-jest"
+    '^.+\\.(ts|tsx)$': 'ts-jest',
+    '\\.[jt]sx?$': 'babel-jest',
   },
-  "moduleNameMapper": {
-    "react-dom": "preact/compat",
-    "src/(.*)$": "<rootDir>/src/$1",
+  moduleNameMapper: {
+    'src/(.*)$': '<rootDir>/src/$1',
   },
-};
+}

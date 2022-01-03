@@ -11,7 +11,9 @@
     "format": "prettier --config .prettierrc 'src/**/*.{ts,tsx}' --write",
     "declaration": "tsc --declaration --emitDeclarationOnly --jsx react-jsx --esModuleInterop --target es2020 -p tsconfig.json --noEmit false && tsc-alias",
     "test-watch": "start-server-and-test 'php -S 0.0.0.0:8000 -ddisplay_errors=1 -q' 8000 'npx cypress open'",
-    "test": "start-server-and-test 'php -S 0.0.0.0:8000 -ddisplay_errors=1 -q' 8000 'npx cypress run'"
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:e2e": "start-server-and-test 'php -S 0.0.0.0:8000 -ddisplay_errors=1 -q' 8000 'npx cypress run'",
+    "test:unit": "jest"
   },
   "dependencies": {
     "@dnd-kit/core": "^3.1.1",
@@ -63,7 +65,8 @@
     "zustand": "^3.5.5"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.24",
+    "@types/jest": "^27.4.0",
+    "@types/quill": "^2.0.9",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@vitejs/plugin-react": "^1.1.0",
@@ -71,15 +74,15 @@
     "cypress": "^9.2.0",
     "esbuild": "^0.14.8",
     "esbuild-node-externals": "^1.4.1",
-    "jest": "^27.0.6",
+    "jest": "^27.4.5",
     "prettier": "^2.3.2",
     "rollup-plugin-analyzer": "^4.0.0",
     "start-server-and-test": "^1.14.0",
-    "ts-jest": "^27.0.3",
+    "ts-jest": "^27.1.2",
     "tsc-alias": "^1.5.0",
     "typescript": "^4.5.2",
     "vite": "^2.6.14",
-    "vite-jest": "^0.0.3"
+    "vite-jest": "^0.1.4"
   },
   "peerDependencies": {
     "react": "^17.0.2",
