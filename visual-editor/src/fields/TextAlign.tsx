@@ -1,9 +1,15 @@
 import { FieldComponent } from 'src/types'
-import { Field, IconTextCenter, IconTextLeft, IconTextRight } from 'src/components/ui'
+import {
+  Field,
+  IconTextCenter,
+  IconTextLeft,
+  IconTextRight,
+} from 'src/components/ui'
 import React, { FunctionComponent } from 'react'
 import { AlignmentButtons } from 'src/fields/shared/AlignmentButtons'
 import { AlignmentButton } from 'src/fields/shared/AlignmentButton'
 import { defineField } from 'src/fields/utils'
+import { useUniqId } from 'src/hooks/useUniqId'
 
 const AlignmentIcons = {
   left: IconTextLeft,
@@ -19,14 +25,20 @@ type FieldArgs = {
   default?: FieldValue
 }
 
-const Component: FieldComponent<FieldArgs, string> = ({value, onChange, options}) => {
+const Component: FieldComponent<FieldArgs, string> = ({
+  value,
+  onChange,
+  options,
+}) => {
   const alignements = Object.keys(AlignmentIcons) as FieldValue[]
+  const id = useUniqId()
   return (
     <Field label={options.label}>
       <AlignmentButtons>
         {alignements.map((alignment) => (
           <AlignmentButton<FieldValue>
             key={alignment}
+            name={id}
             value={alignment}
             checked={value === alignment}
             onChange={onChange}
@@ -42,6 +54,5 @@ export const TextAlign = defineField<FieldArgs, string>({
   defaultOptions: {
     default: 'left' as FieldValue,
   },
-  render: Component
+  render: Component,
 })
-

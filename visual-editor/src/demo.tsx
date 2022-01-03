@@ -13,20 +13,18 @@ import {
   TextAlign,
   VisualEditor,
 } from 'src/VisualEditor'
-import { ButtonField, ButtonsField, ColorField, ContentField, ImageField, TitleField, WithStyles } from './shared'
+import {
+  ButtonField,
+  ButtonsField,
+  ColorField,
+  ContentField,
+  ImageField,
+  TitleField,
+  WithStyles,
+} from './shared'
 
 let editor = new VisualEditor({
-  lang: EN
-})
-
-editor.registerComponent('hero', {
-  title: 'Hero',
-  fields: [
-    Text('title', {
-      label: 'Hello world',
-      multiline: true
-    })
-  ]
+  lang: EN,
 })
 
 editor.registerComponent('hero', {
@@ -77,30 +75,36 @@ editor.registerComponent('demo', {
   title: 'All field',
   fields: [
     Text('text', { label: 'Text' }),
-    HTMLText('htmltext', { label: 'HTMLText' }),
+    HTMLText('htmltext', { label: 'HTMLText', multiline: false }),
     ContentField('htmltextarea'),
     NumberField('number', { label: 'Number' }),
     Checkbox('checkbox', { label: 'Checkbox' }),
     Checkbox('checkbox1', { label: 'Checkbox 1' }).when('checkbox', true),
-    Checkbox('checkbox2', { label: 'Checkbox 2' }).when('checkbox1', (v: boolean) => v),
+    Checkbox('checkbox2', { label: 'Checkbox 2' }).when(
+      'checkbox1',
+      (v: boolean) => v
+    ),
     ImageField(),
     ColorField('color', 'Colors'),
     Range('range', { min: 0, max: 100, label: 'Range' }),
-    Select('select', { options: [
-        {label: 'Option 1', value: '1'},
-        {label: 'Option 2', value: '2'}
-      ], label: 'Select' }),
+    Select('select', {
+      options: [
+        { label: 'Option 1', value: '1' },
+        { label: 'Option 2', value: '2' },
+      ],
+      label: 'Select',
+    }),
     Alignment('alignment', { vertical: true, label: 'Alignment' }),
     TextAlign('textalign', { vertical: true, label: 'TextAlign' }),
     Row([Text('text1'), Text('text2'), Text('text3')]),
     Tabs(
       {
         label: 'Content',
-        fields: [Text('text4', {label: 'Content'})],
+        fields: [Text('text4', { label: 'Content' })],
       },
       {
         label: 'Settings',
-        fields: [Text('text5', {label: 'Settings'})],
+        fields: [Text('text5', { label: 'Settings' })],
       }
     ),
     Repeater('repeater', {

@@ -1,6 +1,7 @@
 # Visual Editor
 
 [![npm version](https://badge.fury.io/js/@boxraiser%2Fvisual-editor.svg)](https://badge.fury.io/js/@boxraiser%2Fvisual-editor)
+[![Tests](https://github.com/boxraiser/visual-editor/actions/workflows/test.yml/badge.svg)](https://github.com/boxraiser/visual-editor/actions/workflows/test.yml)
 
 [Documentation](http://boxraiser.github.io/visual-editor/)
 

@@ -1,11 +1,12 @@
-import { forwardRef, ReactNode } from 'react'
+import { ElementType, forwardRef, ReactNode } from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 
 type FlexProps = {
   between?: boolean
   column?: boolean
-  gap?: number
+  gap?: number,
+  as?: ElementType<any>
 } & JSX.IntrinsicElements['div']
 
 export const Flex = forwardRef<HTMLDivElement, FlexProps>(

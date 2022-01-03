@@ -8,28 +8,39 @@ import { keyframes } from '@emotion/react'
 import { defineField } from 'src/fields/utils'
 
 type FieldArgs = {
-  label?: string,
-  default?: string,
+  label?: string
+  default?: string
   colors: string[]
 }
 
-const Component: FieldComponent<FieldArgs, string | null> = ({value, onChange, options}) => {
+const Component: FieldComponent<FieldArgs, string | null> = ({
+  value,
+  onChange,
+  options,
+}) => {
   const [isOpen, setOpen] = useState(false)
+  const changeHandler = (color: string) =>
+    prevent(() => {
+      onChange(color)
+      setOpen(false)
+    })
 
   return (
     <Field label={options.label}>
       <Popover.Root open={isOpen} onOpenChange={() => setOpen((v) => !v)}>
-        <Button
-          focused={isOpen || undefined}
-          color={value || ''}
-          style={
-            value
-              ? ({
-                '--ve-selected-color': `var(${value})`,
-              } as CSSProperties)
-              : undefined
-          }
-        />
+        <Popover.Trigger asChild>
+          <Button
+            focused={isOpen || undefined}
+            color={value || ''}
+            style={
+              value
+                ? ({
+                    '--ve-selected-color': `var(${value})`,
+                  } as CSSProperties)
+                : undefined
+            }
+          />
+        </Popover.Trigger>
         <Tooltip side="top">
           <Palette
             style={{ '--children': options.colors.length + 1 } as CSSProperties}
@@ -39,7 +50,7 @@ const Component: FieldComponent<FieldArgs, string | null> = ({value, onChange, o
               <PaletteItem
                 key={color}
                 style={{ '--ve-color': `var(${color})` } as CSSProperties}
-                onClick={prevent(() => onChange(color))}
+                onClick={changeHandler(color)}
               />
             ))}
           </Palette>
@@ -55,10 +66,10 @@ export const Color = defineField<FieldArgs, string | null>({
     default: '',
     colors: [] as string[],
   },
-  render: Component
+  render: Component,
 })
 
-const Button = styled(Popover.Trigger)<{
+const Button = styled(UnstyledButton)<{
   focused?: boolean
   color: string
 }>(

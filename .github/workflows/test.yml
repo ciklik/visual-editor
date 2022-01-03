@@ -1,18 +1,13 @@
-name: Publish
+name: Tests
 
-on:
-  push:
-    tags:
-      - 1.*
+on: [push]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Cache pnpm modules
         uses: actions/cache@v2
         with:
@@ -24,15 +19,16 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - uses: pnpm/action-setup@v2.0.1
+      - name: Use PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+      - name: Use PNPM
+        uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.22.2
           run_install: true
-      - run: cd visual-editor && pnpm run build
-      - name: npm publish
-        run: |
-          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          npm publish --access=public
-        env:
-          CI: true
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      - name: Build the library
+        run: cd visual-editor && pnpm run build
+      - name: Run the tests
+        run: cd visual-editor && pnpm run test

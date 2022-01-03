@@ -1,12 +1,11 @@
-import React from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import type {
   EditorComponentData,
   EditorComponentDefinition,
-  EditorComponentDefinitions, Translation,
-  TranslationKey,
+  EditorComponentDefinitions,
+  Translation,
 } from 'src/types'
-import { useEffect, useMemo, useRef } from 'react'
 import { Layout } from 'src/components/Layout'
 import { StoreProvider, useData, useUpdateData } from 'src/store'
 import { indexify, stringifyFields } from 'src/functions/object'
@@ -24,10 +23,9 @@ const components: EditorComponentDefinitions = {}
  * Interface publique du module
  */
 export class VisualEditor {
-
   static i18n: Translation = EN
 
-  constructor (options: {lang?: Translation} = {}) {
+  constructor(options: { lang?: Translation } = {}) {
     VisualEditor.i18n = options.lang || EN
   }
 
@@ -117,6 +115,7 @@ class VisualEditorElement extends HTMLElement {
         data={data}
         definitions={components}
         hiddenCategories={hiddenCategories}
+        rootElement={this}
       >
         <VisualEditorComponent
           element={this}

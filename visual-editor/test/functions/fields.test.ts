@@ -1,32 +1,29 @@
 import { fillDefaults } from 'src/functions/fields'
-import { Text } from 'src/VisualEditor'
-import { Row } from 'src/fields/Row'
+import { Text, Row } from 'src/VisualEditor'
+import type { FieldDefinition } from 'src/types'
 
 describe('fillDefaults', () => {
   test('fill undefined value with default', () => {
     const newData = fillDefaults({}, [
-      new Text('name', {default: 'Hello'}),
-      new Text('name2')
-    ])
+      Text('name', { default: 'Hello' }),
+      Text('name2'),
+    ] as FieldDefinition[])
     expect(newData.name).toBe('Hello')
     expect(newData.name2).toBe('')
-  });
+  })
   test('keep the filled value', () => {
-    const newData = fillDefaults({name: 'Goodbye'}, [
-      new Text('name', {default: 'Hello'}),
-      new Text('name2')
-    ])
+    const newData = fillDefaults({ name: 'Goodbye' }, [
+      Text('name', { default: 'Hello' }),
+      Text('name2'),
+    ] as FieldDefinition[])
     expect(newData.name).toBe('Goodbye')
     expect(newData.name2).toBe('')
-  });
+  })
   test('Works with layout Fields', () => {
     const newData = fillDefaults({}, [
-      new Row([
-          new Text('name', {default: 'Hello'}),
-          new Text('name2')
-      ])
-    ])
+      Row([Text('name', { default: 'Hello' }), Text('name2')]),
+    ] as FieldDefinition[])
     expect(newData.name).toBe('Hello')
     expect(newData.name2).toBe('')
-  });
+  })
 })

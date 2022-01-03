@@ -1,13 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import {
-  Delta,
-  lineBreakHandler,
-  lineBreakMatcher,
-  Quill,
-} from 'src/libs/Quill'
+import { Delta, lineBreakHandler, lineBreakMatcher, Quill } from './Quill'
 import type { DeltaOperation } from 'quill'
 import styled from '@emotion/styled'
-import { QuillEditorStyles } from 'src/fields/shared/QuillEditorStyles'
+import { QuillEditorStyles } from './QuillEditorStyles'
 import { Styles } from 'src/components/ui'
 import { colorToProperty } from 'src/functions/css'
 
@@ -45,11 +40,15 @@ type QuillEditorProps = {
   onChange: (v: string) => void
   mode?: QuillEditorMode
   placeholder?: string
-  colors?: string[],
-  backgroundColor?: string,
-  color?: string,
+  colors?: string[]
+  backgroundColor?: string
+  color?: string
 }
 
+/**
+ * This component is kept while waiting to see if Quill APIs improves but it's not used at the moment
+ * @deprecated
+ */
 export function QuillEditor({
   value,
   onChange,

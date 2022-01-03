@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["node", "vite/client", "@emotion/react/types/css-prop"],
+    "types": ["jest", "node", "vite/client", "@emotion/react/types/css-prop"],
     "target": "ESNext",
     "useDefineForClassFields": true,
     "declaration": true,
