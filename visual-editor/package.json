@@ -13,6 +13,7 @@
     "test-watch": "start-server-and-test 'php -S 0.0.0.0:8000 -ddisplay_errors=1 -q' 8000 'npx cypress open'",
     "test": "npm run test:unit && npm run test:e2e",
     "test:e2e": "start-server-and-test 'php -S 0.0.0.0:8000 -ddisplay_errors=1 -q' 8000 'npx cypress run'",
+    "test:e2e:watch": "start-server-and-test 'php -S 0.0.0.0:8000 -ddisplay_errors=1 -q' 8000 'npx cypress open'",
     "test:unit": "jest"
   },
   "dependencies": {

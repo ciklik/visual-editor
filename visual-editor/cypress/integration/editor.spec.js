@@ -85,7 +85,7 @@ describe('Editor behaviour', () => {
       addBlock()
       cy.contains('label', 'HTML Multiline').siblings().first().click()
       cy.get('body').type('Hello World{selectall}')
-      cy.get('[title="Center"]').click()
+      cy.get('.WysiwygToolbar button[title="Center"]').click()
       assertValueMatch(
         'multiline',
         '<p style="text-align: center">Hello World</p>'
