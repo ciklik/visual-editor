@@ -15,6 +15,36 @@ editor.registerComponent('<COMPONENT_IDENTIFIER>', {
 })
 ```
 
-The fields property is an array of field definition
-
+The fields property is an array of field definition.
 You can use the built in fields (explained in the next chapter of this documentation) or [create your own](./Fields/CustomField.md).
+
+## Example
+
+Here is an example of fields for a hero banner.
+
+```js
+import {Text, HTMLText, Repeater, Select} from '@boxraiser/visual-editor'
+
+editor.registerComponent('hero', {
+  title: 'Hero',
+  fields: [
+    Text('title', {label: 'Title'}),
+    HTMLText('content', {label: 'Content'}),
+    Repeater('actions', {
+      label: 'Buttons',
+      fields: [
+        Text('label', { label: 'Label', default: 'Call to action' }),
+        Text('url', { label: 'Link' }),
+        Select('type', {
+          default: 'primary',
+          label: 'type',
+          options: [
+            { label: 'Primary', value: 'primary' },
+            { label: 'Secondary', value: 'secondary' }
+          ]
+        })
+      ]
+    })
+  ]
+})
+```

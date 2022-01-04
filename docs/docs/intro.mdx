@@ -5,7 +5,7 @@ id: intro
 
 # Getting started
 
-The editor uses custom element, you first have to register your page before registering the element. Then you can use it anywhere you want in your HTML document.
+This editor uses [Custom Element](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements).
 
 import {EditorDemo} from '../src/components/EditorDemo'
 
@@ -17,7 +17,6 @@ Start by instantiating the editor.
 
 ```js
 import { VisualEditor } from '@boxraiser/visual-editor'
-import '@boxraiser/visual-editor/style.css'
 
 let editor = new VisualEditor()
 ```
@@ -25,7 +24,7 @@ let editor = new VisualEditor()
 Then register your page components using the `registerComponent` method that expect 2 parameters
 
 - A unique identifier for the block (string)
-- An option object object (see [EditorComponentDefinition](https://github.com/Grafikart/VisualEditor/blob/master/src/types.ts#L24) for more information)
+- An option object (see [EditorComponentDefinition](https://github.com/boxraiser/visual-editor/blob/main/visual-editor/src/types.ts#L38) for more information)
 
 ```js
 import { HTMLText, Repeater, Text, Row, Select } from '@boxraiser/visual-editor'
@@ -42,20 +41,20 @@ editor.registerComponent('hero', {
       addLabel: 'Add a new button',
       fields: [
         Row([
-          Text('label', { label: 'Libellé', default: 'Call to action' }),
-          Text('url', { label: 'Lien' }),
+          Text('label', { label: 'Label', default: 'Call to action' }),
+          Text('url', { label: 'Link' }),
           Select('type', {
             default: 'primary',
             label: 'type',
             options: [
               { label: 'Primaire', value: 'primary' },
-              { label: 'Secondaire', value: 'secondary' },
-            ],
-          }),
+              { label: 'Secondaire', value: 'secondary' }
+            ]
+          })
         ])
-      ],
+      ]
     })
-  ],
+  ]
 })
 ```
 
@@ -63,6 +62,7 @@ When all your components are registered you can define the custom element using 
 
 ```js
 editor.defineElement()
+// You can also choose a custom component name with editor.defineElement('my-editor')
 ```
 
 ## Add the editor on your page
@@ -79,7 +79,7 @@ You now have a custom element `visual-editor` that you can use to display the ed
 ></visual-editor>
 ```
 
-There are multiple attributes :
+There are multiple mandatory attributes :
 
 - `hidden`, toggle this attribute to show or hide the editor
 - `name`, name for the field (will be passed to an hidden textarea)
@@ -91,7 +91,7 @@ The custom element will create a hidden field that will be used to store the dat
 
 ## How the data is formatted ?
 
-The data use a simple structure (to be usable with any framework or technology)
+The data follow a simple structure (to be usable with any framework or technology)
 
 ```json
  [

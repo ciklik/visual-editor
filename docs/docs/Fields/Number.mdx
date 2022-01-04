@@ -9,9 +9,16 @@ Generate a simple number field
 ## Options
 
 ```ts
-type FieldArgs = {
-  label?: string
-  help?: string
-  default?: string | number
-}
+Number('fieldName', {
+  label: 'Label of the field',          // (optional)
+  multiline: true,                      // Allow multiple line of text (default to false)
+  help: 'Some additional informations', // (optional)
+  default: 'Default value',             // default to ''
+})
 ```
+
+## Preview
+
+import {FieldPreview} from '../../src/components/FieldPreview'
+
+<FieldPreview type="Number" args={{label: 'Single line of text', help: 'With some help'}}/>

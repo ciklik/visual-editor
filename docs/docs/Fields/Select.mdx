@@ -8,16 +8,39 @@ Generate a select field
 
 ## Options
 
-```ts
-type Option = {
-  value: string
-  label: string
-}
-
-type FieldArgs = {
-  label?: string
-  options: Option[]
-  help?: string
-  default?: string
-}
+```js
+Select('fieldName', {
+  label: 'Label of the field',          // (optional)
+  help: 'Some additional informations', // (optional)
+  default: 'option1',                   // default value to 0 (optional)
+  options: [
+    {
+      value: 'option1',
+      label: 'Option 1'
+    }, {
+      value: 'option2',
+      label: 'Option 2'
+    }, {
+      value: 'option3',
+      label: 'Option 3'
+    }
+  ]
+})
 ```
+
+## Preview
+
+import {FieldPreview} from '../../src/components/FieldPreview'
+
+<FieldPreview type="Select" args={{label: 'Select an option', help: 'With some help', options: [
+    {
+      value: 'option1',
+      label: 'Option 1'
+    }, {
+      value: 'option2',
+      label: 'Option 2'
+    }, {
+      value: 'option3',
+      label: 'Option 3'
+    }
+  ]}}/>

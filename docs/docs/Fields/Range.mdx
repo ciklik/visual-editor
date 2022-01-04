@@ -4,17 +4,24 @@ sidebar_position: 8
 
 # Range
 
-Generate a text field with a button to select image. This field does not implement an image selector and it's up to you so plug it.
+Generate a slider to choose a numeric value
 
 ## Options
 
-```ts
-type FieldArgs = {
-  label?: string
-  help?: string
-  default?: number
-  min?: number
-  max?: number
-  step?: number
-}
+```js
+Range('fieldName', {
+  label: 'Label of the field',          // (optional)
+  help: 'Some additional informations', // (optional)
+  default: 0,                           // default value to 0 (optional)
+  min: 0,                               // default to 0 (optional)
+  max: 100,                             // default to 100 (optional)
+  step: 1                               // default to 1 (optional)
+})
 ```
+
+## Preview
+
+import {FieldPreview} from '../../src/components/FieldPreview'
+
+<FieldPreview type="Range" args={{label: 'Padding', help: 'With some help', min: 0, max: 5, step: 1}}/>
+

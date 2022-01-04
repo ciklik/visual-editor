@@ -4,14 +4,21 @@ sidebar_position: 101
 
 # TextAlign
 
-Generate a simple text field
+Generate a radio field to select multiple text alignments
 
 ## Options
 
-```ts
-type FieldArgs = {
-  label?: string
-  vertical?: boolean
-  default?: 'left' | 'center' | 'right'
-}
+```js
+TextAlign('fieldName', {
+  label: 'Label of the field',          // (optional)
+  help: 'Some additional informations', // (optional)
+  default: 'Default value',             // default to '' (optional)
+})
 ```
+
+## Preview
+
+import {FieldPreview} from '../../src/components/FieldPreview'
+
+<FieldPreview type="TextAlign" args={{label: 'Single line of text', help: 'With some help'}}/>
+

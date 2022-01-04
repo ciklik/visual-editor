@@ -51,3 +51,11 @@ button {
 html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+.PreviewCard {
+  margin-bottom: 2rem;
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
+  padding: 1rem;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}

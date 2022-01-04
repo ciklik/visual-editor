@@ -1,10 +1,10 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 # Render the preview
 
-When creating the editor you have to set up a `preview` attribute with an endpoint that will be called using the POST method for rendering the initial preview and every block on change
+When creating the editor you have to set up a `preview` attribute with an endpoint that will be called using the POST method to render the initial preview and every block on change
 
 ## Render the initial preview
 
@@ -57,7 +57,7 @@ curl 'https://visual-editor.droapp.com/' \
   --compressed
 ```
 
-The server must return the HTML code of the component (without any extra HTML)
+The server must return the HTML code of the component (without any extra HTML around)
 
 ```html
 <div class="container">

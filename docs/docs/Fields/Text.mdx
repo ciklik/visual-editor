@@ -8,11 +8,16 @@ Generate a simple text field
 
 ## Options
 
-```ts
-type FieldArgs = {
-  label?: string
-  multiline?: boolean
-  help?: string
-  default?: string
-}
+```js
+Text('fieldName', {
+  label: 'Label of the field',          // (optional)
+  help: 'Some additional informations', // (optional)
+  default: 'Default value'              // default to ''
+})
 ```
+
+## Preview
+
+import {FieldPreview} from '../../src/components/FieldPreview'
+
+<FieldPreview type="Text" args={{label: 'Single line of text', help: 'With some help'}}/>

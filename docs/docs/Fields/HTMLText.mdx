@@ -4,20 +4,24 @@ sidebar_position: 2
 
 # HTMLText
 
-Generate a text field with a WYSIWYG editor (uses [quilljs](https://quilljs.com/))
+Generate a text field with a WYSIWYG editor (uses [tiptap](https://tiptap.dev/))
 
 ## Options
 
-```ts
-type FieldArgs = {
-  label?: string
-  multiline?: boolean
-  help?: string
-  // Allow headings (h1, h2...)
-  allowHeadings?: boolean
-  // A set of color for text (ex: ["--primary", "--secondary"])
-  colors?: string[]
-  default?: string
-}
+```js
+HTMLText('fieldName', {
+  label: 'Label of the field',            // (optional)
+  multiline: true,                        // Allow multiple line of text (default to false)
+  allowHeadings: true,                    // Allow <h1>, <h2>... (optional)
+  colors: ['red', '#F00FF0', '--primary'],// Available colors for the text (optional)
+  default: 'Default value',               // (optional)
+  help: 'Some additional informations',   // (optional)
+})
 ```
 
+## Preview
+
+import {FieldPreview} from '../../src/components/FieldPreview'
+
+<FieldPreview type="HTMLText" args={{label: 'Select some text to see the toolbar', multiline: true, allowHeadings: true, colors: ['red', 'blue', 'yellow', 'green', 'orange']}} defaultValue="<p>This is <strong>some text</strong> to show that you can write multiple paragraphs</p><p>And we have two lines !</p>"/>
+<FieldPreview type="HTMLText" args={{label: 'The same field but with only one line', multiline: false}} defaultValue="This is <strong>some text</strong> to show that you can write formatted text"/>

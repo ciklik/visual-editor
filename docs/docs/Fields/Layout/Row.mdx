@@ -11,10 +11,10 @@ Group field on a single row
 If you want to create equal columns you can simply use an array of fields
 
 ```ts
-new Row([
-  new Text('label', { label: 'Label', default: 'Call to action' }),
-  new Text('url', { label: 'Link' }),
-  new Select('type', {
+Row([
+  Text('label', { label: 'Label', default: 'Call to action' }),
+  Text('url', { label: 'Link' }),
+  Select('type', {
     default: 'primary',
     label: 'type',
     options: [
@@ -25,14 +25,22 @@ new Row([
 ])
 ```
 
-You can also use a
+You can also specify the ratio of each column using a string that works like the grid-template-columns CSS
 
 ```ts
-new Row([
-  new Text('label', { label: 'Label', default: 'Call to action' }),
-  new Text('url', { label: 'Link' }),
+Row([
+  Text('label', { label: 'Label', default: 'Call to action' }),
+  Text('url', { label: 'Link' }),
 ], {
-  labe: 'Button',
+  label: 'Button',
   columns: '30% 70%' // uses https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns
 })
 ```
+
+## Preview
+
+import {RowPreview} from '../../../src/components/RowPreview'
+
+<RowPreview />
+
+

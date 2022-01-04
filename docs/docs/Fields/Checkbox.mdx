@@ -9,8 +9,16 @@ Generate a simple checkbox to toggle a value
 ## Options
 
 ```ts
-type FieldArgs = {
-  label: string
-  default?: boolean
-}
+Checkbox('fieldName', {
+  label: 'Label of the field',          // (optional)
+  help: 'Some additional informations', // (optional)
+  default: false,                       // default to false (optional)
+})
 ```
+
+## Preview
+
+import {FieldPreview} from '../../src/components/FieldPreview'
+
+<FieldPreview type="Checkbox" args={{label: 'Single line of text', help: 'With some help'}}/>
+

@@ -8,23 +8,30 @@ Create a repeatable field
 
 ## Usage
 
-If you want to create equal columns you can simply use an array of fields
-
-```ts
-  new Repeater('buttons', {
-    label: 'Boutons',
-    addLabel: 'Ajouter un bouton',
-    fields: [
-      new Text('label', { label: 'Button Label', default: 'Call to action' }),
-      new Text('url', { label: 'Link' }),
-      new Select('type', {
-        default: 'primary',
-        label: 'type',
-        options: [
-          { label: 'Primary', value: 'primary' },
-          { label: 'Secondary', value: 'secondary' },
-        ],
-      })
-    ],
-  })
+```js
+Repeater('buttons', {
+  label: 'Buttons', // Label for the field (optional)
+  addLabel: 'Add a new button', // Label of the button to add a new item (optional)
+  collapsed: 'label', // The name of the field to use when field are collapsed (optional)
+  min: 1, // Minimum number of items (optional)
+  max: 5, // Maximum number of items (optional)
+  fields: [
+    Text('label', { label: 'Button Label', default: 'Call to action' }),
+    Text('url', { label: 'Link' }),
+    Select('type', {
+      default: 'primary',
+      label: 'type',
+      options: [
+        { label: 'Primary', value: 'primary' },
+        { label: 'Secondary', value: 'secondary' },
+      ],
+    })
+  ],
+})
 ```
+
+## Preview
+
+import {RepeaterPreview} from '../../src/components/RepeaterPreview'
+
+<RepeaterPreview />

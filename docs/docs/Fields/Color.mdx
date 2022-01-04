@@ -8,10 +8,14 @@ Generate a color picker to select a specific color
 
 ## Options
 
-```ts
-type FieldArgs = {
-  label?: string
-  colors: string[]
-}
+```js
+Color('fieldName', {
+  label: 'Label of the field',           // (optional)
+  help: 'Some additional informations',  // (optional)
+  colors: ['red', '#F00FF0', '--primary']// Available colors for the text (optional)
+})
 ```
 
+import {FieldPreview} from '../../src/components/FieldPreview'
+
+<FieldPreview type="Color" args={{label: 'A simple color picker', colors: ['red', 'blue', 'yellow', 'green', 'orange', 'pink', 'grey']}} />

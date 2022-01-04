@@ -4,16 +4,22 @@ sidebar_position: 100
 
 # Alignement
 
-Generate a simple text field
+Generate a radio field to select multiple alignments
 
 ## Options
 
-```ts
-type FieldArgs = {
-  label?: string
-  vertical?: boolean
-  default?: FieldValue
-}
-
-type FieldValue = 'top' | 'right' | 'bottom' | 'left'
+```js
+Alignment('fieldName', {
+  label: 'Label of the field',          // (optional)
+  help: 'Some additional informations', // (optional)
+  default: 'Default value',             // default to '' (optional)
+  vertical: false                       // Allow vertical align, default false (optional)
+})
 ```
+
+## Preview
+
+import {FieldPreview} from '../../src/components/FieldPreview'
+
+<FieldPreview type="Alignment" args={{label: 'Image placement', help: 'With some help', vertical: true}}/>
+

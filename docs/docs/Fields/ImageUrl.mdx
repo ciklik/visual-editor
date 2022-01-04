@@ -4,14 +4,22 @@ sidebar_position: 7
 
 # ImageURL
 
-Generate a text field with a button to select image. This field does not implement an image selector and it's up to you so plug it.
+Generate a text field with a button to select image. This field does not implement an image selector and it's up to you to connect your own system.
 
 ## Options
 
-```ts
-type FieldArgs = {
-  label?: string
-  help?: string
-  onBrowse?: (url?: string) => Promise<string>
-}
+```js
+ImageUrl('fieldName', {
+  label: 'Label of the field',          // (optional)
+  help: 'Some additional informations', // (optional)
+  default: 'Default value',             // default to ''
+  onBrowse: openFileBrowser    // A function that returns a Promise that resolve with an image URL or reject if canceled
+})
 ```
+
+## Preview
+
+import {FieldPreview} from '../../src/components/FieldPreview'
+
+<FieldPreview type="ImageUrl" args={{label: 'Single line of text', help: 'With some help', onBrowse: () => Promise.resolve('https://picsum.photos/425/458')}}/>
+

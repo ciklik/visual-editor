@@ -9,14 +9,23 @@ Group fields using tabs
 ## Usage
 
 ```ts
-new Tabs(
-  {
-    label: 'Content',
-    fields: [/* ... */],
-  },
-  {
-    label: 'Style',
-    fields: [/* ... */],
-  }
-)
+Tabs({
+  tabs: [
+    {
+      label: 'Content',
+      fields: [/* ... */],
+    },
+    {
+      label: 'Style',
+      fields: [/* ... */],
+    }
+  ]
+})
 ```
+
+## Preview
+
+import {TabsPreview} from '../../../src/components/TabsPreview'
+
+<TabsPreview />
+
