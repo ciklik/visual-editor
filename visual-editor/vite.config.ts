@@ -31,15 +31,19 @@ export default defineConfig({
   build: {
     minify: false,
     rollupOptions: {
-      plugins: [analyze({
-        summaryOnly: true,
-        filter: ({ size }) => size > 5000,
-        filterSummary: true,
-      })],
+      plugins: [
+        analyze({
+          summaryOnly: true,
+          filter: ({ size }) => size > 5000,
+          filterSummary: true,
+        }),
+      ],
     },
     lib: {
       entry: path.resolve('src/VisualEditor.tsx'),
-      name: 'VisualEditor'
-    }
-  }
+      name: 'VisualEditor',
+      formats: ['es'],
+      fileName: () => 'VisualEditor.standalone.js',
+    },
+  },
 })

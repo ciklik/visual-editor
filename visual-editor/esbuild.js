@@ -13,7 +13,8 @@ build({
   inject: ['./react-shim.js'],
   plugins: [nodeExternalsPlugin()],
 }).then(console.log, console.error)
-
+/*
+// Build the standalon version with every dependencies included
 build({
   entryPoints: ['src/VisualEditor.jsx'],
   target: 'es2020',
@@ -25,3 +26,4 @@ build({
   bundle: true,
   inject: ['./react-shim.js'],
 }).then(console.log, console.error)
+*/

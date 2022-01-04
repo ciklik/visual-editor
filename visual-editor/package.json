@@ -6,7 +6,7 @@
   "types": "./VisualEditor.d.ts",
   "scripts": {
     "dev": "concurrently \"vite\" \"php -S 0.0.0.0:8000 -ddisplay_errors=1 -t server/\"",
-    "build": "tsc && rm -rf dist && node esbuild.js && npm run declaration && cp package.json dist/package.json",
+    "build": "tsc && vite build && node esbuild.js && npm run declaration && cp package.json dist/package.json",
     "serve": "vite preview",
     "format": "prettier --config .prettierrc 'src/**/*.{ts,tsx}' --write",
     "declaration": "tsc --declaration --emitDeclarationOnly --jsx react-jsx --esModuleInterop --target es2020 -p tsconfig.json --noEmit false && tsc-alias",
