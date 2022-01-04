@@ -13,7 +13,11 @@ type FieldArgs = {
   step?: number
 }
 
-const Component: FieldComponent<FieldArgs, number> = ({ value, onChange, options }) => {
+const Component: FieldComponent<FieldArgs, number> = ({
+  value,
+  onChange,
+  options,
+}) => {
   return (
     <Field
       label={
@@ -41,11 +45,13 @@ const Component: FieldComponent<FieldArgs, number> = ({ value, onChange, options
 
 export const Range = defineField<FieldArgs, number>({
   defaultOptions: {
-    default: 5, min: 0, max: 5, step: 1,
+    default: 0,
+    min: 0,
+    max: 100,
+    step: 1,
   },
   render: Component,
 })
-
 
 const Root = styled(Slider.Root)({
   position: 'relative',
@@ -85,5 +91,5 @@ const Cursor = styled(Slider.Thumb)({
     'rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px',
   cursor: 'pointer',
   border: '1px solid var(--ve-field-border)',
-  '&:focus': Styles.FocusState
+  '&:focus': Styles.FocusState,
 })

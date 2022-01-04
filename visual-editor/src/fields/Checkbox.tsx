@@ -10,7 +10,11 @@ type FieldArgs = {
   default?: boolean
 }
 
-const Component: FieldComponent<FieldArgs, boolean> = ({value, onChange, options}) => {
+const Component: FieldComponent<FieldArgs, boolean> = ({
+  value,
+  onChange,
+  options,
+}) => {
   const id = useUniqId('checkbox')
   return (
     <Field help={options.help}>
@@ -30,9 +34,9 @@ const Component: FieldComponent<FieldArgs, boolean> = ({value, onChange, options
 export const Checkbox = defineField<FieldArgs, boolean>({
   defaultOptions: {
     label: '',
-    default: false
+    default: false,
   },
-  render: Component
+  render: Component,
 })
 
 const Wrapper = styled.div({
@@ -52,6 +56,7 @@ const Label = styled.label({
   display: 'flex',
   alignItems: 'center',
   cursor: 'pointer',
+  lineHeight: 1,
   '&::before': {
     cursor: 'pointer',
     display: 'block',

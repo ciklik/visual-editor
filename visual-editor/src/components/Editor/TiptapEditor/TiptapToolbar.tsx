@@ -44,7 +44,12 @@ export function TiptapToolbar({ editor, colors }: TiptapToolbarProps) {
   const insertLink = (link: string) => {
     editor.commands.setLink({ href: link })
   }
-  const rootElement = useRootElement()
+  let rootElement: HTMLElement | null = null
+  try {
+    rootElement = useRootElement()
+  } catch (e) {
+    // Zustand is not available, keep rootElement to null
+  }
 
   useEffect(() => {
     if (editor.isFocused) {
@@ -59,7 +64,11 @@ export function TiptapToolbar({ editor, colors }: TiptapToolbarProps) {
       shouldShow={({ from, to }) => from !== to}
       tippyOptions={{
         maxWidth: 500,
-        appendTo: () => rootElement,
+        ...(rootElement
+          ? {
+              appendTo: () => rootElement!,
+            }
+          : {}),
       }}
     >
       {mode === Mode.Link ? (

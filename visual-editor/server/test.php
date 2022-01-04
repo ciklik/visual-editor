@@ -104,7 +104,7 @@
         ),
         Repeater('repeater', {
           label: 'Repeater',
-          fields: [Text('text1'), Text('text2'), Text('text3')],
+          fields: [Text('text1', {label: 'Text 1'}), Text('text2', {label: 'Text 2'}), Text('text3', {label: 'Text 3'})],
         }),
       ],
     })

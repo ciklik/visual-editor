@@ -34,111 +34,112 @@ export class VisualEditor {
   }
 
   defineElement(elementName: string = 'visual-editor') {
+    // We only declare the class in this function to avoid any problem with SSR
+    class VisualEditorElement extends HTMLElement {
+      static changeEventName = 'veChange'
+      private _mounted: boolean = false
+      private _data: EditorComponentData[] | null = null
+      private _value = ''
+
+      static get observedAttributes() {
+        return ['hidden', 'value']
+      }
+
+      get value(): string {
+        return this._value
+      }
+
+      set value(v: string) {
+        if (v === this._value) {
+          return
+        }
+        this._value = v
+        this._data = null
+        this.render()
+      }
+
+      connectedCallback() {
+        disableEmotionWarnings()
+        this._value = this.getAttribute('value') || '[]'
+        this.render()
+        this._mounted = true
+      }
+
+      attributeChangedCallback(
+        name: string,
+        oldValue?: string,
+        newValue?: string
+      ) {
+        if (!this._mounted) {
+          return false
+        }
+        // Si la valeur change, on réinitialise la version traduite du JSON
+        if (name === 'value') {
+          // Saute le nouveau rendu si la valeur n'est pas nouvelle
+          if (newValue === this._value) {
+            return
+          }
+          this._value = newValue!
+        }
+        this.render()
+      }
+
+      disconnectedCallback() {
+        this._mounted = false
+      }
+
+      private parseValue(value: string): EditorComponentData[] {
+        if (this._data === null) {
+          try {
+            const json = JSON.parse(value)
+            this._data = indexify(json).map((value: EditorComponentData) => {
+              return fillDefaults(value, components[value._name]?.fields ?? [])
+            })
+          } catch (e) {
+            console.error('Impossible de parser les données', value, e)
+            alert("Impossible de parser les données de l'éditeur visuel")
+            this._data = []
+          }
+        }
+        return this._data!
+      }
+
+      private render() {
+        const data = this.parseValue(this._value)
+        const hiddenCategories =
+          this.getAttribute('hidden-categories')?.split(';') ?? []
+        ReactDOM.render(
+          <StoreProvider
+            data={data}
+            definitions={components}
+            hiddenCategories={hiddenCategories}
+            rootElement={this}
+          >
+            <VisualEditorComponent
+              element={this}
+              value={data}
+              previewUrl={this.getAttribute('preview') ?? ''}
+              iconsUrl={this.getAttribute('iconsUrl') ?? '/'}
+              name={this.getAttribute('name') ?? ''}
+              visible={this.getAttribute('hidden') === null}
+              onChange={(value: string) => {
+                if (this._value === value) {
+                  return
+                }
+                this._value = value
+                this.dispatchEvent(
+                  new CustomEvent('veChange', {
+                    detail: value,
+                  })
+                )
+              }}
+            />
+          </StoreProvider>,
+          this
+        )
+      }
+    }
     customElements.define(elementName, VisualEditorElement)
-  }
-}
-
-/**
- * On déclare notre custom element
- */
-class VisualEditorElement extends HTMLElement {
-  static changeEventName = 'veChange'
-  private _mounted: boolean = false
-  private _data: EditorComponentData[] | null = null
-  private _value = ''
-
-  static get observedAttributes() {
-    return ['hidden', 'value']
-  }
-
-  get value(): string {
-    return this._value
-  }
-
-  set value(v: string) {
-    if (v === this._value) {
-      return
-    }
-    this._value = v
-    this._data = null
-    this.render()
-  }
-
-  connectedCallback() {
-    disableEmotionWarnings()
-    this._value = this.getAttribute('value') || '[]'
-    this.render()
-    this._mounted = true
-  }
-
-  attributeChangedCallback(name: string, oldValue?: string, newValue?: string) {
-    if (!this._mounted) {
-      return false
-    }
-    // Si la valeur change, on réinitialise la version traduite du JSON
-    if (name === 'value') {
-      // Saute le nouveau rendu si la valeur n'est pas nouvelle
-      if (newValue === this._value) {
-        return
-      }
-      this._value = newValue!
-    }
-    this.render()
-  }
-
-  disconnectedCallback() {
-    this._mounted = false
-  }
-
-  private parseValue(value: string): EditorComponentData[] {
-    if (this._data === null) {
-      try {
-        const json = JSON.parse(value)
-        this._data = indexify(json).map((value: EditorComponentData) => {
-          return fillDefaults(value, components[value._name]?.fields ?? [])
-        })
-      } catch (e) {
-        console.error('Impossible de parser les données', value, e)
-        alert("Impossible de parser les données de l'éditeur visuel")
-        this._data = []
-      }
-    }
-    return this._data!
-  }
-
-  private render() {
-    const data = this.parseValue(this._value)
-    const hiddenCategories =
-      this.getAttribute('hidden-categories')?.split(';') ?? []
-    ReactDOM.render(
-      <StoreProvider
-        data={data}
-        definitions={components}
-        hiddenCategories={hiddenCategories}
-        rootElement={this}
-      >
-        <VisualEditorComponent
-          element={this}
-          value={data}
-          previewUrl={this.getAttribute('preview') ?? ''}
-          iconsUrl={this.getAttribute('iconsUrl') ?? '/'}
-          name={this.getAttribute('name') ?? ''}
-          visible={this.getAttribute('hidden') === null}
-          onChange={(value: string) => {
-            if (this._value === value) {
-              return
-            }
-            this._value = value
-            this.dispatchEvent(
-              new CustomEvent('veChange', {
-                detail: value,
-              })
-            )
-          }}
-        />
-      </StoreProvider>,
-      this
-    )
   }
 }
 
@@ -223,4 +224,6 @@ export { Tabs } from 'src/fields/Tabs'
 export { TextAlign } from 'src/fields/TextAlign'
 export { Translations as FR } from 'src/langs/fr'
 export { Translations as EN } from 'src/langs/en'
+export { BaseStyles }
+export { FieldsRenderer } from 'src/components/Sidebar/FieldsRenderer'
 export { React }

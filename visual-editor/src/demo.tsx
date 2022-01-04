@@ -95,7 +95,7 @@ editor.registerComponent('demo', {
       label: 'Select',
     }),
     Alignment('alignment', { vertical: true, label: 'Alignment' }),
-    TextAlign('textalign', { vertical: true, label: 'TextAlign' }),
+    TextAlign('textalign', { label: 'TextAlign' }),
     Row([Text('text1'), Text('text2'), Text('text3')]),
     Tabs(
       {

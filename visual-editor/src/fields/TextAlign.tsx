@@ -21,7 +21,6 @@ type FieldValue = keyof typeof AlignmentIcons
 
 type FieldArgs = {
   label?: string
-  vertical?: boolean
   default?: FieldValue
 }
 

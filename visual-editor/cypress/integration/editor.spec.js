@@ -58,7 +58,44 @@ describe('Editor behaviour', () => {
     assertValueMatch('settings', 'Hello world')
   })
 
-  describe('HTML Editor', function () {
+  describe('Repeater', () => {
+    it('Should add one item and edit it', () => {
+      addBlock()
+      cy.contains('button', 'Add an item').click()
+      cy.contains('label', 'Text 1').click()
+      cy.get('body').type('Content #1')
+      cy.contains('label', 'Text 2').click()
+      cy.get('body').type('Content #2')
+      cy.contains('label', 'Text 3').click()
+      cy.get('body').type('Content #3')
+      assertValue((v) => {
+        expect(v[0].repeater[0].text1).equals('Content #1')
+        expect(v[0].repeater[0].text2).equals('Content #2')
+        expect(v[0].repeater[0].text3).equals('Content #3')
+      })
+      cy.contains('label', 'Text 3').click()
+      cy.get('body').type(' edited')
+      assertValue((v) => {
+        expect(v[0].repeater[0].text1).equals('Content #1')
+        expect(v[0].repeater[0].text2).equals('Content #2')
+        expect(v[0].repeater[0].text3).equals('Content #3 edited')
+      })
+    })
+
+    it.only('Should add one item and edit it', () => {
+      addBlock()
+      cy.contains('button', 'Add an item').click()
+      cy.contains('button', 'Add an item').click()
+      cy.contains('button', '#1').last().click()
+      cy.contains('label', 'Text 2').last().click()
+      cy.get('body').type('Content #2')
+      assertValue((v) => {
+        expect(v[0].repeater[1].text2).equals('Content #2')
+      })
+    })
+  })
+
+  describe('HTML Editor', () => {
     it('inline content should not contain HTML', () => {
       addBlock()
       cy.contains('label', 'HTML One line').siblings().first().click()

@@ -6,6 +6,7 @@ import { Field, Styles, UnstyledButton } from 'src/components/ui'
 import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
 import { defineField } from 'src/fields/utils'
+import { colorToProperty } from 'src/functions/css'
 
 type FieldArgs = {
   label?: string
@@ -35,7 +36,7 @@ const Component: FieldComponent<FieldArgs, string | null> = ({
             style={
               value
                 ? ({
-                    '--ve-selected-color': `var(${value})`,
+                    '--ve-selected-color': colorToProperty(value),
                   } as CSSProperties)
                 : undefined
             }
@@ -49,7 +50,9 @@ const Component: FieldComponent<FieldArgs, string | null> = ({
             {options.colors.map((color) => (
               <PaletteItem
                 key={color}
-                style={{ '--ve-color': `var(${color})` } as CSSProperties}
+                style={
+                  { '--ve-color': colorToProperty(color) } as CSSProperties
+                }
                 onClick={changeHandler(color)}
               />
             ))}

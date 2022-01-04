@@ -6,12 +6,20 @@ import { Sortable, SortableWrapper } from 'src/components/Sortable'
 import { useToggle } from 'src/hooks/useToggle'
 import { prevent } from 'src/functions/functions'
 import { fillDefaults } from 'src/functions/fields'
-import { Button, ButtonIcon, Field, IconCirclePlus, IconDown, IconTrash } from 'src/components/ui'
+import {
+  Button,
+  ButtonIcon,
+  Field,
+  IconCirclePlus,
+  IconDown,
+  IconTrash,
+} from 'src/components/ui'
 import { SidebarHeading } from 'src/components/Sidebar/SidebarHeading'
-import { FunctionComponent, useMemo } from 'react'
+import { FunctionComponent, useMemo, useState } from 'react'
 import styled from '@emotion/styled'
 import { defineField } from 'src/fields/utils'
 import { t } from 'src/functions/i18n'
+import { FieldsRenderer } from 'src/components/Sidebar/FieldsRenderer'
 
 type FieldValue = RepeaterLine[]
 
@@ -21,7 +29,7 @@ type FieldArgs = {
   max?: number
   addLabel?: string
   fields: FieldDefinition<any, any>[]
-  collapsed?: string,
+  collapsed?: string
   default?: FieldValue
 }
 
@@ -58,23 +66,30 @@ const Footer = styled.div({
   backgroundColor: 'rgba(0,0,0,0.03)',
 })
 
-const Component: FieldComponent<FieldArgs, FieldValue> = ({ value: valueProps, onChange, options }) => {
+const Component: FieldComponent<FieldArgs, FieldValue> = ({
+  value: valueProps,
+  onChange,
+  options,
+}) => {
   const value: RepeaterLine[] = valueProps ?? []
   const canAdd = !options.max || value.length < options.max
   const canRemove = !options.min || value.length > options.min
+  const [lastAdditionIndex, setLastAdditionIndex] = useState(-1)
 
   const add = () => {
     onChange([
       ...value,
       fillDefaults({ _id: uniqId() }, options.fields) as RepeaterLine,
     ])
+    setLastAdditionIndex(value.length)
   }
 
   const remove = (line: Object) => {
     onChange(value.filter((v) => v !== line))
   }
 
-  const updateProperty = (path: string, v: unknown) => {
+  const updateProperty = (v: unknown, path: string) => {
+    console.table({ value, path, v })
     onChange(deepSet(value, path, v))
   }
 
@@ -94,6 +109,7 @@ const Component: FieldComponent<FieldArgs, FieldValue> = ({ value: valueProps, o
               onUpdate={updateProperty}
               onRemove={canRemove ? remove : null}
               options={options}
+              defaultCollapsed={lastAdditionIndex !== k}
             />
           ))}
           {canAdd && (
@@ -113,22 +129,15 @@ const FieldLine: FunctionComponent<{
   line: RepeaterLine
   index: number
   onRemove: null | ((line: RepeaterLine) => void)
-  onUpdate: (path: string, v: unknown) => void,
+  onUpdate: (v: unknown, path: string) => void
   options: FieldArgs
-}> = ({
-   line,
-   index,
-   onRemove,
-   onUpdate,
-  options
- }) => {
-  const handleUpdate = (path: string) => (value: unknown) =>
-    onUpdate(path, value)
-  const [collapsed, toggleCollapsed] = useToggle(true)
+  defaultCollapsed: boolean
+}> = ({ line, index, onRemove, onUpdate, options, defaultCollapsed }) => {
+  const [collapsed, toggleCollapsed] = useToggle(defaultCollapsed)
 
   const title = options.collapsed
     ? (line[options.collapsed] as string)
-    : `Element #${index + 1}`
+    : `#${index + 1}`
   const escapedTitle = useMemo(() => textContent(title), [title])
 
   return (
@@ -154,11 +163,11 @@ const FieldLine: FunctionComponent<{
       </SidebarHeading>
       {!collapsed && (
         <ItemBody>
-          <Fields
+          <FieldsRenderer
             fields={options.fields}
-            line={line}
-            index={index}
-            onUpdate={handleUpdate}
+            data={line}
+            onUpdate={onUpdate}
+            path={index.toString()}
           />
         </ItemBody>
       )}
@@ -166,69 +175,7 @@ const FieldLine: FunctionComponent<{
   )
 }
 
-const Fields: FunctionComponent<{
-  fields: Array<FieldDefinition>
-  line: RepeaterLine
-  index: number
-  onUpdate: (path: string) => (v: unknown) => void
-}> = ({
-            fields,
-            line,
-            onUpdate,
-            index,
-          }) => {
-  return (
-    <>
-      {fields.map((field, k) => (
-        <FieldItem
-          key={k}
-          field={field}
-          line={line}
-          onUpdate={onUpdate}
-          index={index}
-        />
-      ))}
-    </>
-  )
-}
-
-const FieldItem: FunctionComponent<{
-  field: FieldDefinition
-  line: RepeaterLine
-  index: number
-  onUpdate: (path: string) => (v: unknown) => void
-}> = ({
-                    field,
-                    line,
-                    onUpdate,
-                    index,
-                  }) => {
-  if (!field.shouldRender(line)) {
-    return null
-  }
-  if (field.group) {
-    return (
-      <field.render options={field.options}>
-        <Fields
-          fields={field.fields}
-          line={line}
-          onUpdate={onUpdate}
-          index={index}
-        />
-      </field.render>
-    )
-  }
-  return (
-    <field.render
-      options={field.options}
-      value={line[field.name]}
-      onChange={onUpdate(`${index}.${field.name}`)}
-    />
-  )
-}
-
 export const Repeater = defineField<FieldArgs, FieldValue>(() => ({
   defaultOptions: { addLabel: t('addItem'), fields: [], default: [] },
-  render: Component
+  render: Component,
 }))
-
