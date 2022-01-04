@@ -2,13 +2,13 @@ import styled from '@emotion/styled'
 import { css, Global } from '@emotion/react'
 import { FunctionComponent } from 'react'
 
-export const BaseStyles: FunctionComponent = ({children}) => {
-  return <>
-    <Global styles={{'visual-editor': {display: 'block'}}}/>
-    <Reset>
-      {children}
-    </Reset>
-  </>
+export const BaseStyles: FunctionComponent = ({ children }) => {
+  return (
+    <>
+      <Global styles={{ 'visual-editor': { display: 'block' } }} />
+      <Reset>{children}</Reset>
+    </>
+  )
 }
 
 export const Reset = styled.div(css`
@@ -31,6 +31,7 @@ export const Reset = styled.div(css`
   display: block;
   font-size: 16px;
   justify-content: center;
+  line-height: 1.4;
 
   *,
   *::before,
