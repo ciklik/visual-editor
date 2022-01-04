@@ -21,14 +21,17 @@ export const Row = defineFieldGroup<RowArgs>({
   render: RowComponent,
 })
 
-const Wrapper = styled(Flex)({}, ({ columns }: { columns?: string }) =>
-  columns
-    ? {
-        display: 'grid',
-        gridTemplateColumns: columns,
-        '& > *': {
-          width: '100%',
-        },
-      }
-    : {}
+const Wrapper = styled(Flex)(
+  {
+    '& > *': {
+      width: '100%',
+    },
+  },
+  ({ columns }: { columns?: string }) =>
+    columns
+      ? {
+          display: 'grid',
+          gridTemplateColumns: columns,
+        }
+      : {}
 )
