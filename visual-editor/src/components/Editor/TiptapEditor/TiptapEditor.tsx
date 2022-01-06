@@ -21,7 +21,7 @@ import styled from '@emotion/styled'
 import History from '@tiptap/extension-history'
 import Blockquote from '@tiptap/extension-blockquote'
 import { Styles } from 'src/components/ui'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const SingleDocument = Node.create({
   name: 'doc',
@@ -50,6 +50,8 @@ export function TiptapEditor({
   color,
 }: TiptapEditorProps) {
   const [isFocused, setFocus] = useState(false)
+  const onChangeRef = useRef(onChange)
+  onChangeRef.current = onChange
   const editor = useEditor({
     extensions: [
       ...(multiline ? [Document] : [SingleDocument]),
@@ -81,7 +83,8 @@ export function TiptapEditor({
         defaultAlignment: defaultAlign,
       }),
     ],
-    onUpdate: ({ editor }) => onChange(cleanHTML(editor.getHTML(), multiline)),
+    onUpdate: ({ editor }) =>
+      onChangeRef.current(cleanHTML(editor.getHTML(), multiline)),
     onFocus: () => setFocus(true),
     onBlur: () => setFocus(false),
     content: value,
