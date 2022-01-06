@@ -15,7 +15,11 @@ type FieldArgs = {
   default?: string
 }
 
-const Component: FieldComponent<FieldArgs, string> = ({value, onChange, options}) => {
+const Component: FieldComponent<FieldArgs, string> = ({
+  value,
+  onChange,
+  options,
+}) => {
   const id = useUniqId('selectinput')
   return (
     <Field
@@ -24,7 +28,7 @@ const Component: FieldComponent<FieldArgs, string> = ({value, onChange, options}
       help={options.help}
       options={options.options}
       value={value}
-      onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
+      onInput={(e) => onChange((e.target as HTMLSelectElement).value)}
     />
   )
 }
@@ -34,6 +38,5 @@ export const Select = defineField<FieldArgs, string>({
     default: '',
     options: [],
   },
-  render: Component
+  render: Component,
 })
-

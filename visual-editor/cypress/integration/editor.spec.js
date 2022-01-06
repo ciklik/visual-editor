@@ -58,6 +58,14 @@ describe('Editor behaviour', () => {
     assertValueMatch('settings', 'Hello world')
   })
 
+  describe('Select', () => {
+    it.only('Should update the value when select change', () => {
+      addBlock()
+      cy.get('select').select('Option 2')
+      assertValueMatch('select', '2')
+    })
+  })
+
   describe('Repeater', () => {
     it('Should add one item and edit it', () => {
       addBlock()

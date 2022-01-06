@@ -32,7 +32,7 @@ export function Field({
   if (!children) {
     if (options) {
       children = (
-        <Input as="select" {...props}>
+        <Select {...props}>
           {options.map((option: Option, key) => {
             return (
               <option value={option.value} key={key}>
@@ -40,7 +40,7 @@ export function Field({
               </option>
             )
           })}
-        </Input>
+        </Select>
       )
     } else if (['text', 'number'].includes(type)) {
       children = <Input type={type} {...props} />
@@ -83,6 +83,8 @@ const Input = styled.input({
     boxShadow: '0 0 0 0.25rem rgb(23 113 230 / 25%)',
   },
 })
+
+const Select = Input.withComponent('select')
 
 const HelpMessage = styled.div({
   fontStyle: 'italic',
