@@ -89,7 +89,6 @@ const Component: FieldComponent<FieldArgs, FieldValue> = ({
   }
 
   const updateProperty = (v: unknown, path: string) => {
-    console.table({ value, path, v })
     onChange(deepSet(value, path, v))
   }
 
