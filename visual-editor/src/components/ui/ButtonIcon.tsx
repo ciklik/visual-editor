@@ -20,6 +20,7 @@ export function ButtonIcon({
   const button = (
     <BaseButton
       {...props}
+      aria-label={title}
       css={[danger && Danger, success && Success]}
       style={style}
     />

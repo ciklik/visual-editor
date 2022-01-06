@@ -1,4 +1,4 @@
-import type {Translation} from 'src/types'
+import type { Translation } from 'src/types'
 
 export const Translations: Translation = {
   unknownComponent: 'Unknown component',
@@ -13,5 +13,7 @@ export const Translations: Translation = {
   addItem: 'Add an item',
   deleteItem: 'Remove item',
   rollback: 'Restore',
-  deleteItemConfirm: 'The component has been deleted'
+  deleteItemConfirm: 'The component has been deleted',
+  save: 'Save',
+  close: 'Close',
 }

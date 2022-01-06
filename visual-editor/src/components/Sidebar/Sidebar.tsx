@@ -4,6 +4,7 @@ import { SidebarHeader } from 'src/components/Sidebar/SidebarHeader'
 
 import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
+import { SidebarFooter } from 'src/components/Sidebar/SidebarFooter'
 
 export function Sidebar({
   data,
@@ -17,6 +18,7 @@ export function Sidebar({
     <SidebarWrapper {...props}>
       <SidebarHeader onClose={onClose} />
       <SidebarBlocs data={data} />
+      <SidebarFooter />
     </SidebarWrapper>
   )
 }

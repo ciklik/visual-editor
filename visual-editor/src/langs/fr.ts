@@ -8,8 +8,10 @@ export const Translations = {
   addComponent: 'Ajouter un bloc',
   responsiveView: 'Vue responsive',
   addItem: 'Ajouter un élément',
-  deleteItem: 'Supprimer l\'élément',
+  deleteItem: "Supprimer l'élément",
   rollback: 'Rétablir',
   deleteItemConfirm: 'Le bloc a bien été supprimé',
-  unknownComponent: 'Bloc inconnu'
+  unknownComponent: 'Bloc inconnu',
+  save: 'Sauvegarder',
+  close: 'Fermer',
 }

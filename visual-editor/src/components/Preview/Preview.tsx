@@ -77,7 +77,7 @@ export function Preview({ data, previewUrl }: PreviewProps) {
       {iframeRoot &&
         createPortal(
           <FrameProvider container={iframe.current!.contentDocument!}>
-            <BaseStyles>
+            <BaseStyles complete={false}>
               <PreviewItems
                 data={data}
                 initialHTML={initialHTML.current}

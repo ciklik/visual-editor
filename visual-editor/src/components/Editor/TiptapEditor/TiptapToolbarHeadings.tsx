@@ -14,7 +14,7 @@ export const TiptapToolbarHeadings: FunctionComponent<{ editor: Editor }> = ({
   const currentLevel = editor.getAttributes('heading').level
 
   if (
-    !('toggleHeading' in editor.can()) &&
+    !('toggleHeading' in editor.can()) ||
     !editor.can().toggleHeading({ level: 2 })
   ) {
     return null

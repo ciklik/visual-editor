@@ -16,6 +16,7 @@ import { useStateDelayed } from 'src/hooks/useStateDelayed'
 import { BaseStyles } from 'src/components/BaseStyles'
 import { disableEmotionWarnings } from 'src/functions/css'
 import { Translations as EN } from 'src/langs/en'
+import { useStopPropagation } from 'src/hooks/useStopPropagation'
 
 const components: EditorComponentDefinitions = {}
 
@@ -36,7 +37,7 @@ export class VisualEditor {
   defineElement(elementName: string = 'visual-editor') {
     // We only declare the class in this function to avoid any problem with SSR
     class VisualEditorElement extends HTMLElement {
-      static changeEventName = 'veChange'
+      static changeEventName = 'change'
       private _mounted: boolean = false
       private _data: EditorComponentData[] | null = null
       private _value = ''
@@ -128,7 +129,7 @@ export class VisualEditor {
                 }
                 this._value = value
                 this.dispatchEvent(
-                  new CustomEvent('veChange', {
+                  new CustomEvent('change', {
                     detail: value,
                   })
                 )
@@ -167,7 +168,7 @@ export function VisualEditorComponent({
   const data = useData()
   const visible = useStateDelayed(visibleProps)
   const handleClose = () => {
-    element.dispatchEvent(new Event('veClose'))
+    element.dispatchEvent(new Event('close'))
   }
   const doNothing = () => null // React wants handler :(
   // JSON nettoyé
@@ -186,6 +187,9 @@ export function VisualEditorComponent({
       onChange(cleanedData)
     }
   }, [cleanedData])
+  // We want to avoid bubbling change & close event
+  const div = useRef<HTMLDivElement>(null)
+  useStopPropagation(div, ['change', 'close'])
 
   if (!visible) {
     return (
@@ -194,7 +198,7 @@ export function VisualEditorComponent({
   }
 
   return (
-    <>
+    <div ref={div}>
       <BaseStyles>
         <Layout
           data={data}
@@ -204,7 +208,7 @@ export function VisualEditorComponent({
         />
       </BaseStyles>
       <textarea hidden name={name} value={cleanedData} onChange={doNothing} />
-    </>
+    </div>
   )
 }
 

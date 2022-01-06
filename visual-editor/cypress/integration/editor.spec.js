@@ -82,7 +82,7 @@ describe('Editor behaviour', () => {
       })
     })
 
-    it.only('Should add one item and edit it', () => {
+    it('Should add one item and edit it', () => {
       addBlock()
       cy.contains('button', 'Add an item').click()
       cy.contains('button', 'Add an item').click()
@@ -144,6 +144,33 @@ describe('Editor behaviour', () => {
         'multiline',
         '<p style="text-align: left">Hello World</p>'
       )
+    })
+  })
+
+  describe('Events', () => {
+    it('should trigger close event on close', () => {
+      cy.document().then((el) => {
+        el.querySelector('visual-editor').addEventListener(
+          'close',
+          cy.stub().as('close')
+        )
+      })
+      addBlock()
+      cy.get('[aria-label="Close"]').type('Content #3')
+      cy.get('@close').should('have.been.calledOnce')
+    })
+
+    it('should trigger change event on input', () => {
+      cy.document().then((el) => {
+        el.querySelector('visual-editor').addEventListener(
+          'change',
+          cy.stub().as('change')
+        )
+      })
+      addBlock()
+      cy.contains('label', 'Text').click()
+      cy.get('body').type('c')
+      cy.get('@change').should('have.been.calledTwice')
     })
   })
 })

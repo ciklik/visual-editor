@@ -15,6 +15,8 @@
       font-family: DM Sans, sans-serif;
       font-size: 16px;
     }
+    [role=button],
+    button{cursor:pointer}
     *, *::before, *::after {
       box-sizing: border-box;
     }
@@ -129,16 +131,16 @@
   document.querySelectorAll('.button').forEach((button) => {
     button.addEventListener('click', toggleEditor)
     const editor = document.getElementById(button.dataset.target)
-    editor.addEventListener('veChange', (e) =>
-      console.log(`veChange #${button.dataset.target} : `, e)
+    editor.addEventListener('change', (e) =>
+      console.log(`change #${button.dataset.target} : `, e)
     )
-    editor.addEventListener('veClose', (e) => {
+    editor.addEventListener('close', (e) => {
       editor.setAttribute('hidden', 'hidden')
     })
   })
 
   // Test how the field handle being updated
-  document.querySelector('#editor1').addEventListener('veChange', (e) => {
+  document.querySelector('#editor1').addEventListener('change', (e) => {
     localStorage.setItem('editor1value', e.detail)
     e.target.setAttribute('value', e.detail);
   })
