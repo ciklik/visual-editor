@@ -19,6 +19,7 @@
       Number as NumberField,
       Range,
       Repeater,
+      DatePicker,
       Row,
       Select,
       Tabs,
@@ -80,6 +81,7 @@
           label: 'image',
           onBrowse: (url) => Promise.resolve('https://picsum.photos/425/458'),
         }),
+        DatePicker('date', { label: 'Date' }),
         Color('color', { label: 'Color', colors: Colors }),
         Range('range', { min: 0, max: 100, label: 'Range' }),
         Select('select', {

@@ -6,6 +6,7 @@ import { css } from '@emotion/react'
 import { useState } from 'react'
 import { prevent } from 'src/functions/functions'
 import styled from '@emotion/styled'
+import { useUniqId } from 'src/hooks/useUniqId'
 
 type FieldArgs = {
   label?: string
@@ -854,8 +855,10 @@ const Component: FieldComponent<FieldArgs, number> = ({
     onChange(date.getTime())
     setOpen(false)
   }
+  const id = useUniqId('datepickerinput')
   return (
     <Field
+      id={id}
       label={options.label}
       help={options.help}
       icon={
@@ -865,7 +868,7 @@ const Component: FieldComponent<FieldArgs, number> = ({
       }
     >
       <div css={DatePickerCss}>
-        <Input onFocus={() => setOpen(true)} value={formattedDate} />
+        <Input id={id} onFocus={() => setOpen(true)} value={formattedDate} />
         {open && (
           <div css={{ position: 'absolute', zIndex: 4 }}>
             <ReactDatePicker

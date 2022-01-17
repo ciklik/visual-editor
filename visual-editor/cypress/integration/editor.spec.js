@@ -14,6 +14,10 @@ const assertValueMatch = (key, value) => {
   return assertValue((v) => expect(v[0][key]).to.equals(value))
 }
 
+const assertValueNotMatch = (key, value) => {
+  return assertValue((v) => expect(v[0][key]).to.not.equals(value))
+}
+
 const addBlock = () => {
   cy.get('@addComponent').click()
   cy.contains(allFieldText).click()
@@ -59,10 +63,20 @@ describe('Editor behaviour', () => {
   })
 
   describe('Select', () => {
-    it.only('Should update the value when select change', () => {
+    it('Should update the value when select change', () => {
       addBlock()
       cy.get('select').select('Option 2')
       assertValueMatch('select', '2')
+    })
+  })
+
+  describe('Datepicker', () => {
+    it('Should pick a date', () => {
+      addBlock()
+      assertValueMatch('date', '')
+      cy.contains('label', 'Date').scrollIntoView().siblings().first().click()
+      cy.contains('div', '17').click()
+      assertValueNotMatch('date', '')
     })
   })
 
