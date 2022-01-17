@@ -1,6 +1,6 @@
 {
   "name": "@boxraiser/visual-editor",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "type": "module",
   "main": "VisualEditor.js",
   "types": "./VisualEditor.d.ts",
@@ -59,6 +59,7 @@
     "clsx": "^1.1.1",
     "framesync": "^6.1.0",
     "react": "^17.0.2",
+    "react-datepicker": "^4.6.0",
     "react-dom": "^17.0.2",
     "react-flip-toolkit": "^7.0.13",
     "react-popper": "^2.2.5",
@@ -69,6 +70,7 @@
     "@types/jest": "^27.4.0",
     "@types/quill": "^2.0.9",
     "@types/react": "^17.0.38",
+    "@types/react-datepicker": "^4.3.4",
     "@types/react-dom": "^17.0.11",
     "@vitejs/plugin-react": "^1.1.4",
     "concurrently": "^7.0.0",

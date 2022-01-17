@@ -1,6 +1,7 @@
 import {
   Alignment,
   Checkbox,
+  DatePicker,
   EN,
   HTMLText,
   Number as NumberField,
@@ -74,6 +75,7 @@ editor.registerComponent('icons-columns', {
 editor.registerComponent('demo', {
   title: 'All field',
   fields: [
+    DatePicker('date', { label: 'Date' }),
     Text('text', { label: 'Text' }),
     HTMLText('htmltext', { label: 'HTMLText', multiline: false }),
     ContentField('htmltextarea'),

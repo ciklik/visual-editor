@@ -1,4 +1,5 @@
 export { Button } from './Button'
+export { Input } from './Input'
 export { UnstyledButton } from './UnstyledButton'
 export { ButtonIcon } from './ButtonIcon'
 export { DragHandle } from './DragHandle'
