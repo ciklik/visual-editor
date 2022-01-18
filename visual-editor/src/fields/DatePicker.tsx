@@ -1,7 +1,7 @@
 import { FieldComponent } from 'src/types'
 import { ButtonIcon, Field, IconCalendar, Input } from 'src/components/ui'
 import { defineField } from 'src/fields/utils'
-import { default as ReactDatePicker } from 'react-datepicker'
+import ReactDatePicker from 'react-datepicker'
 import { css } from '@emotion/react'
 import { useState } from 'react'
 import { prevent } from 'src/functions/functions'
