@@ -1,7 +1,7 @@
 import { FieldComponent } from 'src/types'
 import { ButtonIcon, Field, IconCalendar, Input } from 'src/components/ui'
 import { defineField } from 'src/fields/utils'
-import ReactDatePicker from 'react-datepicker'
+import { default as ReactDatePicker } from 'react-datepicker'
 import { css } from '@emotion/react'
 import { useState } from 'react'
 import { prevent } from 'src/functions/functions'
@@ -844,15 +844,16 @@ const Component: FieldComponent<FieldArgs, number> = ({
   onChange,
   options,
 }) => {
+  const date = value ? new Date(value * 1000) : null
   const [open, setOpen] = useState(false)
-  const formattedDate = value
+  const formattedDate = date
     ? new Intl.DateTimeFormat(undefined, {
         dateStyle: 'long',
         timeStyle: options.time ? 'short' : undefined,
-      }).format(new Date(value))
+      }).format(date)
     : ''
   const handleChange = (date: Date) => {
-    onChange(date.getTime())
+    onChange(date.getTime() / 1000)
     setOpen(false)
   }
   const id = useUniqId('datepickerinput')
@@ -868,11 +869,16 @@ const Component: FieldComponent<FieldArgs, number> = ({
       }
     >
       <div css={DatePickerCss}>
-        <Input id={id} onFocus={() => setOpen(true)} value={formattedDate} />
+        <Input
+          id={id}
+          onFocus={() => setOpen(true)}
+          value={formattedDate}
+          readOnly
+        />
         {open && (
           <div css={{ position: 'absolute', zIndex: 4 }}>
             <ReactDatePicker
-              selected={value ? new Date(value) : undefined}
+              selected={date}
               showTimeInput={options.time}
               inline
               onChange={handleChange}
