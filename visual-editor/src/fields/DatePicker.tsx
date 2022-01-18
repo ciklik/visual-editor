@@ -854,7 +854,9 @@ const Component: FieldComponent<FieldArgs, number> = ({
     : ''
   const handleChange = (date: Date) => {
     onChange(date.getTime() / 1000)
-    setOpen(false)
+    if (!options.time) {
+      setOpen(false)
+    }
   }
   const id = useUniqId('datepickerinput')
   return (
