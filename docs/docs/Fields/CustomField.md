@@ -4,55 +4,76 @@ sidebar_position: 1000
 
 # Custom Field
 
-You can create custom field 
+You can create custom field. You'll need to create a function that returns an object.
 
-```jsx
-import { AbstractField } from '@boxraiser/visual-editor'
+```ts
+type SingleFieldDefinition<O, V> = {
+  // Name of the field
+  name: string, 
+  // Options will be passed when rendering the component
+  options: O, 
+  // Function to render the component in the editor
+  render: FunctionComponent<{value: V, onChange: (v: V) => void, options: O}>,
+  // Allow conditional rendering depending of the component data
+  shouldRender: (data: Record<string, unknown>) => boolean,
+  // You can compute extra props using the component data
+  extraProps?: (data: Record<string, unknown>) => Record<string, any>,
+}
+```
 
-/**
- * @property args Field arguments merged with default 
- */
-export class MyCustomField extends AbstractField {
+For instance
 
-  // Set the default arguments for this field
-  get defaultArgs() {
-    return {
+```tsx
+import { Field, React } from '@boxraiser/visual-editor'
+
+const Component = ({
+  value,
+  onChange,
+  options,
+}) => {
+  return (
+    <Field label={options.label} help={options.help}>
+      <TiptapEditor
+        value={value}
+        onChange={onChange}
+        multiline={options.multiline}
+      />
+    </Field>
+  )
+}
+
+export const MyCustomField = (name, options) => {
+  return {
+    name: name,
+    options: {
       multiline: true,
       allowHeadings: false,
-      default: '', // Set the default value for this field
-    }
-  }
-
-  /**
-   * Function used to render the field
-   * @param {T} value The value set by the user
-   * @param {(T) => void} onChange A callback to call when the value change (expect the value as a parameter)
-   * @returns {JSX.Element}
-   */
-  field({ value, onChange }) {
-    return (
-      <Field label={this.args.label} help={this.args.help}>
-        <div className={Styles.HTMLText}>
-          <QuillEditor
-            value={value || ''}
-            onChange={onChange}
-            mode={this.fieldType()}
-            colors={this.args.colors}
-          />
-        </div>
-      </Field>
-    )
+      default: '',
+      ...options,
+    },
+    render: Component,
+    shouldRender: () => true,
   }
 }
 ```
 
-Then, you can use your field when creating new blocks
+For simple fields you can use the `defineField` and `defineFieldGroup` helper function.
 
-```jsx
-// The arguments will be merged with the default arguments
-new MyCustomField('title', {
-  label: 'Title',
-  default: 'Pro',
-  multiline: false,
+```tsx
+import { Field, defineField, React } from '@boxraiser/visual-editor'
+
+const Component = ({ value, onChange, options }) => {
+  return <div>
+      <input value={value} onChange={(e) => onChange(e.target.value)} />
+  </div>
+}
+
+export const Number = defineField({
+  defaultOptions: {
+    default: '',
+  },
+  render: Component,
 })
 ```
+
+You can check how [it is used internally](https://github.com/boxraiser/visual-editor/tree/main/visual-editor/src/fields)

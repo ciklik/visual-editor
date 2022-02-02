@@ -214,6 +214,7 @@ export function VisualEditorComponent({
 
 // Exporte les champs
 export { Text } from 'src/fields/Text'
+export { Field } from 'src/components/ui'
 export { Checkbox } from 'src/fields/Checkbox'
 export { Repeater } from 'src/fields/Repeater'
 export { ImageUrl } from 'src/fields/ImageUrl'
@@ -230,5 +231,6 @@ export { TextAlign } from 'src/fields/TextAlign'
 export { Translations as FR } from 'src/langs/fr'
 export { Translations as EN } from 'src/langs/en'
 export { BaseStyles }
+export { defineField, defineFieldGroup } from 'src/fields/utils'
 export { FieldsRenderer } from 'src/components/Sidebar/FieldsRenderer'
 export { React }

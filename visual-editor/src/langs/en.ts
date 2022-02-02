@@ -16,4 +16,5 @@ export const Translations: Translation = {
   deleteItemConfirm: 'The component has been deleted',
   save: 'Save',
   close: 'Close',
+  poweredBy: 'Powered by',
 }

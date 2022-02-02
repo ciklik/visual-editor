@@ -14,4 +14,5 @@ export const Translations = {
   unknownComponent: 'Bloc inconnu',
   save: 'Sauvegarder',
   close: 'Fermer',
+  poweredBy: 'Propulsé par',
 }
