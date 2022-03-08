@@ -15,4 +15,6 @@ export const Translations = {
   save: 'Sauvegarder',
   close: 'Fermer',
   poweredBy: 'Propulsé par',
+  noContent: `Vous n'avez pas encore de contenu`,
+  useTemplate: 'Utilisez un template',
 }

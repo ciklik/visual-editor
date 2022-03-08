@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 
 type ButtonProps = Omit<JSX.IntrinsicElements['button'], 'icon'> & {
   secondary?: boolean
+  outline?: boolean
   icon?: (...args: any) => JSX.Element
   size?: 'small' | 'default'
 }
@@ -11,11 +12,16 @@ export function Button({
   icon: IconElement,
   size = 'default',
   secondary = false,
+  outline = false,
   ...props
 }: ButtonProps) {
   return (
     <BaseButton
-      css={[secondary && Secondary, size === 'small' && Small]}
+      css={[
+        secondary && Secondary,
+        size === 'small' && Small,
+        outline && Outline,
+      ]}
       {...props}
     >
       {IconElement && <IconElement size={20} />}
@@ -52,4 +58,11 @@ const Secondary = {
 
 const Small = {
   height: 40,
+}
+
+const Outline = {
+  border: 'solid 1px var(--ve-primary)',
+  background: 'transparent',
+  color: 'var(--ve-primary)',
+  '&:hover, &:focus': { backgroundColor: 'var(--ve-primary)', color: '#FFF' },
 }

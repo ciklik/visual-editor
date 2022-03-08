@@ -46,12 +46,6 @@ const config = {
             label: "Docs",
           },
           {
-            type: "doc",
-            docId: "changelog",
-            position: "left",
-            label: "Changelog",
-          },
-          {
             to: "/pricing",
             label: "Pricing",
           },

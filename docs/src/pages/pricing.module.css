@@ -1,0 +1,61 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.title {
+  margin: 1em;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.prices {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 4rem 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .prices {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.price {
+  border: 1px solid #303846;
+  padding: 40px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 280px;
+}
+
+.price__title {
+  color: var(--ifm-color-primary);
+  margin: 0 0 0.25em;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.price__info {
+  font-style: normal;
+  font-size: .9em;
+  opacity: .7;
+}
+
+.price__value {
+  color: var(--ifm-color-primary);
+  font-size: 69px;
+  line-height: 51px;
+  font-weight: bold;
+  margin: 40px 0;
+}
+
+.price__body {
+  line-height: 1.4;
+  font-size: .9em;
+  margin: 1.5em 0;
+  opacity: .7;
+}

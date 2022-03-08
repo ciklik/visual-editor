@@ -5,6 +5,14 @@ import { SidebarHeader } from 'src/components/Sidebar/SidebarHeader'
 import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
 import { SidebarFooter } from 'src/components/Sidebar/SidebarFooter'
+import { SidebarEmpty } from 'src/components/Sidebar/SidebarEmpty'
+import { useState } from 'react'
+import { SidebarTemplates } from 'src/components/Sidebar/SidebarTemplates'
+
+enum States {
+  BLOCS,
+  TEMPLATES,
+}
 
 export function Sidebar({
   data,
@@ -14,10 +22,17 @@ export function Sidebar({
   data: EditorComponentData[]
   onClose: () => void
 }) {
+  const [state, setState] = useState(States.BLOCS)
   return (
     <SidebarWrapper {...props}>
       <SidebarHeader onClose={onClose} />
-      <SidebarBlocs data={data} />
+      {data.length > 0 && <SidebarBlocs data={data} />}
+      {state === States.BLOCS && data.length === 0 && (
+        <SidebarEmpty onAction={() => setState(States.TEMPLATES)} />
+      )}
+      {state === States.TEMPLATES && data.length === 0 && (
+        <SidebarTemplates onTemplate={() => setState(States.BLOCS)} />
+      )}
       <SidebarFooter />
     </SidebarWrapper>
   )

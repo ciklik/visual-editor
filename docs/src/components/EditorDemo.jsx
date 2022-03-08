@@ -8,9 +8,7 @@ export function EditorDemo({ className }) {
 
   useEffect(() => {
     import("./shared");
-    ref.current.addEventListener("veClose", () =>
-      setEditorVisibility("hidden")
-    );
+    ref.current.addEventListener("close", () => setEditorVisibility("hidden"));
   }, [ref.current]);
   return (
     <>

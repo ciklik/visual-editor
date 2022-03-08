@@ -4,6 +4,7 @@ import type {
   EditorComponentData,
   EditorComponentDefinition,
   EditorComponentDefinitions,
+  EditorComponentTemplate,
   Translation,
 } from 'src/types'
 import { Layout } from 'src/components/Layout'
@@ -19,6 +20,7 @@ import { Translations as EN } from 'src/langs/en'
 import { useStopPropagation } from 'src/hooks/useStopPropagation'
 
 const components: EditorComponentDefinitions = {}
+const templates: EditorComponentTemplate[] = []
 
 /**
  * Interface publique du module
@@ -32,6 +34,10 @@ export class VisualEditor {
 
   registerComponent(name: string, definition: EditorComponentDefinition) {
     components[name] = { label: 'title', ...definition }
+  }
+
+  registerTemplate(template: EditorComponentTemplate) {
+    templates.push(template)
   }
 
   defineElement(elementName: string = 'visual-editor') {
@@ -113,6 +119,7 @@ export class VisualEditor {
           <StoreProvider
             data={data}
             definitions={components}
+            templates={templates}
             hiddenCategories={hiddenCategories}
             rootElement={this}
           >

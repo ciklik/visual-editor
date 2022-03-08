@@ -1,5 +1,9 @@
 import create, { UseBoundStore } from 'zustand'
-import { EditorComponentData, EditorComponentDefinitions } from 'src/types'
+import {
+  EditorComponentData,
+  EditorComponentDefinitions,
+  EditorComponentTemplate,
+} from 'src/types'
 import { deepSet } from 'src/functions/object'
 import { combine, devtools } from 'zustand/middleware'
 import { insertItem } from 'src/functions/array'
@@ -18,6 +22,7 @@ export enum PreviewModes {
 
 type State = {
   data: EditorComponentData[]
+  templates: EditorComponentTemplate[]
   previousData: EditorComponentData[]
   definitions: EditorComponentDefinitions
   hiddenCategories: string[]
@@ -38,7 +43,8 @@ const createStore = (
   data: EditorComponentData[] = [],
   definitions: EditorComponentDefinitions,
   hiddenCategories: string[] = [],
-  rootElement: HTMLElement
+  rootElement: HTMLElement,
+  templates: EditorComponentTemplate[]
 ) =>
   create(
     devtools(
@@ -48,6 +54,7 @@ const createStore = (
           definitions,
           hiddenCategories,
           rootElement,
+          templates,
           previousData: [],
           rollbackMessage: null,
           addBlockIndex: null,
@@ -142,9 +149,11 @@ export function StoreProvider({
   definitions,
   hiddenCategories,
   rootElement,
+  templates,
 }: {
   children: ReactElement
   data: EditorComponentData[]
+  templates: EditorComponentTemplate[]
   definitions: EditorComponentDefinitions
   hiddenCategories: string[]
   rootElement: HTMLElement
@@ -152,7 +161,7 @@ export function StoreProvider({
   return (
     <Provider
       createStore={() =>
-        createStore(data, definitions, hiddenCategories, rootElement)
+        createStore(data, definitions, hiddenCategories, rootElement, templates)
       }
     >
       {children}
@@ -226,6 +235,10 @@ export function useBlocSelectionVisible(): boolean {
 
 export function useSetBlockIndex(): Function {
   return useStore((state) => state.setAddBlockIndex)
+}
+
+export function useTemplates(): EditorComponentTemplate[] {
+  return useStore((state) => state.templates)
 }
 
 export function useAddBlock() {
