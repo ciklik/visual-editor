@@ -61,7 +61,7 @@ const createStore = (
           focusIndex: null,
           previewMode: PreviewModes.DESKTOP,
           sidebarWidth: clamp(
-            sidebarWidth ? parseInt(sidebarWidth, 10) : 600,
+            sidebarWidth ? parseInt(sidebarWidth, 10) : 33,
             0,
             window.innerWidth - 375
           ),
