@@ -1,0 +1,23 @@
+---
+sidebar_position: 4
+---
+
+# Create templates
+
+To help user bootstrap their content you can define page templates that can be selected from the editor. A template is easy to define since you have to use the content of the page you want to clone.
+
+```js
+// Register a component / block
+editor.registerTemplate({
+  name: '<COMPONENT_IDENTIFIER>',
+  image: '<COMPONENT_PREVIEW_URL>',
+  description: '<TEMPLATE_DESCRIPTION>',
+  data: '<PAGE_DATA>'
+})
+```
+
+Here is an empty version of the editor so you can see the template selection
+
+import {EditorDemo} from '../src/components/EditorDemo'
+
+<EditorDemo withoutContent title="Test the template system"/>

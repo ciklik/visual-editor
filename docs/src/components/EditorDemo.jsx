@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import data from "./data.json";
 
-export function EditorDemo({ className }) {
+export function EditorDemo({ className, withoutContent, title }) {
   const [editorVisibility, setEditorVisibility] = useState("hidden");
   const ref = useRef();
 
@@ -18,7 +18,7 @@ export function EditorDemo({ className }) {
           setEditorVisibility((v) => (v === undefined ? "hidden" : undefined))
         }
       >
-        Test the editor
+        {title ?? "Test the editor"}
       </button>
       {typeof document !== "undefined" &&
         ReactDOM.createPortal(
@@ -34,7 +34,7 @@ export function EditorDemo({ className }) {
               name="content"
               preview="https://visual-editor.droapp.com"
               iconsUrl="/visual-editor/img/[name].svg"
-              value={JSON.stringify(data)}
+              value={withoutContent ? "[]" : JSON.stringify(data)}
               ref={ref}
             />
           </div>,
