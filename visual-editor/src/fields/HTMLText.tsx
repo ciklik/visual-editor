@@ -47,7 +47,7 @@ const Component: FieldComponent<FieldArgs, string, ExtraParams> = ({
   )
 }
 
-export const HTMLText = (name: string, options: FieldArgs) => {
+export const HTMLText = (name: string, options: FieldArgs = {}) => {
   return {
     name: name,
     options: {

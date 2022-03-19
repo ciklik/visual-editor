@@ -8,6 +8,7 @@ import { SidebarFooter } from 'src/components/Sidebar/SidebarFooter'
 import { SidebarEmpty } from 'src/components/Sidebar/SidebarEmpty'
 import { useState } from 'react'
 import { SidebarTemplates } from 'src/components/Sidebar/SidebarTemplates'
+import { useTemplates } from 'src/store'
 
 enum States {
   BLOCS,
@@ -23,11 +24,12 @@ export function Sidebar({
   onClose: () => void
 }) {
   const [state, setState] = useState(States.BLOCS)
+  const templates = useTemplates()
   return (
     <SidebarWrapper {...props}>
       <SidebarHeader onClose={onClose} />
       {data.length > 0 && <SidebarBlocs data={data} />}
-      {state === States.BLOCS && data.length === 0 && (
+      {state === States.BLOCS && data.length === 0 && templates.length > 0 && (
         <SidebarEmpty onAction={() => setState(States.TEMPLATES)} />
       )}
       {state === States.TEMPLATES && data.length === 0 && (
