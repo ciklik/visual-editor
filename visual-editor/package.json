@@ -4,6 +4,10 @@
   "type": "module",
   "main": "VisualEditor.js",
   "types": "./VisualEditor.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boxraiser/visual-editor"
+  },
   "scripts": {
     "dev": "concurrently \"vite\" \"php -S 0.0.0.0:8000 -ddisplay_errors=1 -t server/\"",
     "build": "tsc && vite build && node esbuild.js && npm run declaration && cp package.json dist/package.json",
