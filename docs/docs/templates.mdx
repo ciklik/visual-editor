@@ -21,3 +21,15 @@ Here is an empty version of the editor so you can see the template selection
 import {EditorDemo} from '../src/components/EditorDemo'
 
 <EditorDemo withoutContent title="Test the template system"/>
+
+You can also fetch the template on demand using a function in the data property
+
+```js
+// Register a component / block
+editor.registerTemplate({
+  name: '<COMPONENT_IDENTIFIER>',
+  image: '<COMPONENT_PREVIEW_URL>',
+  description: '<TEMPLATE_DESCRIPTION>',
+  data: () => fetchTemplateFromApi()
+})
+```

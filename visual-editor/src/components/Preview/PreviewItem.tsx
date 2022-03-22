@@ -4,7 +4,7 @@ import { usePreview } from 'src/hooks/usePreview'
 import { useFieldFocused, useSetFocusIndex } from 'src/store'
 import { offsetTop } from 'src/functions/dom'
 import { Flipped } from 'react-flip-toolkit'
-import { Spinner } from 'src/components/ui/Spinner'
+import { Spinner } from 'src/components/ui'
 import styled from '@emotion/styled'
 
 type PreviewItemProps = {

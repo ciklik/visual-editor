@@ -15,7 +15,9 @@ export type EditorComponentTemplate = {
   name: string
   description: string
   image: string
-  data: Omit<EditorComponentData, '_id'>[]
+  data:
+    | Omit<EditorComponentData, '_id'>[]
+    | (() => Promise<Omit<EditorComponentData, '_id'>[]>)
 }
 
 export type FieldComponent<
