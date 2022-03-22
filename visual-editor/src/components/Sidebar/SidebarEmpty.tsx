@@ -10,9 +10,9 @@ type Props = {
 export function SidebarEmpty(data: Props) {
   return (
     <Wrapper>
-      <p>{t('noContent')}</p>
+      <Description>{t('noContent')}</Description>
       <div>
-        <Button outline onClick={prevent(data.onAction)}>
+        <Button outline onClick={prevent(data.onAction)} size="small">
           {t('useTemplate')}
         </Button>
       </div>
@@ -27,4 +27,8 @@ const Wrapper = styled.div({
   justifyContent: 'center',
   height: '100%',
   textAlign: 'center',
+})
+
+const Description = styled.p({
+  marginBottom: '1em',
 })
