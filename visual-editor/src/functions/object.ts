@@ -67,9 +67,15 @@ export function stringifyFields(source: any) {
 }
 
 /**
- * Ajoute des _id sur tous les objets dans des tableaux afin de faciliter l'identification des objets
+ * Add _id on every objects in an array to simplify identification of element
  */
-export function indexify<T extends unknown>(object: T): T {
+export function indexify<T extends Record<string, unknown>>(
+  object: T
+): T & { _id: string }
+export function indexify<T extends Record<string, unknown>>(
+  object: T[]
+): (T & { _id: string })[]
+export function indexify(object: unknown): unknown {
   if (Array.isArray(object)) {
     object.forEach((v, k) => {
       if (typeof v === 'object') {
@@ -78,9 +84,7 @@ export function indexify<T extends unknown>(object: T): T {
       }
     })
   } else if (typeof object === 'object' && object !== null) {
-    Object.keys(object as Record<string, object>).forEach((key) =>
-      indexify((object as Record<string, object>)[key])
-    )
+    Object.keys(object).forEach((key) => indexify(object[key]))
   }
   return object
 }

@@ -1,15 +1,13 @@
 import styled from '@emotion/styled'
-import { useInsertData, useTemplates } from 'src/store'
+import { useSetData, useTemplates } from 'src/store'
 import { EditorComponentTemplate } from 'src/types'
-import { Card } from 'src/components/ui'
+import { Card, Spinner } from 'src/components/ui'
 import { prevent } from 'src/functions/functions'
 import { useCallback, useState } from 'react'
-import { indexify } from 'src/functions/object'
-import { Spinner } from 'src/components/ui'
 
 export function SidebarTemplates({ onTemplate }: { onTemplate: () => void }) {
   const templates = useTemplates()
-  const insertData = useInsertData()
+  const setData = useSetData()
   const [loadingTemplate, setLoadingTemplate] =
     useState<EditorComponentTemplate>()
   const callback = useCallback(
@@ -23,12 +21,10 @@ export function SidebarTemplates({ onTemplate }: { onTemplate: () => void }) {
       } else {
         data = t.data
       }
-      for (const datum of data) {
-        insertData(datum._name, 0, indexify(datum))
-      }
+      setData(data)
       onTemplate()
     },
-    [insertData, onTemplate]
+    [setData, onTemplate]
   )
   return (
     <Wrapper>

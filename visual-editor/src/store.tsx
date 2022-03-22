@@ -4,7 +4,7 @@ import {
   EditorComponentDefinitions,
   EditorComponentTemplate,
 } from 'src/types'
-import { deepSet } from 'src/functions/object'
+import { deepSet, indexify } from 'src/functions/object'
 import { combine, devtools } from 'zustand/middleware'
 import { insertItem } from 'src/functions/array'
 import { uniqId } from 'src/functions/string'
@@ -116,6 +116,16 @@ const createStore = (
             })
             return newData
           },
+          setData: function (
+            newData: Omit<EditorComponentData, '_id'>[]
+          ): void {
+            set(() => {
+              return {
+                data: indexify(newData) as EditorComponentData[],
+                focusIndex: null,
+              }
+            })
+          },
           setFocusIndex: function (id: string) {
             set(() => ({ focusIndex: id }))
           },
@@ -187,6 +197,10 @@ export function useRemoveBloc() {
 
 export function useInsertData() {
   return useStore((state) => state.insertData)
+}
+
+export function useSetData() {
+  return useStore((state) => state.setData)
 }
 
 export function useFocusIndex() {

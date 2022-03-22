@@ -128,7 +128,7 @@ editor.registerTemplate({
   description: 'Template multicolonne',
   data: [
     {
-      title: 'Album example',
+      title: 'Album 1 example',
       titleAlign: 'left',
       content:
         "<p>Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>",
@@ -147,7 +147,7 @@ editor.registerTemplate({
       _name: 'hero',
     },
     {
-      title: 'Album example',
+      title: 'Album 2 example',
       titleAlign: 'left',
       content:
         "<p>Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>",
@@ -166,7 +166,7 @@ editor.registerTemplate({
       _name: 'hero',
     },
     {
-      title: 'Album example',
+      title: 'Album 3 example',
       titleAlign: 'left',
       content:
         "<p>Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>",
@@ -185,7 +185,7 @@ editor.registerTemplate({
       _name: 'hero',
     },
     {
-      title: 'Album example',
+      title: 'Album 3 example',
       titleAlign: 'left',
       content:
         "<p>Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>",
