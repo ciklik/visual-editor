@@ -858,6 +858,11 @@ const Component: FieldComponent<FieldArgs, number> = ({
       setOpen(false)
     }
   }
+  // Fix an issue with the import not using the default by default
+  const ReactDatePickerComponent =
+    typeof ReactDatePicker === 'function'
+      ? ReactDatePicker
+      : (ReactDatePicker as any).default
   const id = useUniqId('datepickerinput')
   return (
     <Field
@@ -879,7 +884,7 @@ const Component: FieldComponent<FieldArgs, number> = ({
         />
         {open && (
           <div css={{ position: 'absolute', zIndex: 4 }}>
-            <ReactDatePicker
+            <ReactDatePickerComponent
               selected={date}
               showTimeInput={options.time}
               inline

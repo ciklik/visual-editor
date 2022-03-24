@@ -1,0 +1,25 @@
+---
+sidebar_position: 102
+---
+
+# DatePicker
+
+Generate a datepicker field based on [react-datepicker](https://reactdatepicker.com).
+
+## Options
+
+```js
+DatePicker('fieldName', {
+  label: 'Label of the field',          // (optional)
+  help: 'Some additional informations', // (optional)
+  time: false,                          // default to false (optional)
+  default: 'Default value',             // default to '' (optional)
+})
+```
+
+## Preview
+
+import {FieldPreview} from '../../src/components/FieldPreview'
+
+<FieldPreview type="DatePicker" args={{label: 'Single line of text', help: 'With some help', time: true}}/>
+

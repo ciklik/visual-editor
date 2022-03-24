@@ -47,8 +47,8 @@ editor.registerComponent('hero', {
 
           <iframe
             className={`margin-bottom--lg ${styles.video}`}
-            src="https://www.youtube-nocookie.com/embed/XIMLoLxmTDw?controls=0"
-            title="YouTube video player"
+            src="https://www.youtube-nocookie.com/embed/xpDM5UQ5VPk?controls=0"
+            title="Tutorial in french"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen

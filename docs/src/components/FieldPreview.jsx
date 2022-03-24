@@ -9,6 +9,7 @@ import {
   Select,
   Alignment,
   TextAlign,
+  DatePicker
 } from "../../../visual-editor/dist/VisualEditor.js";
 import React, { useState } from "react";
 import { DemoWrapper } from "./DemoWrapper";
@@ -24,6 +25,7 @@ const FieldTypes = {
   Select,
   Alignment,
   TextAlign,
+  DatePicker
 };
 
 export function FieldPreview({ type, args, defaultValue = "" }) {
