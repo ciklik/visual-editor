@@ -63,9 +63,9 @@ export const HTMLText = (name: string, options: FieldArgs = {}) => {
       textColor: colorToProperty(
         options.textColor && (data[options.textColor] as string)
       ),
-      defaultAlign: colorToProperty(
-        options.defaultAlign && (data[options.defaultAlign] as string)
-      ),
+      defaultAlign: options.defaultAlign
+        ? data[options.defaultAlign]
+        : undefined,
     }),
     render: Component,
     ...defaultFieldProperties(),
