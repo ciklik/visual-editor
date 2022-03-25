@@ -70,7 +70,7 @@ export function TiptapEditor({
       History,
       Blockquote,
       Link.configure({ openOnClick: false }),
-      Heading.configure({ levels: [2, 3, 4] }),
+      Heading.configure({ levels: [2, 3, 4, 5, 6] }),
       TextAlign.configure({
         types: [
           'heading',
