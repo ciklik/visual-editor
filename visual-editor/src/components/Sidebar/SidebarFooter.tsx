@@ -2,7 +2,6 @@ import { Button, Flex, IconSave } from 'src/components/ui'
 
 import styled from '@emotion/styled'
 import { t } from 'src/functions/i18n'
-import { BoxraiserLogo } from 'src/components/Sidebar/BoxraiserLogo'
 
 export function SidebarFooter() {
   return (
@@ -10,7 +9,10 @@ export function SidebarFooter() {
       <Mention>
         {t('poweredBy')} <br />
         <a href="https://boxraiser.com" target="_blank">
-          <BoxraiserLogo />
+          <Logo
+            src="https://static.boxraiser.com/logo.svg"
+            alt="Logo Boxraiser"
+          />
         </a>
       </Mention>
       <Button type="submit" icon={IconSave}>
@@ -32,7 +34,9 @@ const Wrapper = styled(Flex)({
 const Mention = styled('div')({
   fontSize: '.7em',
   marginRight: 'auto',
-  svg: {
-    height: 20,
-  },
+})
+
+const Logo = styled('img')({
+  width: 'auto',
+  height: 20,
 })
