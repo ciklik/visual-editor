@@ -6,9 +6,10 @@ import {
   Children,
   ReactElement,
   ReactNode,
+  FunctionComponent,
   useContext,
+  PropsWithChildren,
 } from 'react'
-import * as React from 'react'
 import { useForceUpdate } from './hooks'
 import { PresenceChild } from './PresenceChild'
 import { LayoutGroupContext } from './LayoutGroupContext'
@@ -63,11 +64,13 @@ function onlyElements(children: ReactNode): ReactElement<any>[] {
  * A big part of this code is taken from motion : https://github.com/framer/motion/blob/main/src/components/AnimatePresence/index.tsx
  *
  */
-export const AnimatePresence: React.FunctionComponent<{
-  in: Keyframes
-  out: Keyframes
-  exitBeforeEnter?: boolean
-}> = ({ children, in: inKeyframes, out: outKeyframes, exitBeforeEnter }) => {
+export const AnimatePresence: FunctionComponent<
+  PropsWithChildren<{
+    in: Keyframes
+    out: Keyframes
+    exitBeforeEnter?: boolean
+  }>
+> = ({ children, in: inKeyframes, out: outKeyframes, exitBeforeEnter }) => {
   // We want to force a re-render once all exiting animations have finished. We
   // either use a local forceRender function, or one from a parent context if it exists.
   let [forceRender] = useForceUpdate()

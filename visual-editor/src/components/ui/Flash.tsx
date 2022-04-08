@@ -1,4 +1,9 @@
-import type { EventHandler, MouseEventHandler, ReactNode } from 'react'
+import type {
+  EventHandler,
+  MouseEventHandler,
+  PropsWithChildren,
+  ReactNode,
+} from 'react'
 import { Flex } from './Flex'
 import { Button } from './Button'
 import { AnimatePresence } from './Animation/AnimatedPresence'
@@ -6,15 +11,13 @@ import { prevent, preventPropagation } from 'src/functions/functions'
 import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
 
-type FlashProps = {
-  children: ReactNode
+type FlashProps = PropsWithChildren<{
   action?: ReactNode
   onClick?: MouseEventHandler<HTMLButtonElement>
   onHide?: EventHandler<any>
   onExit?: Function
   duration?: number
-  className?: string
-}
+}>
 
 export function Flash({
   children,
@@ -22,7 +25,6 @@ export function Flash({
   onClick,
   duration,
   onHide,
-  className,
 }: FlashProps) {
   return (
     <AnimatePresence in={FlashIn} out={FlashOut}>

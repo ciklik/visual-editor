@@ -1,11 +1,12 @@
 import styled from '@emotion/styled'
 import { css, Global } from '@emotion/react'
-import { FunctionComponent } from 'react'
+import type { FunctionComponent, PropsWithChildren } from 'react'
 
-export const BaseStyles: FunctionComponent<{ complete?: boolean }> = ({
-  children,
-  complete = true,
-}) => {
+export const BaseStyles: FunctionComponent<
+  PropsWithChildren<{
+    complete?: boolean
+  }>
+> = ({ children, complete = true }) => {
   return (
     <>
       <Global styles={{ 'visual-editor': { display: 'block' } }} />

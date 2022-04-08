@@ -1,11 +1,5 @@
-import type { ReactNode } from 'react'
-import {
-  EditorComponentData,
-  EditorComponentDefinition,
-  FieldDefinition,
-} from 'src/types'
-import { useUpdateData } from 'src/store'
 import { useCallback } from 'react'
+import type { EditorComponentDefinition, FieldDefinition } from 'src/types'
 
 type FieldsRendererProps = {
   fields: EditorComponentDefinition['fields']
@@ -64,7 +58,7 @@ function Field({
 }) {
   const Component = field.render
   const handleChange = useCallback(
-    (v) => {
+    (v: unknown) => {
       onUpdate(v, path)
     },
     [path, onUpdate]

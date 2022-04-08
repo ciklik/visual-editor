@@ -3,6 +3,7 @@ import type {
   ForwardRefExoticComponent,
   FunctionComponent,
   MouseEventHandler,
+  PropsWithChildren,
   ReactNode,
   RefAttributes,
 } from 'react'
@@ -11,12 +12,11 @@ import { Flex, UnstyledButton } from 'src/components/ui'
 import styled from '@emotion/styled'
 import { SidebarBlocWrapper } from 'src/components/Sidebar/SidebarBlocWrapper'
 
-type SidebarHeadingProps = {
-  children: ReactNode
+type SidebarHeadingProps = PropsWithChildren<{
   title: string
   description?: string
   onClick?: MouseEventHandler<HTMLElement>
-}
+}>
 
 const Wrapper = styled(Flex)({})
 
@@ -65,7 +65,9 @@ export const SidebarHeading = forwardRef<HTMLDivElement, SidebarHeadingProps>(
 
 SidebarHeading.displayName = 'SidebarHeading'
 
-const SidebarHeadingHoverable: FunctionComponent<{}> = (props) => {
+const SidebarHeadingHoverable: FunctionComponent<PropsWithChildren<{}>> = (
+  props
+) => {
   return <HoverableActions gap={0} {...props} />
 }
 

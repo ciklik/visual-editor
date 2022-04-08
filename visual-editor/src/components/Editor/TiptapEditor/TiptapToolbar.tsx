@@ -1,4 +1,4 @@
-import { BubbleMenu, Editor } from '@tiptap/react'
+import { BubbleMenu, BubbleMenuProps, Editor } from '@tiptap/react'
 import { prevent } from 'src/functions/functions'
 import styled from '@emotion/styled'
 import { TiptapToolbarButton as Button } from './TiptapToolbarButton'
@@ -15,8 +15,11 @@ import {
 } from './TiptapIcons'
 import { Flex } from 'src/components/ui'
 import {
+  ComponentProps,
   FormEventHandler,
+  FunctionComponent,
   KeyboardEventHandler,
+  PropsWithChildren,
   useEffect,
   useState,
 } from 'react'
@@ -220,7 +223,7 @@ const Toolbar = styled(BubbleMenu)({
   height: 40,
   display: 'flex',
   padding: '0 1em',
-})
+}) as FunctionComponent<PropsWithChildren<BubbleMenuProps>>
 
 const Separator = styled.div({
   width: '.5em',
