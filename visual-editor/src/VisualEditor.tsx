@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import type {
   EditorComponentData,
   EditorComponentDefinition,
@@ -15,7 +15,6 @@ import { useUpdateEffect } from 'src/hooks/useUpdateEffect'
 import { fillDefaults } from 'src/functions/fields'
 import { useStateDelayed } from 'src/hooks/useStateDelayed'
 import { BaseStyles } from 'src/components/BaseStyles'
-import { disableEmotionWarnings } from 'src/functions/css'
 import { Translations as EN } from 'src/langs/en'
 import { useStopPropagation } from 'src/hooks/useStopPropagation'
 
@@ -66,7 +65,6 @@ export class VisualEditor {
       }
 
       connectedCallback() {
-        disableEmotionWarnings()
         this._value = this.getAttribute('value') || '[]'
         this.render()
         this._mounted = true
@@ -115,7 +113,7 @@ export class VisualEditor {
         const data = this.parseValue(this._value)
         const hiddenCategories =
           this.getAttribute('hidden-categories')?.split(';') ?? []
-        ReactDOM.render(
+        createRoot(this).render(
           <StoreProvider
             data={data}
             definitions={components}
@@ -142,8 +140,7 @@ export class VisualEditor {
                 )
               }}
             />
-          </StoreProvider>,
-          this
+          </StoreProvider>
         )
       }
     }
