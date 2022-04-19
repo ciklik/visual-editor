@@ -10,17 +10,17 @@ Group fields using tabs
 
 ```ts
 Tabs({
-  tabs: [
-    {
-      label: 'Content',
-      fields: [/* ... */],
-    },
-    {
-      label: 'Style',
-      fields: [/* ... */],
-    }
-  ]
-})
+    label: "Content",
+    fields: [
+      Text("text1", { label: "Text 1" }),
+      Text("text2", { label: "Text 2" }),
+    ],
+  },
+  {
+    label: "Settings",
+    fields: [Text("text3", { label: "Text 3" })],
+  }
+)
 ```
 
 ## Preview
