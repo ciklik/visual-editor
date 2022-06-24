@@ -30,14 +30,14 @@ const Component: FieldComponent<FieldArgs, string> = ({
   options,
 }) => {
   const alignements = Object.keys(AlignmentIcons) as FieldValue[]
-  const id = useUniqId()
+  const id = useUniqId('textaligninput')
   return (
     <Field label={options.label}>
       <AlignmentButtons>
         {alignements.map((alignment) => (
           <AlignmentButton<FieldValue>
             key={alignment}
-            name={id}
+            id={id}
             value={alignment}
             checked={value === alignment}
             onChange={onChange}

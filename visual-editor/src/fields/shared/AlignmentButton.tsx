@@ -8,7 +8,7 @@ type Props<T extends unknown> = {
   checked: boolean
   icon: FunctionComponent
   onChange: (v: T) => void
-  name?: string
+  id?: string
 }
 
 export function AlignmentButton<T extends unknown>({
