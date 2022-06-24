@@ -1,7 +1,6 @@
 import type { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
 import { capitalize } from 'src/functions/string'
-import { prevent } from 'src/functions/functions'
 
 type Props<T extends unknown> = {
   value: T
