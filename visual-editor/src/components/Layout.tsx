@@ -25,25 +25,23 @@ export function Layout({ data, previewUrl, onClose, iconsUrl }: LayoutProps) {
   const showResizeControl = !sidebarCollapsed
   return (
     <>
-    <Wrapper withSidebar={!sidebarCollapsed}>
-      <Sidebar
-        data={data}
-        onClose={onClose}
-        css={{
-          display: sidebarCollapsed ? 'none' : undefined,
-        }}
-      />
-      {previewUrl && (
-        <Preview data={data} previewUrl={previewUrl} />
-      )}
-      <SidebarToggleButton
-        collapsed={sidebarCollapsed}
-        onClick={toggleSidebar}
-      />
-      {showResizeControl && <ResizeBar />}
-      <BlocSelector iconsUrl={iconsUrl} />
-      <RollbackMessage />
-    </Wrapper>
+      <Wrapper withSidebar={!sidebarCollapsed}>
+        <Sidebar
+          data={data}
+          onClose={onClose}
+          css={{
+            display: sidebarCollapsed ? 'none' : undefined,
+          }}
+        />
+        {previewUrl && <Preview data={data} previewUrl={previewUrl} />}
+        <SidebarToggleButton
+          collapsed={sidebarCollapsed}
+          onClick={toggleSidebar}
+        />
+        {showResizeControl && <ResizeBar />}
+        <BlocSelector iconsUrl={iconsUrl} />
+        <RollbackMessage />
+      </Wrapper>
     </>
   )
 }

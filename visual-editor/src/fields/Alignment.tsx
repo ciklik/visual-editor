@@ -1,5 +1,11 @@
 import { FieldComponent } from 'src/types'
-import { Field, IconAlignBottom, IconAlignLeft, IconAlignRight, IconAlignTop } from 'src/components/ui'
+import {
+  Field,
+  IconAlignBottom,
+  IconAlignLeft,
+  IconAlignRight,
+  IconAlignTop,
+} from 'src/components/ui'
 import type { FunctionComponent } from 'react'
 import { AlignmentButton } from 'src/fields/shared/AlignmentButton'
 import { AlignmentButtons } from 'src/fields/shared/AlignmentButtons'
@@ -20,7 +26,11 @@ const AlignmentIcons = {
   right: IconAlignRight,
 } as Record<FieldValue, FunctionComponent>
 
-const Component: FieldComponent<FieldArgs, FieldValue> = ({value, onChange, options}) => {
+const Component: FieldComponent<FieldArgs, FieldValue> = ({
+  value,
+  onChange,
+  options,
+}) => {
   const alignements = [
     'left',
     'right',
@@ -47,5 +57,5 @@ export const Alignment = defineField<FieldArgs, FieldValue>({
   defaultOptions: {
     default: 'left' as FieldValue,
   },
-  render: Component
+  render: Component,
 })

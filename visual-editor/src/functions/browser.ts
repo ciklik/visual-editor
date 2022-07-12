@@ -1,6 +1,6 @@
 export async function copyToClipboard(text: string): Promise<true> {
   try {
-    const permissionName = "clipboard-write" as PermissionName;
+    const permissionName = 'clipboard-write' as PermissionName
     const result = await navigator.permissions.query({
       name: permissionName,
     })

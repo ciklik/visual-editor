@@ -10,21 +10,27 @@ type FieldArgs = {
   default?: string
 }
 
-const Component: FieldComponent<FieldArgs, string> = ({value, onChange, options}) => {
+const Component: FieldComponent<FieldArgs, string> = ({
+  value,
+  onChange,
+  options,
+}) => {
   const id = useUniqId('textinput')
-  return <Field
-    label={options.label}
-    type={options.multiline ? 'textarea' : 'text'}
-    id={id}
-    value={value}
-    onInput={(e) => onChange((e.target as HTMLTextAreaElement).value)}
-    help={options.help}
-  />
+  return (
+    <Field
+      label={options.label}
+      type={options.multiline ? 'textarea' : 'text'}
+      id={id}
+      value={value}
+      onInput={(e) => onChange((e.target as HTMLTextAreaElement).value)}
+      help={options.help}
+    />
+  )
 }
 
 export const Text = defineField<FieldArgs, string>({
   defaultOptions: {
-    default: ''
+    default: '',
   },
-  render: Component
+  render: Component,
 })

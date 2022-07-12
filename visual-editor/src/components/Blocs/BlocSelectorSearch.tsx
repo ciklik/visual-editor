@@ -26,7 +26,7 @@ const Input = styled.input({
   padding: '0 1rem 0 2.6rem',
   border: '1px solid transparent',
   font: 'inherit',
-  '&:focus': Styles.FocusState
+  '&:focus': Styles.FocusState,
 })
 
 export function BlocSelectorSearch({

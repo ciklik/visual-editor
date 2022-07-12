@@ -5,7 +5,7 @@ import { css } from '@emotion/react'
 type FlexProps = {
   between?: boolean
   column?: boolean
-  gap?: number,
+  gap?: number
   as?: ElementType<any>
 } & JSX.IntrinsicElements['div']
 

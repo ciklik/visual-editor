@@ -25,9 +25,7 @@ export function CopyAction({ data, size, ...props }: CopyActionProps) {
       alert(e)
     }
   }
-  const tooltipLabel = Array.isArray(data)
-    ? t('copyPage')
-    : t('copyComponent')
+  const tooltipLabel = Array.isArray(data) ? t('copyPage') : t('copyComponent')
 
   useEffect(() => {
     clearTimeout(timer.current)

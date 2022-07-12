@@ -10,16 +10,22 @@ type FieldArgs = {
   default?: string
 }
 
-const Component: FieldComponent<FieldArgs, string> = ({ value, onChange, options }) => {
+const Component: FieldComponent<FieldArgs, string> = ({
+  value,
+  onChange,
+  options,
+}) => {
   const id = useUniqId('numberinput')
-  return <Field
-    label={options.label}
-    type='number'
-    id={id}
-    value={value}
-    onInput={(e) => onChange((e.target as HTMLTextAreaElement).value)}
-    help={options.help}
-  />
+  return (
+    <Field
+      label={options.label}
+      type="number"
+      id={id}
+      value={value}
+      onInput={(e) => onChange((e.target as HTMLTextAreaElement).value)}
+      help={options.help}
+    />
+  )
 }
 
 export const Number = defineField<FieldArgs, string>({

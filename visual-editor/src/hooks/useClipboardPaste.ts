@@ -6,7 +6,7 @@ export function useClipboardPaste(enabled: boolean) {
   const insertData = useInsertData()
   useEffect(() => {
     if (!enabled) {
-      return;
+      return
     }
     const listener = (event: ClipboardEvent) => {
       try {

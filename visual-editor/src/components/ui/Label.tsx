@@ -5,5 +5,5 @@ export const Label = styled.label({
   marginBottom: '.5em',
   overflow: 'hidden',
   whiteSpace: 'nowrap',
-  textOverflow: 'ellipsis'
+  textOverflow: 'ellipsis',
 })

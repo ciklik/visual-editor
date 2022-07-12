@@ -1,6 +1,7 @@
 import { css } from '@emotion/react'
 
-const ignoreError = '/* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */';
+const ignoreError =
+  '/* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */'
 
 export const QuillEditorStyles = css`
   .ql-disabled .ql-tooltip {

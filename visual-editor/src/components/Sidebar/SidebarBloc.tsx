@@ -76,7 +76,11 @@ export const SidebarBloc = memo(function SidebarItem({
       >
         <SidebarHeading.Hover>
           <CopyAction data={data} size={20} />
-          <ButtonIcon danger onClick={handleRemove} title={t('deleteComponent')}>
+          <ButtonIcon
+            danger
+            onClick={handleRemove}
+            title={t('deleteComponent')}
+          >
             <IconTrash size={20} />
           </ButtonIcon>
         </SidebarHeading.Hover>

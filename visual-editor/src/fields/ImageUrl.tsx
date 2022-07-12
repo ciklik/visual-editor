@@ -8,11 +8,15 @@ import { defineField } from 'src/fields/utils'
 type FieldArgs = {
   label?: string
   help?: string
-  default?: string,
+  default?: string
   onBrowse?: (url?: string) => Promise<string>
 }
 
-const Component: FieldComponent<FieldArgs, string> = ({value, onChange, options}) => {
+const Component: FieldComponent<FieldArgs, string> = ({
+  value,
+  onChange,
+  options,
+}) => {
   const id = useUniqId('imageinput')
   const handleBrowse = () => {
     options.onBrowse!(value)
@@ -44,9 +48,9 @@ const Component: FieldComponent<FieldArgs, string> = ({value, onChange, options}
 
 export const ImageUrl = defineField<FieldArgs, string>({
   defaultOptions: {
-    default: ''
+    default: '',
   },
-  render: Component
+  render: Component,
 })
 
 const Button = styled(ButtonIcon)({
