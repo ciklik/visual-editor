@@ -6,9 +6,12 @@ import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
 import { SidebarFooter } from 'src/components/Sidebar/SidebarFooter'
 import { SidebarEmpty } from 'src/components/Sidebar/SidebarEmpty'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { SidebarTemplates } from 'src/components/Sidebar/SidebarTemplates'
 import { useTemplates } from 'src/store'
+import { ButtonIcon, IconBlocs, IconPage } from 'src/components/ui'
+import { prevent } from 'src/functions/functions'
+import { t } from 'src/functions/i18n'
 
 enum States {
   BLOCS,
@@ -25,14 +28,32 @@ export function Sidebar({
 }) {
   const [state, setState] = useState(States.BLOCS)
   const templates = useTemplates()
+  const toggleMode = useCallback(() => {
+    setState((v) => (v === States.BLOCS ? States.TEMPLATES : States.BLOCS))
+  }, [])
+  const hasTemplates = templates.length > 0
+  const showEmpty = data.length === 0 && hasTemplates
+  const isTemplateMode = state === States.TEMPLATES
+
   return (
     <SidebarWrapper {...props}>
-      <SidebarHeader onClose={onClose} />
-      {data.length > 0 && <SidebarBlocs data={data} />}
-      {state === States.BLOCS && data.length === 0 && templates.length > 0 && (
-        <SidebarEmpty onAction={() => setState(States.TEMPLATES)} />
-      )}
-      {state === States.TEMPLATES && data.length === 0 && (
+      <SidebarHeader onClose={onClose}>
+        {hasTemplates && (
+          <ButtonIcon
+            onClick={prevent(toggleMode)}
+            title={t(isTemplateMode ? 'addComponent' : 'useTemplate')}
+          >
+            {isTemplateMode ? <IconBlocs /> : <IconPage />}
+          </ButtonIcon>
+        )}
+      </SidebarHeader>
+      {state === States.BLOCS &&
+        (showEmpty ? (
+          <SidebarEmpty onAction={() => setState(States.TEMPLATES)} />
+        ) : (
+          <SidebarBlocs data={data} />
+        ))}
+      {state === States.TEMPLATES && (
         <SidebarTemplates onTemplate={() => setState(States.BLOCS)} />
       )}
       <SidebarFooter />

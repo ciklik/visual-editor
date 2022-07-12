@@ -400,3 +400,39 @@ export function IconCalendar({ size = 24 }: IconProps) {
     </svg>
   )
 }
+
+export function IconPage({ size = 24 }: IconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+    >
+      <path
+        fill="currentColor"
+        d="M5 8v12h14V8H5zm0-2h14V4H5v2zm15 16H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1zM7 10h4v4H7v-4zm0 6h10v2H7v-2zm6-5h4v2h-4v-2z"
+      />
+    </svg>
+  )
+}
+
+export function IconBlocs({ size = 24 }: IconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+    >
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M4 4v5h16V4H4ZM3 2a1 1 0 0 0-1 1v7c0 .6.4 1 1 1h18c.6 0 1-.4 1-1V3c0-.6-.4-1-1-1H3ZM4 15v5h16v-5H4Zm-1-2a1 1 0 0 0-1 1v7c0 .6.4 1 1 1h18c.6 0 1-.4 1-1v-7c0-.6-.4-1-1-1H3Z"
+        clipRule="evenodd"
+      />
+      <path fill="currentColor" d="M5 5h6v1H5V5ZM5 16h6v1H5v-1Z" />
+    </svg>
+  )
+}

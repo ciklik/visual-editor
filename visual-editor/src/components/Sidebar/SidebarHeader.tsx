@@ -13,18 +13,20 @@ import {
   IconCirclePlus,
   IconCross,
   IconDesktop,
+  IconPage,
   IconPhone,
 } from 'src/components/ui'
 import { CopyAction } from './Actions/CopyAction'
 
 import styled from '@emotion/styled'
 import { t } from 'src/functions/i18n'
+import { PropsWithChildren } from 'react'
 
-type SidebarHeaderProps = {
+type SidebarHeaderProps = PropsWithChildren<{
   onClose: () => void
-}
+}>
 
-export function SidebarHeader({ onClose }: SidebarHeaderProps) {
+export function SidebarHeader({ onClose, children }: SidebarHeaderProps) {
   const togglePreviewMode = useTogglePreviewMode()
   const previewMode = usePreviewMode()
   const isPhone = previewMode === PreviewModes.PHONE
@@ -39,6 +41,7 @@ export function SidebarHeader({ onClose }: SidebarHeaderProps) {
         </ButtonIcon>
       </div>
       <Flex>
+        {children}
         <CopyAction data={data} size={20} />
         <ButtonIcon
           onClick={prevent(togglePreviewMode)}
