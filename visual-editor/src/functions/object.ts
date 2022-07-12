@@ -77,9 +77,10 @@ export function indexify<T extends Record<string, unknown>>(
 ): (T & { _id: string })[]
 export function indexify(object: unknown): unknown {
   if (Array.isArray(object)) {
+    const prefix = Math.round(Date.now() / 1000)
     object.forEach((v, k) => {
       if (typeof v === 'object') {
-        v._id = k.toString()
+        v._id = prefix + k.toString()
         indexify(v)
       }
     })
