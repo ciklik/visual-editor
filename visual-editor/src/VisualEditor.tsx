@@ -113,6 +113,7 @@ export class VisualEditor {
         const data = this.parseValue(this._value)
         const hiddenCategories =
           this.getAttribute('hidden-categories')?.split(';') ?? []
+
         createRoot(this).render(
           <StoreProvider
             data={data}
@@ -126,6 +127,7 @@ export class VisualEditor {
               value={data}
               previewUrl={this.getAttribute('preview') ?? ''}
               iconsUrl={this.getAttribute('iconsUrl') ?? '/'}
+              blockPositionOnAdd={this.getAttribute('blockPositionOnAdd') ?? 'top'}
               name={this.getAttribute('name') ?? ''}
               visible={this.getAttribute('hidden') === null}
               onChange={(value: string) => {
@@ -153,6 +155,7 @@ type VisualEditorProps = {
   previewUrl: string
   name: string
   iconsUrl: string
+  blockPositionOnAdd: string
   visible: boolean
   element: Element
   onChange: (v: string) => void
@@ -164,6 +167,7 @@ export function VisualEditorComponent({
   name,
   element,
   iconsUrl,
+  blockPositionOnAdd,
   visible: visibleProps,
   onChange,
 }: VisualEditorProps) {
@@ -209,6 +213,7 @@ export function VisualEditorComponent({
           onClose={handleClose}
           previewUrl={previewUrl}
           iconsUrl={iconsUrl}
+          blockPositionOnAdd={blockPositionOnAdd}
         />
       </BaseStyles>
       <textarea hidden name={name} value={cleanedData} onChange={doNothing} />

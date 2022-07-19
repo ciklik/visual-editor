@@ -257,14 +257,15 @@ export function useTemplates(): EditorComponentTemplate[] {
 
 export function useAddBlock() {
   const insertData = useInsertData()
-  const blockIndex = useStore((state) => state.addBlockIndex) || 0
+  const blockIndex = useStore((state) => state.data.length) || 0
+
   const definitions = useDefinitions()
   const setBlockIndex = useSetBlockIndex()
   return useCallback(
-    (blocName: string) => {
+    (blocName: string, blockPosition: string) => {
       insertData(
         blocName,
-        blockIndex,
+        blockPosition === 'bottom' ? blockIndex : 0,
         fillDefaults({}, definitions[blocName]!.fields)
       )
       setBlockIndex(null)

@@ -17,9 +17,10 @@ const ALL_TAB = 'Tous les blocs'
 
 type BlocSelectorProps = {
   iconsUrl: string
+  blockPositionOnAdd: string
 }
 
-export function BlocSelector({ iconsUrl }: BlocSelectorProps) {
+export function BlocSelector({ iconsUrl, blockPositionOnAdd }: BlocSelectorProps) {
   const isVisible = useBlocSelectionVisible()
   const setBlockIndex = useSetBlockIndex()
   const [search, setSearch] = useState('')
@@ -73,7 +74,9 @@ export function BlocSelector({ iconsUrl }: BlocSelectorProps) {
                   definition={definitions[key]!}
                   name={key}
                   iconsUrl={iconsUrl}
-                  onClick={() => addBlock(key)}
+                  onClick={() => {
+                    addBlock(key, blockPositionOnAdd)
+                  }}
                 />
               ))}
           </BlocSelectorGrid>

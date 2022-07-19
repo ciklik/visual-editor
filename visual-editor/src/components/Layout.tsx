@@ -18,9 +18,10 @@ type LayoutProps = {
   previewUrl?: string
   onClose: () => void
   iconsUrl: string
+  blockPositionOnAdd: string
 }
 
-export function Layout({ data, previewUrl, onClose, iconsUrl }: LayoutProps) {
+export function Layout({ data, previewUrl, onClose, iconsUrl, blockPositionOnAdd }: LayoutProps) {
   const [sidebarCollapsed, toggleSidebar] = useToggle(false)
   const showResizeControl = !sidebarCollapsed
   return (
@@ -39,7 +40,7 @@ export function Layout({ data, previewUrl, onClose, iconsUrl }: LayoutProps) {
           onClick={toggleSidebar}
         />
         {showResizeControl && <ResizeBar />}
-        <BlocSelector iconsUrl={iconsUrl} />
+        <BlocSelector iconsUrl={iconsUrl} blockPositionOnAdd={blockPositionOnAdd} />
         <RollbackMessage />
       </Wrapper>
     </>
