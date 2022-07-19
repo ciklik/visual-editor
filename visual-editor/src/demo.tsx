@@ -30,6 +30,7 @@ let editor = new VisualEditor({
 
 editor.registerComponent('hero', {
   title: 'Hero',
+  titleFromField: 'title',
   fields: WithStyles([TitleField(), ContentField(), ButtonsField()]),
 })
 

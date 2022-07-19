@@ -12,6 +12,7 @@ import { SidebarFields } from './SidebarFields'
 import { CopyAction } from './Actions/CopyAction'
 import { SidebarBlocWrapper } from 'src/components/Sidebar/SidebarBlocWrapper'
 import { t } from 'src/functions/i18n'
+import {textContent} from "src/functions/string";
 
 type SidebarBlocProps = {
   data: EditorComponentData
@@ -46,6 +47,11 @@ export const SidebarBloc = memo(function SidebarItem({
     }
   }, [isFocused])
 
+  const title = definition?.titleFromField
+      ? (data[definition?.titleFromField] as string)
+      : (definition?.title ?? '')
+  const escapedTitle = useMemo(() => textContent(title), [title])
+
   const labelHTMLSafe = useMemo(
     () => (label?.includes('<') ? strToDom(label).innerText : label),
     [label]
@@ -70,7 +76,7 @@ export const SidebarBloc = memo(function SidebarItem({
     <SidebarBlocWrapper item={data}>
       <SidebarHeading
         ref={ref}
-        title={definition.title}
+        title={escapedTitle}
         description={isCollapsed ? labelHTMLSafe : null}
         onClick={prevent(focusBloc)}
       >

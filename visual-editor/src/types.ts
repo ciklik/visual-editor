@@ -68,6 +68,8 @@ export type EditorComponentDefinition = {
   fields: Array<FieldDefinition<any, any>>
   // Catégorie du bloc
   category?: string
+  // Titre du block dependant d'un champ
+  titleFromField?: string
 }
 
 export type EditorComponentDefinitions = Record<
