@@ -74,9 +74,7 @@ export function BlocSelector({ iconsUrl, blockPositionOnAdd }: BlocSelectorProps
                   definition={definitions[key]!}
                   name={key}
                   iconsUrl={iconsUrl}
-                  onClick={() => {
-                    addBlock(key, blockPositionOnAdd)
-                  }}
+                  onClick={() => addBlock(key, blockPositionOnAdd)}
                 />
               ))}
           </BlocSelectorGrid>
