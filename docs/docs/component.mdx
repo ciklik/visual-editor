@@ -11,12 +11,15 @@ For the editor to work you have to define the components you want to use on your
 editor.registerComponent('<COMPONENT_IDENTIFIER>', {
   category: '<CATEGORY_LABEL>',
   title: '<COMPONENT_TITLE>',
-  fields: [/* An array of fields */]
+  fields: [/* An array of fields */],
+  titleFromField: '<COMPONENT_FIELD_NAME>',
 })
 ```
 
 The fields property is an array of field definition.
 You can use the built in fields (explained in the next chapter of this documentation) or [create your own](./Fields/CustomField.md).
+
+- `titleFromField` (optional), the name of the component's field who will be used to override  title. If field doesn't exist default title will be this you have defined in `title` key.
 
 ## Example
 
@@ -27,6 +30,7 @@ import {Text, HTMLText, Repeater, Select} from '@boxraiser/visual-editor'
 
 editor.registerComponent('hero', {
   title: 'Hero',
+  titleFromField: 'title',
   fields: [
     Text('title', {label: 'Title'}),
     HTMLText('content', {label: 'Content'}),
