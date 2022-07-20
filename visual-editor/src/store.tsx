@@ -1,9 +1,5 @@
 import create, { UseBoundStore } from 'zustand'
-import {
-  EditorComponentData,
-  EditorComponentDefinitions,
-  EditorComponentTemplate,
-} from 'src/types'
+import { EditorComponentData, EditorComponentDefinitions, EditorComponentTemplate } from 'src/types'
 import { deepSet, indexify } from 'src/functions/object'
 import { combine, devtools } from 'zustand/middleware'
 import { insertItem } from 'src/functions/array'
@@ -14,6 +10,7 @@ import { clamp } from './functions/number'
 import React, { ReactElement, useCallback } from 'react'
 import { fillDefaults } from './functions/fields'
 import { t } from 'src/functions/i18n'
+import { InsertDirection } from 'src/enum'
 
 export enum PreviewModes {
   PHONE,
@@ -262,10 +259,10 @@ export function useAddBlock() {
   const definitions = useDefinitions()
   const setBlockIndex = useSetBlockIndex()
   return useCallback(
-    (blocName: string, blockPosition: string) => {
+    (blocName: string, insertDirection: InsertDirection) => {
       insertData(
         blocName,
-        blockPosition === 'bottom' ? blockIndex : 0,
+        insertDirection === InsertDirection.Start ? 0 : blockIndex,
         fillDefaults({}, definitions[blocName]!.fields)
       )
       setBlockIndex(null)

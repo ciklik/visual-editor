@@ -4,13 +4,13 @@ import { EditorComponentData } from 'src/types'
 import { useSidebarWidth } from 'src/store'
 import { ResizeBar } from './ResizeBar'
 import { BlocSelector } from './Blocs/BlocSelector'
-import React, { FunctionComponent, ReactNode, useState } from 'react'
+import React, { ReactNode } from 'react'
 import { RollbackMessage } from './RollbackMessage'
-import { ButtonIcon, IconBack } from 'src/components/ui'
 import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
 import { SidebarToggleButton } from 'src/components/Layout/SidebarToggleButton'
 import { useToggle } from 'src/hooks/useToggle'
+import { InsertDirection } from 'src/enum'
 
 type LayoutProps = {
   className?: string
@@ -18,10 +18,10 @@ type LayoutProps = {
   previewUrl?: string
   onClose: () => void
   iconsUrl: string
-  blockPositionOnAdd: string
+  insertDirection: InsertDirection
 }
 
-export function Layout({ data, previewUrl, onClose, iconsUrl, blockPositionOnAdd }: LayoutProps) {
+export function Layout({ data, previewUrl, onClose, iconsUrl, insertDirection }: LayoutProps) {
   const [sidebarCollapsed, toggleSidebar] = useToggle(false)
   const showResizeControl = !sidebarCollapsed
   return (
@@ -40,7 +40,7 @@ export function Layout({ data, previewUrl, onClose, iconsUrl, blockPositionOnAdd
           onClick={toggleSidebar}
         />
         {showResizeControl && <ResizeBar />}
-        <BlocSelector iconsUrl={iconsUrl} blockPositionOnAdd={blockPositionOnAdd} />
+        <BlocSelector iconsUrl={iconsUrl} insertDirection={insertDirection} />
         <RollbackMessage />
       </Wrapper>
     </>
