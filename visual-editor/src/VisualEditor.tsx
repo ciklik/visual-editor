@@ -122,7 +122,10 @@ export class VisualEditor {
             templates={templates}
             hiddenCategories={hiddenCategories}
             rootElement={this}
-            insertPosition={(this.getAttribute('insertPosition') ?? InsertPosition.Start) as InsertPosition}
+            insertPosition={
+              (this.getAttribute('insertPosition') ??
+                InsertPosition.Start) as InsertPosition
+            }
           >
             <VisualEditorComponent
               element={this}

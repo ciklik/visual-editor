@@ -1,5 +1,9 @@
 import create, { UseBoundStore } from 'zustand'
-import { EditorComponentData, EditorComponentDefinitions, EditorComponentTemplate } from 'src/types'
+import {
+  EditorComponentData,
+  EditorComponentDefinitions,
+  EditorComponentTemplate,
+} from 'src/types'
 import { deepSet, indexify } from 'src/functions/object'
 import { combine, devtools } from 'zustand/middleware'
 import { insertItem } from 'src/functions/array'
@@ -131,7 +135,12 @@ const createStore = (
           },
           setAddBlockIndex: function (index?: number | null) {
             if (index === undefined) {
-              set((state) => ({ addBlockIndex: state.insertPosition === InsertPosition.Start ? 0 : state.data.length }))
+              set((state) => ({
+                addBlockIndex:
+                  state.insertPosition === InsertPosition.Start
+                    ? 0
+                    : state.data.length,
+              }))
               return
             }
             set(() => ({ addBlockIndex: index }))
@@ -171,13 +180,20 @@ export function StoreProvider({
   templates: EditorComponentTemplate[]
   definitions: EditorComponentDefinitions
   hiddenCategories: string[]
-  rootElement: HTMLElement,
+  rootElement: HTMLElement
   insertPosition: InsertPosition
 }) {
   return (
     <Provider
       createStore={() =>
-        createStore(data, definitions, hiddenCategories, rootElement, templates, insertPosition)
+        createStore(
+          data,
+          definitions,
+          hiddenCategories,
+          rootElement,
+          templates,
+          insertPosition
+        )
       }
     >
       {children}

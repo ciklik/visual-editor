@@ -1,6 +1,20 @@
 import { prevent } from 'src/functions/functions'
-import { PreviewModes, useData, usePreviewMode, useSetBlockIndex, useTogglePreviewMode } from 'src/store'
-import { Button, ButtonIcon, Flex, IconCirclePlus, IconCross, IconDesktop, IconPhone } from 'src/components/ui'
+import {
+  PreviewModes,
+  useData,
+  usePreviewMode,
+  useSetBlockIndex,
+  useTogglePreviewMode,
+} from 'src/store'
+import {
+  Button,
+  ButtonIcon,
+  Flex,
+  IconCirclePlus,
+  IconCross,
+  IconDesktop,
+  IconPhone,
+} from 'src/components/ui'
 import { CopyAction } from './Actions/CopyAction'
 
 import styled from '@emotion/styled'
