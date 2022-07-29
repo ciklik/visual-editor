@@ -60,13 +60,13 @@ export interface IndexableObject {
 }
 
 export type EditorComponentDefinition = {
-  // Titre du bloc
+  // Bloc title
   title: string
-  // Champs dont la valeur sera utilisé comme label de bloc
+  // Field used for the block label
   label?: string
-  // Champs du bloc
+  // Fields inside the block
   fields: Array<FieldDefinition<any, any>>
-  // Catégorie du bloc
+  // Block category
   category?: string
 }
 
