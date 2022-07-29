@@ -10,7 +10,7 @@ import { clamp } from './functions/number'
 import React, { ReactElement, useCallback } from 'react'
 import { fillDefaults } from './functions/fields'
 import { t } from 'src/functions/i18n'
-import { InsertDirection } from 'src/enum'
+import { InsertPosition } from 'src/enum'
 
 export enum PreviewModes {
   PHONE,
@@ -29,6 +29,7 @@ type State = {
   sidebarWidth: number
   addBlockIndex: number | null
   rootElement: HTMLElement
+  insertPosition: InsertPosition
 }
 
 const sidebarWidth =
@@ -41,7 +42,8 @@ const createStore = (
   definitions: EditorComponentDefinitions,
   hiddenCategories: string[] = [],
   rootElement: HTMLElement,
-  templates: EditorComponentTemplate[]
+  templates: EditorComponentTemplate[],
+  insertPosition: InsertPosition
 ) =>
   create(
     devtools(
@@ -52,6 +54,7 @@ const createStore = (
           hiddenCategories,
           rootElement,
           templates,
+          insertPosition,
           previousData: [],
           rollbackMessage: null,
           addBlockIndex: null,
@@ -126,7 +129,11 @@ const createStore = (
           setFocusIndex: function (id: string) {
             set(() => ({ focusIndex: id }))
           },
-          setAddBlockIndex: function (index: number | null) {
+          setAddBlockIndex: function (index?: number | null) {
+            if (index === undefined) {
+              set((state) => ({ addBlockIndex: state.insertPosition === InsertPosition.Start ? 0 : state.data.length }))
+              return
+            }
             set(() => ({ addBlockIndex: index }))
           },
           togglePreviewMode: function () {
@@ -157,18 +164,20 @@ export function StoreProvider({
   hiddenCategories,
   rootElement,
   templates,
+  insertPosition,
 }: {
   children: ReactElement
   data: EditorComponentData[]
   templates: EditorComponentTemplate[]
   definitions: EditorComponentDefinitions
   hiddenCategories: string[]
-  rootElement: HTMLElement
+  rootElement: HTMLElement,
+  insertPosition: InsertPosition
 }) {
   return (
     <Provider
       createStore={() =>
-        createStore(data, definitions, hiddenCategories, rootElement, templates)
+        createStore(data, definitions, hiddenCategories, rootElement, templates, insertPosition)
       }
     >
       {children}
@@ -254,15 +263,15 @@ export function useTemplates(): EditorComponentTemplate[] {
 
 export function useAddBlock() {
   const insertData = useInsertData()
-  const blockIndex = useStore((state) => state.data.length) || 0
+  const blockIndex = useStore((state) => state.addBlockIndex) || 0
 
   const definitions = useDefinitions()
   const setBlockIndex = useSetBlockIndex()
   return useCallback(
-    (blocName: string, insertDirection: InsertDirection) => {
+    (blocName: string) => {
       insertData(
         blocName,
-        insertDirection === InsertDirection.Start ? 0 : blockIndex,
+        blockIndex,
         fillDefaults({}, definitions[blocName]!.fields)
       )
       setBlockIndex(null)

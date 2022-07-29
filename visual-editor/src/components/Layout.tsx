@@ -10,7 +10,6 @@ import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
 import { SidebarToggleButton } from 'src/components/Layout/SidebarToggleButton'
 import { useToggle } from 'src/hooks/useToggle'
-import { InsertDirection } from 'src/enum'
 
 type LayoutProps = {
   className?: string
@@ -18,10 +17,9 @@ type LayoutProps = {
   previewUrl?: string
   onClose: () => void
   iconsUrl: string
-  insertDirection: InsertDirection
 }
 
-export function Layout({ data, previewUrl, onClose, iconsUrl, insertDirection }: LayoutProps) {
+export function Layout({ data, previewUrl, onClose, iconsUrl }: LayoutProps) {
   const [sidebarCollapsed, toggleSidebar] = useToggle(false)
   const showResizeControl = !sidebarCollapsed
   return (
@@ -40,7 +38,7 @@ export function Layout({ data, previewUrl, onClose, iconsUrl, insertDirection }:
           onClick={toggleSidebar}
         />
         {showResizeControl && <ResizeBar />}
-        <BlocSelector iconsUrl={iconsUrl} insertDirection={insertDirection} />
+        <BlocSelector iconsUrl={iconsUrl} />
         <RollbackMessage />
       </Wrapper>
     </>

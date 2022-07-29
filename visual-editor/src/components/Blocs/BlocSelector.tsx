@@ -12,16 +12,14 @@ import { BlocSelectorItem } from 'src/components/Blocs/BlocSelectorItem'
 import { BlocSelectorSearch } from 'src/components/Blocs/BlocSelectorSearch'
 import { BlocSelectorGrid } from 'src/components/Blocs/BlocSelectorGrid'
 import { t } from 'src/functions/i18n'
-import { InsertDirection } from 'src/enum'
 
 const ALL_TAB = 'Tous les blocs'
 
 type BlocSelectorProps = {
   iconsUrl: string
-  insertDirection: InsertDirection
 }
 
-export function BlocSelector({ iconsUrl, insertDirection }: BlocSelectorProps) {
+export function BlocSelector({ iconsUrl }: BlocSelectorProps) {
   const isVisible = useBlocSelectionVisible()
   const setBlockIndex = useSetBlockIndex()
   const [search, setSearch] = useState('')
@@ -75,7 +73,7 @@ export function BlocSelector({ iconsUrl, insertDirection }: BlocSelectorProps) {
                   definition={definitions[key]!}
                   name={key}
                   iconsUrl={iconsUrl}
-                  onClick={() => addBlock(key, insertDirection)}
+                  onClick={() => addBlock(key)}
                 />
               ))}
           </BlocSelectorGrid>

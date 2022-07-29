@@ -1,21 +1,6 @@
 import { prevent } from 'src/functions/functions'
-import {
-  PreviewModes,
-  useData,
-  usePreviewMode,
-  useSetBlockIndex,
-  useTogglePreviewMode,
-} from 'src/store'
-import {
-  Button,
-  ButtonIcon,
-  Flex,
-  IconCirclePlus,
-  IconCross,
-  IconDesktop,
-  IconPage,
-  IconPhone,
-} from 'src/components/ui'
+import { PreviewModes, useData, usePreviewMode, useSetBlockIndex, useTogglePreviewMode } from 'src/store'
+import { Button, ButtonIcon, Flex, IconCirclePlus, IconCross, IconDesktop, IconPhone } from 'src/components/ui'
 import { CopyAction } from './Actions/CopyAction'
 
 import styled from '@emotion/styled'
@@ -49,7 +34,7 @@ export function SidebarHeader({ onClose, children }: SidebarHeaderProps) {
         >
           {isPhone ? <IconDesktop size={20} /> : <IconPhone size={24} />}
         </ButtonIcon>
-        <Button icon={IconCirclePlus} onClick={prevent(() => setAddBlock(0))}>
+        <Button icon={IconCirclePlus} onClick={prevent(() => setAddBlock())}>
           {t('addComponent')}
         </Button>
       </Flex>

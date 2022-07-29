@@ -17,7 +17,7 @@ import { useStateDelayed } from 'src/hooks/useStateDelayed'
 import { BaseStyles } from 'src/components/BaseStyles'
 import { Translations as EN } from 'src/langs/en'
 import { useStopPropagation } from 'src/hooks/useStopPropagation'
-import { InsertDirection } from 'src/enum'
+import { InsertPosition } from 'src/enum'
 
 const components: EditorComponentDefinitions = {}
 const templates: EditorComponentTemplate[] = []
@@ -122,13 +122,13 @@ export class VisualEditor {
             templates={templates}
             hiddenCategories={hiddenCategories}
             rootElement={this}
+            insertPosition={(this.getAttribute('insertPosition') ?? InsertPosition.Start) as InsertPosition}
           >
             <VisualEditorComponent
               element={this}
               value={data}
               previewUrl={this.getAttribute('preview') ?? ''}
               iconsUrl={this.getAttribute('iconsUrl') ?? '/'}
-              insertDirection={(this.getAttribute('insertDirection') ?? InsertDirection.Start) as InsertDirection}
               name={this.getAttribute('name') ?? ''}
               visible={this.getAttribute('hidden') === null}
               onChange={(value: string) => {
@@ -156,7 +156,6 @@ type VisualEditorProps = {
   previewUrl: string
   name: string
   iconsUrl: string
-  insertDirection: InsertDirection
   visible: boolean
   element: Element
   onChange: (v: string) => void
@@ -168,7 +167,6 @@ export function VisualEditorComponent({
   name,
   element,
   iconsUrl,
-  insertDirection,
   visible: visibleProps,
   onChange,
 }: VisualEditorProps) {
@@ -214,7 +212,6 @@ export function VisualEditorComponent({
           onClose={handleClose}
           previewUrl={previewUrl}
           iconsUrl={iconsUrl}
-          insertDirection={insertDirection}
         />
       </BaseStyles>
       <textarea hidden name={name} value={cleanedData} onChange={doNothing} />
