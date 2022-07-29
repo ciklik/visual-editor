@@ -17,6 +17,7 @@ import { useStateDelayed } from 'src/hooks/useStateDelayed'
 import { BaseStyles } from 'src/components/BaseStyles'
 import { Translations as EN } from 'src/langs/en'
 import { useStopPropagation } from 'src/hooks/useStopPropagation'
+import { InsertPosition } from 'src/enum'
 
 const components: EditorComponentDefinitions = {}
 const templates: EditorComponentTemplate[] = []
@@ -113,6 +114,7 @@ export class VisualEditor {
         const data = this.parseValue(this._value)
         const hiddenCategories =
           this.getAttribute('hidden-categories')?.split(';') ?? []
+
         createRoot(this).render(
           <StoreProvider
             data={data}
@@ -120,6 +122,10 @@ export class VisualEditor {
             templates={templates}
             hiddenCategories={hiddenCategories}
             rootElement={this}
+            insertPosition={
+              (this.getAttribute('insertPosition') ??
+                InsertPosition.Start) as InsertPosition
+            }
           >
             <VisualEditorComponent
               element={this}

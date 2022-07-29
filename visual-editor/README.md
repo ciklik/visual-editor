@@ -74,6 +74,7 @@ You now have a custom element `visual-editor` that you can use to display the ed
   preview="http://localhost:3000/preview"
   iconsUrl="/assets/editor/[name].svg"
   value="[]"
+  insertPosition="start"
 ></visual-editor>
 ```
 
@@ -84,6 +85,7 @@ There are multiple attributes :
 - `preview`, endpoint called to render the preview
 - `iconsUrl`, path used to resolve component icons URL ([name] will be replaced by the ID of the component)
 - `value` (optional), will set the default value for the editor (expect a JSON array)
+- `insertPosition` (optional), determine at which position the new block will be added (**start** or **end**)
 
 The custom element will create a hidden field that will be used to store the data, no need for additional JavaScript you will receive the data when the form is submitted.
 

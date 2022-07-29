@@ -13,7 +13,6 @@ import {
   IconCirclePlus,
   IconCross,
   IconDesktop,
-  IconPage,
   IconPhone,
 } from 'src/components/ui'
 import { CopyAction } from './Actions/CopyAction'
@@ -49,7 +48,7 @@ export function SidebarHeader({ onClose, children }: SidebarHeaderProps) {
         >
           {isPhone ? <IconDesktop size={20} /> : <IconPhone size={24} />}
         </ButtonIcon>
-        <Button icon={IconCirclePlus} onClick={prevent(() => setAddBlock(0))}>
+        <Button icon={IconCirclePlus} onClick={prevent(() => setAddBlock())}>
           {t('addComponent')}
         </Button>
       </Flex>
