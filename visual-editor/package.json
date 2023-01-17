@@ -1,6 +1,6 @@
 {
   "name": "@boxraiser/visual-editor",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "type": "module",
   "main": "VisualEditor.js",
   "types": "./VisualEditor.d.ts",
@@ -59,15 +59,15 @@
     "@tiptap/react": "^2.0.0-beta.108",
     "clsx": "^1.1.1",
     "framesync": "^6.1.0",
-    "react": "^18.0.0",
     "react-datepicker": "^4.7.0",
-    "react-dom": "^18.0.0",
     "react-flip-toolkit": "^7.0.13",
     "react-popper": "^2.2.5",
     "react-use": "^17.3.2",
     "zustand": "^3.7.2"
   },
   "devDependencies": {
+    "react-dom": "^18.0.0",
+    "react": "^18.0.0",
     "@emotion/babel-plugin": "^11.7.2",
     "@types/jest": "^27.4.1",
     "@types/quill": "^2.0.9",

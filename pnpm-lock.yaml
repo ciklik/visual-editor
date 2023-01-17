@@ -126,9 +126,7 @@ importers:
       '@tiptap/react': 2.0.0-beta.108_46y2eftk5yaqaulnogdvslnhpm
       clsx: 1.1.1
       framesync: 6.1.0
-      react: 18.0.0
       react-datepicker: 4.7.0_zpnidt7m3osuk7shl3s4oenomq
-      react-dom: 18.0.0_react@18.0.0
       react-flip-toolkit: 7.0.13_zpnidt7m3osuk7shl3s4oenomq
       react-popper: 2.2.5_3xwovrkoqcwqqlotewjitwlwgi
       react-use: 17.3.2_zpnidt7m3osuk7shl3s4oenomq
@@ -147,6 +145,8 @@ importers:
       esbuild-node-externals: 1.4.1_esbuild@0.14.34
       jest: 27.5.1
       prettier: 2.6.2
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
       rollup-plugin-analyzer: 4.0.0
       start-server-and-test: 1.14.0
       ts-jest: 27.1.4_clsujg55ghbr5bj72wipvz62fa
@@ -8820,7 +8820,7 @@ packages:
     dev: true
 
   /object-assign/4.1.1:
-    resolution: {integrity: sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=}
+    resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
     dev: false
 
@@ -9865,7 +9865,6 @@ packages:
       loose-envify: 1.4.0
       react: 18.0.0
       scheduler: 0.21.0
-    dev: false
 
   /react-error-overlay/6.0.10:
     resolution: {integrity: sha512-mKR90fX7Pm5seCOfz8q9F+66VCc1PGsWSBxKbITjfKVQHMNF2zudxHnMdJiB1fRCb+XsbQV9sO9DCkgsMQgBIA==}
@@ -10495,7 +10494,6 @@ packages:
     resolution: {integrity: sha512-1r87x5fz9MXqswA2ERLo0EbOAU74DpIUO090gIasYTqlVoJeMcl+Z1Rg7WHz+qtPujhS/hGIt9kxZOYBV3faRQ==}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
 
   /schema-utils/2.7.0:
     resolution: {integrity: sha512-0ilKFI6QQF5nxDZLFn2dMjvc4hjg/Wkg7rHd3jK6/A4a1Hl9VFdQWvgB1UMGoU94pad1P/8N7fMcEnLnSiju8A==}
