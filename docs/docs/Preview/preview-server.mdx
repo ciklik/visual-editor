@@ -1,10 +1,22 @@
 ---
-sidebar_position: 4
+sidebar_position: 1
 ---
 
-# Render the preview
+# Server Side preview
 
-When creating the editor you have to set up a `preview` attribute with an endpoint that will be called using the POST method to render the initial preview and every block on change
+:::info
+This is the default behaviour.
+:::
+
+When creating the editor you have to set up a `preview` attribute with an endpoint that will be called using the POST method to render the initial preview and every block on change.
+
+```html
+<visual-editor
+  name="content"
+  preview="http://my.server/preview"
+  iconsUrl="/[name].svg"
+></visual-editor>
+```
 
 ## Render the initial preview
 

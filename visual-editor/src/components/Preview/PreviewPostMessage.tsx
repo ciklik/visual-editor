@@ -54,10 +54,13 @@ export function PreviewPostMessage ({ data, previewUrl }: PreviewProps) {
     }
   }, [loaded, data])
 
+  const previewURLWithReferrer = new URL(previewUrl)
+  previewURLWithReferrer.searchParams.set('referrer', window.location.toString())
+
   return <div>
     <StyledIframe
       ref={iframe}
-      src={previewUrl}
+      src={previewURLWithReferrer.toString()}
       loaded={loaded}
       mobile={previewMode === PreviewModes.PHONE}
       style={transform}

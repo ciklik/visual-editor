@@ -1,0 +1,112 @@
+---
+sidebar_position: 2
+---
+
+# Client Side preview
+
+With this preview method you will receive new data on every change, you can use any front-end library to build the preview. The communication between the editor and your iframe will be done using [window.postMessage](https://developer.mozilla.org/fr/docs/Web/API/Window/postMessage) and will work cross-domain.
+
+First you have to enable this preview mode when initializing the editor.
+
+```js {3}
+let editor = new VisualEditor({
+  lang: EN,
+  postMessagePreview: true
+})
+```
+
+Then in your HTML you have to choose the URL that will be used for the iframe using the `preview` attribute.
+
+```html {3}
+<visual-editor
+  name="content"
+  preview="http://my.server/preview"
+  iconsUrl="/[name].svg"
+></visual-editor>
+```
+
+The editor will send data to this page using [window.postMessage](https://developer.mozilla.org/fr/docs/Web/API/Window/postMessage) so you'll have to subscribe to the `message` event in your application code.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+
+<Tabs>
+<TabItem value="react" label="React">
+
+```jsx
+import type {VisualEditorDataEvent} from '@boxraiser/visual-editor'
+
+import { useEffect, useState } from 'react'
+const [data, setData] = useState([]);
+
+useEffect(() => {
+  const listener = (message: MessageEvent<VisualEditorDataEvent>) => {
+    if (message.data.type === 've-data') {
+      setData(message.data.payload)
+    }
+  }
+  window.addEventListener("message", listener, false);
+  return () => window.removeEventListener("message", listener);
+})
+```
+
+</TabItem>
+<TabItem value="vue" label="VueJS" default>
+
+```js
+import type {VisualEditorDataEvent} from '@boxraiser/visual-editor'
+import { onMounted, ref, onUnmounted } from 'vue'
+
+const data = ref([])
+const listener = (message: MessageEvent&lt;VisualEditorDataEvent>) => {
+  if (message.data.type === 've-data') {
+    data.value = message.data.payload
+  }
+}
+onMounted(() => {
+  window.addEventListener("message", listener, false);
+})
+onUnmounted(() => {
+  window.removeEventListener("message", listener);
+})
+```
+
+</TabItem>
+</Tabs>
+
+Then you can use the data to render your components
+
+```html
+<!-- Vue example -->
+<template>
+  <div v-for='item in data' :key='item._id'>
+    <component :is="components[item._name]" v-bind='item' />
+  </div>
+</template>
+```
+
+You can also register custom elements provided by the library to add editor controls into your preview.
+
+```js
+import {PreviewWrapper, AddButton} from '@boxraiser/visual-editor'
+
+// Register the two custom elements
+customElements.define('ve-wrapper', PreviewWrapper)
+customElements.define('ve-add', AddButton)
+```
+
+- `PreviewWrapper`, add a button to prepend a new component above the current one and allows the element to be clickable to select a component.
+- `AddButton`, add a button to add a new component at a specific position.
+
+```html
+<!-- Vue example -->
+<template>
+  <div v-for='item in data' :key='bloc._id'>
+    <ve-wrapper :data-id='item._id'>
+      <component :is="components[item._name]" v-bind='bloc' />
+    </ve-wrapper>
+  </div>
+  <ve-add :data-index='data.length'></ve-add>
+</template>
+```
