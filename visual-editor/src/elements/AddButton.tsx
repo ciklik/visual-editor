@@ -2,11 +2,12 @@ import { createRoot } from 'react-dom/client'
 import React, { SyntheticEvent } from 'react'
 import { PreviewAddButton } from 'src/components/Preview/PreviewAddButton'
 import { Reset } from 'src/components/BaseStyles'
+import { isClientSide } from 'src/functions/browser'
 
 /**
  * Custom element usable within an iframe to display a button to add a new bloc
  */
-export class AddButton extends HTMLElement {
+export class AddButton extends (isClientSide() ? HTMLElement : class {} as typeof HTMLElement) {
 
   connectedCallback () {
     const div = document.createElement('div')

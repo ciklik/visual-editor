@@ -4,6 +4,7 @@ import { PreviewAddFloating } from 'src/components/Preview/PreviewAddFloating'
 import React, { SyntheticEvent } from 'react'
 import { Reset } from 'src/components/BaseStyles'
 import { EditorMessageEvents } from 'src/components/Preview/PreviewPostMessage'
+import { isClientSide } from 'src/functions/browser'
 
 /**
  * Custom element usable within an iframe to get editor capabilities
@@ -21,7 +22,7 @@ import { EditorMessageEvents } from 'src/components/Preview/PreviewPostMessage'
  *   </div>
  * ```
  */
-export class PreviewWrapper extends HTMLElement {
+export class PreviewWrapper extends (isClientSide() ? HTMLElement : class {} as typeof HTMLElement) {
 
   isFocused = false
   root: ReturnType<typeof createRoot> | undefined
