@@ -29,7 +29,8 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 6.22.2
-          run_install: true
+      - name: Install dependencies
+        run: pnpm install --recursive
       - name: Build the library
         run: cd visual-editor && pnpm run build
       - name: Publish
