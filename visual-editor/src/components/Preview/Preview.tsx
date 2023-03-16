@@ -101,7 +101,7 @@ const In = keyframes({
   to: { transform: 'translateX(0)', opacity: 1 },
 })
 
-const PreviewWrapper = styled.div({
+export const PreviewWrapper = styled.div({
   width: '100%',
   height: '100%',
   display: 'flex',

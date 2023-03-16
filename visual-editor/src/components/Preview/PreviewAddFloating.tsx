@@ -1,14 +1,15 @@
-import React, { SyntheticEvent } from 'react'
+import React, { CSSProperties, SyntheticEvent } from 'react'
 import styled from '@emotion/styled'
 import { UnstyledButton } from 'src/components/ui'
 
 type PreviewAddFloatingProps = {
-  onClick?: (e: SyntheticEvent) => void
+  onClick?: (e: SyntheticEvent) => void,
+  style?: CSSProperties
 }
 
-export function PreviewAddFloating({ onClick }: PreviewAddFloatingProps) {
+export function PreviewAddFloating({ onClick, style }: PreviewAddFloatingProps) {
   return (
-    <Button onClick={onClick}>
+    <Button onClick={onClick} style={style}>
       <span>Ajouter un bloc</span>
     </Button>
   )

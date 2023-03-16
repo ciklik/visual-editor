@@ -24,6 +24,7 @@ const templates: EditorComponentTemplate[] = []
 
 export { PreviewWrapper } from './elements/PreviewWrapper'
 export { AddButton } from './elements/AddButton'
+export type { EditorMessageEvents } from './components/Preview/PreviewPostMessage'
 
 /**
  * Public interface for the module
@@ -249,8 +250,4 @@ export { Translations as EN } from 'src/langs/en'
 export { BaseStyles }
 export { defineField, defineFieldGroup } from 'src/fields/utils'
 export { FieldsRenderer } from 'src/components/Sidebar/FieldsRenderer'
-export type VisualEditorDataEvent = {
-  type: 've-data',
-  payload: EditorComponentData[]
-}
 export { React }

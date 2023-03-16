@@ -1,9 +1,10 @@
 import type { PreviewProps } from 'src/components/Preview/Preview'
 import { useEffect, useRef, useState } from 'react'
-import { StyledIframe } from 'src/components/Preview/Preview'
-import { PreviewModes, usePreviewMode, useSetBlockIndex, useSetFocusIndex } from 'src/store'
+import { PreviewWrapper, StyledIframe } from 'src/components/Preview/Preview'
+import { PreviewModes, useFocusIndex, usePreviewMode, useSetBlockIndex, useSetFocusIndex } from 'src/store'
 import { useWindowSize } from 'react-use'
 import { PHONE_HEIGHT } from 'src/constants'
+import { EditorComponentData } from 'src/types'
 
 type IframeEvents = {
   type: 've-focus',
@@ -11,6 +12,14 @@ type IframeEvents = {
 } | {
   type: 've-add',
   payload: {id: string}
+}
+
+export type EditorMessageEvents = {
+  type: 've-focus',
+  payload: {id: string}
+} | {
+  type: 've-data',
+  payload: EditorComponentData[]
 }
 
 /**
@@ -25,6 +34,9 @@ export function PreviewPostMessage ({ data, previewUrl }: PreviewProps) {
   let transform = undefined
   const setFocusIndex = useSetFocusIndex()
   const setAddBlockIndex = useSetBlockIndex()
+  const focusIndex = useFocusIndex()
+  const previewUrlRef = useRef(previewUrl)
+  previewUrlRef.current = previewUrl
 
   if (previewMode === PreviewModes.PHONE && windowHeight < 844) {
     transform = { transform: `scale(${windowHeight / PHONE_HEIGHT})` }
@@ -50,14 +62,23 @@ export function PreviewPostMessage ({ data, previewUrl }: PreviewProps) {
       iframe.current.contentWindow.postMessage({
         type: 've-data',
         payload: data
-      }, previewUrl)
+      }, previewUrlRef.current)
     }
   }, [loaded, data])
+
+  useEffect(() => {
+    if (iframe.current && iframe.current.contentWindow) {
+      iframe.current.contentWindow.postMessage({
+        type: 've-focus',
+        payload: {id: focusIndex}
+      }, previewUrlRef.current)
+    }
+  }, [focusIndex])
 
   const previewURLWithReferrer = new URL(previewUrl)
   previewURLWithReferrer.searchParams.set('referrer', window.location.toString())
 
-  return <div>
+  return <PreviewWrapper>
     <StyledIframe
       ref={iframe}
       src={previewURLWithReferrer.toString()}
@@ -66,5 +87,5 @@ export function PreviewPostMessage ({ data, previewUrl }: PreviewProps) {
       style={transform}
       onLoad={() => setLoaded(true)}
     />
-  </div>
+  </PreviewWrapper>
 }
