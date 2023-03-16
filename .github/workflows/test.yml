@@ -24,7 +24,7 @@ jobs:
         with:
           php-version: '8.0'
       - name: Use PNPM
-        uses: pnpm/action-setup@v2.0.1
+        uses: pnpm/action-setup@v2
         with:
           version: 6.22.2
           run_install: true
