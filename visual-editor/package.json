@@ -14,10 +14,10 @@
     "serve": "vite preview",
     "format": "prettier --config .prettierrc 'src/**/*.{ts,tsx}' --write",
     "declaration": "tsc --declaration --emitDeclarationOnly --jsx react-jsx --esModuleInterop --target es2020 -p tsconfig.json --noEmit false && tsc-alias",
-    "test-watch": "start-server-and-test 'php -S 0.0.0.0:8000 -ddisplay_errors=1 -q' 8000 'npx cypress open'",
+    "test-watch": "start-server-and-test 'php -S 0.0.0.0:8000 -ddisplay_errors=1 -q' http://localhost:8000 'npx cypress open'",
     "test": "npm run test:unit && npm run test:e2e",
-    "test:e2e": "start-server-and-test 'php -S 0.0.0.0:8000 -ddisplay_errors=1 -q' 8000 'npx cypress run'",
-    "test:e2e:watch": "start-server-and-test 'php -S 0.0.0.0:8000 -ddisplay_errors=1 -q' 8000 'npx cypress open'",
+    "test:e2e": "start-server-and-test 'php -S 0.0.0.0:8000 -ddisplay_errors=1 -q' http://localhost:8000 'npx cypress run'",
+    "test:e2e:watch": "start-server-and-test 'php -S 0.0.0.0:8000 -ddisplay_errors=1 -q' http://localhost:8000 'npx cypress open'",
     "test:unit": "jest"
   },
   "dependencies": {
@@ -83,7 +83,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "rollup-plugin-analyzer": "^4.0.0",
-    "start-server-and-test": "^1.14.0",
+    "start-server-and-test": "^2.0.0",
     "ts-jest": "^27.1.4",
     "tsc-alias": "^1.6.6",
     "typescript": "^4.6.3",
