@@ -1,6 +1,6 @@
 {
   "name": "@boxraiser/visual-editor",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "type": "module",
   "main": "VisualEditor.js",
   "types": "./VisualEditor.d.ts",
