@@ -1,17 +1,14 @@
-import React from 'react'
+import React, { SyntheticEvent } from 'react'
 import styled from '@emotion/styled'
-import { prevent } from 'src/functions/functions'
-import { useSetBlockIndex } from 'src/store'
 import { UnstyledButton } from 'src/components/ui'
 
 type PreviewAddFloatingProps = {
-  position: number
+  onClick?: (e: SyntheticEvent) => void
 }
 
-export function PreviewAddFloating({ position }: PreviewAddFloatingProps) {
-  const setAddBlockIndex = useSetBlockIndex()
+export function PreviewAddFloating({ onClick }: PreviewAddFloatingProps) {
   return (
-    <Button onClick={prevent(() => setAddBlockIndex(position))}>
+    <Button onClick={onClick}>
       <span>Ajouter un bloc</span>
     </Button>
   )
@@ -68,7 +65,7 @@ const Button = styled(UnstyledButton)({
     left: '50%',
     bottom: '-30px',
     transform: 'translate(-50%, 5px)',
-    color: 'var(--ve-background)',
+    color: '#FFF',
     transition: 'transform .3s',
     '&::before': {
       content: "''",

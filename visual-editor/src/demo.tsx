@@ -26,6 +26,7 @@ import {
 
 let editor = new VisualEditor({
   lang: EN,
+  postMessagePreview: false
 })
 
 editor.registerComponent('hero', {

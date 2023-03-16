@@ -10,6 +10,8 @@ import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
 import { SidebarToggleButton } from 'src/components/Layout/SidebarToggleButton'
 import { useToggle } from 'src/hooks/useToggle'
+import { VisualEditor } from 'src/VisualEditor'
+import { PreviewPostMessage } from 'src/components/Preview/PreviewPostMessage'
 
 type LayoutProps = {
   className?: string
@@ -22,6 +24,7 @@ type LayoutProps = {
 export function Layout({ data, previewUrl, onClose, iconsUrl }: LayoutProps) {
   const [sidebarCollapsed, toggleSidebar] = useToggle(false)
   const showResizeControl = !sidebarCollapsed
+  const PreviewComponent = VisualEditor.postMessagePreview ? PreviewPostMessage : Preview
   return (
     <>
       <Wrapper withSidebar={!sidebarCollapsed}>
@@ -32,7 +35,7 @@ export function Layout({ data, previewUrl, onClose, iconsUrl }: LayoutProps) {
             display: sidebarCollapsed ? 'none' : undefined,
           }}
         />
-        {previewUrl && <Preview data={data} previewUrl={previewUrl} />}
+        {previewUrl && <PreviewComponent data={data} previewUrl={previewUrl} />}
         <SidebarToggleButton
           collapsed={sidebarCollapsed}
           onClick={toggleSidebar}

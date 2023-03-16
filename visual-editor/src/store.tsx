@@ -133,7 +133,7 @@ const createStore = (
           setFocusIndex: function (id: string) {
             set(() => ({ focusIndex: id }))
           },
-          setAddBlockIndex: function (index?: number | null) {
+          setAddBlockIndex: function (index?: number | string | null) {
             if (index === undefined) {
               set((state) => ({
                 addBlockIndex:
@@ -142,6 +142,10 @@ const createStore = (
                     : state.data.length,
               }))
               return
+            }
+            if (typeof index === 'string') {
+              set((state) => ({ addBlockIndex: state.data.findIndex(v => v._id === index) }))
+              return;
             }
             set(() => ({ addBlockIndex: index }))
           },

@@ -35,21 +35,21 @@ export function PreviewItem({
 
   return (
     <Flipped flipId={data._id}>
-      <Wrapper
+      <PreviewItemWrapper
         id={`previewItem${data._id}`}
         isFocused={isFocused}
         ref={ref}
         onClick={() => setFocusIndex(data._id)}
       >
         {loading && <StyledSpinner size={12} />}
-        <Title isFocused={isFocused}>{title}</Title>
+        <PreviewItemTitle isFocused={isFocused}>{title}</PreviewItemTitle>
         <div dangerouslySetInnerHTML={{ __html: html }} />
-      </Wrapper>
+      </PreviewItemWrapper>
     </Flipped>
   )
 }
 
-const Wrapper = styled.div<{ isFocused: boolean }>(
+export const PreviewItemWrapper = styled.div<{ isFocused: boolean }>(
   {
     position: 'relative',
     cursor: 'pointer',
@@ -76,7 +76,7 @@ const Wrapper = styled.div<{ isFocused: boolean }>(
   })
 )
 
-const Title = styled.div<{ isFocused: boolean }>(
+export const PreviewItemTitle = styled.div<{ isFocused: boolean }>(
   {
     position: 'absolute',
     top: 0,

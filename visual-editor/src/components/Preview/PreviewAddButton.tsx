@@ -1,21 +1,18 @@
 import { Button, IconCirclePlus } from 'src/components/ui'
-import { prevent } from 'src/functions/functions'
-import React from 'react'
-import { useSetBlockIndex } from 'src/store'
+import React, { SyntheticEvent } from 'react'
 import styled from '@emotion/styled'
 
 type PreviewAddButtonProps = {
-  position: number
+  onClick?: (e: SyntheticEvent) => void
 }
 
-export function PreviewAddButton({ position }: PreviewAddButtonProps) {
-  const setAddBlockIndex = useSetBlockIndex()
+export function PreviewAddButton({ onClick }: PreviewAddButtonProps) {
 
   return (
     <Wrapper>
       <Button
         icon={IconCirclePlus}
-        onClick={prevent(() => setAddBlockIndex(position))}
+        onClick={onClick}
       >
         Ajouter un bloc
       </Button>

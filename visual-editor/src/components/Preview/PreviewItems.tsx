@@ -4,7 +4,7 @@ import { Flipper } from 'react-flip-toolkit'
 import { PreviewAddFloating } from 'src/components/Preview/PreviewAddFloating'
 import { PreviewItem } from 'src/components/Preview/PreviewItem'
 import { PreviewAddButton } from 'src/components/Preview/PreviewAddButton'
-import React from 'react'
+import { prevent } from 'src/functions/functions'
 
 /**
  * Gère le rendu dans l'iframe des différents composants
@@ -18,6 +18,7 @@ export function PreviewItems({
   initialHTML: Record<string, string>
   previewUrl: string
 }) {
+  const setAddBlockIndex = useSetBlockIndex()
   const definitions = useFieldDefinitions()
 
   return (
@@ -25,7 +26,7 @@ export function PreviewItems({
       <Flipper flipKey={data.map((d) => d._id).join('_')}>
         {data.map((v, k) => (
           <div key={v._id}>
-            <PreviewAddFloating position={k} />
+            <PreviewAddFloating onClick={prevent(() => setAddBlockIndex(k))} />
             <PreviewItem
               title={definitions[v._name]?.title || ''}
               data={v}
@@ -35,7 +36,7 @@ export function PreviewItems({
           </div>
         ))}
       </Flipper>
-      <PreviewAddButton position={data.length} />
+      <PreviewAddButton onClick={() => setAddBlockIndex(data.length)} />
     </>
   )
 }

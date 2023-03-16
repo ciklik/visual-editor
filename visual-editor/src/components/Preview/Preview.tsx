@@ -12,7 +12,7 @@ import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
 import { PreviewItems } from 'src/components/Preview/PreviewItems'
 
-type PreviewProps = {
+export type PreviewProps = {
   data: EditorComponentData[]
   previewUrl: string
 }
@@ -114,7 +114,7 @@ const PreviewWrapper = styled.div({
   },
 })
 
-const StyledIframe = styled.iframe<{ loaded: boolean; mobile: boolean }>(
+export const StyledIframe = styled.iframe<{ loaded: boolean; mobile: boolean }>(
   {
     transformOrigin: '50% 50%',
     border: 'none',

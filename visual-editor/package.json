@@ -66,10 +66,9 @@
     "zustand": "^3.7.2"
   },
   "devDependencies": {
-    "react-dom": "^18.0.0",
-    "react": "^18.0.0",
     "@emotion/babel-plugin": "^11.7.2",
     "@types/jest": "^27.4.1",
+    "@types/node": "^18.15.3",
     "@types/quill": "^2.0.9",
     "@types/react": "^18.0.0",
     "@types/react-datepicker": "^4.3.4",
@@ -81,6 +80,8 @@
     "esbuild-node-externals": "^1.4.1",
     "jest": "^27.5.1",
     "prettier": "^2.6.2",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "rollup-plugin-analyzer": "^4.0.0",
     "start-server-and-test": "^1.14.0",
     "ts-jest": "^27.1.4",

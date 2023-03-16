@@ -22,25 +22,30 @@ import { InsertPosition } from 'src/enum'
 const components: EditorComponentDefinitions = {}
 const templates: EditorComponentTemplate[] = []
 
+export { PreviewWrapper } from './elements/PreviewWrapper'
+export { AddButton } from './elements/AddButton'
+
 /**
- * Interface publique du module
+ * Public interface for the module
  */
 export class VisualEditor {
   static i18n: Translation = EN
+  static postMessagePreview: boolean = false
 
-  constructor(options: { lang?: Translation } = {}) {
-    VisualEditor.i18n = options.lang || EN
+  constructor (options: { lang?: Translation, postMessagePreview?: boolean } = {}) {
+    VisualEditor.i18n = options.lang ?? EN
+    VisualEditor.postMessagePreview = options.postMessagePreview ?? false
   }
 
-  registerComponent(name: string, definition: EditorComponentDefinition) {
+  registerComponent (name: string, definition: EditorComponentDefinition) {
     components[name] = { label: 'title', ...definition }
   }
 
-  registerTemplate(template: EditorComponentTemplate) {
+  registerTemplate (template: EditorComponentTemplate) {
     templates.push(template)
   }
 
-  defineElement(elementName: string = 'visual-editor') {
+  defineElement (elementName: string = 'visual-editor') {
     // We only declare the class in this function to avoid any problem with SSR
     class VisualEditorElement extends HTMLElement {
       static changeEventName = 'change'
@@ -48,15 +53,15 @@ export class VisualEditor {
       private _data: EditorComponentData[] | null = null
       private _value = ''
 
-      static get observedAttributes() {
+      static get observedAttributes () {
         return ['hidden', 'value']
       }
 
-      get value(): string {
+      get value (): string {
         return this._value
       }
 
-      set value(v: string) {
+      set value (v: string) {
         if (v === this._value) {
           return
         }
@@ -65,16 +70,16 @@ export class VisualEditor {
         this.render()
       }
 
-      connectedCallback() {
+      connectedCallback () {
         this._value = this.getAttribute('value') || '[]'
         this.render()
         this._mounted = true
       }
 
-      attributeChangedCallback(
+      attributeChangedCallback (
         name: string,
         oldValue?: string,
-        newValue?: string
+        newValue?: string,
       ) {
         if (!this._mounted) {
           return false
@@ -90,11 +95,11 @@ export class VisualEditor {
         this.render()
       }
 
-      disconnectedCallback() {
+      disconnectedCallback () {
         this._mounted = false
       }
 
-      private parseValue(value: string): EditorComponentData[] {
+      private parseValue (value: string): EditorComponentData[] {
         if (this._data === null) {
           try {
             const json = JSON.parse(value)
@@ -103,14 +108,14 @@ export class VisualEditor {
             })
           } catch (e) {
             console.error('Impossible de parser les données', value, e)
-            alert("Impossible de parser les données de l'éditeur visuel")
+            alert('Impossible de parser les données de l\'éditeur visuel')
             this._data = []
           }
         }
         return this._data!
       }
 
-      private render() {
+      private render () {
         const data = this.parseValue(this._value)
         const hiddenCategories =
           this.getAttribute('hidden-categories')?.split(';') ?? []
@@ -142,14 +147,15 @@ export class VisualEditor {
                 this.dispatchEvent(
                   new CustomEvent('change', {
                     detail: value,
-                  })
+                  }),
                 )
               }}
             />
-          </StoreProvider>
+          </StoreProvider>,
         )
       }
     }
+
     customElements.define(elementName, VisualEditorElement)
   }
 }
@@ -164,15 +170,15 @@ type VisualEditorProps = {
   onChange: (v: string) => void
 }
 
-export function VisualEditorComponent({
-  value,
-  previewUrl,
-  name,
-  element,
-  iconsUrl,
-  visible: visibleProps,
-  onChange,
-}: VisualEditorProps) {
+export function VisualEditorComponent ({
+                                         value,
+                                         previewUrl,
+                                         name,
+                                         element,
+                                         iconsUrl,
+                                         visible: visibleProps,
+                                         onChange,
+                                       }: VisualEditorProps) {
   const skipNextChange = useRef(true) // Skip emitting a change event on the next update (usefull for external changes)
   const updateData = useUpdateData()
   const data = useData()
@@ -243,4 +249,8 @@ export { Translations as EN } from 'src/langs/en'
 export { BaseStyles }
 export { defineField, defineFieldGroup } from 'src/fields/utils'
 export { FieldsRenderer } from 'src/components/Sidebar/FieldsRenderer'
+export type VisualEditorDataEvent = {
+  type: 've-data',
+  payload: EditorComponentData[]
+}
 export { React }
