@@ -4,13 +4,11 @@ import type {
   FunctionComponent,
   MouseEventHandler,
   PropsWithChildren,
-  ReactNode,
   RefAttributes,
 } from 'react'
 import { forwardRef } from 'react'
 import { Flex, UnstyledButton } from 'src/components/ui'
 import styled from '@emotion/styled'
-import { SidebarBlocWrapper } from 'src/components/Sidebar/SidebarBlocWrapper'
 
 type SidebarHeadingProps = PropsWithChildren<{
   title: string

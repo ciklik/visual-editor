@@ -1,4 +1,4 @@
-import create, { UseBoundStore } from 'zustand'
+import { create, useStore as useZustandStore } from 'zustand'
 import {
   EditorComponentData,
   EditorComponentDefinitions,
@@ -9,9 +9,14 @@ import { combine, devtools } from 'zustand/middleware'
 import { insertItem } from 'src/functions/array'
 import { uniqId } from 'src/functions/string'
 
-import createContext from 'zustand/context'
 import { clamp } from './functions/number'
-import React, { ReactElement, useCallback } from 'react'
+import React, {
+  ReactElement,
+  useCallback,
+  createContext,
+  useContext,
+  useMemo,
+} from 'react'
 import { fillDefaults } from './functions/fields'
 import { t } from 'src/functions/i18n'
 import { InsertPosition } from 'src/enum'
@@ -144,8 +149,10 @@ const createStore = (
               return
             }
             if (typeof index === 'string') {
-              set((state) => ({ addBlockIndex: state.data.findIndex(v => v._id === index) }))
-              return;
+              set((state) => ({
+                addBlockIndex: state.data.findIndex((v) => v._id === index),
+              }))
+              return
             }
             set(() => ({ addBlockIndex: index }))
           },
@@ -164,11 +171,13 @@ const createStore = (
 
 type Store = ReturnType<typeof createStore>
 // Extrait le type de la donnée à l'intérieur d'un UseBoundStore<T>
-type StoreData<T extends UseBoundStore<any>> = T extends UseBoundStore<infer V>
-  ? V
+type StoreState = Store extends {
+  getState: () => infer T
+}
+  ? T
   : never
 
-const { Provider, useStore } = createContext<StoreData<Store>>()
+const StoreContext = createContext<{ store?: Store }>({})
 
 export function StoreProvider({
   children,
@@ -187,22 +196,38 @@ export function StoreProvider({
   rootElement: HTMLElement
   insertPosition: InsertPosition
 }) {
-  return (
-    <Provider
-      createStore={() =>
-        createStore(
-          data,
-          definitions,
-          hiddenCategories,
-          rootElement,
-          templates,
-          insertPosition
-        )
-      }
-    >
-      {children}
-    </Provider>
+  const store = useMemo(
+    () =>
+      createStore(
+        data,
+        definitions,
+        hiddenCategories,
+        rootElement,
+        templates,
+        insertPosition
+      ),
+    [
+      data,
+      definitions,
+      hiddenCategories,
+      rootElement,
+      templates,
+      insertPosition,
+    ]
   )
+  return (
+    <StoreContext.Provider value={{ store: store }}>
+      {children}
+    </StoreContext.Provider>
+  )
+}
+
+function useStore<T>(selector: (state: StoreState) => T) {
+  const store = useContext(StoreContext).store
+  if (!store) {
+    throw new Error('A context need to be provided to use the store')
+  }
+  return useZustandStore(store, selector)
 }
 
 export function useData() {
@@ -273,11 +298,11 @@ export function useBlocSelectionVisible(): boolean {
   return useStore((state) => state.addBlockIndex) !== null
 }
 
-export function useSetBlockIndex(): Function {
+export function useSetBlockIndex() {
   return useStore((state) => state.setAddBlockIndex)
 }
 
-export function useTemplates(): EditorComponentTemplate[] {
+export function useTemplates() {
   return useStore((state) => state.templates)
 }
 

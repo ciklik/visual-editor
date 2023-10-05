@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import path from 'path'
+import path from 'node:path'
 import react from '@vitejs/plugin-react'
 import analyze from 'rollup-plugin-analyzer'
 
@@ -19,6 +19,7 @@ export default defineConfig({
     jsxFragment: 'Fragment',
   },
   server: {
+    port: 3000,
     proxy: {
       '/preview': 'http://localhost:8000/index.php',
     },

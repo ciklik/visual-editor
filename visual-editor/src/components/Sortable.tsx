@@ -19,7 +19,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { DragEndEvent } from '@dnd-kit/core/dist/types'
+import type { DragEndEvent } from '@dnd-kit/core/dist/types'
 import { DragHandle } from 'src/components/ui'
 
 type SortableWrapperProps = {
@@ -45,7 +45,7 @@ export function SortableWrapper({
     const { active, over } = event
 
     if (over && active.id !== over.id) {
-      onMove(ids.indexOf(active.id), ids.indexOf(over.id))
+      onMove(ids.indexOf(active.id.toString()), ids.indexOf(over.id.toString()))
     }
   }
 
