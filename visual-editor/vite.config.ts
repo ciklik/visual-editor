@@ -1,10 +1,11 @@
 import { defineConfig } from 'vite'
-import path from 'node:path'
+import { resolve } from 'node:path'
 import react from '@vitejs/plugin-react'
 import analyze from 'rollup-plugin-analyzer'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: { 'process.env.NODE_ENV': '"production"' },
   plugins: [
     react({
       babel: {
@@ -26,7 +27,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      src: path.resolve(__dirname, './src'),
+      src: resolve(__dirname, './src'),
     },
   },
   build: {
@@ -41,7 +42,7 @@ export default defineConfig({
       ],
     },
     lib: {
-      entry: path.resolve('src/VisualEditor.tsx'),
+      entry: resolve('src/VisualEditor.tsx'),
       name: 'VisualEditor',
       formats: ['es'],
       fileName: () => 'VisualEditor.standalone.js',

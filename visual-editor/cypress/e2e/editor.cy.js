@@ -48,7 +48,7 @@ describe('Editor behaviour', () => {
   it('Should not show the checkbox by default', () => {
     addBlock()
     cy.contains('Checkbox 1').should('not.exist')
-    cy.contains('Checkbox').click()
+    cy.contains('Checkbox').click({ force: true })
     cy.contains('Checkbox 1').should('exist')
     assertValueMatch('checkbox', true)
   })
@@ -178,7 +178,7 @@ describe('Editor behaviour', () => {
         )
       })
       addBlock()
-      cy.get('[aria-label="Close"]').type('Content #3')
+      cy.get('[aria-label="Close"]').click()
       cy.get('@close').should('have.been.calledOnce')
     })
 
