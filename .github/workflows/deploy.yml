@@ -20,12 +20,12 @@ jobs:
             ${{ runner.os }}-
       - uses: pnpm/action-setup@v2
         with:
-          version: 6.22.2
+          version: 8.7.0
       - name: Install dependencies
         run: pnpm install --recursive
       - uses: actions/setup-node@v2
         with:
-          node-version: 14.x
+          node-version: 20.x
       - name: Build website
         working-directory: ./
         run: |

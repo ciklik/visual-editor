@@ -26,7 +26,7 @@ jobs:
       - name: Use PNPM
         uses: pnpm/action-setup@v2
         with:
-          version: 6.22.2
+          version: 8.7.0
       - name: Install dependencies
         run: pnpm install --recursive
       - name: Build the library
