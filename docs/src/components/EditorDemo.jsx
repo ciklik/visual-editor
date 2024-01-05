@@ -32,7 +32,7 @@ export function EditorDemo({ className, withoutContent, title }) {
             <visual-editor
               hidden={editorVisibility}
               name="content"
-              preview="https://visual-editor.droapp.com"
+              preview="https://x6475apkns.preview.infomaniak.website"
               iconsUrl="/visual-editor/img/[name].svg"
               value={withoutContent ? "[]" : JSON.stringify(data)}
               ref={ref}
