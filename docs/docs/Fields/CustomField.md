@@ -76,4 +76,4 @@ export const Number = defineField({
 })
 ```
 
-You can check how [it is used internally](https://github.com/boxraiser/visual-editor/tree/main/visual-editor/src/fields)
+You can check how [it is used internally](https://github.com/ciklik/visual-editor/tree/main/visual-editor/src/fields)
