@@ -8,9 +8,9 @@ export function SidebarFooter() {
     <Wrapper between>
       <Mention>
         {t('poweredBy')} <br />
-        <a href="https://boxraiser.com" target="_blank">
+        <a href="https://ciklik.com" target="_blank">
           <Logo
-            src="https://static.boxraiser.com/logo.svg"
+            src="https://static.ciklik.com/logo.svg"
             alt="Logo Boxraiser"
           />
         </a>

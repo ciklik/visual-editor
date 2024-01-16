@@ -1,12 +1,12 @@
 {
-  "name": "@boxraiser/visual-editor",
+  "name": "@ciklik/visual-editor",
   "version": "0.1.1",
   "type": "module",
   "main": "VisualEditor.js",
   "types": "./VisualEditor.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/boxraiser/visual-editor"
+    "url": "https://github.com/ciklik/visual-editor"
   },
   "scripts": {
     "dev": "concurrently \"vite\" \"php -S 0.0.0.0:8000 -ddisplay_errors=1 -t server/\"",
