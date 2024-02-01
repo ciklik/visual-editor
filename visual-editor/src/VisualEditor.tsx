@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, type Root } from 'react-dom/client'
 import type {
   EditorComponentData,
   EditorComponentDefinition,
@@ -18,6 +18,7 @@ import { BaseStyles } from 'src/components/BaseStyles'
 import { Translations as EN } from 'src/langs/en'
 import { useStopPropagation } from 'src/hooks/useStopPropagation'
 import { InsertPosition } from 'src/enum'
+import { Events } from 'src/constants'
 
 const components: EditorComponentDefinitions = {}
 const templates: EditorComponentTemplate[] = []
@@ -33,36 +34,38 @@ export class VisualEditor {
   static i18n: Translation = EN
   static postMessagePreview: boolean = false
 
-  constructor (options: { lang?: Translation, postMessagePreview?: boolean } = {}) {
+  constructor(
+    options: { lang?: Translation; postMessagePreview?: boolean } = {}
+  ) {
     VisualEditor.i18n = options.lang ?? EN
     VisualEditor.postMessagePreview = options.postMessagePreview ?? false
   }
 
-  registerComponent (name: string, definition: EditorComponentDefinition) {
+  registerComponent(name: string, definition: EditorComponentDefinition) {
     components[name] = { label: 'title', ...definition }
   }
 
-  registerTemplate (template: EditorComponentTemplate) {
+  registerTemplate(template: EditorComponentTemplate) {
     templates.push(template)
   }
 
-  defineElement (elementName: string = 'visual-editor') {
+  defineElement(elementName: string = 'visual-editor') {
     // We only declare the class in this function to avoid any problem with SSR
     class VisualEditorElement extends HTMLElement {
       static changeEventName = 'change'
-      private _mounted: boolean = false
       private _data: EditorComponentData[] | null = null
       private _value = ''
+      private _root: Root | null = null
 
-      static get observedAttributes () {
+      static get observedAttributes() {
         return ['hidden', 'value']
       }
 
-      get value (): string {
+      get value(): string {
         return this._value
       }
 
-      set value (v: string) {
+      set value(v: string) {
         if (v === this._value) {
           return
         }
@@ -71,36 +74,36 @@ export class VisualEditor {
         this.render()
       }
 
-      connectedCallback () {
+      connectedCallback() {
         this._value = this.getAttribute('value') || '[]'
         this.render()
-        this._mounted = true
       }
 
-      attributeChangedCallback (
+      attributeChangedCallback(
         name: string,
         oldValue?: string,
-        newValue?: string,
+        newValue?: string
       ) {
-        if (!this._mounted) {
+        if (!this._root) {
           return false
         }
         // Si la valeur change, on réinitialise la version traduite du JSON
-        if (name === 'value') {
-          // Saute le nouveau rendu si la valeur n'est pas nouvelle
-          if (newValue === this._value) {
-            return
-          }
-          this._value = newValue!
+        if (name === 'value' && newValue) {
+          this.value = newValue
+          return
         }
         this.render()
       }
 
-      disconnectedCallback () {
-        this._mounted = false
+      disconnectedCallback() {
+        if (!this._root) {
+          return
+        }
+        this._root.unmount()
+        this._root = null
       }
 
-      private parseValue (value: string): EditorComponentData[] {
+      private parseValue(value: string): EditorComponentData[] {
         if (this._data === null) {
           try {
             const json = JSON.parse(value)
@@ -109,19 +112,23 @@ export class VisualEditor {
             })
           } catch (e) {
             console.error('Impossible de parser les données', value, e)
-            alert('Impossible de parser les données de l\'éditeur visuel')
+            alert("Impossible de parser les données de l'éditeur visuel")
             this._data = []
           }
         }
         return this._data!
       }
 
-      private render () {
+      private render() {
         const data = this.parseValue(this._value)
         const hiddenCategories =
           this.getAttribute('hidden-categories')?.split(';') ?? []
 
-        createRoot(this).render(
+        if (!this._root) {
+          this._root = createRoot(this)
+        }
+
+        this._root.render(
           <StoreProvider
             data={data}
             definitions={components}
@@ -145,14 +152,10 @@ export class VisualEditor {
                   return
                 }
                 this._value = value
-                this.dispatchEvent(
-                  new CustomEvent('change', {
-                    detail: value,
-                  }),
-                )
+                this.dispatchEvent(new CustomEvent(Events.Change))
               }}
             />
-          </StoreProvider>,
+          </StoreProvider>
         )
       }
     }
@@ -171,15 +174,15 @@ type VisualEditorProps = {
   onChange: (v: string) => void
 }
 
-export function VisualEditorComponent ({
-                                         value,
-                                         previewUrl,
-                                         name,
-                                         element,
-                                         iconsUrl,
-                                         visible: visibleProps,
-                                         onChange,
-                                       }: VisualEditorProps) {
+export function VisualEditorComponent({
+  value,
+  previewUrl,
+  name,
+  element,
+  iconsUrl,
+  visible: visibleProps,
+  onChange,
+}: VisualEditorProps) {
   const skipNextChange = useRef(true) // Skip emitting a change event on the next update (usefull for external changes)
   const updateData = useUpdateData()
   const data = useData()

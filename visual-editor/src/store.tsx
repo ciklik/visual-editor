@@ -20,6 +20,7 @@ import React, {
 import { fillDefaults } from './functions/fields'
 import { t } from 'src/functions/i18n'
 import { InsertPosition } from 'src/enum'
+import { Events } from 'src/constants'
 
 export enum PreviewModes {
   PHONE,
@@ -36,9 +37,20 @@ type State = {
   rollbackMessage: null | string
   previewMode: PreviewModes
   sidebarWidth: number
+  // Index where we want to add the next component
   addBlockIndex: number | null
   rootElement: HTMLElement
   insertPosition: InsertPosition
+  setSidebarWidth: (width: number) => void
+  updateData: (newData: any, path?: string) => void
+  removeBloc: (data: EditorComponentData) => void
+  rollback: () => void
+  voidRollback: () => void
+  insertData: (name: string, index: number, extraData?: object) => void
+  setData: (data: Omit<EditorComponentData, '_id'>[]) => void
+  setFocusIndex: (id: string) => void
+  setAddBlockIndex: (index?: number | string | null) => void
+  togglePreviewMode: () => void
 }
 
 const sidebarWidth =
@@ -54,120 +66,129 @@ const createStore = (
   templates: EditorComponentTemplate[],
   insertPosition: InsertPosition
 ) =>
-  create(
-    devtools(
-      combine(
-        {
-          data,
-          definitions,
-          hiddenCategories,
-          rootElement,
-          templates,
-          insertPosition,
-          previousData: [],
-          rollbackMessage: null,
-          addBlockIndex: null,
+  create<State>()((set, getState) => ({
+    data,
+    definitions,
+    hiddenCategories,
+    rootElement,
+    templates,
+    insertPosition,
+    previousData: [],
+    rollbackMessage: null,
+    // index where we will add a new block
+    addBlockIndex: null,
+    // Focused block (used for the preview)
+    focusIndex: null,
+    previewMode: PreviewModes.DESKTOP,
+    sidebarWidth: clamp(
+      sidebarWidth ? parseInt(sidebarWidth, 10) : 33,
+      0,
+      window.innerWidth - 375
+    ),
+    setSidebarWidth: function (width: number) {
+      localStorage.setItem('veSidebarWidth', width.toString())
+      set(() => ({
+        sidebarWidth: width,
+      }))
+    },
+    updateData: function (newData: any, path?: string) {
+      return set((state) => ({
+        data: deepSet(state.data, path, newData),
+      }))
+    },
+    removeBloc: function (removedData: EditorComponentData) {
+      return set(({ data }) => ({
+        previousData: data,
+        data: data.filter((d) => d !== removedData),
+        rollbackMessage: t('deleteItemConfirm'),
+      }))
+    },
+    rollback: function () {
+      return set(({ previousData }) => ({
+        previousData: [],
+        rollbackMessage: null,
+        data: previousData,
+      }))
+    },
+    voidRollback: function () {
+      return set(() => ({
+        rollbackMessage: null,
+        previousData: [],
+      }))
+    },
+    insertData: function (
+      name: string,
+      index: number,
+      extraData?: object
+    ): EditorComponentData {
+      if (!extraData) {
+        extraData = fillDefaults({}, getState().definitions[name]!.fields)
+      }
+      const newData = indexify({
+        ...extraData,
+        _name: name,
+        _id: name + uniqId(),
+      })
+      set((state) => {
+        return {
+          data: insertItem(state.data, index, newData),
+          focusIndex: newData._id,
+        }
+      })
+      return newData
+    },
+    setData: function (newData: Omit<EditorComponentData, '_id'>[]): void {
+      set(() => {
+        return {
+          data: indexify(newData) as EditorComponentData[],
           focusIndex: null,
-          previewMode: PreviewModes.DESKTOP,
-          sidebarWidth: clamp(
-            sidebarWidth ? parseInt(sidebarWidth, 10) : 33,
-            0,
-            window.innerWidth - 375
-          ),
-        } as State,
-        (set) => ({
-          setSidebarWidth: function (width: number) {
-            localStorage.setItem('veSidebarWidth', width.toString())
-            set(() => ({
-              sidebarWidth: width,
-            }))
-          },
-          updateData: function (newData: any, path?: string) {
-            return set((state) => ({
-              data: deepSet(state.data, path, newData),
-            }))
-          },
-          removeBloc: function (removedData: EditorComponentData) {
-            return set(({ data }) => ({
-              previousData: data,
-              data: data.filter((d) => d !== removedData),
-              rollbackMessage: t('deleteItemConfirm'),
-            }))
-          },
-          rollback: function () {
-            return set(({ previousData }) => ({
-              previousData: [],
-              rollbackMessage: null,
-              data: previousData,
-            }))
-          },
-          voidRollback: function () {
-            return set(() => ({
-              rollbackMessage: null,
-              previousData: [],
-            }))
-          },
-          insertData: function (
-            name: string,
-            index: number,
-            extraData?: object
-          ): EditorComponentData {
-            const newData = {
-              ...extraData,
-              _name: name,
-              _id: name + uniqId(),
-            }
-            set((state) => {
-              return {
-                data: insertItem(state.data, index, newData),
-                focusIndex: newData._id,
-              }
-            })
-            return newData
-          },
-          setData: function (
-            newData: Omit<EditorComponentData, '_id'>[]
-          ): void {
-            set(() => {
-              return {
-                data: indexify(newData) as EditorComponentData[],
-                focusIndex: null,
-              }
-            })
-          },
-          setFocusIndex: function (id: string) {
-            set(() => ({ focusIndex: id }))
-          },
-          setAddBlockIndex: function (index?: number | string | null) {
-            if (index === undefined) {
-              set((state) => ({
-                addBlockIndex:
-                  state.insertPosition === InsertPosition.Start
-                    ? 0
-                    : state.data.length,
-              }))
-              return
-            }
-            if (typeof index === 'string') {
-              set((state) => ({
-                addBlockIndex: state.data.findIndex((v) => v._id === index),
-              }))
-              return
-            }
-            set(() => ({ addBlockIndex: index }))
-          },
-          togglePreviewMode: function () {
-            set(({ previewMode }) => ({
-              previewMode:
-                previewMode === PreviewModes.DESKTOP
-                  ? PreviewModes.PHONE
-                  : PreviewModes.DESKTOP,
-            }))
+        }
+      })
+    },
+    setFocusIndex: function (id: string) {
+      set(() => ({ focusIndex: id }))
+    },
+    setAddBlockIndex: function (index?: number | string | null) {
+      const state = getState()
+      if (index === undefined) {
+        state.setAddBlockIndex(
+          state.insertPosition === InsertPosition.Start ? 0 : state.data.length
+        )
+        return
+      }
+      if (typeof index === 'string') {
+        state.setAddBlockIndex(
+          state.data.findIndex((v) => v._id === index) ?? 0
+        )
+        return
+      }
+      if (index !== null) {
+        const event = new CustomEvent(Events.Components, {
+          cancelable: true,
+          detail: {
+            index: index,
+            add: (name: string, extraData?: object) => {
+              state.insertData(name, index, extraData)
+              state.setAddBlockIndex(null)
+            },
           },
         })
-      )
-    )
-  )
+        state.rootElement.dispatchEvent(event)
+        if (event.defaultPrevented) {
+          return
+        }
+      }
+      set({ addBlockIndex: index })
+    },
+    togglePreviewMode: function () {
+      set(({ previewMode }) => ({
+        previewMode:
+          previewMode === PreviewModes.DESKTOP
+            ? PreviewModes.PHONE
+            : PreviewModes.DESKTOP,
+      }))
+    },
+  }))
 
 type Store = ReturnType<typeof createStore>
 // Extrait le type de la donnée à l'intérieur d'un UseBoundStore<T>
@@ -306,6 +327,18 @@ export function useTemplates() {
   return useStore((state) => state.templates)
 }
 
+export function useEmit() {
+  const element = useRootElement()
+  return (eventName: Events, args?: CustomEventInit) => {
+    const event = new CustomEvent(eventName, args)
+    element.dispatchEvent(event)
+    return event
+  }
+}
+
+/**
+ * Add a new block at the current selected index
+ */
 export function useAddBlock() {
   const insertData = useInsertData()
   const blockIndex = useStore((state) => state.addBlockIndex) || 0
@@ -314,11 +347,7 @@ export function useAddBlock() {
   const setBlockIndex = useSetBlockIndex()
   return useCallback(
     (blocName: string) => {
-      insertData(
-        blocName,
-        blockIndex,
-        fillDefaults({}, definitions[blocName]!.fields)
-      )
+      insertData(blocName, blockIndex)
       setBlockIndex(null)
     },
     [insertData, blockIndex, definitions, setBlockIndex]

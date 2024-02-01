@@ -18,16 +18,16 @@ export function PreviewItems({
   initialHTML: Record<string, string>
   previewUrl: string
 }) {
-  const setAddBlockIndex = useSetBlockIndex()
   const definitions = useFieldDefinitions()
+  const setAddBlockIndex = useSetBlockIndex()
 
   return (
     <>
       <Flipper flipKey={data.map((d) => d._id).join('_')}>
         {data.map((v, k) => (
-          <div key={v._id}>
-            <PreviewAddFloating onClick={prevent(() => setAddBlockIndex(k))} />
+          <div key={v._id} style={{ position: 'relative' }}>
             <PreviewItem
+              index={k}
               title={definitions[v._name]?.title || ''}
               data={v}
               initialHTML={initialHTML[v._id] || ''}
