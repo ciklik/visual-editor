@@ -1,7 +1,12 @@
 import { EditorComponentData } from 'src/types'
 import React, { useEffect, useRef } from 'react'
 import { usePreview } from 'src/hooks/usePreview'
-import { useFieldFocused, useSetBlockIndex, useSetFocusIndex } from 'src/store'
+import {
+  useFieldFocused,
+  useRemoveBloc,
+  useSetBlockIndex,
+  useSetFocusIndex,
+} from 'src/store'
 import { offsetTop } from 'src/functions/dom'
 import { Flipped } from 'react-flip-toolkit'
 import { Spinner } from 'src/components/ui'
@@ -29,6 +34,7 @@ export function PreviewItem({
   const setFocusIndex = useSetFocusIndex()
   const isFocused = useFieldFocused(data._id)
   const setAddBlockIndex = useSetBlockIndex()
+  const removeBloc = useRemoveBloc()
 
   useEffect(() => {
     if (isFocused) {
@@ -40,17 +46,19 @@ export function PreviewItem({
 
   return (
     <Flipped flipId={data._id}>
-      <PreviewItemWrapper
-        title={title}
-        id={`previewItem${data._id}`}
-        isFocused={isFocused}
-        ref={ref}
-        onClick={() => setFocusIndex(data._id)}
-        onAdd={prevent(() => setAddBlockIndex(index))}
-      >
+      <div>
         {loading && <StyledSpinner size={12} />}
         <div dangerouslySetInnerHTML={{ __html: html }} />
-      </PreviewItemWrapper>
+        <PreviewItemWrapper
+          title={title}
+          id={`previewItem${data._id}`}
+          isFocused={isFocused}
+          ref={ref}
+          onClick={() => setFocusIndex(data._id)}
+          onAdd={() => setAddBlockIndex(index)}
+          onDelete={() => removeBloc(data._id)}
+        />
+      </div>
     </Flipped>
   )
 }

@@ -40,11 +40,16 @@ export class PreviewWrapper extends (isClientSide()
     )
   }
 
-  onAddClick = (e: SyntheticEvent) => {
-    e.stopPropagation()
-    e.preventDefault()
+  handleAdd = () => {
     window.parent.postMessage(
       { type: 've-add', payload: { id: this.dataset.id } },
+      this.referrer()
+    )
+  }
+
+  handleDelete = () => {
+    window.parent.postMessage(
+      { type: 've-remove', payload: { id: this.dataset.id } },
       this.referrer()
     )
   }
@@ -57,7 +62,8 @@ export class PreviewWrapper extends (isClientSide()
       <Reset complete={false}>
         <PreviewItemWrapper
           title={this.dataset.name}
-          onAdd={this.onAddClick}
+          onDelete={this.handleDelete}
+          onAdd={this.handleAdd}
           isFocused={this.isFocused}
           style={{ position: 'absolute', inset: 0 }}
           onClick={this.onWrapperClick}
