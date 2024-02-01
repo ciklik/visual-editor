@@ -23,7 +23,7 @@ export function SidebarBlocMissing({ data }: SidebarBlocMissingProps) {
       <SidebarHeading title={`${t('unknownComponent')} : ${data._name}`}>
         <ButtonIcon
           danger
-          onClick={prevent(() => removeBloc(data))}
+          onClick={prevent(() => removeBloc(data._id))}
           title={t('deleteComponent')}
         >
           <IconTrash size={20} />

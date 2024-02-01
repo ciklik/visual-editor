@@ -43,7 +43,7 @@ type State = {
   insertPosition: InsertPosition
   setSidebarWidth: (width: number) => void
   updateData: (newData: any, path?: string) => void
-  removeBloc: (data: EditorComponentData) => void
+  removeBloc: (id: string) => void
   rollback: () => void
   voidRollback: () => void
   insertData: (name: string, index: number, extraData?: object) => void
@@ -85,21 +85,21 @@ const createStore = (
       0,
       window.innerWidth - 375
     ),
-    setSidebarWidth: function (width: number) {
+    setSidebarWidth: function (width) {
       localStorage.setItem('veSidebarWidth', width.toString())
       set(() => ({
         sidebarWidth: width,
       }))
     },
-    updateData: function (newData: any, path?: string) {
+    updateData: function (newData, path) {
       return set((state) => ({
         data: deepSet(state.data, path, newData),
       }))
     },
-    removeBloc: function (removedData: EditorComponentData) {
+    removeBloc: function (id) {
       return set(({ data }) => ({
         previousData: data,
-        data: data.filter((d) => d !== removedData),
+        data: data.filter((d) => d._id !== id),
         rollbackMessage: t('deleteItemConfirm'),
       }))
     },
@@ -116,11 +116,7 @@ const createStore = (
         previousData: [],
       }))
     },
-    insertData: function (
-      name: string,
-      index: number,
-      extraData?: object
-    ): EditorComponentData {
+    insertData: function (name, index, extraData) {
       if (!extraData) {
         extraData = fillDefaults({}, getState().definitions[name]!.fields)
       }

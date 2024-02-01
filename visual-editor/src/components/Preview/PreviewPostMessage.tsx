@@ -5,6 +5,7 @@ import {
   PreviewModes,
   useFocusIndex,
   usePreviewMode,
+  useRemoveBloc,
   useSetBlockIndex,
   useSetFocusIndex,
 } from 'src/store'
@@ -19,6 +20,10 @@ type IframeEvents =
     }
   | {
       type: 've-add'
+      payload: { id: string }
+    }
+  | {
+      type: 've-remove'
       payload: { id: string }
     }
 
@@ -44,6 +49,7 @@ export function PreviewPostMessage({ data, previewUrl }: PreviewProps) {
   let transform = undefined
   const setFocusIndex = useSetFocusIndex()
   const setAddBlockIndex = useSetBlockIndex()
+  const removeBloc = useRemoveBloc()
   const focusIndex = useFocusIndex()
   const previewUrlRef = useRef(previewUrl)
   previewUrlRef.current = previewUrl
@@ -54,11 +60,16 @@ export function PreviewPostMessage({ data, previewUrl }: PreviewProps) {
 
   useEffect(() => {
     const listener = (e: MessageEvent<IframeEvents>) => {
-      if (e.data.type === 've-focus') {
-        setFocusIndex(e.data.payload.id)
-      } else if (e.data.type === 've-add') {
-        console.log({ id: e.data.payload.id })
-        setAddBlockIndex(e.data.payload.id)
+      switch (e.data.type) {
+        case 've-focus':
+          setFocusIndex(e.data.payload.id)
+          break
+        case 've-add':
+          setAddBlockIndex(e.data.payload.id)
+          break
+        case 've-remove':
+          removeBloc(e.data.payload.id)
+          break
       }
     }
     window.addEventListener('message', listener)

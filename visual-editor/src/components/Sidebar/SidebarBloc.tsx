@@ -52,7 +52,7 @@ export const SidebarBloc = memo(function SidebarItem({
   )
 
   const handleRemove = () => {
-    removeBloc(data)
+    removeBloc(data._id)
   }
 
   const focusBloc = () => {
