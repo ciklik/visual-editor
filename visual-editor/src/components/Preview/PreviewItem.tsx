@@ -1,20 +1,24 @@
 import { EditorComponentData } from 'src/types'
 import React, { useEffect, useRef } from 'react'
 import { usePreview } from 'src/hooks/usePreview'
-import { useFieldFocused, useSetFocusIndex } from 'src/store'
+import { useFieldFocused, useSetBlockIndex, useSetFocusIndex } from 'src/store'
 import { offsetTop } from 'src/functions/dom'
 import { Flipped } from 'react-flip-toolkit'
 import { Spinner } from 'src/components/ui'
 import styled from '@emotion/styled'
+import { PreviewItemWrapper } from 'src/components/Preview/PreviewItemWrapper'
+import { prevent } from 'src/functions/functions'
 
 type PreviewItemProps = {
   data: EditorComponentData
   initialHTML: string
   previewUrl: string
   title: string
+  index: number
 }
 
 export function PreviewItem({
+  index,
   data,
   initialHTML,
   previewUrl,
@@ -24,6 +28,7 @@ export function PreviewItem({
   const { loading, html } = usePreview(data, previewUrl, initialHTML)
   const setFocusIndex = useSetFocusIndex()
   const isFocused = useFieldFocused(data._id)
+  const setAddBlockIndex = useSetBlockIndex()
 
   useEffect(() => {
     if (isFocused) {
@@ -36,66 +41,19 @@ export function PreviewItem({
   return (
     <Flipped flipId={data._id}>
       <PreviewItemWrapper
+        title={title}
         id={`previewItem${data._id}`}
         isFocused={isFocused}
         ref={ref}
         onClick={() => setFocusIndex(data._id)}
+        onAdd={prevent(() => setAddBlockIndex(index))}
       >
         {loading && <StyledSpinner size={12} />}
-        <PreviewItemTitle isFocused={isFocused}>{title}</PreviewItemTitle>
         <div dangerouslySetInnerHTML={{ __html: html }} />
       </PreviewItemWrapper>
     </Flipped>
   )
 }
-
-export const PreviewItemWrapper = styled.div<{ isFocused: boolean }>(
-  {
-    position: 'relative',
-    cursor: 'pointer',
-    '&:hover': {
-      borderColor: 'var(--ve-primary)',
-    },
-    '&::before': {
-      content: "''",
-      position: 'absolute',
-      inset: 0,
-      borderStyle: 'solid',
-      borderColor: 'transparent',
-      zIndex: 10,
-    },
-    '&:hover::before': {
-      borderColor: 'var(--ve-primary)',
-    },
-  },
-  ({ isFocused }) => ({
-    '&::before': {
-      borderWidth: isFocused ? 2 : 1,
-      borderColor: isFocused ? 'var(--ve-primary)' : 'transparent',
-    },
-  })
-)
-
-export const PreviewItemTitle = styled.div<{ isFocused: boolean }>(
-  {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    backgroundColor: 'var(--ve-primary)',
-    color: '#FFF',
-    padding: '.2rem .4rem',
-    borderTopLeftRadius: '5px',
-    borderTopRightRadius: '5px',
-    opacity: 0,
-    transform: 'translateY(calc(1px - 100%))',
-    '*:hover > &': {
-      opacity: 1,
-    },
-  },
-  ({ isFocused }) => ({
-    opacity: isFocused ? 1 : 0,
-  })
-)
 
 const StyledSpinner = styled(Spinner)({
   top: '1rem',

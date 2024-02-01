@@ -30,6 +30,7 @@ export function SidebarTemplates({ onTemplate }: { onTemplate: () => void }) {
     <Wrapper>
       {templates.map((t) => (
         <TemplateCard
+          key={t.name}
           template={t}
           onClick={callback}
           loading={loadingTemplate === t}

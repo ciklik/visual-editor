@@ -3,11 +3,14 @@ import styled from '@emotion/styled'
 import { UnstyledButton } from 'src/components/ui'
 
 type PreviewAddFloatingProps = {
-  onClick?: (e: SyntheticEvent) => void,
+  onClick?: (e: SyntheticEvent) => void
   style?: CSSProperties
 }
 
-export function PreviewAddFloating({ onClick, style }: PreviewAddFloatingProps) {
+export function PreviewAddFloating({
+  onClick,
+  style,
+}: PreviewAddFloatingProps) {
   return (
     <Button onClick={onClick} style={style}>
       <span>Ajouter un bloc</span>
@@ -16,7 +19,10 @@ export function PreviewAddFloating({ onClick, style }: PreviewAddFloatingProps) 
 }
 
 const Button = styled(UnstyledButton)({
-  position: 'relative',
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
   marginTop: '-40px',
   marginBottom: '-40px',
   opacity: 0,
