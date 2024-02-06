@@ -7,7 +7,7 @@ import {
 } from 'src/types'
 import { deepSet, indexify } from 'src/functions/object'
 import { combine } from 'zustand/middleware'
-import { insertItem } from 'src/functions/array'
+import { insertItem, moveItem } from 'src/functions/array'
 import { uniqId } from 'src/functions/string'
 
 import { clamp } from './functions/number'
@@ -80,6 +80,14 @@ const createStore = (
           return set((state) => ({
             data: deepSet(state.data, path, newData),
           }))
+        },
+        moveBloc: function (id: string, direction: number) {
+          return set(({ data }) => {
+            const currentIndex = data.findIndex((d) => d._id === id)
+            return {
+              data: moveItem(data, currentIndex, currentIndex + direction),
+            }
+          })
         },
         removeBloc: function (id: string) {
           return set(({ data }) => ({

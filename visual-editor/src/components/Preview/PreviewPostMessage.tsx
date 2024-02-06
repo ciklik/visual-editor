@@ -18,6 +18,10 @@ type IframeEvents =
       type: 've-remove'
       payload: { id: string }
     }
+  | {
+      type: 've-move'
+      payload: { id: string; direction: number }
+    }
 
 export type EditorMessageEvents =
   | {
@@ -30,19 +34,20 @@ export type EditorMessageEvents =
     }
 
 /**
- * Alternative preview component based on postMessage to communicate using
- * cross domain
+ * Alternative preview component based on postMessage to communicate
+ * between the host and the iframe using cross domain
  */
 export function PreviewPostMessage({ data, previewUrl }: PreviewProps) {
   const iframe = useRef<HTMLIFrameElement>(null)
   const [loaded, setLoaded] = useState(false)
   let transform = undefined
-  const { setFocusIndex, setAddBlockIndex, removeBloc, focusIndex } =
+  const { setFocusIndex, setAddBlockIndex, removeBloc, focusIndex, moveBloc } =
     usePartialStore(
       'setFocusIndex',
       'setAddBlockIndex',
       'removeBloc',
-      'focusIndex'
+      'focusIndex',
+      'moveBloc'
     )
   const previewUrlRef = useRef(previewUrl)
   previewUrlRef.current = previewUrl
@@ -58,6 +63,9 @@ export function PreviewPostMessage({ data, previewUrl }: PreviewProps) {
           break
         case 've-remove':
           removeBloc(e.data.payload.id)
+          break
+        case 've-move':
+          moveBloc(e.data.payload.id, e.data.payload.direction)
           break
       }
     }

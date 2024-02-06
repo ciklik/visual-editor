@@ -54,6 +54,16 @@ export class PreviewWrapper extends (isClientSide()
     )
   }
 
+  handleMove = (direction: number) => {
+    window.parent.postMessage(
+      {
+        type: 've-move',
+        payload: { id: this.dataset.id, direction: direction },
+      },
+      this.referrer()
+    )
+  }
+
   render() {
     if (!this.root) {
       return
@@ -67,6 +77,7 @@ export class PreviewWrapper extends (isClientSide()
           isFocused={this.isFocused}
           style={{ position: 'absolute', inset: 0 }}
           onClick={this.onWrapperClick}
+          onMove={this.handleMove}
         />
       </Reset>
     )
