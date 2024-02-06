@@ -10,12 +10,10 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { TiptapColorPicker } from 'src/components/Editor/TiptapEditor/TiptapColorPicker'
 import { TiptapToolbarAlign } from 'src/components/Editor/TiptapEditor/TiptapToolbarAlign'
 import { TiptapToolbarHeadings } from 'src/components/Editor/TiptapEditor/TiptapToolbarHeadings'
 import { Flex } from 'src/components/ui'
 import { prevent } from 'src/functions/functions'
-import { useRootElement } from 'src/store'
 import {
   IconBold,
   IconClear,
@@ -28,6 +26,8 @@ import {
   IconUnderline,
 } from './TiptapIcons'
 import { TiptapToolbarButton as Button } from './TiptapToolbarButton'
+import { TiptapColorPicker } from 'src/components/Editor/TiptapEditor/TiptapColorPicker'
+import { usePartialStore } from 'src/store'
 
 type TiptapToolbarProps = {
   editor: Editor
@@ -50,7 +50,7 @@ export function TiptapToolbar({ editor, colors }: TiptapToolbarProps) {
   }
   let rootElement: HTMLElement | null = null
   try {
-    rootElement = useRootElement()
+    rootElement = usePartialStore('rootElement').rootElement
   } catch (e) {
     // Zustand is not available, keep rootElement to null
   }

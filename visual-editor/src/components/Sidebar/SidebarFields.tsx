@@ -1,6 +1,6 @@
 import { EditorComponentData, EditorComponentDefinition } from 'src/types'
-import { useUpdateData } from 'src/store'
 import { FieldsRenderer } from 'src/components/Sidebar/FieldsRenderer'
+import { usePartialStore } from 'src/store'
 
 type SidebarFieldsProps = {
   fields: EditorComponentDefinition['fields']
@@ -9,7 +9,7 @@ type SidebarFieldsProps = {
 }
 
 export function SidebarFields({ fields, data, path }: SidebarFieldsProps) {
-  const updateData = useUpdateData()
+  const { updateData } = usePartialStore('updateData')
   return (
     <FieldsRenderer
       fields={fields}

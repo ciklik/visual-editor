@@ -1,12 +1,7 @@
 import type { PreviewProps } from 'src/components/Preview/Preview'
 import { StyledIframe } from 'src/components/Preview/Preview'
 import { useEffect, useRef, useState } from 'react'
-import {
-  useFocusIndex,
-  useRemoveBloc,
-  useSetBlockIndex,
-  useSetFocusIndex,
-} from 'src/store'
+import { usePartialStore } from 'src/store'
 import { type EditorComponentData } from 'src/types'
 import { PreviewWrapper } from 'src/components/Preview/PreviewWrapper'
 
@@ -42,10 +37,13 @@ export function PreviewPostMessage({ data, previewUrl }: PreviewProps) {
   const iframe = useRef<HTMLIFrameElement>(null)
   const [loaded, setLoaded] = useState(false)
   let transform = undefined
-  const setFocusIndex = useSetFocusIndex()
-  const setAddBlockIndex = useSetBlockIndex()
-  const removeBloc = useRemoveBloc()
-  const focusIndex = useFocusIndex()
+  const { setFocusIndex, setAddBlockIndex, removeBloc, focusIndex } =
+    usePartialStore(
+      'setFocusIndex',
+      'setAddBlockIndex',
+      'removeBloc',
+      'focusIndex'
+    )
   const previewUrlRef = useRef(previewUrl)
   previewUrlRef.current = previewUrl
 

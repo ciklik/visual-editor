@@ -1,17 +1,19 @@
 import { EditorComponentData } from 'src/types'
 import { SortableWrapper } from 'src/components/Sortable'
 import { moveItem } from 'src/functions/array'
-import { useFieldDefinitions, useUpdateData } from 'src/store'
 
 import { SidebarBloc } from './SidebarBloc'
 import styled from '@emotion/styled'
+import { usePartialStore } from 'src/store'
 
 /**
  * Génère la liste des champs dans la sidebar
  */
 export function SidebarBlocs({ data }: { data: EditorComponentData[] }) {
-  const updateData = useUpdateData()
-  const definitions = useFieldDefinitions()
+  const { updateData, definitions } = usePartialStore(
+    'definitions',
+    'updateData'
+  )
   const handleMove = (from: number, to: number) => {
     updateData(moveItem(data, from, to))
   }

@@ -1,7 +1,6 @@
 import { Sidebar } from 'src/components/Sidebar/Sidebar'
 import { Preview } from 'src/components/Preview/Preview'
 import { type EditorComponentData } from 'src/types'
-import { useSidebarWidth } from 'src/store'
 import { ResizeBar } from './ResizeBar'
 import { BlocSelector } from './Blocs/BlocSelector'
 import React, { ReactNode } from 'react'
@@ -13,6 +12,7 @@ import { useToggle } from 'src/hooks/useToggle'
 import { VisualEditor } from 'src/VisualEditor'
 import { PreviewPostMessage } from 'src/components/Preview/PreviewPostMessage'
 import { Header } from 'src/components/Header/Header'
+import { usePartialStore } from 'src/store'
 
 type LayoutProps = {
   className?: string
@@ -53,7 +53,7 @@ export function Layout({ data, previewUrl, onClose, iconsUrl }: LayoutProps) {
 }
 
 function Wrapper(props: { withSidebar: boolean; children: ReactNode }) {
-  const sidebarWidth = useSidebarWidth()
+  const { sidebarWidth } = usePartialStore('sidebarWidth')
 
   return (
     <StyledWrapper

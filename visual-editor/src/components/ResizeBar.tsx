@@ -1,11 +1,11 @@
 import { SyntheticEvent, useState } from 'react'
-import { useSetSidebarWidth } from 'src/store'
 
 import styled from '@emotion/styled'
+import { usePartialStore } from 'src/store'
 
 export function ResizeBar() {
   const [drag, setDrag] = useState(false)
-  const setSidebarWidth = useSetSidebarWidth()
+  const { setSidebarWidth } = usePartialStore('setSidebarWidth')
   const handleMouseDown = (e: SyntheticEvent) => {
     e.stopPropagation()
     e.preventDefault()

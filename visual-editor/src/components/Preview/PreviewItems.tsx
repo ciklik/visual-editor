@@ -1,10 +1,8 @@
 import { EditorComponentData } from 'src/types'
-import { useFieldDefinitions, useSetBlockIndex } from 'src/store'
+import { usePartialStore } from 'src/store'
 import { Flipper } from 'react-flip-toolkit'
-import { PreviewAddFloating } from 'src/components/Preview/PreviewAddFloating'
 import { PreviewItem } from 'src/components/Preview/PreviewItem'
 import { PreviewAddButton } from 'src/components/Preview/PreviewAddButton'
-import { prevent } from 'src/functions/functions'
 
 /**
  * Gère le rendu dans l'iframe des différents composants
@@ -18,8 +16,10 @@ export function PreviewItems({
   initialHTML: Record<string, string>
   previewUrl: string
 }) {
-  const definitions = useFieldDefinitions()
-  const setAddBlockIndex = useSetBlockIndex()
+  const { definitions, setAddBlockIndex } = usePartialStore(
+    'setAddBlockIndex',
+    'definitions'
+  )
 
   return (
     <>
