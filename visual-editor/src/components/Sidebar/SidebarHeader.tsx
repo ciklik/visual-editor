@@ -1,13 +1,11 @@
 import { prevent } from 'src/functions/functions'
-import { PreviewModes, useData, useSetBlockIndex } from 'src/store'
+import { usePartialStore } from 'src/store'
 import {
   Button,
   ButtonIcon,
   Flex,
   IconCirclePlus,
   IconCross,
-  IconDesktop,
-  IconPhone,
 } from 'src/components/ui'
 import { CopyAction } from './Actions/CopyAction'
 
@@ -20,8 +18,7 @@ type SidebarHeaderProps = PropsWithChildren<{
 }>
 
 export function SidebarHeader({ onClose, children }: SidebarHeaderProps) {
-  const setAddBlock = useSetBlockIndex()
-  const data = useData()
+  const { setAddBlockIndex, data } = usePartialStore('setAddBlockIndex', 'data')
 
   return (
     <Wrapper between>
@@ -33,7 +30,10 @@ export function SidebarHeader({ onClose, children }: SidebarHeaderProps) {
       <Flex>
         {children}
         <CopyAction data={data} size={20} />
-        <Button icon={IconCirclePlus} onClick={prevent(() => setAddBlock())}>
+        <Button
+          icon={IconCirclePlus}
+          onClick={prevent(() => setAddBlockIndex())}
+        >
           {t('addComponent')}
         </Button>
       </Flex>

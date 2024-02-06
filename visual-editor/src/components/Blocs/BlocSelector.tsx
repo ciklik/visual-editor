@@ -2,9 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import {
   useAddBlock,
   useBlocSelectionVisible,
-  useFieldDefinitions,
-  useHiddenCategories,
-  useSetBlockIndex,
+  usePartialStore,
 } from 'src/store'
 import { EditorComponentDefinitions } from 'src/types'
 import { Modal, Tabs } from 'src/components/ui'
@@ -21,10 +19,12 @@ type BlocSelectorProps = {
 
 export function BlocSelector({ iconsUrl }: BlocSelectorProps) {
   const isVisible = useBlocSelectionVisible()
-  const setBlockIndex = useSetBlockIndex()
+  const { setAddBlockIndex } = usePartialStore('setAddBlockIndex')
   const [search, setSearch] = useState('')
-  const definitions = useFieldDefinitions()
-  const hiddenCategories = useHiddenCategories()
+  const { definitions, hiddenCategories } = usePartialStore(
+    'definitions',
+    'hiddenCategories'
+  )
   const addBlock = useAddBlock()
   const categories = useMemo(() => {
     return [
@@ -48,7 +48,7 @@ export function BlocSelector({ iconsUrl }: BlocSelectorProps) {
   }
 
   const handleVisibilityChange = (v: any) => {
-    setBlockIndex(null)
+    setAddBlockIndex(null)
   }
 
   return (

@@ -9,7 +9,7 @@ import type {
   Translation,
 } from 'src/types'
 import { Layout } from 'src/components/Layout'
-import { StoreProvider, useData, useUpdateData } from 'src/store'
+import { StoreProvider, usePartialStore } from 'src/store'
 import { indexify, stringifyFields } from 'src/functions/object'
 import { useClipboardPaste } from 'src/hooks/useClipboardPaste'
 import { useUpdateEffect } from 'src/hooks/useUpdateEffect'
@@ -195,8 +195,7 @@ export function VisualEditorComponent({
   onChange,
 }: VisualEditorProps) {
   const skipNextChange = useRef(true) // Skip emitting a change event on the next update (usefull for external changes)
-  const updateData = useUpdateData()
-  const data = useData()
+  const { data, updateData } = usePartialStore('updateData', 'data')
   const visible = useStateDelayed(visibleProps)
   const handleClose = () => {
     element.dispatchEvent(new Event('close'))

@@ -1,12 +1,7 @@
 import { EditorComponentData } from 'src/types'
 import React, { useEffect, useRef } from 'react'
 import { usePreview } from 'src/hooks/usePreview'
-import {
-  useFieldFocused,
-  useRemoveBloc,
-  useSetBlockIndex,
-  useSetFocusIndex,
-} from 'src/store'
+import { useFieldFocused, usePartialStore } from 'src/store'
 import { offsetTop } from 'src/functions/dom'
 import { Flipped } from 'react-flip-toolkit'
 import { Spinner } from 'src/components/ui'
@@ -31,10 +26,12 @@ export function PreviewItem({
 }: PreviewItemProps) {
   const ref = useRef<HTMLDivElement>(null)
   const { loading, html } = usePreview(data, previewUrl, initialHTML)
-  const setFocusIndex = useSetFocusIndex()
   const isFocused = useFieldFocused(data._id)
-  const setAddBlockIndex = useSetBlockIndex()
-  const removeBloc = useRemoveBloc()
+  const { removeBloc, setAddBlockIndex, setFocusIndex } = usePartialStore(
+    'setFocusIndex',
+    'setAddBlockIndex',
+    'removeBloc'
+  )
 
   useEffect(() => {
     if (isFocused) {

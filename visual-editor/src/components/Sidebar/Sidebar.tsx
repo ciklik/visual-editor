@@ -8,7 +8,7 @@ import { SidebarFooter } from 'src/components/Sidebar/SidebarFooter'
 import { SidebarEmpty } from 'src/components/Sidebar/SidebarEmpty'
 import { useCallback, useState } from 'react'
 import { SidebarTemplates } from 'src/components/Sidebar/SidebarTemplates'
-import { useEmit, useTemplates } from 'src/store'
+import { useEmit, usePartialStore } from 'src/store'
 import { ButtonIcon, IconBlocs, IconPage } from 'src/components/ui'
 import { prevent } from 'src/functions/functions'
 import { t } from 'src/functions/i18n'
@@ -28,7 +28,7 @@ export function Sidebar({
   onClose: () => void
 }) {
   const [state, setState] = useState(States.BLOCS)
-  const templates = useTemplates()
+  const { templates } = usePartialStore('templates')
   const emit = useEmit()
   const toggleMode = useCallback(() => {
     setState((v) => {

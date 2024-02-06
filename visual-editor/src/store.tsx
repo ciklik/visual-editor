@@ -243,91 +243,19 @@ export function usePartialStore<K extends keyof StoreState>(...keys: K[]) {
   ) as Pick<StoreState, K>
 }
 
-export function useData() {
-  return useStore((state) => state.data)
-}
-
-export function useRootElement() {
-  return useStore((state) => state.rootElement)
-}
-
-export function useUpdateData() {
-  return useStore((state) => state.updateData)
-}
-
-export function useRemoveBloc() {
-  return useStore((state) => state.removeBloc)
-}
-
-export function useInsertData() {
-  return useStore((state) => state.insertData)
-}
-
-export function useSetData() {
-  return useStore((state) => state.setData)
-}
-
-export function useFocusIndex() {
-  return useStore((state) => state.focusIndex)
-}
-
-export function useDefinitions() {
-  return useStore((state) => state.definitions)
-}
-
-export function useSetFocusIndex() {
-  return useStore((state) => state.setFocusIndex)
-}
-
 export function useFieldFocused(id: string) {
   return useStore((state) => state.focusIndex === id)
-}
-
-export function useSidebarWidth() {
-  return useStore((state) => state.sidebarWidth)
-}
-
-export function useSetSidebarWidth() {
-  return useStore((state) => state.setSidebarWidth)
-}
-
-export function useFieldDefinitions() {
-  return useStore((state) => state.definitions)
-}
-
-export function useHiddenCategories() {
-  return useStore((state) => state.hiddenCategories)
 }
 
 export function useBlocSelectionVisible(): boolean {
   return useStore((state) => state.addBlockIndex) !== null
 }
 
-export function useSetBlockIndex() {
-  return useStore((state) => state.setAddBlockIndex)
-}
-
-export function useTemplates() {
-  return useStore((state) => state.templates)
-}
-
-export function useToggleSidebarMode() {
-  return useStore((state) => state.toggleSidebarMode)
-}
-
-export function useSidebarMode() {
-  return useStore((state) => state.sidebarMode)
-}
-
-export function useDevices() {
-  return useStore((state) => state.devices)
-}
-
 export function useEmit() {
-  const element = useRootElement()
+  const { rootElement } = usePartialStore('rootElement')
   return (eventName: Events, args?: CustomEventInit) => {
     const event = new CustomEvent(eventName, args)
-    element.dispatchEvent(event)
+    rootElement.dispatchEvent(event)
     return event
   }
 }
@@ -336,17 +264,19 @@ export function useEmit() {
  * Add a new block at the current selected index
  */
 export function useAddBlock() {
-  const insertData = useInsertData()
+  const { insertData, definitions, setAddBlockIndex } = usePartialStore(
+    'insertData',
+    'definitions',
+    'setAddBlockIndex'
+  )
   const blockIndex = useStore((state) => state.addBlockIndex) || 0
 
-  const definitions = useDefinitions()
-  const setBlockIndex = useSetBlockIndex()
   return useCallback(
     (blocName: string) => {
       insertData(blocName, blockIndex)
-      setBlockIndex(null)
+      setAddBlockIndex(null)
     },
-    [insertData, blockIndex, definitions, setBlockIndex]
+    [insertData, blockIndex, definitions, setAddBlockIndex]
   )
 }
 
