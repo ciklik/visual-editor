@@ -10,6 +10,7 @@
   },
   "scripts": {
     "dev": "concurrently \"vite\" \"php -S 0.0.0.0:8000 -ddisplay_errors=1 -t server/\"",
+    "check": "tsc",
     "build": "tsc && vite build && node esbuild.js && npm run declaration && cp package.json dist/package.json && cp README.md dist/README.md",
     "serve": "vite preview",
     "format": "prettier --config .prettierrc 'src/**/*.{ts,tsx}' --write",

@@ -2,15 +2,14 @@ import { EditorComponentData } from 'src/types'
 import React, { useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useAsyncEffect } from 'src/hooks/useAsyncEffect'
-import { PreviewModes, usePreviewMode } from 'src/store'
 import { useWindowSize } from 'react-use'
 import { PHONE_HEIGHT } from 'src/constants'
 import { Spinner } from 'src/components/ui'
 import { FrameProvider } from 'src/components/Preview/FrameProvider'
 import { BaseStyles } from 'src/components/BaseStyles'
 import styled from '@emotion/styled'
-import { keyframes } from '@emotion/react'
 import { PreviewItems } from 'src/components/Preview/PreviewItems'
+import { PreviewWrapper } from 'src/components/Preview/PreviewWrapper'
 
 export type PreviewProps = {
   data: EditorComponentData[]
@@ -56,22 +55,12 @@ export function Preview({ data, previewUrl }: PreviewProps) {
     setIframeRoot(root)
   }, [])
 
-  const previewMode = usePreviewMode()
-  const { height: windowHeight } = useWindowSize()
-  let transform = undefined
-
-  if (previewMode === PreviewModes.PHONE && windowHeight < 844) {
-    transform = { transform: `scale(${windowHeight / PHONE_HEIGHT})` }
-  }
-
   return (
     <PreviewWrapper>
       {showSpinner && <Spinner css={{ color: 'white', opacity: 0.6 }} />}
       <StyledIframe
         loaded={loaded}
-        mobile={previewMode === PreviewModes.PHONE}
         ref={iframe}
-        style={transform}
         onLoad={() => setLoaded(true)}
       />
       {iframeRoot &&
@@ -91,39 +80,16 @@ export function Preview({ data, previewUrl }: PreviewProps) {
   )
 }
 
-const Out = keyframes({
-  from: { transform: 'translateX(0)', opacity: 1 },
-  to: { transform: 'translateX(50px)', opacity: 0 },
-})
-
-const In = keyframes({
-  from: { transform: 'translateX(50px)', opacity: 0 },
-  to: { transform: 'translateX(0)', opacity: 1 },
-})
-
-export const PreviewWrapper = styled.div({
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  overflow: 'hidden',
-  animation: `${In} .7s cubic-bezier(0.19, 1, 0.22, 1) both`,
-  '[hidden="hidden"] &': {
-    animationName: `${Out}`,
-  },
-})
-
-export const StyledIframe = styled.iframe<{ loaded: boolean; mobile: boolean }>(
+export const StyledIframe = styled.iframe<{ loaded: boolean }>(
   {
     transformOrigin: '50% 50%',
     border: 'none',
     color: 'var(--ve-primary)',
-    transition: 'width .3s, height .3s, opacity .5s',
+    transition: 'opacity .5s',
+    width: '100%',
+    height: '100%',
   },
   (props) => ({
     opacity: props.loaded ? 1 : 0,
-    width: props.mobile ? '390px' : '100%',
-    height: props.mobile ? '844px' : '100%',
   })
 )

@@ -1,6 +1,6 @@
 import { Sidebar } from 'src/components/Sidebar/Sidebar'
 import { Preview } from 'src/components/Preview/Preview'
-import { EditorComponentData } from 'src/types'
+import { type EditorComponentData } from 'src/types'
 import { useSidebarWidth } from 'src/store'
 import { ResizeBar } from './ResizeBar'
 import { BlocSelector } from './Blocs/BlocSelector'
@@ -12,6 +12,7 @@ import { SidebarToggleButton } from 'src/components/Layout/SidebarToggleButton'
 import { useToggle } from 'src/hooks/useToggle'
 import { VisualEditor } from 'src/VisualEditor'
 import { PreviewPostMessage } from 'src/components/Preview/PreviewPostMessage'
+import { Header } from 'src/components/Header/Header'
 
 type LayoutProps = {
   className?: string
@@ -24,10 +25,13 @@ type LayoutProps = {
 export function Layout({ data, previewUrl, onClose, iconsUrl }: LayoutProps) {
   const [sidebarCollapsed, toggleSidebar] = useToggle(false)
   const showResizeControl = !sidebarCollapsed
-  const PreviewComponent = VisualEditor.postMessagePreview ? PreviewPostMessage : Preview
+  const PreviewComponent = VisualEditor.postMessagePreview
+    ? PreviewPostMessage
+    : Preview
   return (
     <>
       <Wrapper withSidebar={!sidebarCollapsed}>
+        <Header />
         <Sidebar
           data={data}
           onClose={onClose}

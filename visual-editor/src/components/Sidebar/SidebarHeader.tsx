@@ -1,11 +1,5 @@
 import { prevent } from 'src/functions/functions'
-import {
-  PreviewModes,
-  useData,
-  usePreviewMode,
-  useSetBlockIndex,
-  useTogglePreviewMode,
-} from 'src/store'
+import { PreviewModes, useData, useSetBlockIndex } from 'src/store'
 import {
   Button,
   ButtonIcon,
@@ -26,9 +20,6 @@ type SidebarHeaderProps = PropsWithChildren<{
 }>
 
 export function SidebarHeader({ onClose, children }: SidebarHeaderProps) {
-  const togglePreviewMode = useTogglePreviewMode()
-  const previewMode = usePreviewMode()
-  const isPhone = previewMode === PreviewModes.PHONE
   const setAddBlock = useSetBlockIndex()
   const data = useData()
 
@@ -42,12 +33,6 @@ export function SidebarHeader({ onClose, children }: SidebarHeaderProps) {
       <Flex>
         {children}
         <CopyAction data={data} size={20} />
-        <ButtonIcon
-          onClick={prevent(togglePreviewMode)}
-          title={t('responsiveView')}
-        >
-          {isPhone ? <IconDesktop size={20} /> : <IconPhone size={24} />}
-        </ButtonIcon>
         <Button icon={IconCirclePlus} onClick={prevent(() => setAddBlock())}>
           {t('addComponent')}
         </Button>
