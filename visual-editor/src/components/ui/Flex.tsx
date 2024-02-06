@@ -4,18 +4,19 @@ import { css } from '@emotion/react'
 
 type FlexProps = {
   between?: boolean
+  center?: boolean
   column?: boolean
   gap?: number
   as?: ElementType<any>
 } & JSX.IntrinsicElements['div']
 
 export const Flex = forwardRef<HTMLDivElement, FlexProps>(
-  ({ between, column, ...props }, ref) => {
+  ({ between, column, center, ...props }, ref) => {
     return (
       <Wrapper
         {...props}
         ref={ref}
-        css={[between && Between, column && Column]}
+        css={[between && Between, column && Column, center && Center]}
       />
     )
   }
@@ -37,6 +38,10 @@ const Wrapper = styled.div<FlexProps>(
 
 const Between = {
   justifyContent: 'space-between',
+}
+
+const Center = {
+  justifyContent: 'center',
 }
 
 const Column = {

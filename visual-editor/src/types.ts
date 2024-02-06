@@ -11,6 +11,13 @@ export type EditorComponentData = {
   [key: string]: any
 }
 
+export type Device = {
+  name: string
+  width: number | '100%'
+  height: number | '100%'
+  icon: 'tablet' | 'mobile' | 'desktop'
+}
+
 export type EditorComponentTemplate = {
   name: string
   description: string
@@ -23,7 +30,7 @@ export type EditorComponentTemplate = {
 export type FieldComponent<
   FieldOptions,
   FieldValue,
-  FieldExtraParams = {}
+  FieldExtraParams = {},
 > = FunctionComponent<
   {
     value: FieldValue

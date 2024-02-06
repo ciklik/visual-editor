@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import type {
+  Device,
   EditorComponentData,
   EditorComponentDefinition,
   EditorComponentDefinitions,
@@ -22,6 +23,10 @@ import { Events } from 'src/constants'
 
 const components: EditorComponentDefinitions = {}
 const templates: EditorComponentTemplate[] = []
+const defaultDevices: Device[] = [
+  { name: 'Mobile', width: 390, height: '100%', icon: 'mobile' },
+  { name: 'Desktop', width: '100%', height: '100%', icon: 'desktop' },
+]
 
 export { PreviewWrapper } from './elements/PreviewWrapper'
 export { AddButton } from './elements/AddButton'
@@ -33,11 +38,16 @@ export type { EditorMessageEvents } from './components/Preview/PreviewPostMessag
 export class VisualEditor {
   static i18n: Translation = EN
   static postMessagePreview: boolean = false
-
+  static devices: Device[]
   constructor(
-    options: { lang?: Translation; postMessagePreview?: boolean } = {}
+    options: {
+      lang?: Translation
+      postMessagePreview?: boolean
+      devices?: Device[]
+    } = {}
   ) {
     VisualEditor.i18n = options.lang ?? EN
+    VisualEditor.devices = options.devices ?? defaultDevices
     VisualEditor.postMessagePreview = options.postMessagePreview ?? false
   }
 
@@ -135,6 +145,7 @@ export class VisualEditor {
             templates={templates}
             hiddenCategories={hiddenCategories}
             rootElement={this}
+            devices={VisualEditor.devices}
             insertPosition={
               (this.getAttribute('insertPosition') ??
                 InsertPosition.Start) as InsertPosition

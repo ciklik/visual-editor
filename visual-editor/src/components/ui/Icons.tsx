@@ -18,6 +18,23 @@ export function IconPhone({ size = 18 }: IconProps) {
   )
 }
 
+export function IconTablet({ size = 24 }: IconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill="none"
+    >
+      <path
+        fill="currentColor"
+        d="M20 7H4v10h16V7Zm2-1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1Z"
+      />
+      <rect width="10" height="1" x="7" y="15" fill="currentColor" rx=".5" />
+    </svg>
+  )
+}
+
 export function IconDesktop({ size = 24 }: IconProps) {
   return (
     <svg
