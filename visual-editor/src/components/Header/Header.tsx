@@ -8,6 +8,7 @@ import {
 } from 'src/components/ui'
 import { usePartialStore } from 'src/store'
 import { prevent } from 'src/functions/functions'
+import { keyframes } from '@emotion/react'
 
 export function Header() {
   const {
@@ -44,6 +45,16 @@ function DeviceIcon({ icon }: { icon: string }) {
 
 export const headerHeight = 50
 
+const Out = keyframes({
+  from: { transform: 'translateY(0)' },
+  to: { transform: 'translateY(-100%)' },
+})
+
+const In = keyframes({
+  from: { transform: 'translateY(-100%)' },
+  to: { transform: 'translateY(0)' },
+})
+
 const Wrapper = styled(Flex)({
   position: 'fixed',
   top: 0,
@@ -57,6 +68,10 @@ const Wrapper = styled(Flex)({
   borderBottom: '1px solid rgba(0,0,0,0.06)',
   boxShadow: 'rgba(0, 0, 0, 0.05) 0 1px 2px 0',
   height: headerHeight,
+  animation: `${In} .7s cubic-bezier(0.19, 1, 0.22, 1) both`,
+  '[hidden=hidden] &': {
+    animation: `${Out} .7s cubic-bezier(0.19, 1, 0.22, 1) both`,
+  },
 })
 
 const Button = styled('button')({

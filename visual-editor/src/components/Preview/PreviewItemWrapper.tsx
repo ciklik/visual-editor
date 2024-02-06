@@ -1,12 +1,8 @@
-import React, {
-  CSSProperties,
-  forwardRef,
-  PropsWithChildren,
-  SyntheticEvent,
-} from 'react'
+import { type CSSProperties, forwardRef, type SyntheticEvent } from 'react'
 import styled from '@emotion/styled'
 import { PreviewAddFloating } from 'src/components/Preview/PreviewAddFloating'
-import { IconTrash } from 'src/components/ui'
+import { IconDown, IconTrash, IconUp } from 'src/components/ui'
+import { prevent } from 'src/functions/functions'
 
 type Props = {
   title?: string
@@ -15,11 +11,12 @@ type Props = {
   onClick: (e: SyntheticEvent) => void
   onAdd: (e: SyntheticEvent) => void
   onDelete: (e: SyntheticEvent) => void
+  onMove: (direction: number) => void
   id?: string
 }
 
 export const PreviewItemWrapper = forwardRef<HTMLDivElement, Props>(
-  ({ title, isFocused, style, onClick, onAdd, onDelete }, ref) => {
+  ({ title, isFocused, style, onClick, onAdd, onDelete, onMove }, ref) => {
     const handleAdd = (e: SyntheticEvent) => {
       e.preventDefault()
       e.stopPropagation()
@@ -30,6 +27,7 @@ export const PreviewItemWrapper = forwardRef<HTMLDivElement, Props>(
       e.stopPropagation()
       onDelete(e)
     }
+
     return (
       <PreviewItemWrapperDiv
         isFocused={isFocused}
@@ -43,10 +41,25 @@ export const PreviewItemWrapper = forwardRef<HTMLDivElement, Props>(
         )}
         <PreviewItemHeader isFocused={isFocused}>
           <PreviewButton
+            onClick={prevent(() => onMove(-1))}
+            style={{
+              marginLeft: 'auto',
+            }}
+          >
+            <IconUp size={16} />
+          </PreviewButton>
+          <PreviewButton
+            onClick={prevent(() => onMove(1))}
+            style={{
+              marginLeft: 'auto',
+            }}
+          >
+            <IconDown size={16} />
+          </PreviewButton>
+          <PreviewButton
             onClick={handleDelete}
             style={{
               backgroundColor: 'var(--ve-danger)',
-              marginLeft: 'auto',
             }}
           >
             <IconTrash size={16} />
@@ -91,6 +104,7 @@ const PreviewItemHeader = styled.div<{ isFocused: boolean }>(
     top: -1,
     right: 0,
     display: 'flex',
+    alignItems: 'flex-end',
     justifyContent: 'flex-end',
     gap: 2,
     color: '#FFF',

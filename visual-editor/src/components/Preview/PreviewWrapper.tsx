@@ -45,13 +45,13 @@ function useViewportStyle() {
 }
 
 const Out = keyframes({
-  from: { transform: 'translateX(0)', opacity: 1 },
-  to: { transform: 'translateX(50px)', opacity: 0 },
+  from: { opacity: 1 },
+  to: { opacity: 0 },
 })
 
 const In = keyframes({
-  from: { transform: 'translateX(50px)', opacity: 0 },
-  to: { transform: 'translateX(0)', opacity: 1 },
+  from: { opacity: 0 },
+  to: { opacity: 1 },
 })
 
 export const ViewportWrapper = styled.div({

@@ -7,7 +7,6 @@ import { Flipped } from 'react-flip-toolkit'
 import { Spinner } from 'src/components/ui'
 import styled from '@emotion/styled'
 import { PreviewItemWrapper } from 'src/components/Preview/PreviewItemWrapper'
-import { prevent } from 'src/functions/functions'
 
 type PreviewItemProps = {
   data: EditorComponentData
@@ -27,11 +26,13 @@ export function PreviewItem({
   const ref = useRef<HTMLDivElement>(null)
   const { loading, html } = usePreview(data, previewUrl, initialHTML)
   const isFocused = useFieldFocused(data._id)
-  const { removeBloc, setAddBlockIndex, setFocusIndex } = usePartialStore(
-    'setFocusIndex',
-    'setAddBlockIndex',
-    'removeBloc'
-  )
+  const { removeBloc, setAddBlockIndex, setFocusIndex, moveBloc } =
+    usePartialStore(
+      'setFocusIndex',
+      'setAddBlockIndex',
+      'removeBloc',
+      'moveBloc'
+    )
 
   useEffect(() => {
     if (isFocused) {
@@ -54,6 +55,7 @@ export function PreviewItem({
           onClick={() => setFocusIndex(data._id)}
           onAdd={() => setAddBlockIndex(index)}
           onDelete={() => removeBloc(data._id)}
+          onMove={(direction) => moveBloc(data._id, direction)}
         />
       </div>
     </Flipped>
