@@ -251,3 +251,4 @@ export { BaseStyles }
 export { defineField, defineFieldGroup } from 'src/fields/utils'
 export { FieldsRenderer } from 'src/components/Sidebar/FieldsRenderer'
 export { React }
+export * from 'src/store'
