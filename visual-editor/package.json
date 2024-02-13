@@ -57,6 +57,7 @@
     "@tiptap/extension-text-align": "^2.1.11",
     "@tiptap/extension-text-style": "^2.1.11",
     "@tiptap/extension-underline": "^2.1.11",
+    "@tiptap/pm": "^2.2.2",
     "@tiptap/react": "^2.1.11",
     "clsx": "^2.0.0",
     "framesync": "^6.1.2",
