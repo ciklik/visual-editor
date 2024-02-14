@@ -26,12 +26,6 @@ function useViewportStyle() {
   const deviceHeight =
     typeof device.height === 'number' ? device.height : viewportHeight
 
-  console.log({
-    sidebarWidth,
-    viewport: [viewportWidth, viewportHeight],
-    device: [deviceWidth, deviceHeight],
-  })
-
   let scale = 1
   if (deviceWidth > viewportWidth || deviceHeight > viewportHeight) {
     scale = Math.min(viewportWidth / deviceWidth, viewportHeight / deviceHeight)

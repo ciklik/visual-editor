@@ -10,24 +10,26 @@ import { BaseStyles } from 'src/components/BaseStyles'
 import styled from '@emotion/styled'
 import { PreviewItems } from 'src/components/Preview/PreviewItems'
 import { PreviewWrapper } from 'src/components/Preview/PreviewWrapper'
+import { useGetData } from 'src/store'
 
 export type PreviewProps = {
-  data: EditorComponentData[]
   previewUrl: string
 }
 
 /**
  * Affiche un aperçu du rendu de la page dans une iframe
  */
-export function Preview({ data, previewUrl }: PreviewProps) {
+export function Preview({ previewUrl }: PreviewProps) {
   const iframe = useRef<HTMLIFrameElement>(null)
   const [iframeRoot, setIframeRoot] = useState<HTMLElement | null>(null)
   const initialHTML = useRef<Record<string, string>>({})
   const [loaded, setLoaded] = useState(false)
   const showSpinner = !loaded
+  const getData = useGetData()
 
   // Gère le chargement de la preview initiale
   useAsyncEffect(async () => {
+    const data = getData()
     // On génère le premier rendu de la page complète
     const r = await fetch(previewUrl, {
       method: 'POST',
@@ -68,7 +70,6 @@ export function Preview({ data, previewUrl }: PreviewProps) {
           <FrameProvider container={iframe.current!.contentDocument!}>
             <BaseStyles complete={false}>
               <PreviewItems
-                data={data}
                 initialHTML={initialHTML.current}
                 previewUrl={previewUrl}
               />

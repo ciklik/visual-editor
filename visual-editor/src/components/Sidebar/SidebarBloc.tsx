@@ -26,7 +26,7 @@ export const SidebarBloc = memo(function SidebarItem({
 }: SidebarBlocProps) {
   const ref = useRef<HTMLDivElement>(null)
   const isFocused = useFieldFocused(data._id)
-  const [isCollapsed, toggleCollapsed, setCollapsed] = useToggle(!isFocused)
+  const [isCollapsed, toggleCollapsed, setCollapsed] = useToggle(false)
   const { removeBloc, setFocusIndex } = usePartialStore(
     'removeBloc',
     'setFocusIndex'
@@ -63,7 +63,6 @@ export const SidebarBloc = memo(function SidebarItem({
     }
     toggleCollapsed()
   }
-
   if (!definition) {
     return <SidebarBlocMissing data={data} />
   }

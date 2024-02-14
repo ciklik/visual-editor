@@ -1,5 +1,4 @@
 import { createRoot } from 'react-dom/client'
-import React, { SyntheticEvent } from 'react'
 import { Reset } from 'src/components/BaseStyles'
 import { EditorMessageEvents } from 'src/components/Preview/PreviewPostMessage'
 import { isClientSide } from 'src/functions/browser'

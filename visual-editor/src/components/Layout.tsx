@@ -16,13 +16,12 @@ import { usePartialStore } from 'src/store'
 
 type LayoutProps = {
   className?: string
-  data: EditorComponentData[]
   previewUrl?: string
   onClose: () => void
   iconsUrl: string
 }
 
-export function Layout({ data, previewUrl, onClose, iconsUrl }: LayoutProps) {
+export function Layout({ previewUrl, onClose, iconsUrl }: LayoutProps) {
   const [sidebarCollapsed, toggleSidebar] = useToggle(false)
   const showResizeControl = !sidebarCollapsed
   const PreviewComponent = VisualEditor.postMessagePreview
@@ -33,13 +32,12 @@ export function Layout({ data, previewUrl, onClose, iconsUrl }: LayoutProps) {
       <Wrapper withSidebar={!sidebarCollapsed}>
         <Header />
         <Sidebar
-          data={data}
           onClose={onClose}
           css={{
             display: sidebarCollapsed ? 'none' : undefined,
           }}
         />
-        {previewUrl && <PreviewComponent data={data} previewUrl={previewUrl} />}
+        {previewUrl && <PreviewComponent previewUrl={previewUrl} />}
         <SidebarToggleButton
           collapsed={sidebarCollapsed}
           onClick={toggleSidebar}

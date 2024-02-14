@@ -18,7 +18,7 @@ type SidebarHeaderProps = PropsWithChildren<{
 }>
 
 export function SidebarHeader({ onClose, children }: SidebarHeaderProps) {
-  const { setAddBlockIndex, data } = usePartialStore('setAddBlockIndex', 'data')
+  const { setAddBlockIndex } = usePartialStore('setAddBlockIndex')
 
   return (
     <Wrapper between>
@@ -29,7 +29,7 @@ export function SidebarHeader({ onClose, children }: SidebarHeaderProps) {
       </div>
       <Flex>
         {children}
-        <CopyAction data={data} size={20} />
+        <CopyAction size={20} />
         <Button
           icon={IconCirclePlus}
           onClick={prevent(() => setAddBlockIndex())}

@@ -23,11 +23,6 @@ import { t } from 'src/functions/i18n'
 import { InsertPosition } from 'src/enum'
 import { Events } from 'src/constants'
 
-export enum PreviewModes {
-  PHONE,
-  DESKTOP,
-}
-
 const sidebarWidth =
   typeof localStorage !== 'undefined'
     ? localStorage.getItem('veSidebarWidth')
@@ -66,121 +61,138 @@ const createStore = (
           window.innerWidth - 375
         ),
       },
-      (set, getState) => ({
-        setDevice: function (device: Device) {
-          set({ device })
-        },
-        setSidebarWidth: function (width: number) {
-          localStorage.setItem('veSidebarWidth', width.toString())
-          set({
-            sidebarWidth: width,
-          })
-        },
-        updateData: function (newData: any, path?: string) {
-          return set((state) => ({
-            data: deepSet(state.data, path, newData),
-          }))
-        },
-        moveBloc: function (id: string, direction: number) {
-          return set(({ data }) => {
-            const currentIndex = data.findIndex((d) => d._id === id)
-            return {
-              data: moveItem(data, currentIndex, currentIndex + direction),
-            }
-          })
-        },
-        removeBloc: function (id: string) {
-          return set(({ data }) => ({
-            previousData: data,
-            data: data.filter((d) => d._id !== id),
-            rollbackMessage: t('deleteItemConfirm'),
-          }))
-        },
-        rollback: function () {
-          return set(({ previousData }) => ({
-            previousData: [],
-            rollbackMessage: null,
-            data: previousData,
-          }))
-        },
-        voidRollback: function () {
-          return set({
-            rollbackMessage: null,
-            previousData: [],
-          })
-        },
-        insertData: function (name: string, index: number, extraData?: object) {
-          if (!extraData) {
-            extraData = fillDefaults({}, getState().definitions[name]!.fields)
-          }
-          const newData = indexify({
-            ...extraData,
-            _name: name,
-            _id: name + uniqId(),
-          })
-          set((state) => {
-            return {
-              data: insertItem(state.data, index, newData),
-              focusIndex: newData._id,
-            }
-          })
-          return newData
-        },
-        setData: function (newData: Omit<EditorComponentData, '_id'>[]): void {
-          set({
-            data: indexify(newData) as EditorComponentData[],
-            focusIndex: null,
-          })
-        },
-        setFocusIndex: function (id: string) {
-          set({ focusIndex: id })
-        },
-        setAddBlockIndex: function (index?: number | string | null) {
-          const state = getState()
-          if (index === undefined) {
-            this.setAddBlockIndex(
-              state.insertPosition === InsertPosition.Start
-                ? 0
-                : state.data.length
-            )
-            return
-          }
-          if (typeof index === 'string') {
-            this.setAddBlockIndex(
-              state.data.findIndex((v) => v._id === index) ?? 0
-            )
-            return
-          }
-          if (index !== null) {
-            const event = new CustomEvent(Events.Components, {
-              cancelable: true,
-              detail: {
-                index: index,
-                add: (name: string, extraData?: object) => {
-                  this.insertData(name, index, extraData)
-                  this.setAddBlockIndex(null)
-                },
-              },
+      (set, getState) => {
+        const methods = {
+          setDevice: function(device: Device) {
+            set({ device })
+          },
+          setSidebarWidth: function(width: number) {
+            localStorage.setItem('veSidebarWidth', width.toString())
+            set({
+              sidebarWidth: width,
             })
-            state.rootElement.dispatchEvent(event)
-            if (event.defaultPrevented) {
+          },
+          updateData: function(newData: any, path?: string) {
+            set((state) => ({
+              data: deepSet(state.data, path, newData),
+            }))
+            methods.dispatchEvent(Events.Change)
+          },
+          moveBloc: function(id: string, direction: number) {
+            return set(({ data }) => {
+              const currentIndex = data.findIndex((d) => d._id === id)
+              return {
+                data: moveItem(data, currentIndex, currentIndex + direction),
+              }
+            })
+          },
+          removeBloc: function(id: string) {
+            set(({ data }) => ({
+              previousData: data,
+              data: data.filter((d) => d._id !== id),
+              rollbackMessage: t('deleteItemConfirm'),
+            }))
+            return methods.dispatchEvent(Events.Change)
+          },
+          rollback: function() {
+            set(({ previousData }) => ({
+              previousData: [],
+              rollbackMessage: null,
+              data: previousData,
+            }))
+            methods.dispatchEvent(Events.Change)
+          },
+          voidRollback: function() {
+            return set({
+              rollbackMessage: null,
+              previousData: [],
+            })
+          },
+          insertData: function(name: string, index: number, extraData?: object) {
+            if (!extraData) {
+              extraData = fillDefaults({}, getState().definitions[name]!.fields)
+            }
+            const newData = indexify({
+              ...extraData,
+              _name: name,
+              _id: name + uniqId(),
+            })
+            set((state) => {
+              return {
+                data: insertItem(state.data, index, newData),
+                focusIndex: newData._id,
+              }
+            })
+            methods.dispatchEvent(Events.Change)
+            return newData
+          },
+          dispatchEvent(e: Events) {
+            const state = getState()
+            state.rootElement.dispatchEvent(new CustomEvent(e))
+          },
+          setData: function(newData: Omit<EditorComponentData, '_id'>[]): void {
+            set({
+              data: indexify(newData) as EditorComponentData[],
+              focusIndex: null,
+            })
+            methods.dispatchEvent(Events.Change)
+          },
+          setDataFromOutside: function(newData: Omit<EditorComponentData, '_id'>[]) {
+            set({
+              data: indexify(newData) as EditorComponentData[]
+            })
+          },
+          setFocusIndex: function(id: string) {
+            set({ focusIndex: id })
+          },
+          setAddBlockIndex: function(index?: number | string | null) {
+            const state = getState()
+            if (index === undefined) {
+              methods.setAddBlockIndex(
+                state.insertPosition === InsertPosition.Start
+                  ? 0
+                  : state.data.length,
+              )
               return
             }
-          }
-          set({ addBlockIndex: index })
-        },
-        toggleSidebarMode: function () {
-          set(({ sidebarMode }) => ({
-            sidebarMode:
-              sidebarMode === 'components' ? 'templates' : 'components',
-          }))
-        },
-      })
+            if (typeof index === 'string') {
+              methods.setAddBlockIndex(
+                state.data.findIndex((v) => v._id === index) ?? 0,
+              )
+              return
+            }
+            if (index !== null) {
+              const event = new CustomEvent(Events.Components, {
+                cancelable: true,
+                detail: {
+                  index: index,
+                  add: (name: string, extraData?: object) => {
+                    methods.insertData(name, index, extraData)
+                    methods.setAddBlockIndex(null)
+                  },
+                },
+              })
+              state.rootElement.dispatchEvent(event)
+              if (event.defaultPrevented) {
+                return
+              }
+            }
+            set({ addBlockIndex: index })
+          },
+          toggleSidebarMode: function() {
+            set(({ sidebarMode }) => ({
+              sidebarMode:
+                sidebarMode === 'components' ? 'templates' : 'components',
+            }))
+          },
+        }
+        return methods
+      }
     )
   )
 }
 
-type Store = ReturnType<typeof createStore>
+export type Store = ReturnType<typeof createStore>
 // Extrait le type de la donnée à l'intérieur d'un UseBoundStore<T>
 type StoreState = Store extends {
   getState: () => infer T
@@ -199,6 +211,7 @@ export function StoreProvider({
   templates,
   insertPosition,
   devices,
+  onStore,
 }: {
   children: ReactElement
   data: EditorComponentData[]
@@ -207,7 +220,8 @@ export function StoreProvider({
   hiddenCategories: string[]
   rootElement: HTMLElement
   insertPosition: InsertPosition
-  devices: Device[]
+  devices: Device[],
+  onStore: (s: Store) => void
 }) {
   const store = useMemo(
     () =>
@@ -230,6 +244,7 @@ export function StoreProvider({
       devices,
     ]
   )
+  onStore(store)
   return (
     <StoreContext.Provider value={{ store: store }}>
       {children}
@@ -293,6 +308,15 @@ export function useRollbackMessage() {
   const rollback = useStore((state) => state.rollback)
   const voidRollback = useStore((state) => state.voidRollback)
   return { message, rollback, voidRollback }
+}
+
+export function useGetData(): () => EditorComponentData[] {
+  const context = useContext(StoreContext)
+  return () => context.store?.getState().data ?? []
+}
+
+export function useDataLength(): number {
+  return useStore(state => state.data.length)
 }
 
 export const store = useStore
