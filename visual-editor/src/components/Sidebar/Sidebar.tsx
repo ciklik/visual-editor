@@ -8,7 +8,7 @@ import { SidebarFooter } from 'src/components/Sidebar/SidebarFooter'
 import { SidebarEmpty } from 'src/components/Sidebar/SidebarEmpty'
 import { useCallback, useState } from 'react'
 import { SidebarTemplates } from 'src/components/Sidebar/SidebarTemplates'
-import { useEmit, usePartialStore } from 'src/store'
+import { useDataLength, useEmit, usePartialStore } from 'src/store'
 import { ButtonIcon, IconBlocs, IconPage } from 'src/components/ui'
 import { prevent } from 'src/functions/functions'
 import { t } from 'src/functions/i18n'
@@ -20,11 +20,9 @@ enum States {
 }
 
 export function Sidebar({
-  data,
   onClose,
   ...props
 }: {
-  data: EditorComponentData[]
   onClose: () => void
 }) {
   const [state, setState] = useState(States.BLOCS)
@@ -42,7 +40,8 @@ export function Sidebar({
     })
   }, [])
   const hasTemplates = templates.length > 0
-  const showEmpty = data.length === 0 && hasTemplates
+  const dataLength = useDataLength()
+  const showEmpty = dataLength === 0 && hasTemplates
   const isTemplateMode = state === States.TEMPLATES
 
   return (
@@ -61,7 +60,7 @@ export function Sidebar({
         (showEmpty ? (
           <SidebarEmpty onAction={() => setState(States.TEMPLATES)} />
         ) : (
-          <SidebarBlocs data={data} />
+          <SidebarBlocs />
         ))}
       {state === States.TEMPLATES && (
         <SidebarTemplates onTemplate={() => setState(States.BLOCS)} />

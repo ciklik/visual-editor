@@ -8,17 +8,16 @@ import { PreviewAddButton } from 'src/components/Preview/PreviewAddButton'
  * Gère le rendu dans l'iframe des différents composants
  */
 export function PreviewItems({
-  data,
   initialHTML = {},
   previewUrl,
 }: {
-  data: EditorComponentData[]
   initialHTML: Record<string, string>
   previewUrl: string
 }) {
-  const { definitions, setAddBlockIndex } = usePartialStore(
+  const { definitions, setAddBlockIndex, data} = usePartialStore(
     'setAddBlockIndex',
-    'definitions'
+    'definitions',
+    'data',
   )
 
   return (

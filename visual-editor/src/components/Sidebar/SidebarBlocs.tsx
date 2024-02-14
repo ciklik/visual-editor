@@ -9,10 +9,11 @@ import { usePartialStore } from 'src/store'
 /**
  * Génère la liste des champs dans la sidebar
  */
-export function SidebarBlocs({ data }: { data: EditorComponentData[] }) {
-  const { updateData, definitions } = usePartialStore(
+export function SidebarBlocs() {
+  const { updateData, definitions, data } = usePartialStore(
     'definitions',
-    'updateData'
+    'updateData',
+    'data',
   )
   const handleMove = (from: number, to: number) => {
     updateData(moveItem(data, from, to))
@@ -38,7 +39,7 @@ const Wrapper = styled.div({
   display: 'grid',
   gridTemplateColumns: '1fr',
   flexDirection: 'column',
-  gridGap: '1em',
+  gap: '1em',
   padding: '1em',
   overflow: 'auto',
   scrollbarGutter: 'stable',

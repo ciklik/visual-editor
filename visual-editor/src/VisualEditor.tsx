@@ -9,10 +9,9 @@ import type {
   Translation,
 } from 'src/types'
 import { Layout } from 'src/components/Layout'
-import { StoreProvider, usePartialStore } from 'src/store'
+import { Store, StoreProvider, usePartialStore } from 'src/store'
 import { indexify, stringifyFields } from 'src/functions/object'
 import { useClipboardPaste } from 'src/hooks/useClipboardPaste'
-import { useUpdateEffect } from 'src/hooks/useUpdateEffect'
 import { fillDefaults } from 'src/functions/fields'
 import { useStateDelayed } from 'src/hooks/useStateDelayed'
 import { BaseStyles } from 'src/components/BaseStyles'
@@ -39,12 +38,13 @@ export class VisualEditor {
   static i18n: Translation = EN
   static postMessagePreview: boolean = false
   static devices: Device[]
+
   constructor(
     options: {
       lang?: Translation
       postMessagePreview?: boolean
       devices?: Device[]
-    } = {}
+    } = {},
   ) {
     VisualEditor.i18n = options.lang ?? EN
     VisualEditor.devices = options.devices ?? defaultDevices
@@ -63,36 +63,48 @@ export class VisualEditor {
     // We only declare the class in this function to avoid any problem with SSR
     class VisualEditorElement extends HTMLElement {
       static changeEventName = 'change'
-      private _data: EditorComponentData[] | null = null
-      private _value = ''
+      // React root
       private _root: Root | null = null
+      // Access zustand store used by the VisualEditor
+      private _store: Store | null = null
 
       static get observedAttributes() {
         return ['hidden', 'value']
       }
 
       get value(): string {
-        return this._value
+        return stringifyFields(this.valueAsArray)
       }
 
-      set value(v: string) {
-        if (v === this._value) {
+      get valueAsArray(): EditorComponentData[] {
+        return this._store?.getState().data ?? []
+      }
+
+      set value(v: string | EditorComponentData[] | ((v: EditorComponentData[]) => EditorComponentData[])) {
+        if (!this._store) {
+          console.error('Cannot set value for an unconnected visual editor')
+          return;
+        }
+        const state = this._store.getState()
+        if (typeof v === 'string') {
+          state.setDataFromOutside(this.parseValue(v))
           return
         }
-        this._value = v
-        this._data = null
-        this.render()
+        if (typeof v === 'function') {
+          state.setDataFromOutside(v(state.data))
+          return
+        }
+        state.setDataFromOutside(indexify(v))
       }
 
       connectedCallback() {
-        this._value = this.getAttribute('value') || '[]'
         this.render()
       }
 
       attributeChangedCallback(
         name: string,
         oldValue?: string,
-        newValue?: string
+        newValue?: string,
       ) {
         if (!this._root) {
           return false
@@ -110,27 +122,28 @@ export class VisualEditor {
           return
         }
         this._root.unmount()
+        this._store = null
         this._root = null
       }
 
-      private parseValue(value: string): EditorComponentData[] {
-        if (this._data === null) {
-          try {
-            const json = JSON.parse(value)
-            this._data = indexify(json).map((value: EditorComponentData) => {
-              return fillDefaults(value, components[value._name]?.fields ?? [])
-            })
-          } catch (e) {
-            console.error('Impossible de parser les données', value, e)
-            alert("Impossible de parser les données de l'éditeur visuel")
-            this._data = []
-          }
+      private parseValue(value?: string): EditorComponentData[] {
+        if (!value) {
+          return []
         }
-        return this._data!
+        try {
+          const json = JSON.parse(value)
+          return indexify(json).map((value: EditorComponentData) => {
+            return fillDefaults(value, components[value._name]?.fields ?? [])
+          })
+        } catch (e) {
+          console.error('Impossible de parser les données', value, e)
+          alert('Impossible de parser les données de l\'éditeur visuel')
+          return []
+        }
       }
 
       private render() {
-        const data = this.parseValue(this._value)
+        const data = this.parseValue(this.getAttribute('value')?.toString())
         const hiddenCategories =
           this.getAttribute('hidden-categories')?.split(';') ?? []
 
@@ -150,23 +163,16 @@ export class VisualEditor {
               (this.getAttribute('insertPosition') ??
                 InsertPosition.Start) as InsertPosition
             }
+            onStore={(store) => this._store = store}
           >
             <VisualEditorComponent
               element={this}
-              value={data}
               previewUrl={this.getAttribute('preview') ?? ''}
               iconsUrl={this.getAttribute('iconsUrl') ?? '/'}
               name={this.getAttribute('name') ?? ''}
               visible={this.getAttribute('hidden') === null}
-              onChange={(value: string) => {
-                if (this._value === value) {
-                  return
-                }
-                this._value = value
-                this.dispatchEvent(new CustomEvent(Events.Change))
-              }}
             />
-          </StoreProvider>
+          </StoreProvider>,
         )
       }
     }
@@ -176,54 +182,33 @@ export class VisualEditor {
 }
 
 type VisualEditorProps = {
-  value: EditorComponentData[]
   previewUrl: string
   name: string
   iconsUrl: string
   visible: boolean
   element: Element
-  onChange: (v: string) => void
 }
 
 export function VisualEditorComponent({
-  value,
-  previewUrl,
-  name,
-  element,
-  iconsUrl,
-  visible: visibleProps,
-  onChange,
-}: VisualEditorProps) {
-  const skipNextChange = useRef(true) // Skip emitting a change event on the next update (usefull for external changes)
-  const { data, updateData } = usePartialStore('updateData', 'data')
+                                        previewUrl,
+                                        name,
+                                        element,
+                                        iconsUrl,
+                                        visible: visibleProps,
+                                      }: VisualEditorProps) {
   const visible = useStateDelayed(visibleProps)
   const handleClose = () => {
     element.dispatchEvent(new Event('close'))
   }
-  const doNothing = () => null // React wants handler :(
-  // JSON nettoyé
-  const cleanedData = useMemo(() => stringifyFields(data), [data])
-  // Synchronise l'état du composant avec la prop value
-  useUpdateEffect(() => {
-    skipNextChange.current = true
-    updateData(value)
-  }, [value])
 
   useClipboardPaste(visible)
-  useEffect(() => {
-    if (skipNextChange.current) {
-      skipNextChange.current = false
-    } else {
-      onChange(cleanedData)
-    }
-  }, [cleanedData])
   // We want to avoid bubbling change & close event
   const div = useRef<HTMLDivElement>(null)
   useStopPropagation(div, ['change', 'close'])
 
   if (!visible) {
     return (
-      <textarea hidden name={name} value={cleanedData} onChange={doNothing} />
+      <HiddenTextarea name={name}/>
     )
   }
 
@@ -231,15 +216,22 @@ export function VisualEditorComponent({
     <div ref={div}>
       <BaseStyles>
         <Layout
-          data={data}
           onClose={handleClose}
           previewUrl={previewUrl}
           iconsUrl={iconsUrl}
         />
       </BaseStyles>
-      <textarea hidden name={name} value={cleanedData} onChange={doNothing} />
+      <HiddenTextarea name={name}/>
     </div>
   )
+}
+
+function HiddenTextarea({name}: {name: string}) {
+  const doNothing = () => null // React wants handler :(
+  const { data } = usePartialStore('data')
+  // JSON nettoyé
+  const cleanedData = useMemo(() => stringifyFields(data), [data])
+  return <textarea hidden name={name} value={cleanedData} onChange={doNothing} />
 }
 
 // Exporte les champs

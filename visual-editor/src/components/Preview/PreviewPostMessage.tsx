@@ -37,12 +37,13 @@ export type EditorMessageEvents =
  * Alternative preview component based on postMessage to communicate
  * between the host and the iframe using cross domain
  */
-export function PreviewPostMessage({ data, previewUrl }: PreviewProps) {
+export function PreviewPostMessage({ previewUrl }: PreviewProps) {
   const iframe = useRef<HTMLIFrameElement>(null)
   const [loaded, setLoaded] = useState(false)
   let transform = undefined
-  const { setFocusIndex, setAddBlockIndex, removeBloc, focusIndex, moveBloc } =
+  const { setFocusIndex, setAddBlockIndex, removeBloc, focusIndex, moveBloc, data } =
     usePartialStore(
+      'data',
       'setFocusIndex',
       'setAddBlockIndex',
       'removeBloc',
