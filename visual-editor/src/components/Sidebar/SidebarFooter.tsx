@@ -2,8 +2,12 @@ import { Button, Flex, IconSave } from 'src/components/ui'
 
 import styled from '@emotion/styled'
 import { t } from 'src/functions/i18n'
+import { usePartialStore } from 'src/store'
+import { ActionButton } from 'src/components/Sidebar/Actions/ActionButton'
 
 export function SidebarFooter() {
+  const { actions } = usePartialStore('actions')
+
   return (
     <Wrapper between>
       <Mention>
@@ -12,9 +16,16 @@ export function SidebarFooter() {
           <Logo src="https://static.ciklik.co/logo.svg" alt="Logo Boxraiser" />
         </a>
       </Mention>
-      <Button type="submit" icon={IconSave}>
-        {t('save')}
-      </Button>
+      <Flex>
+        {actions
+          .filter((a) => a.position === 'footer')
+          .map((a, k) => (
+            <ActionButton {...a} key={k} />
+          ))}
+        <Button type="submit" icon={IconSave}>
+          {t('save')}
+        </Button>
+      </Flex>
     </Wrapper>
   )
 }

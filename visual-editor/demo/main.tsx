@@ -27,6 +27,11 @@ import {
 let editor = new VisualEditor({
   lang: EN,
   postMessagePreview: false,
+  devices: [
+    { name: 'Mobile', width: 390, height: 820, icon: 'mobile' },
+    { name: 'Tablet', width: 1180, height: 820, icon: 'tablet' },
+    { name: 'Desktop', width: '100%', height: '100%', icon: 'desktop' },
+  ],
 })
 
 editor.registerComponent('hero', {

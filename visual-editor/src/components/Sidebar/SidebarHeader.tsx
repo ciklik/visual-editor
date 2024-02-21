@@ -12,13 +12,17 @@ import { CopyAction } from './Actions/CopyAction'
 import styled from '@emotion/styled'
 import { t } from 'src/functions/i18n'
 import { PropsWithChildren } from 'react'
+import { ActionButton } from 'src/components/Sidebar/Actions/ActionButton'
 
 type SidebarHeaderProps = PropsWithChildren<{
   onClose: () => void
 }>
 
 export function SidebarHeader({ onClose, children }: SidebarHeaderProps) {
-  const { setAddBlockIndex } = usePartialStore('setAddBlockIndex')
+  const { setAddBlockIndex, actions } = usePartialStore(
+    'setAddBlockIndex',
+    'actions'
+  )
 
   return (
     <Wrapper between>
@@ -28,6 +32,11 @@ export function SidebarHeader({ onClose, children }: SidebarHeaderProps) {
         </ButtonIcon>
       </div>
       <Flex>
+        {actions
+          .filter((a) => a.position === 'header')
+          .map((a, k) => (
+            <ActionButton {...a} key={k} />
+          ))}
         {children}
         <CopyAction size={20} />
         <Button

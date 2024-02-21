@@ -1,5 +1,6 @@
 import { create, useStore as useZustandStore } from 'zustand'
 import {
+  Action,
   Device,
   EditorComponentData,
   EditorComponentDefinitions,
@@ -35,7 +36,8 @@ const createStore = (
   rootElement: HTMLElement,
   templates: EditorComponentTemplate[],
   insertPosition: InsertPosition,
-  devices: Device[]
+  devices: Device[],
+  actions: Action[]
 ) => {
   return create(
     combine(
@@ -46,6 +48,7 @@ const createStore = (
         rootElement,
         templates,
         insertPosition,
+        actions,
         device: devices[devices.length - 1]!,
         devices: devices,
         previousData: data,
@@ -63,22 +66,22 @@ const createStore = (
       },
       (set, getState) => {
         const methods = {
-          setDevice: function(device: Device) {
+          setDevice: function (device: Device) {
             set({ device })
           },
-          setSidebarWidth: function(width: number) {
+          setSidebarWidth: function (width: number) {
             localStorage.setItem('veSidebarWidth', width.toString())
             set({
               sidebarWidth: width,
             })
           },
-          updateData: function(newData: any, path?: string) {
+          updateData: function (newData: any, path?: string) {
             set((state) => ({
               data: deepSet(state.data, path, newData),
             }))
             methods.dispatchEvent(Events.Change)
           },
-          moveBloc: function(id: string, direction: number) {
+          moveBloc: function (id: string, direction: number) {
             return set(({ data }) => {
               const currentIndex = data.findIndex((d) => d._id === id)
               return {
@@ -86,7 +89,7 @@ const createStore = (
               }
             })
           },
-          removeBloc: function(id: string) {
+          removeBloc: function (id: string) {
             set(({ data }) => ({
               previousData: data,
               data: data.filter((d) => d._id !== id),
@@ -94,7 +97,7 @@ const createStore = (
             }))
             return methods.dispatchEvent(Events.Change)
           },
-          rollback: function() {
+          rollback: function () {
             set(({ previousData }) => ({
               previousData: [],
               rollbackMessage: null,
@@ -102,13 +105,17 @@ const createStore = (
             }))
             methods.dispatchEvent(Events.Change)
           },
-          voidRollback: function() {
+          voidRollback: function () {
             return set({
               rollbackMessage: null,
               previousData: [],
             })
           },
-          insertData: function(name: string, index: number, extraData?: object) {
+          insertData: function (
+            name: string,
+            index: number,
+            extraData?: object
+          ) {
             if (!extraData) {
               extraData = fillDefaults({}, getState().definitions[name]!.fields)
             }
@@ -130,34 +137,38 @@ const createStore = (
             const state = getState()
             state.rootElement.dispatchEvent(new CustomEvent(e))
           },
-          setData: function(newData: Omit<EditorComponentData, '_id'>[]): void {
+          setData: function (
+            newData: Omit<EditorComponentData, '_id'>[]
+          ): void {
             set({
               data: indexify(newData) as EditorComponentData[],
               focusIndex: null,
             })
             methods.dispatchEvent(Events.Change)
           },
-          setDataFromOutside: function(newData: Omit<EditorComponentData, '_id'>[]) {
+          setDataFromOutside: function (
+            newData: Omit<EditorComponentData, '_id'>[]
+          ) {
             set({
-              data: indexify(newData) as EditorComponentData[]
+              data: indexify(newData) as EditorComponentData[],
             })
           },
-          setFocusIndex: function(id: string) {
+          setFocusIndex: function (id: string) {
             set({ focusIndex: id })
           },
-          setAddBlockIndex: function(index?: number | string | null) {
+          setAddBlockIndex: function (index?: number | string | null) {
             const state = getState()
             if (index === undefined) {
               methods.setAddBlockIndex(
                 state.insertPosition === InsertPosition.Start
                   ? 0
-                  : state.data.length,
+                  : state.data.length
               )
               return
             }
             if (typeof index === 'string') {
               methods.setAddBlockIndex(
-                state.data.findIndex((v) => v._id === index) ?? 0,
+                state.data.findIndex((v) => v._id === index) ?? 0
               )
               return
             }
@@ -179,7 +190,7 @@ const createStore = (
             }
             set({ addBlockIndex: index })
           },
-          toggleSidebarMode: function() {
+          toggleSidebarMode: function () {
             set(({ sidebarMode }) => ({
               sidebarMode:
                 sidebarMode === 'components' ? 'templates' : 'components',
@@ -212,6 +223,7 @@ export function StoreProvider({
   insertPosition,
   devices,
   onStore,
+  actions,
 }: {
   children: ReactElement
   data: EditorComponentData[]
@@ -220,7 +232,8 @@ export function StoreProvider({
   hiddenCategories: string[]
   rootElement: HTMLElement
   insertPosition: InsertPosition
-  devices: Device[],
+  devices: Device[]
+  actions: Action[]
   onStore: (s: Store) => void
 }) {
   const store = useMemo(
@@ -232,7 +245,8 @@ export function StoreProvider({
         rootElement,
         templates,
         insertPosition,
-        devices
+        devices,
+        actions
       ),
     [
       data,
@@ -316,7 +330,7 @@ export function useGetData(): () => EditorComponentData[] {
 }
 
 export function useDataLength(): number {
-  return useStore(state => state.data.length)
+  return useStore((state) => state.data.length)
 }
 
 export const store = useStore
