@@ -19,6 +19,17 @@ import { BaseStyles } from 'src/components/BaseStyles'
 import { Translations as EN } from 'src/langs/en'
 import { useStopPropagation } from 'src/hooks/useStopPropagation'
 import { InsertPosition } from 'src/enum'
+import {
+  Button,
+  ButtonIcon,
+  Card,
+  Flex,
+  Input,
+  Field as FieldUI,
+  Modal,
+  Spinner,
+  Label,
+} from 'src/components/ui'
 
 const components: EditorComponentDefinitions = {}
 const templates: EditorComponentTemplate[] = []
@@ -243,6 +254,18 @@ function HiddenTextarea({ name }: { name: string }) {
   return (
     <textarea hidden name={name} value={cleanedData} onChange={doNothing} />
   )
+}
+
+export const UI = {
+  Button: Button,
+  ButtonIcon: ButtonIcon,
+  Flex: Flex,
+  Card: Card,
+  Input: Input,
+  Field: FieldUI,
+  Modal: Modal,
+  Spinner: Spinner,
+  Label: Label,
 }
 
 // Exporte les champs
