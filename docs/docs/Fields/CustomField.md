@@ -77,3 +77,17 @@ export const Number = defineField({
 ```
 
 You can check how [it is used internally](https://github.com/ciklik/visual-editor/tree/main/visual-editor/src/fields)
+
+## UIKit
+
+The library exposes an object `UI` with some components used internally. You can use these components to keep a coherent design. 
+
+```jsx
+import { Field, defineField, React, UI } from '@boxraiser/visual-editor'
+
+const Component = ({ value, onChange, options }) => {
+  return <div>
+      <UI.Input value={value} onChange={(e) => onChange(e.target.value)} />
+  </div>
+}
+```
