@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import type {
+  Action,
   Device,
   EditorComponentData,
   EditorComponentDefinition,
@@ -18,10 +19,10 @@ import { BaseStyles } from 'src/components/BaseStyles'
 import { Translations as EN } from 'src/langs/en'
 import { useStopPropagation } from 'src/hooks/useStopPropagation'
 import { InsertPosition } from 'src/enum'
-import { Events } from 'src/constants'
 
 const components: EditorComponentDefinitions = {}
 const templates: EditorComponentTemplate[] = []
+const actions: Action[] = []
 const defaultDevices: Device[] = [
   { name: 'Mobile', width: 390, height: '100%', icon: 'mobile' },
   { name: 'Desktop', width: '100%', height: '100%', icon: 'desktop' },
@@ -44,7 +45,7 @@ export class VisualEditor {
       lang?: Translation
       postMessagePreview?: boolean
       devices?: Device[]
-    } = {},
+    } = {}
   ) {
     VisualEditor.i18n = options.lang ?? EN
     VisualEditor.devices = options.devices ?? defaultDevices
@@ -57,6 +58,10 @@ export class VisualEditor {
 
   registerTemplate(template: EditorComponentTemplate) {
     templates.push(template)
+  }
+
+  registerButton(action: Action) {
+    actions.push(action)
   }
 
   defineElement(elementName: string = 'visual-editor') {
@@ -80,10 +85,15 @@ export class VisualEditor {
         return this._store?.getState().data ?? []
       }
 
-      set value(v: string | EditorComponentData[] | ((v: EditorComponentData[]) => EditorComponentData[])) {
+      set value(
+        v:
+          | string
+          | EditorComponentData[]
+          | ((v: EditorComponentData[]) => EditorComponentData[])
+      ) {
         if (!this._store) {
           console.error('Cannot set value for an unconnected visual editor')
-          return;
+          return
         }
         const state = this._store.getState()
         if (typeof v === 'string') {
@@ -104,7 +114,7 @@ export class VisualEditor {
       attributeChangedCallback(
         name: string,
         oldValue?: string,
-        newValue?: string,
+        newValue?: string
       ) {
         if (!this._root) {
           return false
@@ -137,7 +147,7 @@ export class VisualEditor {
           })
         } catch (e) {
           console.error('Impossible de parser les données', value, e)
-          alert('Impossible de parser les données de l\'éditeur visuel')
+          alert("Impossible de parser les données de l'éditeur visuel")
           return []
         }
       }
@@ -155,6 +165,7 @@ export class VisualEditor {
           <StoreProvider
             data={data}
             definitions={components}
+            actions={actions}
             templates={templates}
             hiddenCategories={hiddenCategories}
             rootElement={this}
@@ -163,7 +174,7 @@ export class VisualEditor {
               (this.getAttribute('insertPosition') ??
                 InsertPosition.Start) as InsertPosition
             }
-            onStore={(store) => this._store = store}
+            onStore={(store) => (this._store = store)}
           >
             <VisualEditorComponent
               element={this}
@@ -172,7 +183,7 @@ export class VisualEditor {
               name={this.getAttribute('name') ?? ''}
               visible={this.getAttribute('hidden') === null}
             />
-          </StoreProvider>,
+          </StoreProvider>
         )
       }
     }
@@ -190,12 +201,12 @@ type VisualEditorProps = {
 }
 
 export function VisualEditorComponent({
-                                        previewUrl,
-                                        name,
-                                        element,
-                                        iconsUrl,
-                                        visible: visibleProps,
-                                      }: VisualEditorProps) {
+  previewUrl,
+  name,
+  element,
+  iconsUrl,
+  visible: visibleProps,
+}: VisualEditorProps) {
   const visible = useStateDelayed(visibleProps)
   const handleClose = () => {
     element.dispatchEvent(new Event('close'))
@@ -207,9 +218,7 @@ export function VisualEditorComponent({
   useStopPropagation(div, ['change', 'close'])
 
   if (!visible) {
-    return (
-      <HiddenTextarea name={name}/>
-    )
+    return <HiddenTextarea name={name} />
   }
 
   return (
@@ -221,17 +230,19 @@ export function VisualEditorComponent({
           iconsUrl={iconsUrl}
         />
       </BaseStyles>
-      <HiddenTextarea name={name}/>
+      <HiddenTextarea name={name} />
     </div>
   )
 }
 
-function HiddenTextarea({name}: {name: string}) {
+function HiddenTextarea({ name }: { name: string }) {
   const doNothing = () => null // React wants handler :(
   const { data } = usePartialStore('data')
   // JSON nettoyé
   const cleanedData = useMemo(() => stringifyFields(data), [data])
-  return <textarea hidden name={name} value={cleanedData} onChange={doNothing} />
+  return (
+    <textarea hidden name={name} value={cleanedData} onChange={doNothing} />
+  )
 }
 
 // Exporte les champs
