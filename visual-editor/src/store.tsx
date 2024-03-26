@@ -90,6 +90,12 @@ const createStore = (
             })
           },
           removeBloc: function (id: string) {
+            const event = methods.dispatchEvent(Events.RemoveItem, {
+              cancelable: true,
+            })
+            if (event.defaultPrevented) {
+              return
+            }
             set(({ data }) => ({
               previousData: data,
               data: data.filter((d) => d._id !== id),
@@ -133,9 +139,11 @@ const createStore = (
             methods.dispatchEvent(Events.Change)
             return newData
           },
-          dispatchEvent(e: Events) {
+          dispatchEvent(e: Events, o?: CustomEventInit) {
             const state = getState()
-            state.rootElement.dispatchEvent(new CustomEvent(e))
+            const event = new CustomEvent(e, o)
+            state.rootElement.dispatchEvent(event)
+            return event
           },
           setData: function (
             newData: Omit<EditorComponentData, '_id'>[]

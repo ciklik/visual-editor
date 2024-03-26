@@ -7,4 +7,6 @@ export enum Events {
   Components = 'components',
   // Value has changed
   Change = 'change',
+  // Bloc removed
+  RemoveItem = 'removeitem',
 }
