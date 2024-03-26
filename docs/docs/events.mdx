@@ -1,0 +1,13 @@
+---
+sidebar_position: 7
+---
+
+# Events
+
+If you need to create custom behaviour you can listen for some events on the editor
+
+| **Event** | **Description** | **Methods** |
+|-----------|-----------------|-------------|
+| `change` | Fires when the value of the editor is changed by the user | `{}` |
+| `templates`  | Fires when the user click on the template button | - **preventDefault** |
+| `components`  | Fires when the user click on the add component button | - **preventDefault** : `() => void`<br/>- **detail.add** : `(name: string, data?: object) => void` |

@@ -1,9 +1,9 @@
-import { useInsertData } from 'src/store'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { indexify } from 'src/functions/object'
+import { usePartialStore } from 'src/store'
 
 export function useClipboardPaste(enabled: boolean) {
-  const insertData = useInsertData()
+  const { insertData } = usePartialStore('insertData')
   useEffect(() => {
     if (!enabled) {
       return

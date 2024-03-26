@@ -1,10 +1,8 @@
 import { createRoot } from 'react-dom/client'
-import { PreviewItemTitle, PreviewItemWrapper } from 'src/components/Preview/PreviewItem'
-import { PreviewAddFloating } from 'src/components/Preview/PreviewAddFloating'
-import React, { SyntheticEvent } from 'react'
 import { Reset } from 'src/components/BaseStyles'
 import { EditorMessageEvents } from 'src/components/Preview/PreviewPostMessage'
 import { isClientSide } from 'src/functions/browser'
+import { PreviewItemWrapper } from 'src/components/Preview/PreviewItemWrapper'
 
 /**
  * Custom element usable within an iframe to get editor capabilities
@@ -22,44 +20,71 @@ import { isClientSide } from 'src/functions/browser'
  *   </div>
  * ```
  */
-export class PreviewWrapper extends (isClientSide() ? HTMLElement : class {} as typeof HTMLElement) {
-
+export class PreviewWrapper extends (isClientSide()
+  ? HTMLElement
+  : (class {} as typeof HTMLElement)) {
   isFocused = false
   root: ReturnType<typeof createRoot> | undefined
 
   referrer = () => {
-    return new URL(document.location.toString()).searchParams.get('referrer') ?? ''
+    return (
+      new URL(document.location.toString()).searchParams.get('referrer') ?? ''
+    )
   }
 
   onWrapperClick = () => {
-    window.parent.postMessage({ type: 've-focus', payload: { id: this.dataset.id, parent: true } }, this.referrer())
+    window.parent.postMessage(
+      { type: 've-focus', payload: { id: this.dataset.id, parent: true } },
+      this.referrer()
+    )
   }
 
-  onAddClick = (e: SyntheticEvent) => {
-    e.stopPropagation()
-    e.preventDefault()
-    window.parent.postMessage({ type: 've-add', payload: { id: this.dataset.id } }, this.referrer())
+  handleAdd = () => {
+    window.parent.postMessage(
+      { type: 've-add', payload: { id: this.dataset.id } },
+      this.referrer()
+    )
   }
 
-  render () {
+  handleDelete = () => {
+    window.parent.postMessage(
+      { type: 've-remove', payload: { id: this.dataset.id } },
+      this.referrer()
+    )
+  }
+
+  handleMove = (direction: number) => {
+    window.parent.postMessage(
+      {
+        type: 've-move',
+        payload: { id: this.dataset.id, direction: direction },
+      },
+      this.referrer()
+    )
+  }
+
+  render() {
     if (!this.root) {
       return
     }
-    this.root.render(<Reset complete={false}>
-      <PreviewAddFloating onClick={this.onAddClick} style={{ position: 'absolute', top: 0, left: 0, right: 0 }} />
-      <PreviewItemWrapper
-        isFocused={this.isFocused}
-        style={{ position: 'absolute', inset: 0 }}
-        onClick={this.onWrapperClick}
-      >
-        {this.dataset.name && <PreviewItemTitle isFocused={this.isFocused}>{this.dataset.name}</PreviewItemTitle>}
-      </PreviewItemWrapper>
-    </Reset>)
+    this.root.render(
+      <Reset complete={false}>
+        <PreviewItemWrapper
+          title={this.dataset.name}
+          onDelete={this.handleDelete}
+          onAdd={this.handleAdd}
+          isFocused={this.isFocused}
+          style={{ position: 'absolute', inset: 0 }}
+          onClick={this.onWrapperClick}
+          onMove={this.handleMove}
+        />
+      </Reset>
+    )
   }
 
   onFocusChange = (e: MessageEvent<EditorMessageEvents>) => {
     if (e.data.type === 've-focus') {
-      const isFocused = e.data.payload.id === this.dataset.id;
+      const isFocused = e.data.payload.id === this.dataset.id
       if (isFocused !== this.isFocused) {
         this.isFocused = e.data.payload.id === this.dataset.id
         this.render()
@@ -67,7 +92,7 @@ export class PreviewWrapper extends (isClientSide() ? HTMLElement : class {} as 
     }
   }
 
-  connectedCallback () {
+  connectedCallback() {
     this.style.setProperty('position', 'relative')
     this.style.setProperty('display', 'block')
 
@@ -81,9 +106,7 @@ export class PreviewWrapper extends (isClientSide() ? HTMLElement : class {} as 
     this.render()
   }
 
-  disconnectedCallback () {
+  disconnectedCallback() {
     window.removeEventListener('message', this.onFocusChange)
   }
-
 }
-

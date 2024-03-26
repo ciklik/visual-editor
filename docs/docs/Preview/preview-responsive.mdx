@@ -1,0 +1,23 @@
+---
+sidebar_position: 3
+---
+
+# Responsive
+
+You can customize the breakpoints used for the preview when initializing the VisualEditor.
+
+```js
+const editor = new VisualEditor({
+    // ...
+    devices: [
+        { name: 'Mobile', width: 390, height: '100%', icon: 'mobile' },
+        { name: 'Tablet', width: 1180, height: 820, icon: 'tablet' },
+        { name: 'Desktop', width: '100%', height: '100%', icon: 'desktop' }
+    ]
+})
+```
+
+If the preview size exceeds the viewport, the iframe will be scaled automatically to fit the screen.
+
+- `width` and `height` can be a number of `"100%"`
+- `icon` can be `tablet`, `mobile` or `desktop`

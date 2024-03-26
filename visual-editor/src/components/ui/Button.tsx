@@ -22,6 +22,7 @@ export function Button({
         size === 'small' && Small,
         outline && Outline,
       ]}
+      type="button"
       {...props}
     >
       {IconElement && <IconElement size={20} />}
