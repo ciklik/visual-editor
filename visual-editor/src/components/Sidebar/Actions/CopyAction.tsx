@@ -27,7 +27,7 @@ export function CopyAction({ data, size, ...props }: CopyActionProps) {
       alert(e)
     }
   }
-  const tooltipLabel =  data ? t('copyComponent') : t('copyPage')
+  const tooltipLabel = data ? t('copyComponent') : t('copyPage')
 
   useEffect(() => {
     clearTimeout(timer.current)
@@ -48,7 +48,7 @@ export function CopyAction({ data, size, ...props }: CopyActionProps) {
       }
       trigger="focus"
     >
-      <div>
+      <div className="ve-copy-code">
         <ButtonIcon onClick={prevent(handleCopy)} success={success} {...props}>
           {success ? <IconCheck size={size} /> : <IconCode size={size} />}
         </ButtonIcon>
