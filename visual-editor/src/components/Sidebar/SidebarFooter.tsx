@@ -10,7 +10,7 @@ export function SidebarFooter() {
 
   return (
     <Wrapper between>
-      <Mention>
+      <Mention className="ve-footer-mention">
         {t('poweredBy')} <br />
         <a href="https://ciklik.com" target="_blank">
           <Logo src="https://static.ciklik.co/logo.svg" alt="Logo Boxraiser" />
