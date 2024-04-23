@@ -90,18 +90,24 @@ const createStore = (
             })
           },
           removeBloc: function (id: string) {
+            const confirm = () => {
+              set(({ data }) => ({
+                previousData: data,
+                data: data.filter((d) => d._id !== id),
+                rollbackMessage: t('deleteItemConfirm'),
+              }))
+              methods.dispatchEvent(Events.Change)
+            }
             const event = methods.dispatchEvent(Events.RemoveItem, {
               cancelable: true,
+              detail: {
+                confirm,
+              },
             })
             if (event.defaultPrevented) {
               return
             }
-            set(({ data }) => ({
-              previousData: data,
-              data: data.filter((d) => d._id !== id),
-              rollbackMessage: t('deleteItemConfirm'),
-            }))
-            return methods.dispatchEvent(Events.Change)
+            confirm()
           },
           rollback: function () {
             set(({ previousData }) => ({
