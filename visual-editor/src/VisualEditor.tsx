@@ -103,7 +103,14 @@ export class VisualEditor {
           | ((v: EditorComponentData[]) => EditorComponentData[])
       ) {
         if (!this._store) {
-          console.error('Cannot set value for an unconnected visual editor')
+          if (!v) {
+            this.removeAttribute('value')
+          } else {
+            this.setAttribute(
+              'value',
+              typeof v === 'string' ? v : JSON.stringify(v)
+            )
+          }
           return
         }
         const state = this._store.getState()
