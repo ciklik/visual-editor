@@ -1,6 +1,6 @@
 import { memo, useMemo, useRef } from 'react'
 import { EditorComponentData, EditorComponentDefinition } from 'src/types'
-import { useFieldFocused, useRemoveBloc, useSetFocusIndex } from 'src/store'
+import { useFieldFocused, usePartialStore } from 'src/store'
 import { useToggle } from 'src/hooks/useToggle'
 import { useUpdateEffect } from 'src/hooks/useUpdateEffect'
 import { strToDom } from 'src/functions/dom'
@@ -26,9 +26,11 @@ export const SidebarBloc = memo(function SidebarItem({
 }: SidebarBlocProps) {
   const ref = useRef<HTMLDivElement>(null)
   const isFocused = useFieldFocused(data._id)
-  const [isCollapsed, toggleCollapsed, setCollapsed] = useToggle(!isFocused)
-  const removeBloc = useRemoveBloc()
-  const setFocusIndex = useSetFocusIndex()
+  const [isCollapsed, toggleCollapsed, setCollapsed] = useToggle(false)
+  const { removeBloc, setFocusIndex } = usePartialStore(
+    'removeBloc',
+    'setFocusIndex'
+  )
   const label =
     definition?.label && data[definition.label] ? data[definition.label] : null
 
@@ -52,7 +54,7 @@ export const SidebarBloc = memo(function SidebarItem({
   )
 
   const handleRemove = () => {
-    removeBloc(data)
+    removeBloc(data._id)
   }
 
   const focusBloc = () => {
@@ -61,7 +63,6 @@ export const SidebarBloc = memo(function SidebarItem({
     }
     toggleCollapsed()
   }
-
   if (!definition) {
     return <SidebarBlocMissing data={data} />
   }

@@ -15,7 +15,6 @@ import {
 } from './TiptapIcons'
 import { Flex } from 'src/components/ui'
 import {
-  ComponentProps,
   FormEventHandler,
   FunctionComponent,
   KeyboardEventHandler,
@@ -26,7 +25,7 @@ import {
 import { TiptapToolbarAlign } from 'src/components/Editor/TiptapEditor/TiptapToolbarAlign'
 import { TiptapToolbarHeadings } from 'src/components/Editor/TiptapEditor/TiptapToolbarHeadings'
 import { TiptapColorPicker } from 'src/components/Editor/TiptapEditor/TiptapColorPicker'
-import { useRootElement } from 'src/store'
+import { usePartialStore } from 'src/store'
 
 type TiptapToolbarProps = {
   editor: Editor
@@ -49,7 +48,7 @@ export function TiptapToolbar({ editor, colors }: TiptapToolbarProps) {
   }
   let rootElement: HTMLElement | null = null
   try {
-    rootElement = useRootElement()
+    rootElement = usePartialStore('rootElement').rootElement
   } catch (e) {
     // Zustand is not available, keep rootElement to null
   }

@@ -74,6 +74,9 @@
   <button class="button" data-target="editor2">
     Instance #2
   </button>
+  <button class="button" id="postmessagepreview">
+    PostMessagePreview : <span>off</span>
+  </button>
 </div>
 <div class='flex'>
   <div id='editor'></div>
@@ -96,10 +99,13 @@
   value="[]"
 ></visual-editor>
 </form>
-<script type="module" src="/src/demo.tsx"></script>
+<script type="module" src="/demo/main.tsx"></script>
 <script>
   const toggleEditor = (event) => {
     const editor = document.getElementById(event.target.dataset.target)
+    if (!editor) {
+      return;
+    }
     if (editor.getAttribute('hidden') !== null) {
       editor.removeAttribute('hidden')
     } else {
@@ -128,25 +134,26 @@
     }
   ]))
 
-  // Set the first editor value
-
-
   // Toggle the editor
-  document.querySelectorAll('.button').forEach((button) => {
+  document.querySelectorAll('.button[data-target]').forEach((button) => {
     button.addEventListener('click', toggleEditor)
     const editor = document.getElementById(button.dataset.target)
-    editor.addEventListener('change', (e) =>
-      console.log(`change #${button.dataset.target} : `, e)
-    )
+    const eventNames = ['change', 'templates', 'components']
+    for (const eventName of eventNames) {
+      editor.addEventListener(eventName, (e) => {
+        console.log(`Event:${eventName}#${button.dataset.target}`, e);
+      })
+    }
     editor.addEventListener('close', (e) => {
       editor.setAttribute('hidden', 'hidden')
     })
   })
 
-  // Test how the field handle being updated
+  // Test how the field handle being synced (behaviour used by front-end framework)
   document.querySelector('#editor1').addEventListener('change', (e) => {
-    localStorage.setItem('editor1value', e.detail)
-    e.target.setAttribute('value', e.detail);
+    localStorage.setItem('editor1value', e.target.value)
+    console.log(e.target.valueAsArray)
+    e.target.value = e.target.valueAsArray
   })
 </script>
 </body>

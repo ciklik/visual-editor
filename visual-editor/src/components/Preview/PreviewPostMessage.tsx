@@ -1,54 +1,73 @@
 import type { PreviewProps } from 'src/components/Preview/Preview'
+import { StyledIframe } from 'src/components/Preview/Preview'
 import { useEffect, useRef, useState } from 'react'
-import { PreviewWrapper, StyledIframe } from 'src/components/Preview/Preview'
-import { PreviewModes, useFocusIndex, usePreviewMode, useSetBlockIndex, useSetFocusIndex } from 'src/store'
-import { useWindowSize } from 'react-use'
-import { PHONE_HEIGHT } from 'src/constants'
-import { EditorComponentData } from 'src/types'
+import { usePartialStore } from 'src/store'
+import { type EditorComponentData } from 'src/types'
+import { PreviewWrapper } from 'src/components/Preview/PreviewWrapper'
 
-type IframeEvents = {
-  type: 've-focus',
-  payload: {id: string}
-} | {
-  type: 've-add',
-  payload: {id: string}
-}
+type IframeEvents =
+  | {
+      type: 've-focus'
+      payload: { id: string }
+    }
+  | {
+      type: 've-add'
+      payload: { id: string }
+    }
+  | {
+      type: 've-remove'
+      payload: { id: string }
+    }
+  | {
+      type: 've-move'
+      payload: { id: string; direction: number }
+    }
 
-export type EditorMessageEvents = {
-  type: 've-focus',
-  payload: {id: string}
-} | {
-  type: 've-data',
-  payload: EditorComponentData[]
-}
+export type EditorMessageEvents =
+  | {
+      type: 've-focus'
+      payload: { id: string }
+    }
+  | {
+      type: 've-data'
+      payload: EditorComponentData[]
+    }
 
 /**
- * Alternative preview component based on postMessage to communicate using
- * cross domain
+ * Alternative preview component based on postMessage to communicate
+ * between the host and the iframe using cross domain
  */
-export function PreviewPostMessage ({ data, previewUrl }: PreviewProps) {
+export function PreviewPostMessage({ previewUrl }: PreviewProps) {
   const iframe = useRef<HTMLIFrameElement>(null)
   const [loaded, setLoaded] = useState(false)
-  const previewMode = usePreviewMode()
-  const { height: windowHeight } = useWindowSize()
   let transform = undefined
-  const setFocusIndex = useSetFocusIndex()
-  const setAddBlockIndex = useSetBlockIndex()
-  const focusIndex = useFocusIndex()
+  const { setFocusIndex, setAddBlockIndex, removeBloc, focusIndex, moveBloc, data } =
+    usePartialStore(
+      'data',
+      'setFocusIndex',
+      'setAddBlockIndex',
+      'removeBloc',
+      'focusIndex',
+      'moveBloc'
+    )
   const previewUrlRef = useRef(previewUrl)
   previewUrlRef.current = previewUrl
 
-  if (previewMode === PreviewModes.PHONE && windowHeight < 844) {
-    transform = { transform: `scale(${windowHeight / PHONE_HEIGHT})` }
-  }
-
   useEffect(() => {
     const listener = (e: MessageEvent<IframeEvents>) => {
-      if (e.data.type === 've-focus') {
-        setFocusIndex(e.data.payload.id)
-      } else if (e.data.type === 've-add') {
-        console.log({id: e.data.payload.id})
-        setAddBlockIndex(e.data.payload.id)
+      switch (e.data.type) {
+        case 've-focus':
+          setFocusIndex(e.data.payload.id)
+          break
+        case 've-add':
+          setAddBlockIndex(e.data.payload.id)
+          break
+        case 've-remove':
+          removeBloc(e.data.payload.id)
+          break
+        case 've-move':
+          moveBloc(e.data.payload.id, e.data.payload.direction)
+          break
       }
     }
     window.addEventListener('message', listener)
@@ -59,33 +78,43 @@ export function PreviewPostMessage ({ data, previewUrl }: PreviewProps) {
 
   useEffect(() => {
     if (loaded && iframe.current && iframe.current.contentWindow) {
-      iframe.current.contentWindow.postMessage({
-        type: 've-data',
-        payload: data
-      }, previewUrlRef.current)
+      iframe.current.contentWindow.postMessage(
+        {
+          type: 've-data',
+          payload: data,
+        },
+        previewUrlRef.current
+      )
     }
   }, [loaded, data])
 
   useEffect(() => {
     if (iframe.current && iframe.current.contentWindow) {
-      iframe.current.contentWindow.postMessage({
-        type: 've-focus',
-        payload: {id: focusIndex}
-      }, previewUrlRef.current)
+      iframe.current.contentWindow.postMessage(
+        {
+          type: 've-focus',
+          payload: { id: focusIndex },
+        },
+        previewUrlRef.current
+      )
     }
   }, [focusIndex])
 
   const previewURLWithReferrer = new URL(previewUrl)
-  previewURLWithReferrer.searchParams.set('referrer', window.location.toString())
+  previewURLWithReferrer.searchParams.set(
+    'referrer',
+    window.location.toString()
+  )
 
-  return <PreviewWrapper>
-    <StyledIframe
-      ref={iframe}
-      src={previewURLWithReferrer.toString()}
-      loaded={loaded}
-      mobile={previewMode === PreviewModes.PHONE}
-      style={transform}
-      onLoad={() => setLoaded(true)}
-    />
-  </PreviewWrapper>
+  return (
+    <PreviewWrapper>
+      <StyledIframe
+        ref={iframe}
+        src={previewURLWithReferrer.toString()}
+        loaded={loaded}
+        style={transform}
+        onLoad={() => setLoaded(true)}
+      />
+    </PreviewWrapper>
+  )
 }

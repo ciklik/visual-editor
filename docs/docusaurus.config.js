@@ -8,12 +8,12 @@ const darkCodeTheme = themes.dracula;
 const config = {
   title: "Visual Editor",
   tagline: "Edit your page block by block",
-  url: "https://boxraiser.github.io",
+  url: "https://ciklik.github.io",
   baseUrl: "/visual-editor/",
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
-  organizationName: "BoxRaiser", // Usually your GitHub org/user name.
+  organizationName: "Ciklik", // Usually your GitHub org/user name.
   projectName: "visual-editor", // Usually your repo name.
   presets: [
     [
@@ -23,7 +23,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
-          editUrl: "https://github.com/boxraiser/visual-editor/tree/main/docs/",
+          editUrl: "https://github.com/ciklik/visual-editor/tree/main/docs/",
         },
         blog: false,
         theme: {
@@ -50,7 +50,7 @@ const config = {
             label: "Pricing",
           },
           {
-            href: "https://github.com/boxraiser/visual-editor",
+            href: "https://github.com/ciklik/visual-editor",
             label: "GitHub",
             position: "right",
           },
@@ -73,12 +73,12 @@ const config = {
             items: [
               {
                 label: "Github",
-                href: "https://github.com/boxraiser/visual-editor",
+                href: "https://github.com/ciklik/visual-editor",
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} <a href="https://www.boxraiser.com" target="_blank">Boxraiser</a>. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} <a href="https://www.ciklik.com" target="_blank">Boxraiser</a>. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
