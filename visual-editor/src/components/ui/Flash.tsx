@@ -1,20 +1,20 @@
-import type {
-  EventHandler,
-  MouseEventHandler,
-  PropsWithChildren,
-  ReactNode,
+import {
+  type MouseEventHandler,
+  type PropsWithChildren,
+  type ReactNode,
+  useEffect,
 } from 'react'
 import { Flex } from './Flex'
 import { Button } from './Button'
 import { AnimatePresence } from './Animation/AnimatedPresence'
-import { prevent, preventPropagation } from 'src/functions/functions'
+import { preventPropagation } from 'src/functions/functions'
 import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
 
 type FlashProps = PropsWithChildren<{
   action?: ReactNode
   onClick?: MouseEventHandler<HTMLButtonElement>
-  onHide?: EventHandler<any>
+  onHide?: () => void
   onExit?: Function
   duration?: number
 }>
@@ -26,21 +26,28 @@ export function Flash({
   duration,
   onHide,
 }: FlashProps) {
+  const hasChildren = Boolean(children)
+  useEffect(() => {
+    if (!duration || !hasChildren) {
+      return
+    }
+    const timer = setTimeout(() => {
+      onHide?.()
+    }, duration * 1_000)
+    return () => clearTimeout(timer)
+  }, [onHide, hasChildren])
   return (
     <AnimatePresence in={FlashIn} out={FlashOut}>
       {children && (
-        <Wrapper between>
+        <Wrapper between className="ve-flash" onClick={onHide}>
           <div>{children}</div>
           {action && (
-            <FlashButton size="small" onClick={prevent(onClick)}>
+            <FlashButton size="small" onClick={preventPropagation(onClick)}>
               {action}
             </FlashButton>
           )}
           {duration && (
-            <Progress
-              onAnimationEnd={preventPropagation(onHide)}
-              style={{ animationDuration: `${duration}s` }}
-            />
+            <Progress style={{ animationDuration: `${duration}s` }} />
           )}
         </Wrapper>
       )}
