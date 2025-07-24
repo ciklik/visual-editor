@@ -1,7 +1,21 @@
-import { BubbleMenu, BubbleMenuProps, Editor } from '@tiptap/react'
-import { prevent } from 'src/functions/functions'
 import styled from '@emotion/styled'
-import { TiptapToolbarButton as Button } from './TiptapToolbarButton'
+import { Editor } from '@tiptap/react'
+// @ts-expect-error there is no type for this
+import { BubbleMenu, BubbleMenuProps } from '@tiptap/react/menus'
+import {
+  FormEventHandler,
+  FunctionComponent,
+  KeyboardEventHandler,
+  PropsWithChildren,
+  useEffect,
+  useState,
+} from 'react'
+import { TiptapColorPicker } from 'src/components/Editor/TiptapEditor/TiptapColorPicker'
+import { TiptapToolbarAlign } from 'src/components/Editor/TiptapEditor/TiptapToolbarAlign'
+import { TiptapToolbarHeadings } from 'src/components/Editor/TiptapEditor/TiptapToolbarHeadings'
+import { Flex } from 'src/components/ui'
+import { prevent } from 'src/functions/functions'
+import { useRootElement } from 'src/store'
 import {
   IconBold,
   IconClear,
@@ -13,20 +27,7 @@ import {
   IconQuote,
   IconUnderline,
 } from './TiptapIcons'
-import { Flex } from 'src/components/ui'
-import {
-  ComponentProps,
-  FormEventHandler,
-  FunctionComponent,
-  KeyboardEventHandler,
-  PropsWithChildren,
-  useEffect,
-  useState,
-} from 'react'
-import { TiptapToolbarAlign } from 'src/components/Editor/TiptapEditor/TiptapToolbarAlign'
-import { TiptapToolbarHeadings } from 'src/components/Editor/TiptapEditor/TiptapToolbarHeadings'
-import { TiptapColorPicker } from 'src/components/Editor/TiptapEditor/TiptapColorPicker'
-import { useRootElement } from 'src/store'
+import { TiptapToolbarButton as Button } from './TiptapToolbarButton'
 
 type TiptapToolbarProps = {
   editor: Editor
@@ -64,6 +65,7 @@ export function TiptapToolbar({ editor, colors }: TiptapToolbarProps) {
     <Toolbar
       className="WysiwygToolbar"
       editor={editor}
+      // @ts-expect-error this is incorrectly typed in the libra
       shouldShow={({ from, to }) => from !== to}
       tippyOptions={{
         maxWidth: 500,

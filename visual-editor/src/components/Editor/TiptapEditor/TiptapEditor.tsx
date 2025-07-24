@@ -1,27 +1,27 @@
-import { EditorContent, useEditor } from '@tiptap/react'
+import styled from '@emotion/styled'
 import { Node } from '@tiptap/core'
-import Text from '@tiptap/extension-text'
+import Blockquote from '@tiptap/extension-blockquote'
 import Bold from '@tiptap/extension-bold'
+import BulletList from '@tiptap/extension-bullet-list'
+import { Color } from '@tiptap/extension-color'
+import Document from '@tiptap/extension-document'
+import HardBreak from '@tiptap/extension-hard-break'
+import Heading from '@tiptap/extension-heading'
+import Highlight from '@tiptap/extension-highlight'
+import History from '@tiptap/extension-history'
 import Italic from '@tiptap/extension-italic'
 import Link from '@tiptap/extension-link'
-import Underline from '@tiptap/extension-underline'
-import Highlight from '@tiptap/extension-highlight'
-import { TiptapToolbar } from 'src/components/Editor/TiptapEditor/TiptapToolbar'
-import Paragraph from '@tiptap/extension-paragraph'
-import OrderedList from '@tiptap/extension-ordered-list'
-import BulletList from '@tiptap/extension-bullet-list'
 import ListItem from '@tiptap/extension-list-item'
-import Document from '@tiptap/extension-document'
-import Heading from '@tiptap/extension-heading'
+import OrderedList from '@tiptap/extension-ordered-list'
+import Paragraph from '@tiptap/extension-paragraph'
+import Text from '@tiptap/extension-text'
 import TextAlign from '@tiptap/extension-text-align'
-import { Color } from '@tiptap/extension-color'
-import TextStyle from '@tiptap/extension-text-style'
-import HardBreak from '@tiptap/extension-hard-break'
-import styled from '@emotion/styled'
-import History from '@tiptap/extension-history'
-import Blockquote from '@tiptap/extension-blockquote'
-import { Styles } from 'src/components/ui'
+import { TextStyleKit } from '@tiptap/extension-text-style'
+import Underline from '@tiptap/extension-underline'
+import { EditorContent, useEditor } from '@tiptap/react'
 import { useEffect, useRef, useState } from 'react'
+import { TiptapToolbar } from 'src/components/Editor/TiptapEditor/TiptapToolbar'
+import { Styles } from 'src/components/ui'
 
 const SingleDocument = Node.create({
   name: 'doc',
@@ -45,7 +45,7 @@ export function TiptapEditor({
   onChange,
   multiline = false,
   colors = [],
-  defaultAlign = 'left',
+  defaultAlign,
   backgroundColor,
   color,
 }: TiptapEditorProps) {
@@ -64,7 +64,7 @@ export function TiptapEditor({
       Italic,
       Highlight,
       Underline,
-      TextStyle,
+      TextStyleKit,
       Color,
       HardBreak,
       History,

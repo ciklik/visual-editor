@@ -1,8 +1,8 @@
-import { FieldComponent } from 'src/types'
+import { TiptapEditor } from 'src/components/Editor/TiptapEditor/TiptapEditor'
 import { Field } from 'src/components/ui'
 import { defaultFieldProperties } from 'src/fields/utils'
-import { TiptapEditor } from 'src/components/Editor/TiptapEditor/TiptapEditor'
 import { colorToProperty } from 'src/functions/css'
+import { FieldComponent } from 'src/types'
 
 type FieldArgs = {
   label?: string

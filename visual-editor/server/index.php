@@ -82,7 +82,7 @@ if ($data['preview'] ?? null) {
 
 <main role="main" id="ve-components">
 <?php
-array_map('renderBlock', $data)
+array_map('renderBlock', $data ?? [])
 ?>
 </main>
 </body>
