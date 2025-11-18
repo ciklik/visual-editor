@@ -158,6 +158,9 @@ const EditorWrapper = styled.div<{ focused: boolean; singleLine?: boolean }>(
     '.ProseMirror > *:last-child': {
       margin: 0,
     },
+    '.ProseMirror-focused ~ div': {
+      zIndex: 200,
+    },
   },
   (props) => ({
     ...(props.focused ? Styles.FocusState : undefined),

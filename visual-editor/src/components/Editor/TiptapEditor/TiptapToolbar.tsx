@@ -67,14 +67,6 @@ export function TiptapToolbar({ editor, colors }: TiptapToolbarProps) {
       editor={editor}
       // @ts-expect-error this is incorrectly typed in the libra
       shouldShow={({ from, to }) => from !== to}
-      tippyOptions={{
-        maxWidth: 500,
-        ...(rootElement
-          ? {
-              appendTo: () => rootElement!,
-            }
-          : {}),
-      }}
     >
       {mode === Mode.Link ? (
         <ToolbarLink onSubmit={insertLink} onCancel={setButtonsMode} />
