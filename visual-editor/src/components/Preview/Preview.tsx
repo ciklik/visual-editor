@@ -43,17 +43,21 @@ export function Preview({ data, previewUrl }: PreviewProps) {
     }
 
     // On écrit le contenu dans l'iframe
-    const iframeDocument = iframe.current!.contentDocument!
-    iframeDocument.open()
-    iframeDocument.write(await r.text())
-    iframeDocument.close()
-    const root = iframeDocument.querySelector('#ve-components') as HTMLElement
-    initialHTML.current = Array.from(root.children).reduce(
-      (acc, v, k) => ({ ...acc, [data[k]!._id]: v.outerHTML }),
-      {}
-    )
-    root.innerHTML = ''
-    setIframeRoot(root)
+    try {
+      const iframeDocument = iframe.current!.contentDocument!
+      iframeDocument.open()
+      iframeDocument.write(await r.text())
+      iframeDocument.close()
+      const root = iframeDocument.querySelector('#ve-components') as HTMLElement
+      initialHTML.current = Array.from(root.children).reduce(
+          (acc, v, k) => ({ ...acc, [data[k]!._id]: v.outerHTML }),
+          {}
+      )
+      root.innerHTML = ''
+      setIframeRoot(root)
+    } catch (e) {
+      return
+    }
   }, [])
 
   const previewMode = usePreviewMode()
