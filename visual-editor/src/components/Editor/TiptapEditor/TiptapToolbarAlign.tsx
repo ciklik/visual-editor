@@ -10,9 +10,8 @@ export const TiptapToolbarAlign: FunctionComponent<{ editor: Editor }> = ({
   editor,
 }) => {
   const alignments = ['left', 'center', 'right', 'justify'] as const
-  const currentAlign = alignments.filter((align) =>
-    editor.isActive({ textAlign: align })
-  )[0]!
+  const currentAlign =
+    alignments.find((align) => editor.isActive({ textAlign: align })) ?? 'left'
 
   if (!editor.can().setParagraph()) {
     return null
