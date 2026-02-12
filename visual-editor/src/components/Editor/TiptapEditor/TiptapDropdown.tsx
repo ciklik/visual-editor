@@ -14,6 +14,7 @@ export const TiptapDropdown = styled.div<{ size: number }>(
     alignItems: 'center',
     transition: 'height .2s, transform .3s',
     transformOrigin: '50% 0',
+    zIndex: 1000,
     borderRadius: 3,
     '& > *': {
       height: baseHeight - 10,

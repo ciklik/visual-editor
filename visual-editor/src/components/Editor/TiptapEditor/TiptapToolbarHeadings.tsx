@@ -10,7 +10,7 @@ type Level = 1 | 2 | 3 | 4 | 5 | 6
 export const TiptapToolbarHeadings: FunctionComponent<{ editor: Editor }> = ({
   editor,
 }) => {
-  const levels = [2, 3, 4, 5, 6] as const
+  const levels = [1, 2, 3, 4, 5, 6] as const
   const currentLevel = editor.getAttributes('heading').level
 
   if (
