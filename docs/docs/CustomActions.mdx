@@ -1,0 +1,17 @@
+---
+sidebar_position: 5
+---
+
+# Custom actions
+
+For more specific use case you can add custom buttons.
+
+```js
+// Register a new button
+editor.registerButton({
+  position: 'header', // 'footer' or 'header'
+  icon: '<svg .../></svg>',
+  action: () => alert('Hello world'),
+  title: 'Title'
+})
+```

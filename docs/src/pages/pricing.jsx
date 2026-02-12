@@ -31,7 +31,7 @@ export default function Pricing() {
             </div>
             <div className={styles.price__action}>
               <a
-                href="https://www.boxraiser.com/notre-histoire/#first_name"
+                href="https://www.ciklik.com/notre-histoire/#first_name"
                 className="button button--primary button--lg"
                 target="_blank"
               >

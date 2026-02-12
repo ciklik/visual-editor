@@ -5,7 +5,7 @@ import analyze from 'rollup-plugin-analyzer'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  define: { 'process.env.NODE_ENV': '"production"' },
+  // define: { 'process.env.NODE_ENV': '"production"' },
   plugins: [
     react({
       babel: {
@@ -22,7 +22,7 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      '/preview': 'http://localhost:8000/index.php',
+      '/preview': 'http://127.0.0.1:8000/index.php',
     },
   },
   resolve: {

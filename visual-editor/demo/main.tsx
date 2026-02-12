@@ -13,7 +13,7 @@ import {
   Text,
   TextAlign,
   VisualEditor,
-} from 'src/VisualEditor'
+} from '../src/VisualEditor'
 import {
   ButtonField,
   ButtonsField,
@@ -22,11 +22,16 @@ import {
   ImageField,
   TitleField,
   WithStyles,
-} from './shared'
+} from '../src/shared'
 
 let editor = new VisualEditor({
   lang: EN,
-  postMessagePreview: false
+  postMessagePreview: false,
+  devices: [
+    { name: 'Mobile', width: 390, height: 820, icon: 'mobile' },
+    { name: 'Tablet', width: 1180, height: 820, icon: 'tablet' },
+    { name: 'Desktop', width: '100%', height: '100%', icon: 'desktop' },
+  ],
 })
 
 editor.registerComponent('hero', {
@@ -208,3 +213,19 @@ editor.registerTemplate({
 })
 
 editor.defineElement()
+
+document
+  .querySelector('#postmessagepreview')!
+  .addEventListener('click', (e) => {
+    VisualEditor.postMessagePreview = !VisualEditor.postMessagePreview
+    ;(e.currentTarget as HTMLElement).querySelector('span')!.innerText =
+      VisualEditor.postMessagePreview ? 'on' : 'off'
+    document.querySelectorAll('visual-editor').forEach((button) => {
+      button.setAttribute(
+        'preview',
+        VisualEditor.postMessagePreview
+          ? 'http://localhost:3000/demo/csr-preview.html'
+          : 'http://localhost:3000/preview'
+      )
+    })
+  })

@@ -1,13 +1,12 @@
 import styled from '@emotion/styled'
-import { useSetData, useTemplates } from 'src/store'
 import { EditorComponentTemplate } from 'src/types'
 import { Card, Spinner } from 'src/components/ui'
 import { prevent } from 'src/functions/functions'
 import { useCallback, useState } from 'react'
+import { usePartialStore } from 'src/store'
 
 export function SidebarTemplates({ onTemplate }: { onTemplate: () => void }) {
-  const templates = useTemplates()
-  const setData = useSetData()
+  const { templates, setData } = usePartialStore('setData', 'templates')
   const [loadingTemplate, setLoadingTemplate] =
     useState<EditorComponentTemplate>()
   const callback = useCallback(
@@ -30,6 +29,7 @@ export function SidebarTemplates({ onTemplate }: { onTemplate: () => void }) {
     <Wrapper>
       {templates.map((t) => (
         <TemplateCard
+          key={t.name}
           template={t}
           onClick={callback}
           loading={loadingTemplate === t}

@@ -19,6 +19,7 @@ export function ButtonIcon({
   const style = rotate ? { transform: `rotate(${rotate}deg)` } : undefined
   const button = (
     <BaseButton
+      type="button"
       {...props}
       aria-label={title}
       css={[danger && Danger, success && Success]}

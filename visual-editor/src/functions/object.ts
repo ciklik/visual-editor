@@ -80,7 +80,9 @@ export function indexify(object: unknown): unknown {
     const prefix = Math.round(Date.now() / 1000)
     object.forEach((v, k) => {
       if (typeof v === 'object') {
-        v._id = prefix + k.toString()
+        if (!('_id' in v)) {
+          v._id = prefix + k.toString()
+        }
         indexify(v)
       }
     })

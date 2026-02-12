@@ -1,36 +1,28 @@
 import { prevent } from 'src/functions/functions'
-import {
-  PreviewModes,
-  useData,
-  usePreviewMode,
-  useSetBlockIndex,
-  useTogglePreviewMode,
-} from 'src/store'
+import { usePartialStore } from 'src/store'
 import {
   Button,
   ButtonIcon,
   Flex,
   IconCirclePlus,
   IconCross,
-  IconDesktop,
-  IconPhone,
 } from 'src/components/ui'
 import { CopyAction } from './Actions/CopyAction'
 
 import styled from '@emotion/styled'
 import { t } from 'src/functions/i18n'
 import { PropsWithChildren } from 'react'
+import { ActionButton } from 'src/components/Sidebar/Actions/ActionButton'
 
 type SidebarHeaderProps = PropsWithChildren<{
   onClose: () => void
 }>
 
 export function SidebarHeader({ onClose, children }: SidebarHeaderProps) {
-  const togglePreviewMode = useTogglePreviewMode()
-  const previewMode = usePreviewMode()
-  const isPhone = previewMode === PreviewModes.PHONE
-  const setAddBlock = useSetBlockIndex()
-  const data = useData()
+  const { setAddBlockIndex, actions } = usePartialStore(
+    'setAddBlockIndex',
+    'actions'
+  )
 
   return (
     <Wrapper between>
@@ -40,15 +32,17 @@ export function SidebarHeader({ onClose, children }: SidebarHeaderProps) {
         </ButtonIcon>
       </div>
       <Flex>
+        {actions
+          .filter((a) => a.position === 'header')
+          .map((a, k) => (
+            <ActionButton {...a} key={k} />
+          ))}
         {children}
-        <CopyAction data={data} size={20} />
-        <ButtonIcon
-          onClick={prevent(togglePreviewMode)}
-          title={t('responsiveView')}
+        <CopyAction size={20} />
+        <Button
+          icon={IconCirclePlus}
+          onClick={prevent(() => setAddBlockIndex())}
         >
-          {isPhone ? <IconDesktop size={20} /> : <IconPhone size={24} />}
-        </ButtonIcon>
-        <Button icon={IconCirclePlus} onClick={prevent(() => setAddBlock())}>
           {t('addComponent')}
         </Button>
       </Flex>

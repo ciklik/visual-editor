@@ -2,16 +2,19 @@ import { SidebarHeading } from './SidebarHeading'
 import { SidebarBlocWrapper } from 'src/components/Sidebar/SidebarBlocWrapper'
 import { prevent } from 'src/functions/functions'
 import { ButtonIcon, IconTrash } from 'src/components/ui'
-import { useRemoveBloc } from 'src/store'
 import { EditorComponentData } from 'src/types'
 import { t } from 'src/functions/i18n'
+import { usePartialStore } from 'src/store'
 
 type SidebarBlocMissingProps = {
   data: EditorComponentData
 }
 
+/**
+ * Component displayed when a component definition can't be resolved
+ */
 export function SidebarBlocMissing({ data }: SidebarBlocMissingProps) {
-  const removeBloc = useRemoveBloc()
+  const { removeBloc } = usePartialStore('removeBloc')
   return (
     <SidebarBlocWrapper
       item={data}
@@ -23,7 +26,7 @@ export function SidebarBlocMissing({ data }: SidebarBlocMissingProps) {
       <SidebarHeading title={`${t('unknownComponent')} : ${data._name}`}>
         <ButtonIcon
           danger
-          onClick={prevent(() => removeBloc(data))}
+          onClick={prevent(() => removeBloc(data._id))}
           title={t('deleteComponent')}
         >
           <IconTrash size={20} />

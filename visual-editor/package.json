@@ -1,15 +1,16 @@
 {
-  "name": "@boxraiser/visual-editor",
-  "version": "0.1.4",
+  "name": "@ciklik/visual-editor",
+  "version": "0.2.0",
   "type": "module",
   "main": "VisualEditor.js",
   "types": "./VisualEditor.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/boxraiser/visual-editor"
+    "url": "https://github.com/ciklik/visual-editor"
   },
   "scripts": {
     "dev": "concurrently \"vite\" \"php -S 0.0.0.0:8000 -ddisplay_errors=1 -t server/\"",
+    "check": "tsc",
     "build": "tsc && vite build && node esbuild.js && npm run declaration && cp package.json dist/package.json && cp README.md dist/README.md",
     "serve": "vite preview",
     "format": "prettier --config .prettierrc 'src/**/*.{ts,tsx}' --write",
@@ -57,15 +58,12 @@
     "@tiptap/extension-text-style": "^3.0.7",
     "@tiptap/extension-underline": "^3.0.7",
     "@tiptap/react": "^3.0.7",
-    "@vitejs/plugin-react": "^4.7.0",
     "clsx": "^2.0.0",
     "framesync": "^6.1.2",
     "react-datepicker": "^4.18.0",
     "react-flip-toolkit": "^7.1.0",
     "react-popper": "^2.3.0",
     "react-use": "^17.4.0",
-    "vite": "^7.0.6",
-    "vitest": "^3.2.4",
     "zustand": "^4.4.2"
   },
   "devDependencies": {
@@ -76,7 +74,7 @@
     "@types/react-dom": "^18.2.10",
     "concurrently": "^7.6.0",
     "cypress": "^15.6.0",
-    "esbuild": "^0.19.4",
+    "esbuild": "^0.27.3",
     "esbuild-node-externals": "^1.9.0",
     "prettier": "^3.0.3",
     "react": "^18.2.0",
@@ -84,7 +82,10 @@
     "rollup-plugin-analyzer": "^4.0.0",
     "start-server-and-test": "^2.0.1",
     "tsc-alias": "^1.8.8",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "vite": "^7.3.1",
+    "vitest": "^3.2.4",
+    "@vitejs/plugin-react": "^4.7.0"
   },
   "peerDependencies": {
     "react": "^18.0.0",

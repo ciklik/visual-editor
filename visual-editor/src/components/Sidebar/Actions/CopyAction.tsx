@@ -5,18 +5,20 @@ import { stringifyFields } from 'src/functions/object'
 import { ButtonIcon, IconCheck, IconCode, Tooltip } from 'src/components/ui'
 import React, { useEffect, useRef, useState } from 'react'
 import { t } from 'src/functions/i18n'
+import { useGetData } from 'src/store'
 
 type CopyActionProps = {
-  data: EditorComponentData | EditorComponentData[]
+  data?: EditorComponentData
   size?: number
 }
 
 export function CopyAction({ data, size, ...props }: CopyActionProps) {
   const [success, setSuccess] = useState(false)
+  const getData = useGetData()
   const timer = useRef<number>()
   const handleCopy = async () => {
     try {
-      await copyToClipboard(stringifyFields(data))
+      await copyToClipboard(stringifyFields(data ?? getData()))
       setSuccess(true)
       timer.current = window.setTimeout(() => {
         setSuccess(false)
@@ -25,7 +27,7 @@ export function CopyAction({ data, size, ...props }: CopyActionProps) {
       alert(e)
     }
   }
-  const tooltipLabel = Array.isArray(data) ? t('copyPage') : t('copyComponent')
+  const tooltipLabel = data ? t('copyComponent') : t('copyPage')
 
   useEffect(() => {
     clearTimeout(timer.current)
@@ -46,7 +48,7 @@ export function CopyAction({ data, size, ...props }: CopyActionProps) {
       }
       trigger="focus"
     >
-      <div>
+      <div className="ve-copy-code">
         <ButtonIcon onClick={prevent(handleCopy)} success={success} {...props}>
           {success ? <IconCheck size={size} /> : <IconCode size={size} />}
         </ButtonIcon>

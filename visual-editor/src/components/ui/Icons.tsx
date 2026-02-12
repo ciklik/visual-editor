@@ -1,5 +1,8 @@
+import { type CSSProperties } from 'react'
+
 type IconProps = {
   size?: number
+  style?: CSSProperties
 }
 
 export function IconPhone({ size = 18 }: IconProps) {
@@ -14,6 +17,23 @@ export function IconPhone({ size = 18 }: IconProps) {
         fill="currentColor"
         d="M7 4v16h10V4H7zM6 2h12a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm6 15a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
       />
+    </svg>
+  )
+}
+
+export function IconTablet({ size = 24 }: IconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill="none"
+    >
+      <path
+        fill="currentColor"
+        d="M20 7H4v10h16V7Zm2-1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1Z"
+      />
+      <rect width="10" height="1" x="7" y="15" fill="currentColor" rx=".5" />
     </svg>
   )
 }
@@ -240,19 +260,26 @@ export function IconCirclePlus({ size = 24 }: IconProps) {
   )
 }
 
-export function IconDown({ size = 24 }: IconProps) {
+export function IconDown({ size = 24, style }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       width={size}
       height={size}
+      style={style}
     >
       <path
         d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z"
         fill="currentColor"
       />
     </svg>
+  )
+}
+
+export function IconUp(props: IconProps) {
+  return (
+    <IconDown {...props} style={{ transform: 'scaleY(-1)', ...props.style }} />
   )
 }
 
