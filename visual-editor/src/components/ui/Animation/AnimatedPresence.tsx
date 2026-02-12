@@ -25,22 +25,8 @@ function updateChildLookup(
   children: ReactElement<any>[],
   allChildren: Map<ComponentKey, ReactElement<any>>
 ) {
-  const seenChildren =
-    process.env.NODE_ENV !== 'production' ? new Set<ComponentKey>() : null
-
   children.forEach((child) => {
     const key = getChildKey(child)
-
-    if (process.env.NODE_ENV !== 'production' && seenChildren) {
-      if (seenChildren.has(key)) {
-        console.warn(
-          `Children of AnimatePresence require unique keys. "${key}" is a duplicate.`
-        )
-      }
-
-      seenChildren.add(key)
-    }
-
     allChildren.set(key, child)
   })
 }
@@ -214,16 +200,6 @@ export const AnimatePresence: FunctionComponent<
   })
 
   presentChildren.current = childrenToRender
-
-  if (
-    process.env.NODE_ENV !== 'production' &&
-    exitBeforeEnter &&
-    childrenToRender.length > 1
-  ) {
-    console.warn(
-      `You're attempting to animate multiple children within AnimatePresence, but its exitBeforeEnter prop is set to true. This will lead to odd visual behaviour.`
-    )
-  }
 
   return (
     <>

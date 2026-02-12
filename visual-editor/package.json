@@ -1,5 +1,5 @@
 {
-  "name": "@ciklik/visual-editor",
+  "name": "@boxraiser/visual-editor",
   "version": "0.2.0",
   "type": "module",
   "main": "VisualEditor.js",
