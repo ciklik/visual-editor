@@ -6,6 +6,10 @@ on:
       - 1.*
       - 0.*
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,9 +38,6 @@ jobs:
       - name: Build the library
         run: cd visual-editor && pnpm run build
       - name: Publish
-        run: |
-          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          cd visual-editor/dist && npm publish --access=public
+        run: cd visual-editor/dist && npm publish --access=public --provenance
         env:
-          CI: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
