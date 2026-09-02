@@ -5,6 +5,7 @@ import { colorToProperty } from 'src/functions/css'
 import styled from '@emotion/styled'
 import { prevent } from 'src/functions/functions'
 import { useToggle } from 'src/hooks/useToggle'
+import { Styles } from 'src/components/ui'
 
 type Props = {
   editor: Editor
@@ -19,9 +20,16 @@ export function TiptapColorPicker({ editor, colors }: Props) {
   ) as string[]
   const [expanded, toggleExpanded, setExpanded] = useToggle()
 
-  const handleChange = (color: string) => {
+  // A null color removes the color from the selection
+  const handleChange = (color: string | null) => {
     toggleExpanded()
-    editor.chain().focus().setColor(color).run()
+    const chain = editor.chain().focus()
+    if (color) {
+      chain.setColor(color)
+    } else {
+      chain.unsetColor()
+    }
+    chain.run()
   }
 
   useEffect(() => {
@@ -36,7 +44,7 @@ export function TiptapColorPicker({ editor, colors }: Props) {
 
   return (
     <div css={{ position: 'relative' }}>
-      <Button onClick={prevent(toggleExpanded)}>
+      <Button onClick={prevent(toggleExpanded)} title="Color">
         <svg
           width={16}
           height={16}
@@ -82,16 +90,37 @@ const PaletteItem = styled.button({
   },
 })
 
+/**
+ * Checkerboard swatch with a red diagonal, same visual as the Color field
+ */
+const PaletteItemReset = styled(PaletteItem)({
+  ...Styles.Mosaic,
+  position: 'relative',
+  overflow: 'hidden',
+  padding: 0,
+  '&::before': {
+    position: 'absolute',
+    top: -6,
+    left: 'calc(50% - 1px)',
+    content: "''",
+    width: 2,
+    height: 28,
+    background: 'red',
+    transform: 'rotate(45deg)',
+  },
+})
+
 export function Palette({
   colors,
   onChange,
 }: {
   colors: string[]
-  onChange: (v: string) => void
+  onChange: (v: string | null) => void
 }) {
-  const changeHandler = (color: string) => prevent(() => onChange(color))
+  const changeHandler = (color: string | null) => prevent(() => onChange(color))
   return (
-    <PaletteWrapper size={colors.length}>
+    <PaletteWrapper size={colors.length + 1}>
+      <PaletteItemReset onClick={changeHandler(null)} title="No color" />
       {colors.map((color) => (
         <PaletteItem
           key={color}
