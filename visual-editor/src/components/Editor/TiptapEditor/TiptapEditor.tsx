@@ -3,7 +3,7 @@ import { Node } from '@tiptap/core'
 import Blockquote from '@tiptap/extension-blockquote'
 import Bold from '@tiptap/extension-bold'
 import BulletList from '@tiptap/extension-bullet-list'
-import { Color } from '@tiptap/extension-color'
+import Code from '@tiptap/extension-code'
 import Document from '@tiptap/extension-document'
 import HardBreak from '@tiptap/extension-hard-break'
 import Heading from '@tiptap/extension-heading'
@@ -14,6 +14,9 @@ import Link from '@tiptap/extension-link'
 import ListItem from '@tiptap/extension-list-item'
 import OrderedList from '@tiptap/extension-ordered-list'
 import Paragraph from '@tiptap/extension-paragraph'
+import Strike from '@tiptap/extension-strike'
+import Subscript from '@tiptap/extension-subscript'
+import Superscript from '@tiptap/extension-superscript'
 import Text from '@tiptap/extension-text'
 import TextAlign from '@tiptap/extension-text-align'
 import { TextStyleKit } from '@tiptap/extension-text-style'
@@ -29,6 +32,13 @@ const SingleDocument = Node.create({
   group: 'block',
   content: 'inline*',
 })
+
+// Superscript and subscript cannot apply to the same text
+const ExclusiveSuperscript = Superscript.extend({ excludes: 'subscript' })
+const ExclusiveSubscript = Subscript.extend({ excludes: 'superscript' })
+// Tiptap's Code excludes every other mark by default, here it combines
+// with bold, links, colors... like any other format
+const InlineCode = Code.extend({ excludes: '' })
 
 type TiptapEditorProps = {
   value: string
@@ -64,12 +74,20 @@ export function TiptapEditor({
       Italic,
       Highlight,
       Underline,
+      Strike,
+      ExclusiveSuperscript,
+      ExclusiveSubscript,
+      InlineCode,
+      // TextStyleKit already registers the Color extension (setColor / unsetColor)
       TextStyleKit,
-      Color,
       HardBreak,
       History,
       Blockquote,
-      Link.configure({ openOnClick: false }),
+      Link.configure({
+        openOnClick: false,
+        // Links open in the same tab unless the user asks for a new one
+        HTMLAttributes: { target: null, rel: null },
+      }),
       Heading.configure({ levels: [1, 2, 3, 4, 5, 6] }),
       TextAlign.configure({
         types: [

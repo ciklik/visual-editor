@@ -23,10 +23,12 @@ import {
   IconMark,
   IconOrderedList,
   IconQuote,
+  IconStrike,
   IconUnderline,
 } from './TiptapIcons'
 import { TiptapToolbarButton as Button } from './TiptapToolbarButton'
 import { TiptapColorPicker } from 'src/components/Editor/TiptapEditor/TiptapColorPicker'
+import { TiptapToolbarFormats } from 'src/components/Editor/TiptapEditor/TiptapToolbarFormats'
 import { usePartialStore } from 'src/store'
 
 type TiptapToolbarProps = {
@@ -40,13 +42,26 @@ enum Mode {
 }
 
 const iconSize = 16
+// Minimum gap between the bubble and the edges of the scrolling sidebar
+const toolbarPadding = 8
 
 export function TiptapToolbar({ editor, colors }: TiptapToolbarProps) {
   const [mode, setMode] = useState(Mode.Buttons)
   const setLinkMode = () => setMode(Mode.Link)
   const setButtonsMode = () => setMode(Mode.Buttons)
-  const insertLink = (link: string) => {
-    editor.commands.setLink({ href: link })
+  // Returns false when Tiptap rejects the URL (the form then stays open)
+  const insertLink = (link: string, newTab: boolean): boolean => {
+    const attributes = {
+      href: link,
+      target: newTab ? '_blank' : null,
+      rel: newTab ? 'noopener noreferrer' : null,
+    }
+    if (!editor.can().setLink(attributes)) {
+      return false
+    }
+    // Focusing the editor brings the toolbar back to the buttons mode
+    editor.chain().focus().setLink(attributes).run()
+    return true
   }
   let rootElement: HTMLElement | null = null
   try {
@@ -65,6 +80,9 @@ export function TiptapToolbar({ editor, colors }: TiptapToolbarProps) {
     <Toolbar
       className="WysiwygToolbar"
       editor={editor}
+      // Without a padding the bubble sticks to the sidebar border when the
+      // selection is close to it
+      options={{ shift: { padding: toolbarPadding } }}
       // @ts-expect-error this is incorrectly typed in the libra
       shouldShow={({ from, to }) => from !== to}
     >
@@ -85,7 +103,7 @@ function ToolbarLink({
   onSubmit,
   onCancel,
 }: {
-  onSubmit: (l: string) => void
+  onSubmit: (link: string, newTab: boolean) => boolean
   onCancel: Function
 }) {
   const handleKeyDown: KeyboardEventHandler = (e) => {
@@ -95,18 +113,43 @@ function ToolbarLink({
   }
 
   const handleSubmit: FormEventHandler = (e) => {
-    const data = new FormData(e.target as HTMLFormElement)
-    const link = data.get('link')
-    if (link) {
-      onSubmit(link.toString())
-    } else {
-      onCancel(link)
+    const form = e.target as HTMLFormElement
+    const input = form.elements.namedItem('link') as HTMLInputElement
+    const data = new FormData(form)
+    const link = data.get('link')?.toString().trim()
+    if (!link) {
+      onCancel()
+      return
+    }
+    // "www.example.com/page" would be rejected (or saved as a relative link)
+    const href = /^www\./i.test(link) ? `https://${link}` : link
+    if (!onSubmit(href, data.get('newTab') === 'on')) {
+      input.setCustomValidity('Invalid URL, add "https://"')
+      input.reportValidity()
     }
   }
 
+  const clearValidity: FormEventHandler<HTMLInputElement> = (e) =>
+    (e.target as HTMLInputElement).setCustomValidity('')
+
   return (
-    <Flex as="form" onKeyDown={handleKeyDown} onSubmit={prevent(handleSubmit)}>
-      <LinkInput name="link" type="text" placeholder="https://..." autoFocus />
+    <Flex
+      as="form"
+      gap={0.5}
+      onKeyDown={handleKeyDown}
+      onSubmit={prevent(handleSubmit)}
+    >
+      <LinkInput
+        name="link"
+        type="text"
+        placeholder="https://..."
+        onInput={clearValidity}
+        autoFocus
+      />
+      <LinkOption title="Open the link in a new tab">
+        <input type="checkbox" name="newTab" />
+        New tab
+      </LinkOption>
       <Button>Ok</Button>
     </Flex>
   )
@@ -194,7 +237,15 @@ function ToolbarButtons({
       >
         <IconMark size={iconSize} />
       </Button>
+      <Button
+        onClick={prevent(() => editor.chain().focus().toggleStrike().run())}
+        active={editor.isActive('strike')}
+        title="Strike"
+      >
+        <IconStrike size={iconSize} />
+      </Button>
       <TiptapColorPicker editor={editor} colors={colors} />
+      <TiptapToolbarFormats editor={editor} />
       <Separator />
       <Button
         onClick={prevent(toggleLink)}
@@ -216,7 +267,8 @@ const Toolbar = styled(BubbleMenu)({
   color: '#FFF',
   height: 40,
   display: 'flex',
-  padding: '0 1em',
+  // Keep the 14 buttons within the minimum sidebar width (450px)
+  padding: '0 .5em',
 }) as FunctionComponent<PropsWithChildren<BubbleMenuProps>>
 
 const Separator = styled.div({
@@ -231,4 +283,22 @@ const LinkInput = styled.input({
   font: 'inherit',
   background: 'transparent',
   outline: 'none',
+})
+
+const LinkOption = styled.label({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 4,
+  flex: 'none',
+  fontSize: 12,
+  whiteSpace: 'nowrap',
+  color: '#CCC',
+  cursor: 'pointer',
+  '&:hover': {
+    color: '#FFF',
+  },
+  input: {
+    margin: 0,
+    cursor: 'pointer',
+  },
 })
