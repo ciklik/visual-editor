@@ -55,7 +55,11 @@ export function PreviewPostMessage({ previewUrl }: PreviewProps) {
 
   useEffect(() => {
     const listener = (e: MessageEvent<IframeEvents>) => {
-      switch (e.data.type) {
+      // Only trust messages sent by our own preview iframe, not by any other window
+      if (!iframe.current || e.source !== iframe.current.contentWindow) {
+        return
+      }
+      switch (e.data?.type) {
         case 've-focus':
           setFocusIndex(e.data.payload.id)
           break
