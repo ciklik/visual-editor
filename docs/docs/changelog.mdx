@@ -8,6 +8,7 @@ sidebar_position: 10
 
 - Fix: the `change` event carries the JSON of the page in `detail` again (removed in 0.2.0), and is emitted for every change made in the editor, including the preview arrows. It is not emitted when the host sets `value`
 - Fix: one store per element, the content is kept when the editor is hidden and shown again, and `value` can be read right after the element is inserted
+- Fix: setting `value` again with the same string (Vue does it on every render of the host) no longer resets the content, only a new value replaces it
 - Fix: the text alignment radios are no longer submitted with the surrounding form (#4)
 - Fix: preview messages are only accepted from the preview iframe and from the editor window
 - Fix: English and French translations
