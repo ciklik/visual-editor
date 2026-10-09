@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "packageManager": "pnpm@10.34.6",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "cypress",
+      "esbuild"
+    ],
+    "ignoredBuiltDependencies": [
+      "core-js",
+      "core-js-pure"
+    ]
+  }
+}

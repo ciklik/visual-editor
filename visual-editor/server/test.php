@@ -169,7 +169,7 @@
 <form action="" method="get">
   <visual-editor
     name="content"
-    preview="http://localhost:8000/server/index.php"
+    preview="/server/index.php"
     iconsUrl="/[name].svg"
     id="editor1"
     value=""
