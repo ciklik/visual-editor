@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directories: ['/', '/docs', '/visual-editor']
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    groups:
+      tiptap:
+        patterns: ['@tiptap/*']
+      docs:
+        patterns: ['@docusaurus/*', '@mdx-js/*', 'prism-react-renderer']
+      dev-dependencies:
+        dependency-type: development
+        update-types: [minor, patch]
+      dependencies:
+        dependency-type: production
+        update-types: [minor, patch]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ['*']

@@ -25,7 +25,7 @@ const addBlock = () => {
 
 describe('Editor behaviour', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:8000/server/test.php')
+    cy.visit('/server/test.php')
     cy.contains(addComponentText).as('addComponent')
   })
 

@@ -1,29 +1,16 @@
 import { build } from 'esbuild'
 import { nodeExternalsPlugin } from 'esbuild-node-externals'
 
+// Build the npm entry point, dependencies stay external
 build({
-  entryPoints: ['src/VisualEditor.jsx'],
+  entryPoints: ['src/VisualEditor.tsx'],
   target: 'es2020',
   format: 'esm',
   outfile: 'dist/VisualEditor.js',
   jsxFactory: 'jsx',
   jsxFragment: 'Fragment',
-  logLevel: 'debug',
+  logLevel: 'info',
   bundle: true,
   inject: ['./react-shim.js'],
   plugins: [nodeExternalsPlugin()],
-}).then(console.log, console.error)
-/*
-// Build the standalon version with every dependencies included
-build({
-  entryPoints: ['src/VisualEditor.jsx'],
-  target: 'es2020',
-  format: 'esm',
-  outfile: 'dist/VisualEditor.standalone.js',
-  jsxFactory: 'jsx',
-  jsxFragment: 'Fragment',
-  logLevel: 'debug',
-  bundle: true,
-  inject: ['./react-shim.js'],
-}).then(console.log, console.error)
-*/
+}).catch(() => process.exit(1))

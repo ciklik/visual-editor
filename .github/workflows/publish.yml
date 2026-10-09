@@ -1,43 +1,49 @@
 name: Publish
 
+# Publishes visual-editor/dist to npm with trusted publishing (OIDC)
+# A manual run must target a tag ("Use workflow from" > tag)
 on:
   push:
     tags:
-      - 1.*
-      - 0.*
+      - '0.*'
+      - '1.*'
+  workflow_dispatch:
 
 permissions:
   contents: read
   id-token: write
 
 jobs:
-  build:
+  publish:
+    if: github.ref_type == 'tag'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20.x]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      - name: Cache pnpm modules
-        uses: actions/cache@v4
+        uses: actions/checkout@v7
+      - name: Use pnpm
+        uses: pnpm/action-setup@v6
+      # Node 24 ships npm >= 11.5.1, required by trusted publishing.
+      # No dependency cache here, a poisoned cache could read the OIDC token.
+      - name: Use Node.js
+        uses: actions/setup-node@v7
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 8.7.0
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Check the tag matches the package version
+        run: |
+          version=$(node -p "require('./visual-editor/package.json').version")
+          if [ "$version" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match package version $version"
+            exit 1
+          fi
       - name: Install dependencies
-        run: pnpm install --recursive
+        run: pnpm install --frozen-lockfile
       - name: Build the library
-        run: cd visual-editor && pnpm run build
+        run: pnpm --dir visual-editor run build
       - name: Publish
-        run: cd visual-editor/dist && npm publish --access=public --provenance
+        working-directory: visual-editor/dist
+        run: npm --version && npm publish --access public --provenance
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          # Fallback only: empty unless an NPM_TOKEN secret exists, OIDC is used first
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
