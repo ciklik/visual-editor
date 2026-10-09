@@ -27,6 +27,9 @@ jobs:
           php-version: '8.4'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      # pnpm skips the Cypress postinstall when restoring its cache
+      - name: Install the Cypress binary
+        run: pnpm --dir visual-editor exec cypress install
       - name: Build the library
         run: pnpm --dir visual-editor run build
       - name: Run the tests
