@@ -83,7 +83,11 @@ export class PreviewWrapper extends (isClientSide()
   }
 
   onFocusChange = (e: MessageEvent<EditorMessageEvents>) => {
-    if (e.data.type === 've-focus') {
+    // Only trust messages sent by the editor hosting this preview
+    if (e.source !== window.parent) {
+      return
+    }
+    if (e.data?.type === 've-focus') {
       const isFocused = e.data.payload.id === this.dataset.id
       if (isFocused !== this.isFocused) {
         this.isFocused = e.data.payload.id === this.dataset.id

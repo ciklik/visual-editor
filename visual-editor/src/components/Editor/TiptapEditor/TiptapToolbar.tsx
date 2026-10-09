@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import { Editor } from '@tiptap/react'
-// @ts-expect-error there is no type for this
 import { BubbleMenu, BubbleMenuProps } from '@tiptap/react/menus'
 import {
   FormEventHandler,
@@ -83,7 +82,6 @@ export function TiptapToolbar({ editor, colors }: TiptapToolbarProps) {
       // Without a padding the bubble sticks to the sidebar border when the
       // selection is close to it
       options={{ shift: { padding: toolbarPadding } }}
-      // @ts-expect-error this is incorrectly typed in the libra
       shouldShow={({ from, to }) => from !== to}
     >
       {mode === Mode.Link ? (
