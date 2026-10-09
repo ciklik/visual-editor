@@ -17,7 +17,6 @@ import React, {
   ReactElement,
   useCallback,
   useContext,
-  useMemo,
 } from 'react'
 import { fillDefaults } from './functions/fields'
 import { t } from 'src/functions/i18n'
@@ -29,7 +28,7 @@ const sidebarWidth =
     ? localStorage.getItem('veSidebarWidth')
     : 0
 
-const createStore = (
+export const createStore = (
   data: EditorComponentData[] = [],
   definitions: EditorComponentDefinitions,
   hiddenCategories: string[] = [],
@@ -79,13 +78,20 @@ const createStore = (
             set((state) => ({
               data: deepSet(state.data, path, newData),
             }))
-            methods.dispatchEvent(Events.Change)
           },
           moveBloc: function (id: string, direction: number) {
             return set(({ data }) => {
               const currentIndex = data.findIndex((d) => d._id === id)
+              const newIndex = currentIndex + direction
+              if (
+                currentIndex === -1 ||
+                newIndex < 0 ||
+                newIndex >= data.length
+              ) {
+                return {}
+              }
               return {
-                data: moveItem(data, currentIndex, currentIndex + direction),
+                data: moveItem(data, currentIndex, newIndex),
               }
             })
           },
@@ -96,7 +102,6 @@ const createStore = (
                 data: data.filter((d) => d._id !== id),
                 rollbackMessage: t('deleteItemConfirm'),
               }))
-              methods.dispatchEvent(Events.Change)
             }
             const event = methods.dispatchEvent(Events.RemoveItem, {
               cancelable: true,
@@ -115,7 +120,6 @@ const createStore = (
               rollbackMessage: null,
               data: previousData,
             }))
-            methods.dispatchEvent(Events.Change)
           },
           voidRollback: function () {
             return set({
@@ -142,7 +146,6 @@ const createStore = (
                 focusIndex: newData._id,
               }
             })
-            methods.dispatchEvent(Events.Change)
             return newData
           },
           dispatchEvent(e: Events, o?: CustomEventInit) {
@@ -158,13 +161,17 @@ const createStore = (
               data: indexify(newData) as EditorComponentData[],
               focusIndex: null,
             })
-            methods.dispatchEvent(Events.Change)
           },
           setDataFromOutside: function (
             newData: Omit<EditorComponentData, '_id'>[]
           ) {
+            // The host replaced the content: the editing state is obsolete
             set({
               data: indexify(newData) as EditorComponentData[],
+              previousData: [],
+              rollbackMessage: null,
+              focusIndex: null,
+              addBlockIndex: null,
             })
           },
           setFocusIndex: function (id: string) {
@@ -181,9 +188,8 @@ const createStore = (
               return
             }
             if (typeof index === 'string') {
-              methods.setAddBlockIndex(
-                state.data.findIndex((v) => v._id === index) ?? 0
-              )
+              const blocIndex = state.data.findIndex((v) => v._id === index)
+              methods.setAddBlockIndex(blocIndex === -1 ? 0 : blocIndex)
               return
             }
             if (index !== null) {
@@ -229,50 +235,11 @@ const StoreContext = createContext<{ store?: Store }>({})
 
 export function StoreProvider({
   children,
-  data,
-  definitions,
-  hiddenCategories,
-  rootElement,
-  templates,
-  insertPosition,
-  devices,
-  onStore,
-  actions,
+  store,
 }: {
   children: ReactElement
-  data: EditorComponentData[]
-  templates: EditorComponentTemplate[]
-  definitions: EditorComponentDefinitions
-  hiddenCategories: string[]
-  rootElement: HTMLElement
-  insertPosition: InsertPosition
-  devices: Device[]
-  actions: Action[]
-  onStore: (s: Store) => void
+  store: Store
 }) {
-  const store = useMemo(
-    () =>
-      createStore(
-        data,
-        definitions,
-        hiddenCategories,
-        rootElement,
-        templates,
-        insertPosition,
-        devices,
-        actions
-      ),
-    [
-      data,
-      definitions,
-      hiddenCategories,
-      rootElement,
-      templates,
-      insertPosition,
-      devices,
-    ]
-  )
-  onStore(store)
   return (
     <StoreContext.Provider value={{ store: store }}>
       {children}

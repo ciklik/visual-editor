@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Compatibility</title>
+  <script type="importmap">
+    { "imports": { "@boxraiser/visual-editor": "/dist/VisualEditor.standalone.js" } }
+  </script>
+  <script type="module">
+    // Host page used by cypress/e2e/compat.cy.js. It reproduces how a production
+    // host (a Vue field of the Ciklik app) uses the library, with its real blocks.
+    import * as lib from '@boxraiser/visual-editor'
+    import { VisualEditor, FR } from '@boxraiser/visual-editor'
+    import { registerBlocs } from '/cypress/fixtures/app/blocs.js'
+    import { ImageField } from '/cypress/fixtures/app/shared.js'
+    import { registerTemplates } from '/cypress/fixtures/app/templates.js'
+
+    const editor = new VisualEditor({ lang: FR })
+    registerBlocs(editor)
+    registerTemplates(editor)
+    editor.defineElement()
+
+    const host = {
+      exports: Object.keys(lib),
+      // detail of every change event received
+      changes: [],
+      // value kept by the host, like the Vue field does with `this.value = v.detail`
+      value: null,
+      // names of the fields submitted with the form
+      submitted: null,
+    }
+    window.host = host
+
+    // The file manager is closed without choosing a file
+    ImageField.filemanagerController.open = () => {
+      setTimeout(() => {
+        ImageField.filemanagerController.reject('close')
+        host.browseRejected = true
+      })
+    }
+
+    // Like Vue, every property and attribute is set before the insertion
+    const el = document.createElement('visual-editor')
+    el.hidden = true
+    el.value = window.initialValue ?? '[]'
+    el.setAttribute('hidden-categories', '')
+    el.setAttribute('iconsUrl', '/images/editor/[name].svg')
+    el.setAttribute('preview', '/preview?tenant=1')
+    el.addEventListener('change', (v) => {
+      host.changes.push(v.detail)
+      host.value = v.detail
+    })
+    el.addEventListener('close', () => (el.hidden = true))
+
+    const form = document.querySelector('form')
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+      host.submitted = Array.from(new FormData(form).keys())
+    })
+    document.querySelector('#toggle').addEventListener('click', () => {
+      el.hidden = !el.hidden
+    })
+    form.appendChild(el)
+    host.ready = true
+  </script>
+</head>
+<body>
+<form action="" method="post">
+  <button id="toggle" type="button">Editeur visuel</button>
+</form>
+</body>
+</html>

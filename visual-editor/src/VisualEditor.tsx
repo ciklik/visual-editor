@@ -10,7 +10,7 @@ import type {
   Translation,
 } from 'src/types'
 import { Layout } from 'src/components/Layout'
-import { Store, StoreProvider, usePartialStore } from 'src/store'
+import { createStore, Store, StoreProvider, usePartialStore } from 'src/store'
 import { indexify, stringifyFields } from 'src/functions/object'
 import { useClipboardPaste } from 'src/hooks/useClipboardPaste'
 import { fillDefaults } from 'src/functions/fields'
@@ -19,6 +19,7 @@ import { BaseStyles } from 'src/components/BaseStyles'
 import { Translations as EN } from 'src/langs/en'
 import { useStopPropagation } from 'src/hooks/useStopPropagation'
 import { InsertPosition } from 'src/enum'
+import { Events } from 'src/constants'
 import {
   Button,
   ButtonIcon,
@@ -81,8 +82,12 @@ export class VisualEditor {
       static changeEventName = 'change'
       // React root
       private _root: Root | null = null
-      // Access zustand store used by the VisualEditor
+      // Access zustand store used by the VisualEditor (one per element)
       private _store: Store | null = null
+      // Last JSON value known by the element (emitted or received)
+      private _lastValue = ''
+      // True while the value comes from the host (no change event)
+      private _silent = false
 
       static get observedAttributes() {
         return ['hidden', 'value']
@@ -113,16 +118,23 @@ export class VisualEditor {
           }
           return
         }
+        // The host sends back the value it received: nothing to do
+        if (typeof v === 'string' && v === this._lastValue) {
+          return
+        }
         const state = this._store.getState()
-        if (typeof v === 'string') {
-          state.setDataFromOutside(this.parseValue(v))
-          return
+        this._silent = true
+        try {
+          if (typeof v === 'string') {
+            state.setDataFromOutside(this.parseValue(v))
+          } else if (typeof v === 'function') {
+            state.setDataFromOutside(v(state.data))
+          } else {
+            state.setDataFromOutside(indexify(v))
+          }
+        } finally {
+          this._silent = false
         }
-        if (typeof v === 'function') {
-          state.setDataFromOutside(v(state.data))
-          return
-        }
-        state.setDataFromOutside(indexify(v))
       }
 
       connectedCallback() {
@@ -134,24 +146,65 @@ export class VisualEditor {
         oldValue?: string,
         newValue?: string
       ) {
-        if (!this._root) {
-          return false
-        }
         // Si la valeur change, on réinitialise la version traduite du JSON
-        if (name === 'value' && newValue) {
-          this.value = newValue
+        if (name === 'value') {
+          if (this._store) {
+            this.value = newValue ?? ''
+          }
           return
         }
-        this.render()
+        if (this._root) {
+          this.render()
+        }
       }
 
       disconnectedCallback() {
         if (!this._root) {
           return
         }
+        // The store is kept so the content survives a move in the DOM
         this._root.unmount()
-        this._store = null
         this._root = null
+      }
+
+      /**
+       * Create the store once, and emit "change" (with the JSON as detail)
+       * every time the data changes from inside the editor
+       */
+      private getStore(): Store {
+        if (this._store) {
+          return this._store
+        }
+        const data = this.parseValue(this.getAttribute('value')?.toString())
+        const store = createStore(
+          data,
+          components,
+          this.getAttribute('hidden-categories')?.split(';') ?? [],
+          this,
+          templates,
+          (this.getAttribute('insertPosition') ??
+            InsertPosition.Start) as InsertPosition,
+          VisualEditor.devices,
+          actions
+        )
+        this._lastValue = stringifyFields(data)
+        store.subscribe((state, prevState) => {
+          if (state.data === prevState.data) {
+            return
+          }
+          const value = stringifyFields(state.data)
+          if (value === this._lastValue) {
+            return
+          }
+          this._lastValue = value
+          if (!this._silent) {
+            this.dispatchEvent(
+              new CustomEvent(Events.Change, { detail: value })
+            )
+          }
+        })
+        this._store = store
+        return store
       }
 
       private parseValue(value?: string): EditorComponentData[] {
@@ -171,29 +224,22 @@ export class VisualEditor {
       }
 
       private render() {
-        const data = this.parseValue(this.getAttribute('value')?.toString())
+        const store = this.getStore()
         const hiddenCategories =
           this.getAttribute('hidden-categories')?.split(';') ?? []
+        if (
+          hiddenCategories.join(';') !==
+          store.getState().hiddenCategories.join(';')
+        ) {
+          store.setState({ hiddenCategories })
+        }
 
         if (!this._root) {
           this._root = createRoot(this)
         }
 
         this._root.render(
-          <StoreProvider
-            data={data}
-            definitions={components}
-            actions={actions}
-            templates={templates}
-            hiddenCategories={hiddenCategories}
-            rootElement={this}
-            devices={VisualEditor.devices}
-            insertPosition={
-              (this.getAttribute('insertPosition') ??
-                InsertPosition.Start) as InsertPosition
-            }
-            onStore={(store) => (this._store = store)}
-          >
+          <StoreProvider store={store}>
             <VisualEditorComponent
               element={this}
               previewUrl={this.getAttribute('preview') ?? ''}
