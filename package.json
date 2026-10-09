@@ -9,6 +9,12 @@
     "ignoredBuiltDependencies": [
       "core-js",
       "core-js-pure"
-    ]
+    ],
+    "overrides": {
+      "postcss-selector-parser@<7.1.6": "^7.1.6",
+      "serialize-javascript@<7.0.5": "^7.0.5",
+      "tinypool@<2.1.2": "^2.1.2",
+      "uuid@<14.0.0": "^14.0.0"
+    }
   }
 }

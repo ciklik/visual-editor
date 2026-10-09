@@ -1,7 +1,8 @@
 version: 2
 updates:
   - package-ecosystem: npm
-    directories: ['/', '/docs', '/visual-editor']
+    # pnpm workspace: Dependabot must run from the root (lockfile and workspace)
+    directory: /
     schedule:
       interval: monthly
     open-pull-requests-limit: 5
