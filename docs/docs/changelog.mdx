@@ -4,16 +4,51 @@ sidebar_position: 10
 
 # Changelog
 
-## 0.2 - 2024/02/01
+## 0.2.1 - 2026/10/09
 
+- Fix: the `change` event carries the JSON of the page in `detail` again (removed in 0.2.0), and is emitted for every change made in the editor, including the preview arrows. It is not emitted when the host sets `value`
+- Fix: one store per element, the content is kept when the editor is hidden and shown again, and `value` can be read right after the element is inserted
+- Fix: the text alignment radios are no longer submitted with the surrounding form (#4)
+- Fix: preview messages are only accepted from the preview iframe and from the editor window
+- Fix: English and French translations
+- Feat: strike, superscript, subscript and inline code in the text toolbar, "New tab" option on links, "No color" in the color palette (#21)
+- Change: links created from the toolbar open in the same tab by default (use the "New tab" option)
+- Security: Tiptap 3.31 (prosemirror-view XSS on paste, linkifyjs) and dependency updates
+- Chore: MIT license, `exports` map in `package.json` (only the entry point, `VisualEditor.js`, `VisualEditor.standalone.js` and `package.json` can be imported), minified standalone build, the playground icons are no longer published
+- Chore: publication to npm with trusted publishing (OIDC) and provenance
+
+## 0.2.0 - 2026/02/12
+
+Not published on npm. Upgrading from 0.1.x, mind these behaviour changes:
+
+- **Breaking**: the `change` event had no `detail` anymore (restored in 0.2.1)
+- **Breaking**: the text toolbar offers h1 headings, and the alignment button is available in multiline fields too: it writes an inline `style="text-align: ..."` on paragraphs and headings
+- **Breaking**: blocks can be moved with up and down arrows in the preview (they emit `change` since 0.2.1)
 - Feat: export UI components
 - Feat: registerButton() method for adding custom button
 - Feat: Add control in the preview
 - Feat: New responsive controls
 - Feat: Add a new `templates` event (cancelable)
 - Feat: Add a new `components` event (cancelable)
-- Chore: Remove `detail` in the change event
 - Fix: key missing on templates listing
+
+## 0.1.4 - 2025/12/01
+
+- Fix: undefined text alignment in the toolbar
+
+## 0.1.3 - 2025/11/19
+
+- Fix: z-index of the text toolbar
+
+## 0.1.2 - 2025/07/24
+
+- Republication of 0.1.1
+
+## 0.1.1 - 2025/07/24
+
+- Feat: Tiptap 3
+- Fix: no default text alignment added by Tiptap
+- Fix: SSR compatibility
 
 ## 0.1.0 - 2023/03/16
 

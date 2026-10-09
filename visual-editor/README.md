@@ -1,9 +1,18 @@
 # Visual Editor
 
-[![npm version](https://badge.fury.io/js/@boxraiser%2Fvisual-editor.svg)](https://badge.fury.io/js/@boxraiser%2Fvisual-editor)
-[![Tests](https://github.com/boxraiser/visual-editor/actions/workflows/test.yml/badge.svg)](https://github.com/boxraiser/visual-editor/actions/workflows/test.yml)
+[![npm version](https://img.shields.io/npm/v/@boxraiser/visual-editor)](https://www.npmjs.com/package/@boxraiser/visual-editor)
+[![Tests](https://github.com/ciklik/visual-editor/actions/workflows/test.yml/badge.svg)](https://github.com/ciklik/visual-editor/actions/workflows/test.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ciklik/visual-editor/blob/main/LICENSE)
 
-[Documentation](http://ciklik.github.io/visual-editor/)
+[Documentation](https://ciklik.github.io/visual-editor/)
+
+## Installation
+
+```bash
+npm install @boxraiser/visual-editor react react-dom
+```
+
+React 18 is a peer dependency. A build with every dependency included is also available as `@boxraiser/visual-editor/VisualEditor.standalone.js`.
 
 ## Getting started
 
@@ -15,15 +24,14 @@ Start by instantiating the editor.
 
 ```js
 import { VisualEditor } from '@boxraiser/visual-editor'
-import '@boxraiser/visual-editor/style.css'
 
-let editor = new VisualEditor()
+const editor = new VisualEditor()
 ```
 
 Then register your page components using the `registerComponent` method that expect 2 parameters
 
 - A unique identifier for the block (string)
-- An option object object (see [EditorComponentDefinition](https://github.com/Grafikart/VisualEditor/blob/master/src/types.ts#L24) for more information)
+- An option object object (see [EditorComponentDefinition](https://github.com/ciklik/visual-editor/blob/main/visual-editor/src/types.ts) for more information)
 
 ```js
 import { HTMLText, Repeater, Text, Row, Select } from '@boxraiser/visual-editor'
@@ -33,16 +41,16 @@ editor.registerComponent('hero', {
   title: 'Hero',
   category: 'Banner',
   fields: [
-    new Text('title', {multiline: false}),
-    new HTMLText('content'),
-    new Repeater('buttons', {
+    Text('title', {multiline: false}),
+    HTMLText('content'),
+    Repeater('buttons', {
       title: 'Boutons',
       addLabel: 'Add a new button',
       fields: [
-        new Row([
-          new Text('label', { label: 'Libellé', default: 'Call to action' }),
-          new Text('url', { label: 'Lien' }),
-          new Select('type', {
+        Row([
+          Text('label', { label: 'Libellé', default: 'Call to action' }),
+          Text('url', { label: 'Lien' }),
+          Select('type', {
             default: 'primary',
             label: 'type',
             options: [
@@ -89,6 +97,18 @@ There are multiple attributes :
 
 The custom element will create a hidden field that will be used to store the data, no need for additional JavaScript you will receive the data when the form is submitted.
 
+### Listening to changes
+
+The element emits a `change` event every time the content is changed by the user. `event.detail` (and `element.value`) contains the JSON of the page.
+
+```js
+document.querySelector('visual-editor').addEventListener('change', (e) => {
+  console.log(JSON.parse(e.detail))
+})
+```
+
+See the [documentation](https://ciklik.github.io/visual-editor/) for the other events, the fields, the templates and the preview.
+
 ### How the data is formatted ?
 
 The data use a simple structure (to be usable with any framework or technology)
@@ -117,7 +137,7 @@ A real world example
   {
     "title": "Album example",
     "titleAlign": "center",
-    "content": "<p>Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>",
+    "content": "<p>Something short and leading about the collection below, its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>",
     "buttons": [
       {
         "label": "Main call to action",
@@ -226,3 +246,7 @@ A real world example
   }
 ]
 ```
+
+## License
+
+[MIT](https://github.com/ciklik/visual-editor/blob/main/LICENSE)

@@ -8,7 +8,7 @@ If you need to create custom behaviour you can listen for some events on the edi
 
 | **Event** | **Description** | **Cancellable** | **Methods** |
 |-----------|-----------------|-------------|-------------|
-| `change` | Fires when the value of the editor is changed by the user | No |  |
+| `change` | Fires when the value of the editor is changed by the user (not when the value is set by the host) | No | **detail** : `string`, the JSON of the page (same as `element.value`) |
 | `templates`  | Fires when the user click on the template button | Yes |  |
 | `components`  | Fires when the user click on the add component button | Yes |  |
 | `removeitem`  | Fires when a bloc is removed | Yes | **detail.confirm** : `() => void`, triggers the intended action (usefull if event was prevented) |

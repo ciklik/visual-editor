@@ -4,8 +4,10 @@ import react from '@vitejs/plugin-react'
 import analyze from 'rollup-plugin-analyzer'
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   define: { 'process.env.NODE_ENV': '"production"' },
+  // The playground icons are not part of the library
+  publicDir: command === 'build' ? false : 'public',
   plugins: [
     react({
       babel: {
@@ -33,7 +35,7 @@ export default defineConfig({
     },
   },
   build: {
-    minify: false,
+    minify: true,
     rollupOptions: {
       plugins: [
         analyze({
@@ -50,4 +52,4 @@ export default defineConfig({
       fileName: () => 'VisualEditor.standalone.js',
     },
   },
-})
+}))
