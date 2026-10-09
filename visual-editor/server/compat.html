@@ -50,7 +50,12 @@
       host.changes.push(v.detail)
       host.value = v.detail
     })
-    el.addEventListener('close', () => (el.hidden = true))
+    // Like Vue, every render of the host sets the initial value again
+    const render = () => (el.value = window.initialValue ?? '[]')
+    el.addEventListener('close', () => {
+      el.hidden = true
+      render()
+    })
 
     const form = document.querySelector('form')
     form.addEventListener('submit', (e) => {
@@ -59,6 +64,7 @@
     })
     document.querySelector('#toggle').addEventListener('click', () => {
       el.hidden = !el.hidden
+      render()
     })
     form.appendChild(el)
     host.ready = true

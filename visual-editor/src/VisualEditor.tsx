@@ -86,6 +86,8 @@ export class VisualEditor {
       private _store: Store | null = null
       // Last JSON value known by the element (emitted or received)
       private _lastValue = ''
+      // Last string value set by the host
+      private _hostValue: string | null = null
       // True while the value comes from the host (no change event)
       private _silent = false
 
@@ -107,6 +109,14 @@ export class VisualEditor {
           | EditorComponentData[]
           | ((v: EditorComponentData[]) => EditorComponentData[])
       ) {
+        if (typeof v === 'string') {
+          // Hosts like Vue set the same value again on every render, only a
+          // new value replaces the content (0.1.x ignored every later value)
+          if (v === this._hostValue) {
+            return
+          }
+          this._hostValue = v
+        }
         if (!this._store) {
           if (!v) {
             this.removeAttribute('value')
@@ -175,7 +185,8 @@ export class VisualEditor {
         if (this._store) {
           return this._store
         }
-        const data = this.parseValue(this.getAttribute('value')?.toString())
+        this._hostValue = this.getAttribute('value')
+        const data = this.parseValue(this._hostValue ?? undefined)
         const store = createStore(
           data,
           components,
