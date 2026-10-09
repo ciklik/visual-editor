@@ -1,0 +1,193 @@
+[
+  {
+    "slides": [
+      {
+        "title": "LA PREMIERE BOX POUR LES PASSIONNES DE LECTURE",
+        "titleAlign": "center",
+        "titleSize": 1,
+        "content": "<p></p><p>Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.</p><p></p>",
+        "video": "",
+        "buttons": [
+          {
+            "label": "S'ABONNER",
+            "url": "/formules",
+            "type": "primary"
+          }
+        ],
+        "flexButtons": false,
+        "mobileLayout": "overlay",
+        "textPosition": "left",
+        "backgroundColor": "",
+        "textColor": "",
+        "background": "/images/placeholder.png",
+        "backgroundMobile": "/images/placeholder.png",
+        "paddingY": 15,
+        "backgroundSize": "cover",
+        "backgroundRepeat": "no-repeat",
+        "backgroundXPosition": "center",
+        "backgroundYPosition": "center"
+      }
+    ],
+    "_name": "hero-big"
+  },
+  {
+    "title": "CHOISISSEZ L'UNIVERS QUI VOUS FAIT VIBRER",
+    "columns": [
+      {
+        "image": "/images/placeholder.png",
+        "body": "<p style=\"text-align: center\">Autobiographies / Livres historiques</p>",
+        "imagePosition": "center",
+        "buttons": [
+          {
+            "label": "Je m'abonne",
+            "url": "/formules",
+            "type": "primary"
+          }
+        ]
+      },
+      {
+        "image": "/images/placeholder.png",
+        "body": "<p style=\"text-align: center\">Livres fantastiques &amp; Fictions</p>",
+        "imagePosition": "center",
+        "buttons": [
+          {
+            "label": "Je m'abonne",
+            "url": "/formules",
+            "type": "primary"
+          }
+        ]
+      },
+      {
+        "image": "/images/placeholder.png",
+        "body": "<p style=\"text-align: center\">Romans d'aventures / Policiers</p>",
+        "imagePosition": "center",
+        "buttons": [
+          {
+            "label": "Je m'abonne",
+            "url": "/formules",
+            "type": "primary"
+          }
+        ]
+      }
+    ],
+    "buttons": [],
+    "mobileColumns": 1,
+    "visibility": "all",
+    "backgroundColor": "",
+    "textColor": "",
+    "background": "",
+    "backgroundMobile": "",
+    "paddingY": 5,
+    "backgroundSize": "cover",
+    "backgroundRepeat": "no-repeat",
+    "backgroundXPosition": "center",
+    "backgroundYPosition": "center",
+    "_name": "columns-with-title"
+  },
+  {
+    "image": "/images/placeholder.png",
+    "title": "UNE SÉLECTION DE LIVRES RIEN QUE POUR VOUS",
+    "titleAlign": "left",
+    "caption": "",
+    "steps": [
+      {
+        "step": "Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.",
+        "image": ""
+      },
+      {
+        "step": "Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.",
+        "image": ""
+      },
+      {
+        "step": "Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.",
+        "image": ""
+      }
+    ],
+    "stepColor": "",
+    "align": "left",
+    "visibility": "all",
+    "backgroundColor": "",
+    "textColor": "",
+    "background": "",
+    "backgroundMobile": "",
+    "paddingY": 0,
+    "backgroundSize": "cover",
+    "backgroundRepeat": "no-repeat",
+    "backgroundXPosition": "center",
+    "backgroundYPosition": "center",
+    "_name": "steps"
+  },
+  {
+    "title": "UNE SÉLECTION PARMI DE NOMBREUX GENRES LITTÉRAIRES",
+    "content": "<p></p>",
+    "columns": [
+      {
+        "icon": "/images/placeholder.png",
+        "title": "ROMAN",
+        "content": "<p></p>"
+      },
+      {
+        "icon": "/images/placeholder.png",
+        "title": "NOUVELLE",
+        "content": "<p></p>"
+      },
+      {
+        "icon": "/images/placeholder.png",
+        "title": "APOLOGUE",
+        "content": "<p></p>"
+      },
+      {
+        "icon": "/images/placeholder.png",
+        "title": "BIOGRAPHIE",
+        "content": "<p></p>"
+      }
+    ],
+    "buttons": [],
+    "layout": "column",
+    "mobileColumns": 1,
+    "visibility": "all",
+    "backgroundColor": "",
+    "textColor": "",
+    "background": "",
+    "backgroundMobile": "",
+    "paddingY": 5,
+    "backgroundSize": "cover",
+    "backgroundRepeat": "no-repeat",
+    "backgroundXPosition": "center",
+    "backgroundYPosition": "center",
+    "_name": "icons-columns"
+  },
+  {
+    "image": "/images/placeholder.png",
+    "video": "",
+    "title": "VOUS NE SEREZ PLUS JAMAIS A COURT DE LIVRES ! A DÉVORER, SANS MODÉRATION !",
+    "titleAlign": "left",
+    "content": "<p>Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.</p>",
+    "icons": [],
+    "buttons": [
+      {
+        "label": "S'ABONNER",
+        "url": "/formules",
+        "type": "primary"
+      }
+    ],
+    "align": "right",
+    "imageSize": 50,
+    "containerWidth": 1000,
+    "checkicon": false,
+    "iconColor": "",
+    "iconsPosition": "left",
+    "iconsColumnMobile": 2,
+    "visibility": "all",
+    "backgroundColor": "",
+    "textColor": "",
+    "background": "",
+    "backgroundMobile": "",
+    "paddingY": 0,
+    "backgroundSize": "cover",
+    "backgroundRepeat": "no-repeat",
+    "backgroundXPosition": "center",
+    "backgroundYPosition": "center",
+    "_name": "text-image"
+  }
+]

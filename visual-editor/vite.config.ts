@@ -28,6 +28,8 @@ export default defineConfig({
   resolve: {
     alias: {
       src: resolve(__dirname, './src'),
+      // Lets the tests import host fixtures written against the npm package
+      '@boxraiser/visual-editor': resolve(__dirname, './src/VisualEditor.tsx'),
     },
   },
   build: {

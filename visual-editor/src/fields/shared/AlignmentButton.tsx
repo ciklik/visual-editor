@@ -8,7 +8,6 @@ type Props<T extends unknown> = {
   checked: boolean
   icon: FunctionComponent
   onChange: (v: T) => void
-  name?: string
 }
 
 export function AlignmentButton<T extends unknown>({
@@ -19,6 +18,7 @@ export function AlignmentButton<T extends unknown>({
 }: Props<T>) {
   return (
     <Button>
+      {/* No name: the radio is controlled and must not be submitted with the host form */}
       <input
         type="radio"
         value={value as string}

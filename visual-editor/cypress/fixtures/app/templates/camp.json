@@ -1,0 +1,174 @@
+[
+  {
+    "slides": [
+      {
+        "title": "L’ÉQUIPEMENT DU PARFAIT CAMPEUR RÉUNI DANS UNE BOX !",
+        "titleAlign": "center",
+        "titleSize": 1,
+        "content": "<p></p>",
+        "video": "",
+        "buttons": [
+          {
+            "label": "S'abonner",
+            "url": "/formules",
+            "type": "primary"
+          }
+        ],
+        "flexButtons": false,
+        "mobileLayout": "overlay",
+        "textPosition": "center",
+        "backgroundColor": "",
+        "textColor": "",
+        "background": "/images/placeholder.png",
+        "backgroundMobile": "/images/placeholder.png",
+        "paddingY": 15,
+        "backgroundSize": "cover",
+        "backgroundRepeat": "no-repeat",
+        "backgroundXPosition": "center",
+        "backgroundYPosition": "center"
+      }
+    ],
+    "_name": "hero-big"
+  },
+  {
+    "title": "Le meilleur de l'équipement pour tous les profils de campeur !",
+    "content": "<p></p>",
+    "columns": [
+      {
+        "icon": "/images/placeholder.png",
+        "title": "Petit futé",
+        "content": "<p></p>"
+      },
+      {
+        "icon": "/images/placeholder.png",
+        "title": "Traditionnel",
+        "content": "<p></p>"
+      },
+      {
+        "icon": "/images/placeholder.png",
+        "title": "Comme à la maison",
+        "content": "<p></p>"
+      },
+      {
+        "icon": "/images/placeholder.png",
+        "title": "A la belle étoile",
+        "content": "<p></p>"
+      }
+    ],
+    "buttons": [],
+    "layout": "column",
+    "mobileColumns": 1,
+    "visibility": "all",
+    "backgroundColor": "",
+    "textColor": "",
+    "background": "",
+    "backgroundMobile": "",
+    "paddingY": 5,
+    "backgroundSize": "cover",
+    "backgroundRepeat": "no-repeat",
+    "backgroundXPosition": "center",
+    "backgroundYPosition": "center",
+    "_name": "icons-columns"
+  },
+  {
+    "title": "",
+    "images": [
+      {
+        "image": "/images/placeholder.png",
+        "content": "<p>Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.</p>"
+      },
+      {
+        "image": "/images/placeholder.png",
+        "content": "<p>Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet.</p>"
+      }
+    ],
+    "visibility": "all",
+    "backgroundColor": "",
+    "textColor": "",
+    "background": "",
+    "backgroundMobile": "",
+    "paddingY": 5,
+    "backgroundSize": "cover",
+    "backgroundRepeat": "no-repeat",
+    "backgroundXPosition": "center",
+    "backgroundYPosition": "center",
+    "_name": "images-hoverable"
+  },
+  {
+    "image": "",
+    "video": "",
+    "title": "Un équipement sur-mesure selon votre profil de campeur livré chez vous !",
+    "titleAlign": "center",
+    "content": "<p></p>",
+    "icons": [],
+    "buttons": [
+      {
+        "label": "S'abonner",
+        "url": "/formules",
+        "type": "primary"
+      }
+    ],
+    "align": "bottom",
+    "imageSize": 50,
+    "containerWidth": 1000,
+    "checkicon": false,
+    "iconColor": "",
+    "iconsPosition": "left",
+    "iconsColumnMobile": 2,
+    "visibility": "all",
+    "backgroundColor": "",
+    "textColor": "",
+    "background": "",
+    "backgroundMobile": "",
+    "paddingY": 0,
+    "backgroundSize": "cover",
+    "backgroundRepeat": "no-repeat",
+    "backgroundXPosition": "center",
+    "backgroundYPosition": "center",
+    "_name": "text-image"
+  },
+  {
+    "title": "REJOIGNEZ L'AVENTURE",
+    "content": "<p></p>",
+    "titleLeft": true,
+    "facebook": "#",
+    "instagram": "#",
+    "pinterest": "#",
+    "youtube": "#",
+    "twitter": "#",
+    "tiktok": "#",
+    "instagramSource": false,
+    "images": [
+      {
+        "image": "/images/placeholder.png"
+      },
+      {
+        "image": "/images/placeholder.png"
+      },
+      {
+        "image": "/images/placeholder.png"
+      },
+      {
+        "image": "/images/placeholder.png"
+      },
+      {
+        "image": "/images/placeholder.png"
+      },
+      {
+        "image": "/images/placeholder.png"
+      }
+    ],
+    "highlight": false,
+    "visibility": "all",
+    "backgroundColor": "",
+    "textColor": "",
+    "background": "",
+    "backgroundMobile": "",
+    "paddingY": 1,
+    "backgroundSize": "cover",
+    "backgroundRepeat": "no-repeat",
+    "backgroundXPosition": "center",
+    "backgroundYPosition": "center",
+    "_name": "gallery"
+  }
+]

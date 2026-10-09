@@ -3,7 +3,7 @@ import type { Translation } from 'src/types'
 export const Translations: Translation = {
   unknownComponent: 'Unknown component',
   deleteComponent: 'Remove component',
-  copyPage: 'Copier le code de la page',
+  copyPage: 'Copy the page code',
   copyComponent: 'Copy the component',
   searchComponent: 'Search a component',
   copySuccess: 'The code has been copied',

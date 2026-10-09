@@ -1,10 +1,10 @@
 export const Translations = {
   copyPage: 'Copier le code de la page',
   deleteComponent: 'Supprimer le bloc',
-  copyComponent: 'Copier le  bloc',
+  copyComponent: 'Copier le bloc',
   searchComponent: 'Rechercher un bloc',
-  copySuccess: 'Le code a bién été copié',
-  copyInstructions: 'vous pouvez le coller sur une autre page (CTRL + V)',
+  copySuccess: 'Le code a bien été copié',
+  copyInstructions: 'Vous pouvez le coller sur une autre page (CTRL + V)',
   addComponent: 'Ajouter un bloc',
   responsiveView: 'Vue responsive',
   addItem: 'Ajouter un élément',
@@ -16,5 +16,5 @@ export const Translations = {
   close: 'Fermer',
   poweredBy: 'Propulsé par',
   noContent: `Vous n'avez pas encore de contenu`,
-  useTemplate: 'Utilisez un template',
+  useTemplate: 'Utiliser un modèle',
 }
