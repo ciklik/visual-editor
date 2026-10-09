@@ -1,3 +1,7 @@
 packages:
   - docs/
   - visual-editor
+
+# Same release age gate as Dependabot (3 days): the lockfile never holds a
+# version Dependabot refuses to resolve
+minimumReleaseAge: 4320
