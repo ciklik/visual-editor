@@ -1,6 +1,10 @@
 {
   "private": true,
   "packageManager": "pnpm@10.34.6",
+  "scripts": {
+    "release:prepare": "node scripts/release-prepare.mjs",
+    "release:notes": "node scripts/release-notes.mjs"
+  },
   "pnpm": {
     "onlyBuiltDependencies": [
       "cypress",

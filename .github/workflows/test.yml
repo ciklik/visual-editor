@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   pull_request:
+  # Called by publish.yml before a release
+  workflow_call:
 
 permissions:
   contents: read
