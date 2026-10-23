@@ -1,20 +1,17 @@
 import { Button, IconCirclePlus } from 'src/components/ui'
 import React, { SyntheticEvent } from 'react'
 import styled from '@emotion/styled'
+import { t } from 'src/functions/i18n'
 
 type PreviewAddButtonProps = {
   onClick?: (e: SyntheticEvent) => void
 }
 
 export function PreviewAddButton({ onClick }: PreviewAddButtonProps) {
-
   return (
     <Wrapper>
-      <Button
-        icon={IconCirclePlus}
-        onClick={onClick}
-      >
-        Ajouter un bloc
+      <Button icon={IconCirclePlus} onClick={onClick}>
+        {t('addComponent')}
       </Button>
     </Wrapper>
   )

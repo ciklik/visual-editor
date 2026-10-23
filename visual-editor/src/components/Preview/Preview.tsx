@@ -1,7 +1,6 @@
 import { EditorComponentData } from 'src/types'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useAsyncEffect } from 'src/hooks/useAsyncEffect'
 import { useWindowSize } from 'react-use'
 import { PHONE_HEIGHT } from 'src/constants'
 import { Spinner } from 'src/components/ui'
@@ -28,33 +27,48 @@ export function Preview({ previewUrl }: PreviewProps) {
   const getData = useGetData()
 
   // Gère le chargement de la preview initiale
-  useAsyncEffect(async () => {
-    const data = getData()
-    // On génère le premier rendu de la page complète
-    const r = await fetch(previewUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-    if (!r.ok) {
-      return
-    }
+  useEffect(() => {
+    // The editor can be closed before the preview is loaded
+    const controller = new AbortController()
+    const load = async () => {
+      const data = getData()
+      // On génère le premier rendu de la page complète
+      const r = await fetch(previewUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(data),
+        signal: controller.signal,
+      })
+      if (!r.ok) {
+        return
+      }
+      const html = await r.text()
+      const iframeDocument = iframe.current?.contentDocument
+      if (controller.signal.aborted || !iframeDocument) {
+        return
+      }
 
-    // On écrit le contenu dans l'iframe
-    const iframeDocument = iframe.current!.contentDocument!
-    iframeDocument.open()
-    iframeDocument.write(await r.text())
-    iframeDocument.close()
-    const root = iframeDocument.querySelector('#ve-components') as HTMLElement
-    initialHTML.current = Array.from(root.children).reduce(
-      (acc, v, k) => ({ ...acc, [data[k]!._id]: v.outerHTML }),
-      {}
-    )
-    root.innerHTML = ''
-    setIframeRoot(root)
+      // On écrit le contenu dans l'iframe
+      iframeDocument.open()
+      iframeDocument.write(html)
+      iframeDocument.close()
+      const root = iframeDocument.querySelector('#ve-components') as HTMLElement
+      initialHTML.current = Array.from(root.children).reduce(
+        (acc, v, k) => ({ ...acc, [data[k]!._id]: v.outerHTML }),
+        {}
+      )
+      root.innerHTML = ''
+      setIframeRoot(root)
+    }
+    load().catch((e) => {
+      if (!controller.signal.aborted) {
+        throw e
+      }
+    })
+    return () => controller.abort()
   }, [])
 
   return (

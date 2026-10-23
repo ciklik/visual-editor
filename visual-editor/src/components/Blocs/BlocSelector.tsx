@@ -11,8 +11,6 @@ import { BlocSelectorSearch } from 'src/components/Blocs/BlocSelectorSearch'
 import { BlocSelectorGrid } from 'src/components/Blocs/BlocSelectorGrid'
 import { t } from 'src/functions/i18n'
 
-const ALL_TAB = 'Tous les blocs'
-
 type BlocSelectorProps = {
   iconsUrl: string
 }
@@ -26,9 +24,10 @@ export function BlocSelector({ iconsUrl }: BlocSelectorProps) {
     'hiddenCategories'
   )
   const addBlock = useAddBlock()
+  const allTab = t('allBlocks')
   const categories = useMemo(() => {
     return [
-      ALL_TAB,
+      allTab,
       ...Object.values(definitions)
         .filter((d) => d.category)
         .filter((d) => !hiddenCategories.includes(d.category ?? ''))
@@ -37,7 +36,7 @@ export function BlocSelector({ iconsUrl }: BlocSelectorProps) {
           [] as string[]
         ),
     ]
-  }, [definitions])
+  }, [definitions, allTab])
 
   useEffect(() => {
     setSearch('')
@@ -66,7 +65,14 @@ export function BlocSelector({ iconsUrl }: BlocSelectorProps) {
                 (key) =>
                   !hiddenCategories.includes(definitions[key]!.category ?? '')
               )
-              .filter(searchDefinition(search ?? '', category, definitions))
+              .filter(
+                searchDefinition(
+                  search ?? '',
+                  category === allTab,
+                  category,
+                  definitions
+                )
+              )
               .map((key) => (
                 <BlocSelectorItem
                   key={key}
@@ -85,12 +91,14 @@ export function BlocSelector({ iconsUrl }: BlocSelectorProps) {
 
 function searchDefinition(
   search: string,
+  allCategories: boolean,
   category: string,
   definitions: EditorComponentDefinitions
 ) {
   return (key: string) => {
-    const categoryFilter =
-      category === ALL_TAB ? true : definitions[key]!.category === category
+    const categoryFilter = allCategories
+      ? true
+      : definitions[key]!.category === category
     const searchFilter =
       search === ''
         ? true

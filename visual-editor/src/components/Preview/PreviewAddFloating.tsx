@@ -1,6 +1,7 @@
 import React, { CSSProperties, SyntheticEvent } from 'react'
 import styled from '@emotion/styled'
 import { UnstyledButton } from 'src/components/ui'
+import { t } from 'src/functions/i18n'
 
 type PreviewAddFloatingProps = {
   onClick?: (e: SyntheticEvent) => void
@@ -13,7 +14,7 @@ export function PreviewAddFloating({
 }: PreviewAddFloatingProps) {
   return (
     <Button onClick={onClick} style={style}>
-      <span>Ajouter un bloc</span>
+      <span>{t('addComponent')}</span>
     </Button>
   )
 }
@@ -21,12 +22,13 @@ export function PreviewAddFloating({
 const Button = styled(UnstyledButton)({
   position: 'absolute',
   top: 0,
-  left: 0,
-  right: 0,
+  // The clickable area stays in the middle third, away from the block name
+  // (left) and the move / delete buttons (right) that sit on the same edge
+  left: '33%',
+  right: '33%',
   marginTop: '-40px',
   marginBottom: '-40px',
   opacity: 0,
-  width: '100%',
   height: '80px',
   display: 'flex',
   alignItems: 'center',
@@ -39,10 +41,12 @@ const Button = styled(UnstyledButton)({
   '&::before': {
     content: "''",
     height: '2px',
-    width: '100%',
+    // The line still spans the whole block (the button is a third of it)
+    width: '300%',
     position: 'absolute',
     top: 'calc(50% - 1px)',
-    left: '0',
+    left: '-100%',
+    pointerEvents: 'none',
     zIndex: 101,
     backgroundColor: 'var(--ve-primary)',
   },
