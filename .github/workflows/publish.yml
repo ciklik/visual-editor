@@ -1,21 +1,131 @@
 name: Publish
 
-# Publishes visual-editor/dist to npm with trusted publishing (OIDC)
-# A manual run must target a tag ("Use workflow from" > tag)
+# Releases @boxraiser/visual-editor when the version of
+# visual-editor/package.json changes on main: tests, tag, npm publication with
+# trusted publishing (OIDC) and provenance, then the GitHub release.
+#
+# The file name is declared as the trusted publisher on npmjs.com: renaming it
+# breaks the publication.
+#
+# Other entry points:
+# - manual run on main: releases the current version if it has no tag yet
+# - tag X.Y.Z pushed by hand, or manual run on a tag: publishes that tag
+#   (fallback, also used to retry a failed publication)
 on:
   push:
+    branches: [main]
+    paths: [visual-editor/package.json]
     tags:
       - '[0-9]+.[0-9]+.[0-9]+*'
   workflow_dispatch:
 
-permissions:
-  contents: read
-  id-token: write
+permissions: {}
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
 
 jobs:
-  publish:
-    if: github.ref_type == 'tag'
+  prepare:
+    name: Check the version
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      release: ${{ steps.check.outputs.release }}
+      version: ${{ steps.check.outputs.version }}
+      create_tag: ${{ steps.check.outputs.create_tag }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Decide what to release
+        id: check
+        env:
+          EVENT: ${{ github.event_name }}
+          REF_TYPE: ${{ github.ref_type }}
+          REF_NAME: ${{ github.ref_name }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          fail() { echo "::error::$1"; exit 1; }
+          version=$(node -p "require('./visual-editor/package.json').version")
+          name=$(node -p "require('./visual-editor/package.json').name")
+
+          if [ "$REF_TYPE" = tag ]; then
+            [ "$version" = "$REF_NAME" ] || fail "Tag $REF_NAME does not match package version $version"
+            create_tag=false
+          elif [ "$REF_NAME" = main ]; then
+            if [ "$EVENT" = push ] && git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+              previous=$(git show "$BEFORE:visual-editor/package.json" | node -p "JSON.parse(require('fs').readFileSync(0, 'utf8')).version")
+              if [ "$previous" = "$version" ]; then
+                echo "Version $version unchanged, nothing to release"
+                echo "release=false" >> "$GITHUB_OUTPUT"
+                exit 0
+              fi
+              echo "Version $previous -> $version"
+            fi
+            [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || fail "Version $version is not X.Y.Z"
+            if git ls-remote --exit-code --tags origin "refs/tags/$version" > /dev/null; then
+              fail "Tag $version already exists: bump the version, or run this workflow on the tag to retry"
+            fi
+            create_tag=true
+          else
+            fail "Run this workflow on main or on a tag"
+          fi
+
+          published=$(npm view "$name@$version" version 2>/dev/null || true)
+          [ -z "$published" ] || fail "$name@$version is already on npm"
+
+          {
+            echo "release=true"
+            echo "version=$version"
+            echo "create_tag=$create_tag"
+          } >> "$GITHUB_OUTPUT"
+
+  test:
+    name: Tests
+    needs: prepare
+    if: needs.prepare.outputs.release == 'true'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/test.yml
+
+  tag:
+    name: Create the tag
+    needs: [prepare, test]
+    if: needs.prepare.outputs.create_tag == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      # Fails if the tag exists. A tag created with GITHUB_TOKEN does not
+      # start another run of this workflow.
+      - name: Tag the released commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: gh api "repos/$GITHUB_REPOSITORY/git/refs" -f ref="refs/tags/$VERSION" -f sha="$GITHUB_SHA"
+
+  publish:
+    name: Publish to npm
+    needs: [prepare, test, tag]
+    if: >-
+      !cancelled()
+      && needs.prepare.outputs.release == 'true'
+      && needs.test.result == 'success'
+      && (needs.tag.result == 'success'
+        || (needs.tag.result == 'skipped' && needs.prepare.outputs.create_tag == 'false'))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -29,11 +139,18 @@ jobs:
           node-version: 24
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
-      - name: Check the tag matches the package version
+      - name: Check the version
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
         run: |
           version=$(node -p "require('./visual-editor/package.json').version")
-          if [ "$version" != "$GITHUB_REF_NAME" ]; then
-            echo "Tag $GITHUB_REF_NAME does not match package version $version"
+          name=$(node -p "require('./visual-editor/package.json').name")
+          if [ "$version" != "$VERSION" ]; then
+            echo "::error::Checked out version $version, expected $VERSION"
+            exit 1
+          fi
+          if [ -n "$(npm view "$name@$version" version 2>/dev/null || true)" ]; then
+            echo "::error::$name@$version is already on npm"
             exit 1
           fi
       - name: Install dependencies
@@ -46,3 +163,36 @@ jobs:
         env:
           # Fallback only: empty unless an NPM_TOKEN secret exists, OIDC is used first
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  release:
+    name: Create the GitHub release
+    needs: [prepare, publish]
+    if: ${{ !cancelled() && needs.publish.result == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+      # Changelog section of the version, or the commits since the previous tag
+      - name: Write the release notes
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: node scripts/release-notes.mjs "$VERSION" "$GITHUB_SHA" | tee notes.md
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          if gh release view "$VERSION" > /dev/null 2>&1; then
+            echo "Release $VERSION already exists"
+          else
+            gh release create "$VERSION" --verify-tag --title "$VERSION" --notes-file notes.md
+          fi

@@ -24,3 +24,13 @@ To run Cypress against another port: start `php -S localhost:8765` in `visual-ed
 - Commit messages follow the existing style: `feat:`, `fix:`, `chore:`, `docs:`, `test:`...
 - Keep the public API and the stored JSON format stable. `cypress/e2e/compat.cy.js` replays how an existing host uses the library: if it fails, the change breaks existing users and must be discussed first.
 - Add or update the documentation in `docs/docs/` and an entry in `docs/docs/changelog.mdx`.
+
+## Releasing
+
+A release is a pull request that changes the version:
+
+```bash
+pnpm release:prepare patch   # or minor, major, X.Y.Z
+```
+
+The script bumps `visual-editor/package.json` and adds the version section to `docs/docs/changelog.mdx`, prefilled with the commits since the last tag. Edit the entries, commit `bump: X.Y.Z` and open the pull request to `main`. When it is merged, the `Publish` workflow runs the tests, creates the `X.Y.Z` tag, publishes the package to npm with provenance and creates the GitHub release from the changelog section. Details and the fallbacks are in [RELEASING.md](RELEASING.md).
