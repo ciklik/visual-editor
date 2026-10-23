@@ -7,6 +7,7 @@ import {
   KeyboardEventHandler,
   PropsWithChildren,
   useEffect,
+  useRef,
   useState,
 } from 'react'
 import { TiptapToolbarAlign } from 'src/components/Editor/TiptapEditor/TiptapToolbarAlign'
@@ -29,6 +30,7 @@ import { TiptapToolbarButton as Button } from './TiptapToolbarButton'
 import { TiptapColorPicker } from 'src/components/Editor/TiptapEditor/TiptapColorPicker'
 import { TiptapToolbarFormats } from 'src/components/Editor/TiptapEditor/TiptapToolbarFormats'
 import { usePartialStore } from 'src/store'
+import { t } from 'src/functions/i18n'
 
 type TiptapToolbarProps = {
   editor: Editor
@@ -104,26 +106,35 @@ function ToolbarLink({
   onSubmit: (link: string, newTab: boolean) => boolean
   onCancel: Function
 }) {
-  const handleKeyDown: KeyboardEventHandler = (e) => {
-    if (e.key === 'Escape') {
-      onCancel()
-    }
-  }
+  const input = useRef<HTMLInputElement>(null)
+  const newTab = useRef<HTMLInputElement>(null)
 
-  const handleSubmit: FormEventHandler = (e) => {
-    const form = e.target as HTMLFormElement
-    const input = form.elements.namedItem('link') as HTMLInputElement
-    const data = new FormData(form)
-    const link = data.get('link')?.toString().trim()
+  // No <form> here: the editor usually sits inside the form of the host page,
+  // and a submit event (even prevented) reaches the listeners of that page
+  const submit = () => {
+    const field = input.current!
+    const link = field.value.trim()
     if (!link) {
       onCancel()
       return
     }
     // "www.example.com/page" would be rejected (or saved as a relative link)
     const href = /^www\./i.test(link) ? `https://${link}` : link
-    if (!onSubmit(href, data.get('newTab') === 'on')) {
-      input.setCustomValidity('Invalid URL, add "https://"')
-      input.reportValidity()
+    if (!onSubmit(href, newTab.current!.checked)) {
+      field.setCustomValidity(t('linkInvalid'))
+      field.reportValidity()
+    }
+  }
+
+  const handleKeyDown: KeyboardEventHandler = (e) => {
+    if (e.key === 'Escape') {
+      onCancel()
+    }
+    if (e.key === 'Enter') {
+      // Enter must not submit the host form
+      e.preventDefault()
+      e.stopPropagation()
+      submit()
     }
   }
 
@@ -131,24 +142,21 @@ function ToolbarLink({
     (e.target as HTMLInputElement).setCustomValidity('')
 
   return (
-    <Flex
-      as="form"
-      gap={0.5}
-      onKeyDown={handleKeyDown}
-      onSubmit={prevent(handleSubmit)}
-    >
+    <Flex gap={0.5} onKeyDown={handleKeyDown}>
       <LinkInput
-        name="link"
+        ref={input}
         type="text"
         placeholder="https://..."
         onInput={clearValidity}
         autoFocus
       />
-      <LinkOption title="Open the link in a new tab">
-        <input type="checkbox" name="newTab" />
-        New tab
+      <LinkOption title={t('linkNewTabTitle')}>
+        <input ref={newTab} type="checkbox" />
+        {t('linkNewTab')}
       </LinkOption>
-      <Button>Ok</Button>
+      <Button type="button" onClick={prevent(submit)}>
+        {t('linkSubmit')}
+      </Button>
     </Flex>
   )
 }
@@ -177,7 +185,7 @@ function ToolbarButtons({
             editor.chain().focus().toggleOrderedList().run()
           )}
           active={editor.isActive('orderedList')}
-          title="Ordered List"
+          title={t('orderedList')}
         >
           <IconOrderedList size={iconSize} />
         </Button>
@@ -188,7 +196,7 @@ function ToolbarButtons({
             editor.chain().focus().toggleBulletList().run()
           )}
           active={editor.isActive('bulletList')}
-          title="Unordered List"
+          title={t('bulletList')}
         >
           <IconList size={iconSize} />
         </Button>
@@ -199,7 +207,7 @@ function ToolbarButtons({
             editor.chain().focus().toggleBlockquote().run()
           )}
           active={editor.isActive('blockquote')}
-          title="Blockquote"
+          title={t('blockquote')}
         >
           <IconQuote size={iconSize} />
         </Button>
@@ -210,35 +218,35 @@ function ToolbarButtons({
       <Button
         onClick={prevent(() => editor.chain().focus().toggleBold().run())}
         active={editor.isActive('bold')}
-        title="Bold"
+        title={t('bold')}
       >
         <IconBold size={iconSize} />
       </Button>
       <Button
         onClick={prevent(() => editor.chain().focus().toggleItalic().run())}
         active={editor.isActive('italic')}
-        title="Italic"
+        title={t('italic')}
       >
         <IconItalic size={iconSize} />
       </Button>
       <Button
         onClick={prevent(() => editor.chain().focus().toggleUnderline().run())}
         active={editor.isActive('underline')}
-        title="Underline"
+        title={t('underline')}
       >
         <IconUnderline size={iconSize} />
       </Button>
       <Button
         onClick={prevent(() => editor.chain().focus().toggleHighlight().run())}
         active={editor.isActive('highlight')}
-        title="Mark"
+        title={t('highlight')}
       >
         <IconMark size={iconSize} />
       </Button>
       <Button
         onClick={prevent(() => editor.chain().focus().toggleStrike().run())}
         active={editor.isActive('strike')}
-        title="Strike"
+        title={t('strike')}
       >
         <IconStrike size={iconSize} />
       </Button>
@@ -248,11 +256,11 @@ function ToolbarButtons({
       <Button
         onClick={prevent(toggleLink)}
         active={editor.isActive('link')}
-        title="Link"
+        title={t('link')}
       >
         <IconLink size={iconSize} />
       </Button>
-      <Button onClick={prevent(clearFormat)} title="Clear">
+      <Button onClick={prevent(clearFormat)} title={t('clearFormat')}>
         <IconClear size={iconSize} />
       </Button>
     </>

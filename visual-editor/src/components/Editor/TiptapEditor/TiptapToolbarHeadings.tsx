@@ -4,6 +4,7 @@ import { Editor } from '@tiptap/core'
 import { TiptapToolbarButton as Button } from './TiptapToolbarButton'
 import { TiptapDropdown as Dropdown } from './TiptapDropdown'
 import { prevent } from 'src/functions/functions'
+import { t } from 'src/functions/i18n'
 
 type Level = 1 | 2 | 3 | 4 | 5 | 6
 
@@ -30,7 +31,11 @@ export const TiptapToolbarHeadings: FunctionComponent<{ editor: Editor }> = ({
 
   return (
     <Dropdown size={levels.length + 1}>
-      <Button active={!!currentLevel} onClick={clickHandler(currentLevel)}>
+      <Button
+        active={!!currentLevel}
+        onClick={clickHandler(currentLevel)}
+        title={currentLevel ? `${t('heading')} ${currentLevel}` : t('heading')}
+      >
         <IconHeading size={16} level={currentLevel} />
       </Button>
       {levels.map((level) => (
@@ -39,6 +44,7 @@ export const TiptapToolbarHeadings: FunctionComponent<{ editor: Editor }> = ({
           active={level === currentLevel}
           onClick={clickHandler(level)}
           css={{ height: 30 }}
+          title={`${t('heading')} ${level}`}
         >
           <IconHeading size={16} level={level} />
         </Button>

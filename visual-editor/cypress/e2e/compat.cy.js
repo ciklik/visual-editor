@@ -304,4 +304,101 @@ describe('Compatibility with a production host', () => {
     cy.contains('button', 'Sauvegarder').click()
     cy.window().its('host.submitted').should('deep.equal', [])
   })
+
+  it('applies a link with Enter without submitting the host form', () => {
+    visit()
+    openEditor()
+    addBloc('Texte formaté')
+    cy.get('.ProseMirror').first().click()
+    cy.get('.ProseMirror').first().type('{selectall}')
+    cy.get('.WysiwygToolbar button[title="Lien"]').click()
+    cy.contains('.WysiwygToolbar label', 'Nouvel onglet').should(
+      'have.attr',
+      'title',
+      'Ouvrir le lien dans un nouvel onglet'
+    )
+    changeCount().then((count) => {
+      cy.focused().type('www.example.com{enter}')
+      expectNewChange(count, (data) =>
+        expect(data[0].content).to.contain('href="https://www.example.com"')
+      )
+    })
+    cy.window().its('host.submitEvents').should('equal', 0)
+    cy.window().should((win) => expect(win.host.submitted).to.equal(null))
+  })
+
+  it('does not submit the host form with Enter in a text field', () => {
+    visit()
+    openEditor()
+    addBloc('Avis google')
+    cy.contains('label', "ID de l'établissement sur Google")
+      .parent()
+      .find('input')
+      .first()
+      .type('abc{enter}')
+    cy.window().its('host.submitEvents').should('equal', 0)
+    lastChange().then((data) => expect(data[0].placeId).to.equal('abc'))
+  })
+
+  it('shows the text toolbar in French', () => {
+    visit()
+    openEditor()
+    addBloc('Texte formaté')
+    cy.get('.ProseMirror').first().click()
+    cy.get('.ProseMirror').first().type('{selectall}')
+    for (const title of ['Gras', 'Italique', 'Souligné', 'Barré', 'Lien']) {
+      cy.get(`.WysiwygToolbar button[title="${title}"]`).should('exist')
+    }
+    cy.get('.WysiwygToolbar [title="Bold"]').should('not.exist')
+  })
+
+  it('can be closed before the preview is loaded', () => {
+    cy.intercept('POST', '/preview*', (req) => {
+      req.reply({
+        delay: 1500,
+        body: '<html><body><main id="ve-components"></main></body></html>',
+      })
+    }).as('slowPreview')
+    cy.visit('/server/compat.html')
+    cy.window().its('host.ready').should('be.true')
+    openEditor()
+    cy.get('[aria-label="Fermer"]').click()
+    cy.wait('@slowPreview')
+    // An uncaught error would fail the test
+    cy.wait(300)
+  })
+
+  it('keeps the move buttons of the preview away from the add zone', () => {
+    cy.fixture('app/templates/camp.json').then((camp) => {
+      visit(JSON.stringify(camp))
+      openEditor()
+      cy.wait('@previewPage')
+      previewFrame().find('button[title="Monter le bloc"]').should('exist')
+      cy.get('iframe').then(($iframe) => {
+        const doc = $iframe[0].contentDocument
+        const buttons = doc.querySelectorAll('button[title="Monter le bloc"]')
+        expect(buttons.length).to.be.greaterThan(1)
+        let checked = 0
+        buttons.forEach((up) => {
+          const r = up.getBoundingClientRect()
+          // Around the buttons (left, above, between): never the add zone
+          const points = [
+            [r.left - 6, r.top + r.height / 2],
+            [r.left + r.width / 2, r.top - 6],
+            [r.right + 1, r.top + r.height / 2],
+          ]
+          for (const [x, y] of points) {
+            const hit = doc.elementFromPoint(x, y)
+            if (hit) {
+              checked++
+            }
+            expect(hit?.closest('button')?.textContent ?? '').not.to.contain(
+              'Ajouter un bloc'
+            )
+          }
+        })
+        expect(checked, 'points inside the preview').to.be.greaterThan(2)
+      })
+    })
+  })
 })

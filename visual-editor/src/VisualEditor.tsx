@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import type {
   Action,
@@ -14,6 +14,7 @@ import { createStore, Store, StoreProvider, usePartialStore } from 'src/store'
 import { indexify, stringifyFields } from 'src/functions/object'
 import { useClipboardPaste } from 'src/hooks/useClipboardPaste'
 import { fillDefaults } from 'src/functions/fields'
+import { t } from 'src/functions/i18n'
 import { useStateDelayed } from 'src/hooks/useStateDelayed'
 import { BaseStyles } from 'src/components/BaseStyles'
 import { Translations as EN } from 'src/langs/en'
@@ -35,9 +36,9 @@ import {
 const components: EditorComponentDefinitions = {}
 const templates: EditorComponentTemplate[] = []
 const actions: Action[] = []
-const defaultDevices: Device[] = [
-  { name: 'Mobile', width: 390, height: '100%', icon: 'mobile' },
-  { name: 'Desktop', width: '100%', height: '100%', icon: 'desktop' },
+const defaultDevices = (): Device[] => [
+  { name: t('deviceMobile'), width: 390, height: '100%', icon: 'mobile' },
+  { name: t('deviceDesktop'), width: '100%', height: '100%', icon: 'desktop' },
 ]
 
 export { PreviewWrapper } from './elements/PreviewWrapper'
@@ -60,7 +61,7 @@ export class VisualEditor {
     } = {}
   ) {
     VisualEditor.i18n = options.lang ?? EN
-    VisualEditor.devices = options.devices ?? defaultDevices
+    VisualEditor.devices = options.devices ?? defaultDevices()
     VisualEditor.postMessagePreview = options.postMessagePreview ?? false
   }
 
@@ -291,6 +292,7 @@ export function VisualEditorComponent({
   // We want to avoid bubbling change & close event
   const div = useRef<HTMLDivElement>(null)
   useStopPropagation(div, ['change', 'close'])
+  usePreventImplicitSubmit(div)
 
   if (!visible) {
     return <HiddenTextarea name={name} />
@@ -308,6 +310,26 @@ export function VisualEditorComponent({
       <HiddenTextarea name={name} />
     </div>
   )
+}
+
+/**
+ * The editor usually sits inside the form of the host page: Enter in one of
+ * its inputs must not submit that form
+ */
+function usePreventImplicitSubmit(ref: React.RefObject<HTMLElement>) {
+  useEffect(() => {
+    const element = ref.current
+    if (!element) {
+      return
+    }
+    const listener = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && e.target instanceof HTMLInputElement) {
+        e.preventDefault()
+      }
+    }
+    element.addEventListener('keydown', listener)
+    return () => element.removeEventListener('keydown', listener)
+  })
 }
 
 function HiddenTextarea({ name }: { name: string }) {

@@ -6,6 +6,7 @@ import styled from '@emotion/styled'
 import { prevent } from 'src/functions/functions'
 import { useToggle } from 'src/hooks/useToggle'
 import { Styles } from 'src/components/ui'
+import { t } from 'src/functions/i18n'
 
 type Props = {
   editor: Editor
@@ -44,7 +45,7 @@ export function TiptapColorPicker({ editor, colors }: Props) {
 
   return (
     <div css={{ position: 'relative' }}>
-      <Button onClick={prevent(toggleExpanded)} title="Color">
+      <Button onClick={prevent(toggleExpanded)} title={t('color')}>
         <svg
           width={16}
           height={16}
@@ -120,7 +121,7 @@ export function Palette({
   const changeHandler = (color: string | null) => prevent(() => onChange(color))
   return (
     <PaletteWrapper size={colors.length + 1}>
-      <PaletteItemReset onClick={changeHandler(null)} title="No color" />
+      <PaletteItemReset onClick={changeHandler(null)} title={t('noColor')} />
       {colors.map((color) => (
         <PaletteItem
           key={color}

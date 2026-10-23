@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { PreviewAddFloating } from 'src/components/Preview/PreviewAddFloating'
 import { IconDown, IconTrash, IconUp } from 'src/components/ui'
 import { prevent } from 'src/functions/functions'
+import { t } from 'src/functions/i18n'
 
 type Props = {
   title?: string
@@ -42,6 +43,7 @@ export const PreviewItemWrapper = forwardRef<HTMLDivElement, Props>(
         <PreviewItemHeader isFocused={isFocused}>
           <PreviewButton
             onClick={prevent(() => onMove(-1))}
+            title={t('moveUp')}
             style={{
               marginLeft: 'auto',
             }}
@@ -50,6 +52,7 @@ export const PreviewItemWrapper = forwardRef<HTMLDivElement, Props>(
           </PreviewButton>
           <PreviewButton
             onClick={prevent(() => onMove(1))}
+            title={t('moveDown')}
             style={{
               marginLeft: 'auto',
             }}
@@ -58,6 +61,7 @@ export const PreviewItemWrapper = forwardRef<HTMLDivElement, Props>(
           </PreviewButton>
           <PreviewButton
             onClick={handleDelete}
+            title={t('deleteComponent')}
             style={{
               backgroundColor: 'var(--ve-danger)',
             }}

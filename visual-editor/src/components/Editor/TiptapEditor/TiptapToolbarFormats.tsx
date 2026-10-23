@@ -4,23 +4,25 @@ import { prevent } from 'src/functions/functions'
 import { TiptapDropdown as Dropdown } from './TiptapDropdown'
 import { IconCode, IconSubscript, IconSuperscript } from './TiptapIcons'
 import { TiptapToolbarButton as Button } from './TiptapToolbarButton'
+import { t } from 'src/functions/i18n'
+import type { TranslationKey } from 'src/types'
 
 type FormatDefinition = {
   name: 'superscript' | 'subscript' | 'code'
-  title: string
+  title: TranslationKey
   Icon: FunctionComponent<{ size: number }>
 }
 
 const superscript: FormatDefinition = {
   name: 'superscript',
-  title: 'Superscript',
+  title: 'superscript',
   Icon: IconSuperscript,
 }
 
 const formats: FormatDefinition[] = [
   superscript,
-  { name: 'subscript', title: 'Subscript', Icon: IconSubscript },
-  { name: 'code', title: 'Code', Icon: IconCode },
+  { name: 'subscript', title: 'subscript', Icon: IconSubscript },
+  { name: 'code', title: 'code', Icon: IconCode },
 ]
 
 /**
@@ -44,7 +46,7 @@ export const TiptapToolbarFormats: FunctionComponent<{ editor: Editor }> = ({
       <Button
         active={editor.isActive(current.name)}
         onClick={toggle(current)}
-        title={current.title}
+        title={t(current.title)}
       >
         <current.Icon size={16} />
       </Button>
@@ -56,7 +58,7 @@ export const TiptapToolbarFormats: FunctionComponent<{ editor: Editor }> = ({
             active={editor.isActive(format.name)}
             onClick={toggle(format)}
             css={{ height: 30 }}
-            title={format.title}
+            title={t(format.title)}
           >
             <format.Icon size={16} />
           </Button>

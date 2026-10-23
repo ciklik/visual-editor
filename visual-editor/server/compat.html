@@ -28,8 +28,14 @@
       value: null,
       // names of the fields submitted with the form
       submitted: null,
+      // submit events seen by the page, even prevented ones (the Vue field
+      // restores the page layout on any of them)
+      submitEvents: 0,
     }
     window.host = host
+    window.addEventListener('submit', () => host.submitEvents++, {
+      capture: true,
+    })
 
     // The file manager is closed without choosing a file
     ImageField.filemanagerController.open = () => {
