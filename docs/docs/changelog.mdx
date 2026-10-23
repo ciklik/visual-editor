@@ -4,6 +4,13 @@ sidebar_position: 10
 
 # Changelog
 
+## 0.2.2 - 2026/10/23
+
+- Fix: Enter in the link field of the text toolbar no longer submits the form around the editor (the link form is no longer a nested `<form>`), and Enter in an input of the editor never submits it
+- Fix: closing the editor before the preview is loaded no longer throws an error
+- Fix: the "add a component" zone of the preview stays in the middle of the block edge, the move and delete buttons and the block name can no longer open the component list
+- Fix: the texts added in 0.2 (text toolbar tooltips, "New tab" link option, preview buttons, device names) and the "All blocks" tab go through the translations, French included; a translation given to the editor without the new keys falls back to English
+
 ## 0.2.1 - 2026/10/09
 
 - Fix: the `change` event carries the JSON of the page in `detail` again (removed in 0.2.0), and is emitted for every change made in the editor, including the preview arrows. It is not emitted when the host sets `value`

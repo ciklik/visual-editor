@@ -1,6 +1,6 @@
 {
   "name": "@boxraiser/visual-editor",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Block based visual editor, as a custom element",
   "license": "MIT",
   "type": "module",
